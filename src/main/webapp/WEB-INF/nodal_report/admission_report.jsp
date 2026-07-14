@@ -251,7 +251,7 @@
 
     <!-- Scripts -->
     <script>
-        const API = '${pageContext.request.contextPath}/nodal-report'; 
+        const API = 'http://localhost:5051/api/reports'; 
 
         async function fetchJSON(url) {
             try {
@@ -265,31 +265,25 @@
         }
 
         async function loadMetadata() {
-            const data = await fetchJSON(API + '/api/metadata');
+            const data = await fetchJSON(API + '/metadata');
             const yearSel = document.getElementById('year');
             const casteSel = document.getElementById('caste');
-            const selectedYear = '${year}';
-            const selectedCaste = '${caste}';
             
             if(data.years && data.years.length > 0) {
                 data.years.forEach(y => {
-                    if (y != selectedYear) {
-                        const o = document.createElement('option');
-                        o.value = y;
-                        o.textContent = y;
-                        yearSel.appendChild(o);
-                    }
+                    const o = document.createElement('option');
+                    o.value = y;
+                    o.textContent = y;
+                    yearSel.appendChild(o);
                 });
             }
 
             if(data.castes && data.castes.length > 0) {
                 data.castes.forEach(c => {
-                    if (c != selectedCaste) {
-                        const o = document.createElement('option');
-                        o.value = c;
-                        o.textContent = c;
-                        casteSel.appendChild(o);
-                    }
+                    const o = document.createElement('option');
+                    o.value = c;
+                    o.textContent = c;
+                    casteSel.appendChild(o);
                 });
             }
         }

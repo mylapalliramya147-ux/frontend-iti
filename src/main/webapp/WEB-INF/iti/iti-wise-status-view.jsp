@@ -126,10 +126,10 @@
 <body class="nodal-body">
     
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" %>
+    <%@ include file="header.jsp" />
     
     <c:set var="activeTab" value="iti_status" />
-    <%@ include file="iti_navbar.jsp" %>
+    <%@ include file="iti_navbar.jsp" />
     
     <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">
@@ -227,7 +227,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        const API = '${pageContext.request.contextPath}/nodal-report/api';
+        const API = 'http://localhost:5051/api/reports';
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Simplified: only year selection
@@ -247,7 +247,7 @@
 
             const requestBody = { year: year };
 
-            fetch('http://10.72.4.135:5051/reports/iti-wise-status', { credentials: 'include',
+            fetch('http://localhost:5051/api/reports/iti-wise-status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
@@ -270,18 +270,18 @@
                     data.itis.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.dist_name}</td>
-                            <td style="text-align: left;">\${row.iti_name}</td>
-                            <td>\${row.iti_code}</td>
-                            <td class="num" style="color: #003366;">\${row.total}</td>
-                            <td class="num text-success">\${row.success}</td>
-                            <td class="num text-warning">\${row.pending_sid}</td>
-                            <td class="num text-primary">\${row.verified}</td>
-                            <td class="num text-danger">\${row.to_be_verified}</td>
-                            <td class="num">\${row.to_be_updated}</td>
-                            <td class="num text-danger">\${row.phone_duplicate_records}</td>
-                            <td class="num text-danger">\${row.email_duplicate_records}</td>
-                            <td class="num text-danger">\${row.aadhar_duplicate_records}</td>
+                            <td style="text-align: left;">${row.dist_name}</td>
+                            <td style="text-align: left;">${row.iti_name}</td>
+                            <td>${row.iti_code}</td>
+                            <td class="num" style="color: #003366;">${row.total}</td>
+                            <td class="num text-success">${row.success}</td>
+                            <td class="num text-warning">${row.pending_sid}</td>
+                            <td class="num text-primary">${row.verified}</td>
+                            <td class="num text-danger">${row.to_be_verified}</td>
+                            <td class="num">${row.to_be_updated}</td>
+                            <td class="num text-danger">${row.phone_duplicate_records}</td>
+                            <td class="num text-danger">${row.email_duplicate_records}</td>
+                            <td class="num text-danger">${row.aadhar_duplicate_records}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -292,15 +292,15 @@
                         ft.className = 'total-row';
                         ft.innerHTML = `
                             <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                            <td class="num">\${t.total}</td>
-                            <td class="num">\${t.success}</td>
-                            <td class="num">\${t.pending_sid}</td>
-                            <td class="num">\${t.verified}</td>
-                            <td class="num">\${t.to_be_verified}</td>
-                            <td class="num">\${t.to_be_updated}</td>
-                            <td class="num">\${t.phone_duplicate_records}</td>
-                            <td class="num">\${t.email_duplicate_records}</td>
-                            <td class="num">\${t.aadhar_duplicate_records}</td>
+                            <td class="num">${t.total}</td>
+                            <td class="num">${t.success}</td>
+                            <td class="num">${t.pending_sid}</td>
+                            <td class="num">${t.verified}</td>
+                            <td class="num">${t.to_be_verified}</td>
+                            <td class="num">${t.to_be_updated}</td>
+                            <td class="num">${t.phone_duplicate_records}</td>
+                            <td class="num">${t.email_duplicate_records}</td>
+                            <td class="num">${t.aadhar_duplicate_records}</td>
                         `;
                         tfoot.appendChild(ft);
                     }

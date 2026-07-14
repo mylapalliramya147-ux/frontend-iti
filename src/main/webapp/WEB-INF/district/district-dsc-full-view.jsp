@@ -151,10 +151,9 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('http://10.72.4.135:5051/reports/dsc-full', { credentials: 'include',
+            fetch('http://localhost:5051/api/reports/dsc-full', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
                 body: JSON.stringify({ iti_code, trade_code, year, phase, mode_adm, dist_code: "ALL" })
             })
             .then(response => response.json())
@@ -248,7 +247,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Fetching DSC options...');
             const localDistCode = localStorage.getItem('insCode') || '';
-            const url = 'http://10.72.4.135:5051/reports/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
+            const url = 'http://localhost:5051/api/reports/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
             
             fetch(url, { credentials: 'include' })
                 .then(response => {
@@ -290,7 +289,7 @@
                         const selectedIti = itiSelect.value;
                         tradeSelect.innerHTML = '<option value="">Select Trade</option>';
                         
-                        let fetchUrl = 'http://10.72.4.135:5051/reports/dsc-options?dist_code=' + localDistCode;
+                        let fetchUrl = 'http://localhost:5051/api/reports/dsc-options?dist_code=' + localDistCode;
                         if (selectedIti) {
                             fetchUrl += '&iti_code=' + selectedIti;
                         }
