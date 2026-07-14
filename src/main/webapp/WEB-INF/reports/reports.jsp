@@ -77,7 +77,7 @@
                 <h1 style="color: #003366; font-weight: 800;">ITI Reports Dashboard</h1>
                 <p class="text-muted">Comprehensive reporting module with 25+ reports</p>
                 <div class="mt-3">
-                    <a href="http://localhost:5051/swagger-ui/index.html" target="_blank" class="btn btn-primary me-2">
+                    <a href="${backendBaseUrl}/swagger-ui/index.html" target="_blank" class="btn btn-primary me-2">
                         <i class="fas fa-book-medical me-2"></i>Backend API Docs (Swagger)
                     </a>
                     <a href="${pageContext.request.contextPath}/reports/unified-reports" class="btn btn-secondary">
@@ -94,7 +94,7 @@
                         <i class="fas fa-building"></i>
                         <h5>ITI Wise Status</h5>
                         <p>Admission status by ITI</p>
-                        <span class="api-badge">POST /api/reports/iti-wise-status</span>
+                        <span class="api-badge">${backendApiUrl}/iti-wise-status</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -102,7 +102,7 @@
                         <i class="fas fa-user-check"></i>
                         <h5>Admission Report</h5>
                         <p>Trade-wise admissions</p>
-                        <span class="api-badge">POST /api/reports/admission-report</span>
+                        <span class="api-badge">${backendApiUrl}/admission-report</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -117,7 +117,7 @@
                         <i class="fas fa-user-graduate"></i>
                         <h5>Student Details</h5>
                         <p>Individual student info</p>
-                        <span class="api-badge">GET /api/reports/student-details</span>
+                        <span class="api-badge">${backendApiUrl}/student-details</span>
                     </a>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         <i class="fas fa-file-contract"></i>
                         <h5>DSC Full Report</h5>
                         <p>District seat matrix</p>
-                        <span class="api-badge">POST /api/reports/dsc-full</span>
+                        <span class="api-badge">${backendApiUrl}/dsc-full</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -138,7 +138,7 @@
                         <i class="fas fa-users-cog"></i>
                         <h5>Applicant Report</h5>
                         <p>Phase-wise applicants</p>
-                        <span class="api-badge">POST /api/reports/applicant-report-by-phase</span>
+                        <span class="api-badge">${backendApiUrl}/applicant-report-by-phase</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -146,7 +146,7 @@
                         <i class="fas fa-id-card"></i>
                         <h5>Caste Wise Report</h5>
                         <p>Category-wise admissions</p>
-                        <span class="api-badge">GET /api/reports/caste-wise-admissions</span>
+                        <span class="api-badge">${backendApiUrl}/caste-wise-admissions</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -154,7 +154,7 @@
                         <i class="fas fa-check-circle"></i>
                         <h5>Verified Count</h5>
                         <p>Verification status</p>
-                        <span class="api-badge">GET /api/reports/verified-application-count</span>
+                        <span class="api-badge">${backendApiUrl}/verified-application-count</span>
                     </a>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                         <i class="fas fa-tachometer-alt"></i>
                         <h5>API Dashboard</h5>
                         <p>District performance</p>
-                        <span class="api-badge">GET /api/reports/api-dashboard</span>
+                        <span class="api-badge">${backendApiUrl}/api-dashboard</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -175,7 +175,7 @@
                         <i class="fas fa-chart-bar"></i>
                         <h5>State Dashboard</h5>
                         <p>State-level analytics</p>
-                        <span class="api-badge">GET /api/reports/state-dashboard</span>
+                        <span class="api-badge">${backendApiUrl}/state-dashboard</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -183,7 +183,7 @@
                         <i class="fas fa-layer-group"></i>
                         <h5>Phase Wise Report</h5>
                         <p>Phase-wise admissions</p>
-                        <span class="api-badge">GET /api/reports/phase-wise</span>
+                        <span class="api-badge">${backendApiUrl}/phase-wise</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -191,7 +191,7 @@
                         <i class="fas fa-calendar-day"></i>
                         <h5>Today's Schedule</h5>
                         <p>Today's ITI schedule</p>
-                        <span class="api-badge">GET /api/reports/today-schedule</span>
+                        <span class="api-badge">${backendApiUrl}/today-schedule</span>
                     </a>
                 </div>
             </div>
@@ -204,7 +204,7 @@
                         <i class="fas fa-door-open"></i>
                         <h5>Open Seats Abstract</h5>
                         <p>Available seats overview</p>
-                        <span class="api-badge">GET /api/reports/open-seats</span>
+                        <span class="api-badge">${backendApiUrl}/open-seats</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -212,7 +212,7 @@
                         <i class="fas fa-clock"></i>
                         <h5>Trade Duration Seats</h5>
                         <p>Duration-wise analysis</p>
-                        <span class="api-badge">GET /api/reports/trade-duration-seats</span>
+                        <span class="api-badge">${backendApiUrl}/trade-duration-seats</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -220,7 +220,7 @@
                         <i class="fas fa-landmark"></i>
                         <h5>Govt/Pvt Seats</h5>
                         <p>Government vs Private</p>
-                        <span class="api-badge">GET /api/reports/govt-pvt-seats</span>
+                        <span class="api-badge">${backendApiUrl}/govt-pvt-seats</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -228,7 +228,7 @@
                         <i class="fas fa-exclamation-circle"></i>
                         <h5>Vacant Positions</h5>
                         <p>Trade-wise vacancies</p>
-                        <span class="api-badge">GET /api/reports/trade-vacant-positions</span>
+                        <span class="api-badge">${backendApiUrl}/trade-vacant-positions</span>
                     </a>
                 </div>
             </div>
@@ -241,7 +241,7 @@
                         <i class="fas fa-tools"></i>
                         <h5>Trade Wise Report</h5>
                         <p>Trade-wise analysis</p>
-                        <span class="api-badge">GET /api/reports/trade-wise-report</span>
+                        <span class="api-badge">${backendApiUrl}/trade-wise-report</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -249,7 +249,7 @@
                         <i class="fas fa-map"></i>
                         <h5>District Wise Count</h5>
                         <p>District applications</p>
-                        <span class="api-badge">GET /api/reports/district-wise-application-count</span>
+                        <span class="api-badge">${backendApiUrl}/district-wise-application-count</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -257,7 +257,7 @@
                         <i class="fas fa-calendar-alt"></i>
                         <h5>District Schedule</h5>
                         <p>District-wise schedule</p>
-                        <span class="api-badge">GET /api/reports/district-schedule</span>
+                        <span class="api-badge">${backendApiUrl}/district-schedule</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -265,7 +265,7 @@
                         <i class="fas fa-exchange-alt"></i>
                         <h5>Shift Unit Report</h5>
                         <p>Permitted shift units</p>
-                        <span class="api-badge">GET /api/reports/permitted-shift-unit</span>
+                        <span class="api-badge">${backendApiUrl}/permitted-shift-unit</span>
                     </a>
                 </div>
             </div>
@@ -278,7 +278,7 @@
                         <i class="fas fa-clipboard-list"></i>
                         <h5>ITI Admissions</h5>
                         <p>Detailed admissions</p>
-                        <span class="api-badge">GET /api/reports/iti-admissions</span>
+                        <span class="api-badge">${backendApiUrl}/iti-admissions</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -286,7 +286,7 @@
                         <i class="fas fa-chart-area"></i>
                         <h5>Strength Filled Seats</h5>
                         <p>Seat utilization</p>
-                        <span class="api-badge">GET /api/reports/strength-filled-seats</span>
+                        <span class="api-badge">${backendApiUrl}/strength-filled-seats</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -294,7 +294,7 @@
                         <i class="fas fa-address-book"></i>
                         <h5>Applicant Mobile/Address</h5>
                         <p>Contact information</p>
-                        <span class="api-badge">GET /api/reports/applicant-mobile-address</span>
+                        <span class="api-badge">${backendApiUrl}/applicant-mobile-address</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -302,7 +302,7 @@
                         <i class="fas fa-users"></i>
                         <h5>All Resource Roles</h5>
                         <p>User roles overview</p>
-                        <span class="api-badge">GET /api/reports/all-resource-roles</span>
+                        <span class="api-badge">${backendApiUrl}/all-resource-roles</span>
                     </a>
                 </div>
             </div>
@@ -319,7 +319,7 @@
                             <li><a href="http://localhost:5051/swagger-ui/index.html" target="_blank" class="text-decoration-none">
                                 <i class="fas fa-external-link-alt me-1"></i>Swagger UI (Backend)
                             </a></li>
-                            <li><a href="http://localhost:5051/api/reports" target="_blank" class="text-decoration-none">
+                        <li><a href="${backendApiUrl}" target="_blank" class="text-decoration-none">
                                 <i class="fas fa-external-link-alt me-1"></i>Reports API Base URL
                             </a></li>
                         </ul>
