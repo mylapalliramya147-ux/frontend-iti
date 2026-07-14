@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Wise Status | Institute Reports</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
+        .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
+        .nodal-report-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
+        .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
+        .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
+        .form-select-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
+        .form-select-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
+        .btn-submit-official-navy { background-color: #003366; color: white; padding: 12px 30px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; border: none; transition: all 0.2s ease; }
+        .btn-submit-official-navy:hover { background-color: #002244; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2); color: white; }
+        .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
+        .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
+        .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
+    </style>
+</head>
+<body class="nodal-body">
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/iti_navbar :: navbar"></div>
+    
+    <div class="nodal-page-title-dashboard">
+        <h2>ITI Wise Admission Status</h2>
+    </div>
+
+    <!-- SELECTION VIEW -->
+    <div class="container mt-4" id="selectionView">
+        <div class="nodal-report-card shadow-lg" style="max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
+            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;">
+                <i class="fas fa-filter me-2"></i> Selection Criteria
+            </div>
+            <div class="p-4 bg-white rounded-bottom">
+                <form id="reportForm" onsubmit="fetchReport(event)">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label-official">Year</label>
+                            <select name="year" id="year" class="form-select-official" required>
+                                <option value="2025">2025</option>
+                                <option value="2024" selected>2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label class="form-label-official">District Code</label>
+                            <select name="distCode" id="distCode" class="form-select-official">
+                                <option value="All">All Districts</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label-official">ITI Code</label>
+                            <select name="itiCode" id="itiCode" class="form-select-official">
+                                <option value="All">All ITIs</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn-submit-official-navy w-100">
+                            <i class="fas fa-search me-2"></i>VIEW REPORT
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="loader-spinner" id="loader">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+        <p class="mt-3 fw-bold">Generating ITI Status Report...</p>
+    </div>
+
+    <!-- REPORT VIEW -->
+    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+        
+        <div class="no-print d-flex justify-content-center gap-3 mb-4">
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">
+                <i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION
+            </button>
+            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;">
+                <i class="fas fa-print me-2"></i>PRINT REPORT
+            </button>
+        </div>
+
+        <div class="shadow" style="background-color: #fff; border-radius: 8px; padding: 20px; border: 1px solid #e0e0e0;">
+            <div id="reportContent">
+                <!-- Report content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSelection() {
+            document.getElementById('reportView').style.display = 'none';
+            document.getElementById('selectionView').style.display = 'block';
+        }
+
+        function fetchReport(event) {
+            event.preventDefault();
+            const year = document.getElementById('year').value;
+            const distCode = document.getElementById('distCode').value;
+            const itiCode = document.getElementById('itiCode').value;
+
+            document.getElementById('selectionView').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+
+            fetch(`http://localhost:5051/api/reports/iti-wise-status?year=${year}&distCode=${distCode}&itiCode=${itiCode}&page=0&size=100`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loader').style.display = 'none';
+                    
+                    if(data.error) {
+                        alert("Error: " + data.error);
+                        showSelection();
+                        return;
+                    }
+
+                    document.getElementById('reportView').style.display = 'block';
+                    
+                    // Render report content
+                    const items = data.data || [];
+                    let html = `
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold" style="color: #003366;">ITI Wise Status Report</h3>
+                            <h5 class="text-muted">Year: ${year} | District: ${distCode}</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover report-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ITI Code</th>
+                                        <th>ITI Name</th>
+                                        <th>District</th>
+                                        <th>Total Seats</th>
+                                        <th>Filled</th>
+                                        <th>Vacant</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+
+                    if(items.length === 0) {
+                        html += `<tr><td colspan="8" class="text-center text-muted">No data available</td></tr>`;
+                    } else {
+                        items.forEach((item, index) => {
+                            html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${item.iti_code || '-'}</td>
+                                    <td>${item.iti_name || '-'}</td>
+                                    <td>${item.district || '-'}</td>
+                                    <td>${item.total_seats || 0}</td>
+                                    <td>${item.filled || 0}</td>
+                                    <td>${item.vacant || 0}</td>
+                                    <td><span class="badge bg-${item.vacant > 0 ? 'warning' : 'success'}">${item.vacant > 0 ? 'Partial' : 'Full'}</span></td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    html += `</tbody></table></div>`;
+                    document.getElementById('reportContent').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('selectionView').style.display = 'block';
+                    alert('Error loading data: ' + error.message);
+                    console.error('Error:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load districts and ITIs for dropdowns
+            fetch('http://localhost:5051/api/reports/trade-display/districts')
+                .then(r => r.json())
+                .then(data => {
+                    const distSelect = document.getElementById('distCode');
+                    if(data.data && data.data.length > 0) {
+                        data.data.forEach(d => {
+                            const option = document.createElement('option');
+                            option.value = d.district_code;
+                            option.textContent = d.district_name;
+                            distSelect.appendChild(option);
+                        });
+                    }
+                });
+        });
+    </script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
