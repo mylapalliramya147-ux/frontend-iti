@@ -58,7 +58,7 @@ public class ReportsController {
         return "reports/iti-student-list-view";
     }
 
-    @GetMapping("/reports")
+    @GetMapping("/")
     public String reportsDashboard() {
         return "reports/reports";
     }
