@@ -77,7 +77,7 @@
                 <h1 style="color: #003366; font-weight: 800;">ITI Reports Dashboard</h1>
                 <p class="text-muted">Comprehensive reporting module</p>
                 <div class="mt-3">
-                    <a href="${backendBaseUrl}/swagger-ui/index.html" target="_blank" class="btn btn-primary me-2">
+                    <a href="${backendBaseUrl}/swagger" target="_blank" class="btn btn-primary me-2">
                         <i class="fas fa-book-medical me-2"></i>Backend API Docs (Swagger)
                     </a>
                     <a href="${pageContext.request.contextPath}/reports/unified-reports" class="btn btn-secondary">
