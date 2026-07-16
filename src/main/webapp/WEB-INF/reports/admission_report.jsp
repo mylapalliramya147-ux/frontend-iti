@@ -96,7 +96,7 @@
             const pwd = document.getElementById('pwd').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('http://localhost:5051/api/reports/admission-report', {
+            fetch('${backendApiUrl}/admission-report', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ year, caste, pwd })
             })
             .then(response => response.json())

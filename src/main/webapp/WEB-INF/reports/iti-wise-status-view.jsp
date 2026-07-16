@@ -227,8 +227,6 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        const API = 'http://localhost:5051/api/reports';
-
         document.addEventListener('DOMContentLoaded', async () => {
             // Simplified: only year selection
         });
@@ -247,7 +245,7 @@
 
             const requestBody = { year: year };
 
-            fetch('http://localhost:5051/api/reports/iti-wise-status', {
+            fetch('${backendApiUrl}/iti-wise-status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)

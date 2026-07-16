@@ -85,7 +85,7 @@
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('http://localhost:5051/api/reports/applicant-report-by-phase', {
+            fetch('${backendApiUrl}/applicant-report-by-phase', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phase, year, itiCode: "All", distCode: "All" })
             })
             .then(response => response.json())

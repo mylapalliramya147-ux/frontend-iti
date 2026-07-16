@@ -78,7 +78,7 @@
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('http://localhost:5051/api/reports/caste-wise-admissions', {
+            fetch('${backendApiUrl}/caste-wise-admissions', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ year, distCode: "All", govt: "All", phase: "All", gender: "All" })
             })
             .then(response => response.json())

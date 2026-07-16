@@ -76,7 +76,7 @@
                 <h3 class="report-group-title"><i class="fas fa-map-marked-alt me-2"></i> District Level Reports</h3>
                 <div class="row g-4">
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/district-dsc-full" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-dsc-full" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-file-contract"></i>
                                 <h5>DSC Full Report</h5>
@@ -85,7 +85,7 @@
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/district-applicant-report" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-applicant-report" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-users-cog"></i>
                                 <h5>Applicant Report</h5>
@@ -94,7 +94,7 @@
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/district-iti-wise-year" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-iti-wise-year" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-building"></i>
                                 <h5>ITI Wise Status</h5>
@@ -103,7 +103,7 @@
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/district-caste-wise" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-caste-wise" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-id-card"></i>
                                 <h5>Caste Wise</h5>
@@ -119,16 +119,16 @@
                 <h3 class="report-group-title"><i class="fas fa-university me-2"></i> Institute Level Reports</h3>
                 <div class="row g-4">
                     <div class="col-md-4">
-                        <a href="${pageContext.request.contextPath}/applicant-report-by-phase" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/admission-report" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-user-check"></i>
-                                <h5>Applicant Phase Report</h5>
-                                <p>Individual applicant tracking</p>
+                                <h5>Admission Report</h5>
+                                <p>Trade-wise admission metrics</p>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="${pageContext.request.contextPath}/iti-wise-status-view" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/iti-wise-status-view" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-tasks"></i>
                                 <h5>Admission Status</h5>
@@ -137,7 +137,7 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="${pageContext.request.contextPath}/iti-student-list-view" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/iti-student-list-view" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-list-ol"></i>
                                 <h5>Student List</h5>
@@ -148,43 +148,25 @@
                 </div>
             </div>
 
-            <!-- NODAL MANAGEMENT REPORTS -->
+            <!-- VERIFIED & PERMITTED REPORTS -->
             <div class="mb-5">
-                <h3 class="report-group-title"><i class="fas fa-shield-alt me-2"></i> Nodal Management Reports</h3>
+                <h3 class="report-group-title"><i class="fas fa-shield-alt me-2"></i> Verification & Shift Reports</h3>
                 <div class="row g-4">
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/nodal-report/dashboard" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-verified-count" class="report-card-link">
                             <div class="report-card-official">
-                                <i class="fas fa-tachometer-alt"></i>
-                                <h5>API Dashboard</h5>
-                                <p>District-wise performance metrics</p>
+                                <i class="fas fa-check-circle"></i>
+                                <h5>Verified Count</h5>
+                                <p>District verification status</p>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/nodal-report/phase-wise" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-permitted-shift" class="report-card-link">
                             <div class="report-card-official">
-                                <i class="fas fa-layer-group"></i>
-                                <h5>Phase-Wise Abstract</h5>
-                                <p>Registration counts per phase</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/nodal-report/iti_admissions_report" class="report-card-link">
-                            <div class="report-card-official">
-                                <i class="fas fa-clipboard-list"></i>
-                                <h5>ITI Detailed Admissions</h5>
-                                <p>Advanced filtering for all admissions</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/nodal-report/open-seats-report" class="report-card-link">
-                            <div class="report-card-official">
-                                <i class="fas fa-chair"></i>
-                                <h5>Open Seats</h5>
-                                <p>Real-time vacancy tracking</p>
+                                <i class="fas fa-exchange-alt"></i>
+                                <h5>Permitted Shift</h5>
+                                <p>Permitted shift units</p>
                             </div>
                         </a>
                     </div>

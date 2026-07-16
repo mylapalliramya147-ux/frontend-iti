@@ -86,7 +86,7 @@
             const itiCode = document.getElementById('itiCode').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('http://localhost:5051/api/reports/permitted-shift-unit?distCode=' + encodeURIComponent(distCode) + '&itiCode=' + encodeURIComponent(itiCode) + '&page=0&size=500', {
+            fetch('${backendApiUrl}/permitted-shift-unit?distCode=' + encodeURIComponent(distCode) + '&itiCode=' + encodeURIComponent(itiCode) + '&page=0&size=500', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())

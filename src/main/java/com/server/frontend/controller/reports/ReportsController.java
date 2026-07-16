@@ -63,16 +63,6 @@ public class ReportsController {
         return "reports/reports";
     }
 
-    @GetMapping("/about-strive")
-    public String aboutStrive() {
-        return "reports/aboutstrive";
-    }
-
-    @GetMapping("/disclosure-management")
-    public String disclosureManagement() {
-        return "reports/disclosuremanagement";
-    }
-
     @GetMapping("/api-docs")
     public String apiDocs() {
         return "reports/swagger";
