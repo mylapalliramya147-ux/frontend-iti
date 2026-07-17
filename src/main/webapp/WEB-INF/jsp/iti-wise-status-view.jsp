@@ -243,12 +243,8 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            const requestBody = { year: year };
-
-            fetch('${backendApiUrl}/iti-wise-status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody)
+            fetch('${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All', {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
             .then(data => {
@@ -264,44 +260,43 @@
 
                 if (data.error) throw new Error(data.error);
 
-                if (data.itis && data.itis.length > 0) {
-                    data.itis.forEach(row => {
+                let totals = { total: 0, success: 0, pending_sid: 0, verified: 0, to_be_verified: 0, to_be_updated: 0, phone_duplicate_records: 0, aadhar_duplicate_records: 0, email_duplicate_records: 0 };
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${row.dist_name}</td>
-                            <td style="text-align: left;">${row.iti_name}</td>
-                            <td>${row.iti_code}</td>
-                            <td class="num" style="color: #003366;">${row.total}</td>
-                            <td class="num text-success">${row.success}</td>
-                            <td class="num text-warning">${row.pending_sid}</td>
-                            <td class="num text-primary">${row.verified}</td>
-                            <td class="num text-danger">${row.to_be_verified}</td>
-                            <td class="num">${row.to_be_updated}</td>
-                            <td class="num text-danger">${row.phone_duplicate_records}</td>
-                            <td class="num text-danger">${row.email_duplicate_records}</td>
-                            <td class="num text-danger">${row.aadhar_duplicate_records}</td>
+                            <td style="text-align: left;">${row.distName || '-'}</td>
+                            <td style="text-align: left;">${row.itiName || '-'}</td>
+                            <td>${row.itiCode || '-'}</td>
+                            <td class="num" style="color: #003366;">${row.total || 0}</td>
+                            <td class="num text-success">${row.success || 0}</td>
+                            <td class="num text-warning">${row.pendingSid || 0}</td>
+                            <td class="num text-primary">${row.verified || 0}</td>
+                            <td class="num text-danger">${row.toBeVerified || 0}</td>
+                            <td class="num">${row.toBeUpdated || 0}</td>
+                            <td class="num text-danger">${row.phoneDuplicateRecords || 0}</td>
+                            <td class="num text-danger">${row.emailDuplicateRecords || 0}</td>
+                            <td class="num text-danger">${row.aadharDuplicateRecords || 0}</td>
                         `;
                         tbody.appendChild(tr);
+                        totals.total += row.total || 0; totals.success += row.success || 0; totals.pending_sid += row.pendingSid || 0; totals.verified += row.verified || 0; totals.to_be_verified += row.toBeVerified || 0; totals.to_be_updated += row.toBeUpdated || 0; totals.phone_duplicate_records += row.phoneDuplicateRecords || 0; totals.aadhar_duplicate_records += row.aadharDuplicateRecords || 0; totals.email_duplicate_records += row.emailDuplicateRecords || 0;
                     });
 
-                    if (data.totals) {
-                        const t = data.totals;
-                        const ft = document.createElement('tr');
-                        ft.className = 'total-row';
-                        ft.innerHTML = `
-                            <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                            <td class="num">${t.total}</td>
-                            <td class="num">${t.success}</td>
-                            <td class="num">${t.pending_sid}</td>
-                            <td class="num">${t.verified}</td>
-                            <td class="num">${t.to_be_verified}</td>
-                            <td class="num">${t.to_be_updated}</td>
-                            <td class="num">${t.phone_duplicate_records}</td>
-                            <td class="num">${t.email_duplicate_records}</td>
-                            <td class="num">${t.aadhar_duplicate_records}</td>
-                        `;
-                        tfoot.appendChild(ft);
-                    }
+                    const ft = document.createElement('tr');
+                    ft.className = 'total-row';
+                    ft.innerHTML = `
+                        <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
+                        <td class="num">${totals.total}</td>
+                        <td class="num">${totals.success}</td>
+                        <td class="num">${totals.pending_sid}</td>
+                        <td class="num">${totals.verified}</td>
+                        <td class="num">${totals.to_be_verified}</td>
+                        <td class="num">${totals.to_be_updated}</td>
+                        <td class="num">${totals.phone_duplicate_records}</td>
+                        <td class="num">${totals.email_duplicate_records}</td>
+                        <td class="num">${totals.aadhar_duplicate_records}</td>
+                    `;
+                    tfoot.appendChild(ft);
                 } else {
                     tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
                 }

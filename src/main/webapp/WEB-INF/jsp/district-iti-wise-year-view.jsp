@@ -79,8 +79,8 @@
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/iti-wise-status', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ year, distCode: "All", itiCode: "All" })
+            fetch('${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All', {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
             .then(data => {

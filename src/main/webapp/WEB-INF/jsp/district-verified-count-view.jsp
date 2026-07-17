@@ -127,11 +127,9 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('${backendApiUrl}/verified-application-count', { credentials: 'include',
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ year: year })
+            fetch('${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
             .then(data => {
@@ -153,27 +151,27 @@
                 let gTotal = 0, gApproved = 0, gRejected = 0, gUnverified = 0;
 
                 if (data.data && data.data.length > 0) {
-                    data.data.forEach((rowObj, index) => {
-                        const totalApp = parseInt(rowObj['Total Applications']) || 0;
-                        const approved = parseInt(rowObj['Approved']) || 0;
-                        const rejected = parseInt(rowObj['Rejected']) || 0;
-                        const unverified = parseInt(rowObj['Unverified']) || 0;
+                    data.data.forEach((row, index) => {
+                        const totalApp = parseInt(row.totalApplications) || 0;
+                        const approved = parseInt(row.approved) || 0;
+                        const rejected = parseInt(row.rejected) || 0;
+                        const unverified = parseInt(row.unverified) || 0;
 
                         gTotal += totalApp;
                         gApproved += approved;
                         gRejected += rejected;
                         gUnverified += unverified;
 
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td style="font-weight: 600; color: #64748b;">\${index + 1}</td>
-                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${rowObj['District Name'] || ''}</td>
-                            <td class="fw-bold">\${totalApp}</td>
-                            <td style="color: #10b981; font-weight: bold;">\${approved}</td>
-                            <td style="color: #ef4444; font-weight: bold;">\${rejected}</td>
-                            <td style="color: #f59e0b; font-weight: bold;">\${unverified}</td>
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="font-weight: 600; color: #64748b;">${index + 1}</td>
+                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">${row.districtName || ''}</td>
+                            <td class="fw-bold">${totalApp}</td>
+                            <td style="color: #10b981; font-weight: bold;">${approved}</td>
+                            <td style="color: #ef4444; font-weight: bold;">${rejected}</td>
+                            <td style="color: #f59e0b; font-weight: bold;">${unverified}</td>
                         `;
-                        tbody.appendChild(row);
+                        tbody.appendChild(tr);
                     });
 
                     // Add a totals row

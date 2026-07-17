@@ -78,8 +78,8 @@
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/caste-wise-admissions', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ year, distCode: "All", govt: "All", phase: "All", gender: "All" })
+            fetch('${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=All&gender=All', {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
             .then(data => {
