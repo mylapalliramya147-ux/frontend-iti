@@ -9,7 +9,7 @@ public class ReportsController {
 
     @GetMapping("/")
     public String dashboard() {
-        return "reports";
+        return "redirect:/reports/test-all";
     }
 
     @GetMapping("/reports/admission-report")
@@ -55,6 +55,71 @@ public class ReportsController {
     @GetMapping("/reports/iti-student-list-view")
     public String itiStudentListView() {
         return "iti-student-list-view";
+    }
+
+    @GetMapping("/reports/phase-wise-report")
+    public String phaseWiseReport() {
+        return "phase-wise-report";
+    }
+
+    @GetMapping("/reports/open-seats-report")
+    public String openSeatsReport() {
+        return "open-seats-report";
+    }
+
+    @GetMapping("/reports/trade-duration-seats")
+    public String tradeDurationSeats() {
+        return "trade-duration-seats";
+    }
+
+    @GetMapping("/reports/govt-pvt-seats")
+    public String govtPvtSeats() {
+        return "govt-pvt-seats";
+    }
+
+    @GetMapping("/reports/iti-admissions-report")
+    public String itiAdmissionsReport() {
+        return "iti-admissions-report";
+    }
+
+    @GetMapping("/reports/student-registration-details")
+    public String studentRegistrationDetails() {
+        return "student-registration-details";
+    }
+
+    @GetMapping("/reports/applicant-report-state-wise")
+    public String applicantReportStateWise() {
+        return "applicant-report-state-wise";
+    }
+
+    @GetMapping("/reports/open-seats-abstract")
+    public String openSeatsAbstract() {
+        return "open-seats-abstract";
+    }
+
+    @GetMapping("/reports/district-wise-application-count")
+    public String districtWiseApplicationCount() {
+        return "district-wise-application-count";
+    }
+
+    @GetMapping("/reports/verification-report")
+    public String verificationReport() {
+        return "verification-report";
+    }
+
+    @GetMapping("/reports/state-dashboard")
+    public String stateDashboard() {
+        return "state-dashboard";
+    }
+
+    @GetMapping("/reports/api-dashboard")
+    public String apiDashboard() {
+        return "api-dashboard";
+    }
+
+    @GetMapping("/reports/test-all")
+    public String testAllReports() {
+        return "reports-test";
     }
 
     @GetMapping("/reports/api-docs")

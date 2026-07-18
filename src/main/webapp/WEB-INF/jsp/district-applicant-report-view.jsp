@@ -8,7 +8,7 @@
     <title>Applicant Report | District</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
@@ -27,9 +27,9 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
+    <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="dist_applicant" />
-    <%@ include file="district_navbar.jsp" />
+    <%@ include file="district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Phase-wise Applicant Report</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">

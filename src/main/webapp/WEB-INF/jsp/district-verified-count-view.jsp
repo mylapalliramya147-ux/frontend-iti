@@ -8,7 +8,7 @@
     <title>Verified Application Count | District Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
@@ -165,7 +165,7 @@
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
                             <td style="font-weight: 600; color: #64748b;">${index + 1}</td>
-                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">${row.districtName || ''}</td>
+                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">${empty row.districtName ? '' : row.districtName}</td>
                             <td class="fw-bold">${totalApp}</td>
                             <td style="color: #10b981; font-weight: bold;">${approved}</td>
                             <td style="color: #ef4444; font-weight: bold;">${rejected}</td>

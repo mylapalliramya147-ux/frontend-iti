@@ -3,7 +3,7 @@
     <header class="fixed-top-header">
         <%@ include file="bannernew.jsp" %>
     </header>
-    <c:if test="${empty hideNavbar or not hideNavbar}">
+    <c:if test="${empty hideNavbar or hideNavbar.toString() == 'false' or hideNavbar.toString() == '0'}">
     <%@ include file="openNavbar.jsp" %>
         <div class="news-marquee">
             <div class="marquee-content">

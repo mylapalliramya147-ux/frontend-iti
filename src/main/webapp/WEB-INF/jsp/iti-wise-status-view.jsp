@@ -8,7 +8,7 @@
     <title>ITI-Wise Admission Status Report</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <style>
         /* DASHBOARD UI OVERRIDES */
         .nodal-page-title-dashboard {
@@ -126,10 +126,10 @@
 <body class="nodal-body">
     
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
+    <%@ include file="header.jsp" %>
     
     <c:set var="activeTab" value="iti_status" />
-    <%@ include file="iti_navbar.jsp" />
+    <%-- <%@ include file="iti_navbar.jsp" %> --%>
     
     <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">
@@ -265,18 +265,18 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${row.distName || '-'}</td>
-                            <td style="text-align: left;">${row.itiName || '-'}</td>
-                            <td>${row.itiCode || '-'}</td>
-                            <td class="num" style="color: #003366;">${row.total || 0}</td>
-                            <td class="num text-success">${row.success || 0}</td>
-                            <td class="num text-warning">${row.pendingSid || 0}</td>
-                            <td class="num text-primary">${row.verified || 0}</td>
-                            <td class="num text-danger">${row.toBeVerified || 0}</td>
-                            <td class="num">${row.toBeUpdated || 0}</td>
-                            <td class="num text-danger">${row.phoneDuplicateRecords || 0}</td>
-                            <td class="num text-danger">${row.emailDuplicateRecords || 0}</td>
-                            <td class="num text-danger">${row.aadharDuplicateRecords || 0}</td>
+                            <td style="text-align: left;">${empty row.distName ? '-' : row.distName}</td>
+                            <td style="text-align: left;">${empty row.itiName ? '-' : row.itiName}</td>
+                            <td>${empty row.itiCode ? '-' : row.itiCode}</td>
+                            <td class="num" style="color: #003366;">${empty row.total ? 0 : row.total}</td>
+                            <td class="num text-success">${empty row.success ? 0 : row.success}</td>
+                            <td class="num text-warning">${empty row.pendingSid ? 0 : row.pendingSid}</td>
+                            <td class="num text-primary">${empty row.verified ? 0 : row.verified}</td>
+                            <td class="num text-danger">${empty row.toBeVerified ? 0 : row.toBeVerified}</td>
+                            <td class="num">${empty row.toBeUpdated ? 0 : row.toBeUpdated}</td>
+                            <td class="num text-danger">${empty row.phoneDuplicateRecords ? 0 : row.phoneDuplicateRecords}</td>
+                            <td class="num text-danger">${empty row.emailDuplicateRecords ? 0 : row.emailDuplicateRecords}</td>
+                            <td class="num text-danger">${empty row.aadharDuplicateRecords ? 0 : row.aadharDuplicateRecords}</td>
                         `;
                         tbody.appendChild(tr);
                         totals.total += row.total || 0; totals.success += row.success || 0; totals.pending_sid += row.pendingSid || 0; totals.verified += row.verified || 0; totals.to_be_verified += row.toBeVerified || 0; totals.to_be_updated += row.toBeUpdated || 0; totals.phone_duplicate_records += row.phoneDuplicateRecords || 0; totals.aadhar_duplicate_records += row.aadharDuplicateRecords || 0; totals.email_duplicate_records += row.emailDuplicateRecords || 0;

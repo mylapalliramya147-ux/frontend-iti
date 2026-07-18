@@ -8,7 +8,7 @@
     <title>DSC Full Report | District Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
@@ -244,7 +244,12 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Fetching DSC options...');
-            const localDistCode = localStorage.getItem('insCode') || '';
+            let localDistCode = '';
+            try {
+                localDistCode = localStorage.getItem('insCode') || '';
+            } catch (e) {
+                console.warn('localStorage not available:', e);
+            }
             const url = '${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
             
             fetch(url, { credentials: 'include' })
@@ -280,41 +285,50 @@
                         console.log('Populated ' + data.trades.length + ' trades');
                     } else {
                         console.warn('No trades found in options data');
+                        tradeSelect.innerHTML = '<option value="">No trades available</option>';
                     }
 
-                    // Dynamic filtering of trades based on selected ITI
-                    itiSelect.addEventListener('change', () => {
-                        const selectedIti = itiSelect.value;
-                        tradeSelect.innerHTML = '<option value="">Select Trade</option>';
-                        
-                        let fetchUrl = '${backendApiUrl}/dsc-options?dist_code=' + localDistCode;
-                        if (selectedIti) {
-                            fetchUrl += '&iti_code=' + selectedIti;
-                        }
-                        
-                        fetch(fetchUrl, { credentials: 'include' })
-                            .then(response => {
-                                if (!response.ok) throw new Error('HTTP error ' + response.status);
-                                return response.json();
-                            })
-                            .then(filteredData => {
-                                if (filteredData.trades && filteredData.trades.length > 0) {
-                                    filteredData.trades.forEach(trade => {
-                                        const option = document.createElement('option');
-                                        option.value = trade.trade_code;
-                                        option.textContent = trade.trade_code + ' - ' + trade.trade_name;
-                                        tradeSelect.appendChild(option);
-                                    });
-                                    console.log('Populated ' + filteredData.trades.length + ' filtered trades');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error fetching filtered trades:', error);
-                            });
-                    });
+                    if (itiSelect && tradeSelect) {
+                        itiSelect.addEventListener('change', () => {
+                            const selectedIti = itiSelect.value;
+                            tradeSelect.innerHTML = '<option value="">Select Trade</option>';
+                            
+                            let fetchUrl = '${backendApiUrl}/dsc-options?dist_code=' + localDistCode;
+                            if (selectedIti) {
+                                fetchUrl += '&iti_code=' + selectedIti;
+                            }
+                            
+                            fetch(fetchUrl, { credentials: 'include' })
+                                .then(response => {
+                                    if (!response.ok) throw new Error('HTTP error ' + response.status);
+                                    return response.json();
+                                })
+                                .then(filteredData => {
+                                    if (filteredData.trades && filteredData.trades.length > 0) {
+                                        filteredData.trades.forEach(trade => {
+                                            const option = document.createElement('option');
+                                            option.value = trade.trade_code;
+                                            option.textContent = trade.trade_code + ' - ' + trade.trade_name;
+                                            tradeSelect.appendChild(option);
+                                        });
+                                        console.log('Populated ' + filteredData.trades.length + ' filtered trades');
+                                    } else {
+                                        tradeSelect.innerHTML = '<option value="">No trades available</option>';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching filtered trades:', error);
+                                    tradeSelect.innerHTML = '<option value="">Error loading trades</option>';
+                                });
+                        });
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching options:', error);
+                    const tradeSelect = document.getElementById('trade_code');
+                    if (tradeSelect) {
+                        tradeSelect.innerHTML = '<option value="">Error loading options</option>';
+                    }
                     alert('Failed to load selection options. Please ensure you are logged in and the backend is running.');
                 });
         });

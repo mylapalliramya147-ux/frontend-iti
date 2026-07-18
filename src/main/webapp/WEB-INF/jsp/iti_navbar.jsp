@@ -36,9 +36,9 @@
         <a href="${pageContext.request.contextPath}/authHome" class="iti-dashboard-link">
             <i class="fas fa-home me-1"></i> Home
         </a>
-        <a href="${pageContext.request.contextPath}/applicant-report-by-phase" class="iti-dashboard-link ${activeTab == 'applicant_phase' ? 'active' : ''}">Applicant Report</a>
-        <a href="${pageContext.request.contextPath}/iti-wise-status-view" class="iti-dashboard-link ${activeTab == 'iti_status' ? 'active' : ''}">Admission Status</a>
-        <a href="${pageContext.request.contextPath}/iti-student-list-view" class="iti-dashboard-link ${activeTab == 'student_list' ? 'active' : ''}">Student List</a>
+        <a href="${pageContext.request.contextPath}/applicant-report-by-phase" class="iti-dashboard-link ${activeTab eq 'applicant_phase' ? 'active' : ''}">Applicant Report</a>
+        <a href="${pageContext.request.contextPath}/iti-wise-status-view" class="iti-dashboard-link ${activeTab eq 'iti_status' ? 'active' : ''}">Admission Status</a>
+        <a href="${pageContext.request.contextPath}/iti-student-list-view" class="iti-dashboard-link ${activeTab eq 'student_list' ? 'active' : ''}">Student List</a>
         
         <a href="${pageContext.request.contextPath}/logout" class="iti-dashboard-link ms-auto" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out
