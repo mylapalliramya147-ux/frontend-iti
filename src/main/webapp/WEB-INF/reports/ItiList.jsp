@@ -144,16 +144,15 @@
             }
 
             function applyFilter() {
-                const term = searchInput.value.toLowerCase();
-                const filtered = allData.filter(item => 
-                    (item.itiCode && item.itiCode.toLowerCase().includes(term)) ||
-                    (item.itiName && item.itiName.toLowerCase().includes(term)) ||
-                    (item.principalName && item.principalName.toLowerCase().includes(term)) ||
-                    (item.email && item.email.toLowerCase().includes(term)) ||
-                    (item.mobile && item.mobile.toLowerCase().includes(term)) ||
-                    (item.address && item.address.toLowerCase().includes(term)) ||
-                    (item.cityTown && item.cityTown.toLowerCase().includes(term))
-                );
+               const filtered = allData.filter(item =>
+                 (item.itiCode && item.itiCode.toLowerCase().includes(term)) ||
+                   (item.itiName && item.itiName.toLowerCase().includes(term)) ||
+                  (item.principalName && item.principalName.toLowerCase().includes(term)) ||
+                (item.email && item.email.toLowerCase().includes(term)) ||
+               (item.mobile && item.mobile.toLowerCase().includes(term)) ||
+              (item.address && item.address.toLowerCase().includes(term)) ||
+            (item.cityTown && item.cityTown.toLowerCase().includes(term))
+            );
                 renderTable(filtered);
             }
 
