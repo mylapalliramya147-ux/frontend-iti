@@ -181,13 +181,13 @@
                         <tr>
                             <td class="trade-code">${not empty row.trade_code ? row.trade_code : row.iti_code}</td>
                             <td class="trade-name">${not empty row.trade_name ? row.trade_name : row.iti_name}</td>
-                            <td class="stat-strength">${row.strength}</td>
-                            <td class="stat-fill">${row.fill}</td>
-                            <td class="stat-vacant">${row.vacant}</td>
+                            <td class="stat-strength">\${row.strength}</td>
+                            <td class="stat-fill">\${row.fill}</td>
+                            <td class="stat-vacant">\${row.vacant}</td>
                             <td class="stat-percentage">
                                 <c:choose>
                                     <c:when test="${not empty row['fill percentage']}">${row['fill percentage']}</c:when>
-                                    <c:otherwise>${row.fill_percentage}</c:otherwise>
+                                    <c:otherwise>\${row.fill_percentage}</c:otherwise>
                                 </c:choose>
                             </td>
                         </tr>
@@ -210,6 +210,7 @@
     </div>
 
     <script>
+
         function exportTableToExcel(tableID, filename = '') {
             var tableSelect = document.getElementById(tableID);
             var html = tableSelect.outerHTML;
@@ -223,6 +224,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+</script>
 </body>
 </html>

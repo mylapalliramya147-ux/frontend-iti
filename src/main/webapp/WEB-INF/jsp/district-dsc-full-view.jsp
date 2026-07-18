@@ -135,6 +135,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -332,7 +333,8 @@
                     alert('Failed to load selection options. Please ensure you are logged in and the backend is running.');
                 });
         });
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

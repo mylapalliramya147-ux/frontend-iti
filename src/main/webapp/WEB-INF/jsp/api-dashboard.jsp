@@ -99,6 +99,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -133,16 +134,16 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${empty row.distName ? '-' : row.distName}</td>
-                            <td class="num" style="color: #003366;">${empty row.total ? 0 : row.total}</td>
-                            <td class="num text-success">${empty row.success ? 0 : row.success}</td>
-                            <td class="num text-warning">${empty row.pendingSid ? 0 : row.pendingSid}</td>
-                            <td class="num text-primary">${empty row.verified ? 0 : row.verified}</td>
-                            <td class="num text-danger">${empty row.toBeVerified ? 0 : row.toBeVerified}</td>
-                            <td class="num">${empty row.toBeUpdated ? 0 : row.toBeUpdated}</td>
-                            <td class="num text-danger">${empty row.phoneDuplicateRecords ? 0 : row.phoneDuplicateRecords}</td>
-                            <td class="num text-danger">${empty row.aadharDuplicateRecords ? 0 : row.aadharDuplicateRecords}</td>
-                            <td class="num text-danger">${empty row.emailDuplicateRecords ? 0 : row.emailDuplicateRecords}</td>
+                            <td style="text-align: left;">\${row.distName || \'-\'}</td>
+                            <td class="num" style="color: #003366;">\${row.total || 0}</td>
+                            <td class="num text-success">\${row.success || 0}</td>
+                            <td class="num text-warning">\${row.pendingSid || 0}</td>
+                            <td class="num text-primary">\${row.verified || 0}</td>
+                            <td class="num text-danger">\${row.toBeVerified || 0}</td>
+                            <td class="num">\${row.toBeUpdated || 0}</td>
+                            <td class="num text-danger">\${row.phoneDuplicateRecords || 0}</td>
+                            <td class="num text-danger">\${row.aadharDuplicateRecords || 0}</td>
+                            <td class="num text-danger">\${row.emailDuplicateRecords || 0}</td>
                         `;
                         tbody.appendChild(tr);
                         totals.total += row.total || 0; totals.success += row.success || 0; totals.pendingSid += row.pendingSid || 0; totals.verified += row.verified || 0; totals.toBeVerified += row.toBeVerified || 0; totals.toBeUpdated += row.toBeUpdated || 0; totals.phoneDuplicateRecords += row.phoneDuplicateRecords || 0; totals.aadharDuplicateRecords += row.aadharDuplicateRecords || 0; totals.emailDuplicateRecords += row.emailDuplicateRecords || 0;
@@ -152,15 +153,15 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="1" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">${totals.total}</td>
-                        <td class="num text-success">${totals.success}</td>
-                        <td class="num text-warning">${totals.pendingSid}</td>
-                        <td class="num text-primary">${totals.verified}</td>
-                        <td class="num text-danger">${totals.toBeVerified}</td>
-                        <td class="num">${totals.toBeUpdated}</td>
-                        <td class="num text-danger">${totals.phoneDuplicateRecords}</td>
-                        <td class="num text-danger">${totals.aadharDuplicateRecords}</td>
-                        <td class="num text-danger">${totals.emailDuplicateRecords}</td>
+                        <td class="num">\${totals.total}</td>
+                        <td class="num text-success">\${totals.success}</td>
+                        <td class="num text-warning">\${totals.pendingSid}</td>
+                        <td class="num text-primary">\${totals.verified}</td>
+                        <td class="num text-danger">\${totals.toBeVerified}</td>
+                        <td class="num">\${totals.toBeUpdated}</td>
+                        <td class="num text-danger">\${totals.phoneDuplicateRecords}</td>
+                        <td class="num text-danger">\${totals.aadharDuplicateRecords}</td>
+                        <td class="num text-danger">\${totals.emailDuplicateRecords}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -174,7 +175,8 @@
                 console.error('Error:', error);
             });
         }
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

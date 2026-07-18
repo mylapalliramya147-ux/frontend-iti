@@ -302,10 +302,10 @@
                                         </c:if>
                                         <c:forEach items="${appliedItis}" var="iti">
                                             <tr>
-                                                <td>${iti.iti_code}</td>
-                                                <td style="text-align: left; padding-left: 15px;">${iti.iti_name}</td>
-                                                <td>${iti.phase}</td>
-                                                <td>${iti.admissions_year}</td>
+                                                <td>\${iti.iti_code}</td>
+                                                <td style="text-align: left; padding-left: 15px;">\${iti.iti_name}</td>
+                                                <td>\${iti.phase}</td>
+                                                <td>\${iti.admissions_year}</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

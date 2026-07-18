@@ -239,7 +239,7 @@
                     </style>
                 </head>
                 <body>
-                    <div class="main-title">Nodal Applicant Count Report - Phase \${phase} (\${year})</div>
+                    <div class="main-title">Nodal Applicant Count Report - Phase \${phase} (${year})</div>
                     
                     <div class="report-header">DISTRICTWISE GOVT & PVT</div>
                     \${document.getElementById('table1').outerHTML}

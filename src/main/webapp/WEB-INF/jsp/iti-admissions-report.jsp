@@ -220,10 +220,10 @@
                         <tbody style="font-size: 1.05rem;">
                             <c:forEach items="${reportData}" var="row">
                                 <tr style="border-bottom: 1px solid #e2e8f0;">
-                                    <td style="font-weight: 800; color: #1e293b;">${row.admission_number}</td>
-                                    <td class="text-start" style="padding-left: 35px; color: #003366; font-weight: 800;">${row.name}</td>
-                                    <td style="font-weight: 800; color: #1a4a72;">${row.ssc_regno}</td>
-                                    <td style="font-weight: 800; color: #64748b;">${row.year_of_admission}</td>
+                                    <td style="font-weight: 800; color: #1e293b;">\${row.admission_number}</td>
+                                    <td class="text-start" style="padding-left: 35px; color: #003366; font-weight: 800;">\${row.name}</td>
+                                    <td style="font-weight: 800; color: #1a4a72;">\${row.ssc_regno}</td>
+                                    <td style="font-weight: 800; color: #64748b;">\${row.year_of_admission}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -251,6 +251,7 @@
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script>
+
         const API = '${pageContext.request.contextPath}/nodal-report';
 
         async function fetchJSON(url) {
@@ -267,7 +268,7 @@
         async function loadDistricts() {
             const districts = await fetchJSON(API + '/api/districts');
             const sel = document.getElementById('dist_code');
-            const selectedDist = '${dist_code}';
+            const selectedDist = '\${dist_code}';
 
             districts.forEach(d => {
                 const o = document.createElement('option');
@@ -328,6 +329,7 @@
                 }, 100);
             }
         };
-    </script>
+    
+</script>
 </body>
 </html>

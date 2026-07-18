@@ -113,6 +113,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -164,12 +165,12 @@
 
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="font-weight: 600; color: #64748b;">${index + 1}</td>
-                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">${empty row.districtName ? '' : row.districtName}</td>
-                            <td class="fw-bold">${totalApp}</td>
-                            <td style="color: #10b981; font-weight: bold;">${approved}</td>
-                            <td style="color: #ef4444; font-weight: bold;">${rejected}</td>
-                            <td style="color: #f59e0b; font-weight: bold;">${unverified}</td>
+                            <td style="font-weight: 600; color: #64748b;">\${index + 1}</td>
+                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${row.districtName || \'\'}</td>
+                            <td class="fw-bold">\${totalApp}</td>
+                            <td style="color: #10b981; font-weight: bold;">\${approved}</td>
+                            <td style="color: #ef4444; font-weight: bold;">\${rejected}</td>
+                            <td style="color: #f59e0b; font-weight: bold;">\${unverified}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -210,7 +211,8 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

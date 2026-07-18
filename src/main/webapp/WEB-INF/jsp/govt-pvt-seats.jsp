@@ -119,13 +119,13 @@
                         <c:forEach items="${reportData}" var="row" varStatus="loop">
                             <tr style="border-bottom: 1px solid #e2e8f0;">
                                 <td style="font-weight: 600; color: #64748b;">${loop.index + 1}</td>
-                                <td style="font-weight: 800; color: #1e293b;">${row.iti_code}</td>
+                                <td style="font-weight: 800; color: #1e293b;">\${row.iti_code}</td>
                                 <td class="text-start" style="padding-left: 20px; font-weight: 800; color: #003366;">
-                                    ${row.iti_name}
+                                    \${row.iti_name}
                                 </td>
-                                <td style="font-weight: 800; color: #1a4a72;">${row.no_of_seats}</td>
-                                <td style="font-weight: 800; color: #1a4a72;">${row.fill}</td>
-                                <td style="font-weight: 900;" class="${row.vacant < 0 ? 'text-danger' : 'text-success'}">${row.vacant}</td>
+                                <td style="font-weight: 800; color: #1a4a72;">\${row.no_of_seats}</td>
+                                <td style="font-weight: 800; color: #1a4a72;">\${row.fill}</td>
+                                <td style="font-weight: 900;" class="\${row.vacant < 0 ? 'text-danger' : 'text-success'}">\${row.vacant}</td>
                             </tr>
                         </c:forEach>
                         
@@ -164,6 +164,7 @@
     </div>
 
     <script>
+
         function exportTableToExcel(tableID, filename = '') {
             var tableSelect = document.getElementById(tableID);
             var html = tableSelect.outerHTML;
@@ -177,6 +178,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+</script>
 </body>
 </html>

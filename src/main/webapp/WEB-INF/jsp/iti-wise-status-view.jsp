@@ -227,6 +227,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
+
         document.addEventListener('DOMContentLoaded', async () => {
             // Simplified: only year selection
         });
@@ -265,18 +266,18 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${empty row.distName ? '-' : row.distName}</td>
-                            <td style="text-align: left;">${empty row.itiName ? '-' : row.itiName}</td>
-                            <td>${empty row.itiCode ? '-' : row.itiCode}</td>
-                            <td class="num" style="color: #003366;">${empty row.total ? 0 : row.total}</td>
-                            <td class="num text-success">${empty row.success ? 0 : row.success}</td>
-                            <td class="num text-warning">${empty row.pendingSid ? 0 : row.pendingSid}</td>
-                            <td class="num text-primary">${empty row.verified ? 0 : row.verified}</td>
-                            <td class="num text-danger">${empty row.toBeVerified ? 0 : row.toBeVerified}</td>
-                            <td class="num">${empty row.toBeUpdated ? 0 : row.toBeUpdated}</td>
-                            <td class="num text-danger">${empty row.phoneDuplicateRecords ? 0 : row.phoneDuplicateRecords}</td>
-                            <td class="num text-danger">${empty row.emailDuplicateRecords ? 0 : row.emailDuplicateRecords}</td>
-                            <td class="num text-danger">${empty row.aadharDuplicateRecords ? 0 : row.aadharDuplicateRecords}</td>
+                            <td style="text-align: left;">\${row.distName || \'-\'}</td>
+                            <td style="text-align: left;">\${row.itiName || \'-\'}</td>
+                            <td>\${row.itiCode || \'-\'}</td>
+                            <td class="num" style="color: #003366;">\${row.total || 0}</td>
+                            <td class="num text-success">\${row.success || 0}</td>
+                            <td class="num text-warning">\${row.pendingSid || 0}</td>
+                            <td class="num text-primary">\${row.verified || 0}</td>
+                            <td class="num text-danger">\${row.toBeVerified || 0}</td>
+                            <td class="num">\${row.toBeUpdated || 0}</td>
+                            <td class="num text-danger">\${row.phoneDuplicateRecords || 0}</td>
+                            <td class="num text-danger">\${row.emailDuplicateRecords || 0}</td>
+                            <td class="num text-danger">\${row.aadharDuplicateRecords || 0}</td>
                         `;
                         tbody.appendChild(tr);
                         totals.total += row.total || 0; totals.success += row.success || 0; totals.pending_sid += row.pendingSid || 0; totals.verified += row.verified || 0; totals.to_be_verified += row.toBeVerified || 0; totals.to_be_updated += row.toBeUpdated || 0; totals.phone_duplicate_records += row.phoneDuplicateRecords || 0; totals.aadhar_duplicate_records += row.aadharDuplicateRecords || 0; totals.email_duplicate_records += row.emailDuplicateRecords || 0;
@@ -286,15 +287,15 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">${totals.total}</td>
-                        <td class="num">${totals.success}</td>
-                        <td class="num">${totals.pending_sid}</td>
-                        <td class="num">${totals.verified}</td>
-                        <td class="num">${totals.to_be_verified}</td>
-                        <td class="num">${totals.to_be_updated}</td>
-                        <td class="num">${totals.phone_duplicate_records}</td>
-                        <td class="num">${totals.email_duplicate_records}</td>
-                        <td class="num">${totals.aadhar_duplicate_records}</td>
+                        <td class="num">\${totals.total}</td>
+                        <td class="num">\${totals.success}</td>
+                        <td class="num">\${totals.pending_sid}</td>
+                        <td class="num">\${totals.verified}</td>
+                        <td class="num">\${totals.to_be_verified}</td>
+                        <td class="num">\${totals.to_be_updated}</td>
+                        <td class="num">\${totals.phone_duplicate_records}</td>
+                        <td class="num">\${totals.email_duplicate_records}</td>
+                        <td class="num">\${totals.aadhar_duplicate_records}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -320,6 +321,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+</script>
 </body>
 </html>

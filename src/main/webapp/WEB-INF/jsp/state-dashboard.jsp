@@ -95,6 +95,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -129,12 +130,12 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${empty row.distName ? '-' : row.distName}</td>
-                            <td>${empty row.itiCode ? '-' : row.itiCode}</td>
-                            <td style="text-align: left;">${empty row.itiName ? '-' : row.itiName}</td>
-                            <td class="num">${empty row.strength ? 0 : row.strength}</td>
-                            <td class="num">${empty row.strengthFill ? 0 : row.strengthFill}</td>
-                            <td class="num">${empty row.fillPercentage ? '0.00' : row.fillPercentage}</td>
+                            <td style="text-align: left;">\${row.distName || \'-\'}</td>
+                            <td>\${row.itiCode || \'-\'}</td>
+                            <td style="text-align: left;">\${row.itiName || \'-\'}</td>
+                            <td class="num">\${row.strength || 0}</td>
+                            <td class="num">\${row.strengthFill || 0}</td>
+                            <td class="num">\${row.fillPercentage || \'0.00\'}</td>
                         `;
                         tbody.appendChild(tr);
                         totalStrength += row.strength || 0;
@@ -145,9 +146,9 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">${totalStrength}</td>
-                        <td class="num">${totalFill}</td>
-                        <td class="num">${totalStrength > 0 ? (totalFill / totalStrength * 100).toFixed(2) : '0.00'}</td>
+                        <td class="num">\${totalStrength}</td>
+                        <td class="num">\${totalFill}</td>
+                        <td class="num">\${totalStrength > 0 ? (totalFill / totalStrength * 100).toFixed(2) : '0.00'}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -161,7 +162,8 @@
                 console.error('Error:', error);
             });
         }
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
