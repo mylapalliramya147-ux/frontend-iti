@@ -47,6 +47,13 @@
     </div>
 
     <script>
+
+
+
+
+
+
+
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
@@ -66,6 +73,13 @@
                 is_visible = false;
             }
         }
-    </script>
+    
+
+
+
+
+
+
+</script>
 </body>
 </html>

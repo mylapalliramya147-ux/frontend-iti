@@ -223,9 +223,16 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/api.js"></script>
     <script>
+
+
+
+
+
+
+
         function exportAllTables() {
-            const phase = '${phase}';
-            const year = '${year}';
+            const phase = '\${phase}';
+            const year = '\${year}';
             let combinedHtml = `
                 <html>
                 <head>
@@ -239,7 +246,7 @@
                     </style>
                 </head>
                 <body>
-                    <div class="main-title">Nodal Applicant Count Report - Phase \${phase} (${year})</div>
+                    <div class="main-title">Nodal Applicant Count Report - Phase \${phase} (\${year})</div>
                     
                     <div class="report-header">DISTRICTWISE GOVT & PVT</div>
                     \${document.getElementById('table1').outerHTML}
@@ -272,6 +279,13 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+
+
+
+
+
+
+</script>
 </body>
 </html>

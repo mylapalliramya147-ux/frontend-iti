@@ -183,6 +183,13 @@
     </div>
 
     <script>
+
+
+
+
+
+
+
         // Insert short current date dynamically like in screenshot
         document.addEventListener('DOMContentLoaded', () => {
             const dateSpan = document.getElementById('currentDate');
@@ -208,6 +215,13 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    </script>
+    
+
+
+
+
+
+
+</script>
 </body>
 </html>

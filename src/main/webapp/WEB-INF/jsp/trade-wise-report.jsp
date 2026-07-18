@@ -5,16 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Dashboard</title>
+    <title>Trade Wise Report</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <style>
-        .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
-        .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
+        .nodal-page-title { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
+        .nodal-page-title h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
         .nodal-report-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
-        .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
-        .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .nodal-card-header { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
+        .nodal-card-header i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
         .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
         .form-select-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; }
         .form-select-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
@@ -28,13 +28,13 @@
 </head>
 <body class="nodal-body">
     <%@ include file="header.jsp" %>
-    <div class="nodal-page-title-dashboard">
-        <h2 id="reportTitle">API Dashboard</h2>
+    <div class="nodal-page-title">
+        <h2>Trade Wise Report</h2>
     </div>
 
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
-            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;">
+            <div class="nodal-card-header" style="padding: 15px 25px;">
                 <i class="fas fa-filter me-2"></i> Select Year
             </div>
             <div class="p-4 bg-white rounded-bottom">
@@ -61,7 +61,7 @@
 
     <div class="loader-spinner" id="loader">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <p class="mt-3 fw-bold">Generating API Dashboard...</p>
+        <p class="mt-3 fw-bold">Generating Trade Wise Report...</p>
     </div>
 
     <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
@@ -79,16 +79,11 @@
                 <table class="table table-bordered table-sm table-hover text-center report-table" id="reportTable">
                     <thead>
                         <tr>
-                            <th>District</th>
-                            <th>Total</th>
-                            <th>Success</th>
-                            <th>Pending SID</th>
-                            <th>Verified</th>
-                            <th>To Be Verified</th>
-                            <th>To Be Updated</th>
-                            <th>Phone Duplicates</th>
-                            <th>Aadhar Duplicates</th>
-                            <th>Email Duplicates</th>
+                            <th>Trade Name</th>
+                            <th>Trade Code</th>
+                            <th>Total Strength</th>
+                            <th>Filled</th>
+                            <th>Vacant</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -99,11 +94,6 @@
     </div>
 
     <script>
-
-
-
-
-
 
 
 
@@ -119,7 +109,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('\${backendApiUrl}/api-dashboard?year=' + encodeURIComponent(year), {
+            fetch('\${backendApiUrl}/trade-wise-report?year=' + encodeURIComponent(year), {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -129,7 +119,7 @@
                 if(data.error) throw new Error(data.error);
 
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'API Dashboard (' + year + ')';
+                document.getElementById('reportTitle').innerText = 'Trade Wise Report (' + year + ')';
 
                 const tbody = document.getElementById('tableBody');
                 const tfoot = document.getElementById('tableFoot');
@@ -137,42 +127,33 @@
                 tfoot.innerHTML = '';
 
                 if (data.data && data.data.length > 0) {
-                    let totals = { total: 0, success: 0, pendingSid: 0, verified: 0, toBeVerified: 0, toBeUpdated: 0, phoneDuplicateRecords: 0, aadharDuplicateRecords: 0, emailDuplicateRecords: 0 };
+                    let totalStrength = 0, totalFilled = 0, totalVacant = 0;
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.distName || '-'}</td>
-                            <td class="num" style="color: #003366;">\${row.total || 0}</td>
-                            <td class="num text-success">\${row.success || 0}</td>
-                            <td class="num text-warning">\${row.pendingSid || 0}</td>
-                            <td class="num text-primary">\${row.verified || 0}</td>
-                            <td class="num text-danger">\${row.toBeVerified || 0}</td>
-                            <td class="num">\${row.toBeUpdated || 0}</td>
-                            <td class="num text-danger">\${row.phoneDuplicateRecords || 0}</td>
-                            <td class="num text-danger">\${row.aadharDuplicateRecords || 0}</td>
-                            <td class="num text-danger">\${row.emailDuplicateRecords || 0}</td>
+                            <td style="text-align: left;">\\${row.tradeName || '-'}</td>
+                            <td>\\${row.tradeCode || '-'}</td>
+                            <td class="num">\\${row.totalStrength || 0}</td>
+                            <td class="num text-success">\\${row.filled || 0}</td>
+                            <td class="num text-danger">\\${row.vacant || 0}</td>
                         `;
                         tbody.appendChild(tr);
-                        totals.total += row.total || 0; totals.success += row.success || 0; totals.pendingSid += row.pendingSid || 0; totals.verified += row.verified || 0; totals.toBeVerified += row.toBeVerified || 0; totals.toBeUpdated += row.toBeUpdated || 0; totals.phoneDuplicateRecords += row.phoneDuplicateRecords || 0; totals.aadharDuplicateRecords += row.aadharDuplicateRecords || 0; totals.emailDuplicateRecords += row.emailDuplicateRecords || 0;
+                        totalStrength += row.totalStrength || 0;
+                        totalFilled += row.filled || 0;
+                        totalVacant += row.vacant || 0;
                     });
 
                     const ft = document.createElement('tr');
                     ft.className = 'total-row';
                     ft.innerHTML = `
-                        <td colspan="1" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">\${totals.total}</td>
-                        <td class="num text-success">\${totals.success}</td>
-                        <td class="num text-warning">\${totals.pendingSid}</td>
-                        <td class="num text-primary">\${totals.verified}</td>
-                        <td class="num text-danger">\${totals.toBeVerified}</td>
-                        <td class="num">\${totals.toBeUpdated}</td>
-                        <td class="num text-danger">\${totals.phoneDuplicateRecords}</td>
-                        <td class="num text-danger">\${totals.aadharDuplicateRecords}</td>
-                        <td class="num text-danger">\${totals.emailDuplicateRecords}</td>
+                        <td colspan="2" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
+                        <td class="num">\${totalStrength}</td>
+                        <td class="num text-success">\${totalFilled}</td>
+                        <td class="num text-danger">\${totalVacant}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
                 }
             })
             .catch(error => {
@@ -183,11 +164,6 @@
             });
         }
     
-
-
-
-
-
 
 
 </script>

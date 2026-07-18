@@ -196,6 +196,13 @@
     </footer>
 
     <script>
+
+
+
+
+
+
+
         document.addEventListener("DOMContentLoaded", function () {
             let allData = [];
             const tableBody = document.getElementById("tableBody");
@@ -205,7 +212,7 @@
             const rowCount = document.getElementById("rowCount");
 
             // Fetch Data from API
-            fetch("${pageContext.request.contextPath}/api/seats-open", {
+            fetch("\${pageContext.request.contextPath}/api/seats-open", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" }
             })
@@ -295,7 +302,14 @@
                 }
             });
         });
-    </script>
+    
+
+
+
+
+
+
+</script>
 </body>
 
 </html>

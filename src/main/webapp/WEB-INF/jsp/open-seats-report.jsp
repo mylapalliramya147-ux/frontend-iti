@@ -159,6 +159,13 @@
 
     <script>
 
+
+
+
+
+
+
+
         function exportTableToExcel(tableID, filename = '') {
             var tableSelect = document.getElementById(tableID);
             var html = tableSelect.outerHTML;
@@ -173,6 +180,13 @@
             URL.revokeObjectURL(url);
         }
     
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

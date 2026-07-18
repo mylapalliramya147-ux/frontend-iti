@@ -254,6 +254,13 @@
             <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 
             <script>
+
+
+
+
+
+
+
                 $(document).ready(function () {
                     loadItis();
 
@@ -477,7 +484,14 @@
                     if (show) $('#loader').show();
                     else $('#loader').hide();
                 }
-            </script>
+            
+
+
+
+
+
+
+</script>
         </body>
 
         </html>

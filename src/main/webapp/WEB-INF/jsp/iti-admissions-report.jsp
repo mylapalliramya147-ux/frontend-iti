@@ -252,7 +252,14 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script>
 
-        const API = '${pageContext.request.contextPath}/nodal-report';
+
+
+
+
+
+
+
+        const API = '\${pageContext.request.contextPath}/nodal-report';
 
         async function fetchJSON(url) {
             try {
@@ -288,7 +295,7 @@
         async function loadMetadata() {
             const data = await fetchJSON(API + '/api/metadata');
             const yearSel = document.getElementById('year');
-            const selectedYear = '${year}';
+            const selectedYear = '\${year}';
 
             if (data.years && data.years.length > 0) {
                 data.years.forEach(y => {
@@ -330,6 +337,13 @@
             }
         };
     
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

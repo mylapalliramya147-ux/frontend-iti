@@ -96,6 +96,13 @@
 
     <script>
 
+
+
+
+
+
+
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -108,7 +115,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/state-dashboard?year=' + encodeURIComponent(year), {
+            fetch('\${backendApiUrl}/state-dashboard?year=' + encodeURIComponent(year), {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -130,12 +137,12 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.distName || \'-\'}</td>
-                            <td>\${row.itiCode || \'-\'}</td>
-                            <td style="text-align: left;">\${row.itiName || \'-\'}</td>
+                            <td style="text-align: left;">\${row.distName || '-'}</td>
+                            <td>\${row.itiCode || '-'}</td>
+                            <td style="text-align: left;">\${row.itiName || '-'}</td>
                             <td class="num">\${row.strength || 0}</td>
                             <td class="num">\${row.strengthFill || 0}</td>
-                            <td class="num">\${row.fillPercentage || \'0.00\'}</td>
+                            <td class="num">\${row.fillPercentage || '0.00'}</td>
                         `;
                         tbody.appendChild(tr);
                         totalStrength += row.strength || 0;
@@ -163,6 +170,13 @@
             });
         }
     
+
+
+
+
+
+
+
 </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

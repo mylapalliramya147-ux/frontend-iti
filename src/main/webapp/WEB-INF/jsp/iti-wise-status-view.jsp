@@ -228,6 +228,13 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
 
+
+
+
+
+
+
+
         document.addEventListener('DOMContentLoaded', async () => {
             // Simplified: only year selection
         });
@@ -244,7 +251,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All', {
+            fetch('\${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -266,9 +273,9 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.distName || \'-\'}</td>
-                            <td style="text-align: left;">\${row.itiName || \'-\'}</td>
-                            <td>\${row.itiCode || \'-\'}</td>
+                            <td style="text-align: left;">\${row.distName || '-'}</td>
+                            <td style="text-align: left;">\${row.itiName || '-'}</td>
+                            <td>\${row.itiCode || '-'}</td>
                             <td class="num" style="color: #003366;">\${row.total || 0}</td>
                             <td class="num text-success">\${row.success || 0}</td>
                             <td class="num text-warning">\${row.pendingSid || 0}</td>
@@ -322,6 +329,13 @@
             URL.revokeObjectURL(url);
         }
     
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

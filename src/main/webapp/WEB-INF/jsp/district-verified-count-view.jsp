@@ -114,6 +114,13 @@
 
     <script>
 
+
+
+
+
+
+
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -128,7 +135,7 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
+            fetch('\${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -166,7 +173,7 @@
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
                             <td style="font-weight: 600; color: #64748b;">\${index + 1}</td>
-                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${row.districtName || \'\'}</td>
+                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${row.districtName || ''}</td>
                             <td class="fw-bold">\${totalApp}</td>
                             <td style="color: #10b981; font-weight: bold;">\${approved}</td>
                             <td style="color: #ef4444; font-weight: bold;">\${rejected}</td>
@@ -212,6 +219,13 @@
             URL.revokeObjectURL(url);
         }
     
+
+
+
+
+
+
+
 </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

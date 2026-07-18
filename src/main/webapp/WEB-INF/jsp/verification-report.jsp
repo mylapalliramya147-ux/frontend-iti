@@ -300,6 +300,13 @@
     </div>
 
     <script>
+
+
+
+
+
+
+
         // Global State
         window.unverifiedCandidates = [];
         window.currentCandidateIndex = -1;
@@ -624,6 +631,13 @@
             window.print();
         });
 
-    </script>
+    
+
+
+
+
+
+
+</script>
 </body>
 </html>

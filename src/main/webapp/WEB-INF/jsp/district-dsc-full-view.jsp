@@ -136,6 +136,13 @@
 
     <script>
 
+
+
+
+
+
+
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -152,7 +159,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/dsc-full?distCode=ALL&itiCode=' + encodeURIComponent(iti_code) + '&tradeCode=' + encodeURIComponent(trade_code) + '&phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&modeAdm=' + encodeURIComponent(mode_adm), {
+            fetch('\${backendApiUrl}/dsc-full?distCode=ALL&itiCode=' + encodeURIComponent(iti_code) + '&tradeCode=' + encodeURIComponent(trade_code) + '&phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&modeAdm=' + encodeURIComponent(mode_adm), {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -251,7 +258,7 @@
             } catch (e) {
                 console.warn('localStorage not available:', e);
             }
-            const url = '${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
+            const url = '\${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
             
             fetch(url, { credentials: 'include' })
                 .then(response => {
@@ -294,7 +301,7 @@
                             const selectedIti = itiSelect.value;
                             tradeSelect.innerHTML = '<option value="">Select Trade</option>';
                             
-                            let fetchUrl = '${backendApiUrl}/dsc-options?dist_code=' + localDistCode;
+                            let fetchUrl = '\${backendApiUrl}/dsc-options?dist_code=' + localDistCode;
                             if (selectedIti) {
                                 fetchUrl += '&iti_code=' + selectedIti;
                             }
@@ -334,6 +341,13 @@
                 });
         });
     
+
+
+
+
+
+
+
 </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

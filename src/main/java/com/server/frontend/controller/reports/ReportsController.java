@@ -117,6 +117,16 @@ public class ReportsController {
         return "api-dashboard";
     }
 
+    @GetMapping("/reports/today-schedule")
+    public String todaySchedule() {
+        return "today-schedule";
+    }
+
+    @GetMapping("/reports/trade-wise-report")
+    public String tradeWiseReport() {
+        return "trade-wise-report";
+    }
+
     @GetMapping("/reports/test-all")
     public String testAllReports() {
         return "reports-test";
