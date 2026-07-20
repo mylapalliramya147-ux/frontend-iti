@@ -80,8 +80,8 @@
 </head>
 <body class="bg-light">
     <!-- Header Content -->
-    <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="container form-container">
         <div class="outer-border shadow-lg">
@@ -143,7 +143,7 @@
 
     <!-- Global Footer -->
     <footer>
-        <jsp:include page="/WEB-INF/footer.jsp" />
+        <jsp:include page="/WEB-INF/reports/footer.jsp" />
     </footer>
 
     <script>
