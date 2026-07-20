@@ -54,6 +54,7 @@
 
     <script>
 
+
         document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.getElementById('tableBody');
             const tfoot = document.getElementById('tableFoot');
@@ -61,7 +62,7 @@
 
             loader.style.display = 'block';
 
-            fetch('\${backendApiUrl}/district-schedule', {
+            fetch('${backendApiUrl}/district-schedule', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => {
@@ -108,6 +109,7 @@
             });
         });
     
+
 </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

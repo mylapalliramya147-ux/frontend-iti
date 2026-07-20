@@ -47,6 +47,7 @@
     </div>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.getElementById('tableBody');
             const tfoot = document.getElementById('tableFoot');
@@ -70,8 +71,8 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td>${row.code || '-'}</td>
-                            <td style="text-align: left;">${row.name || '-'}</td>
+                            <td>\${row.code || '-'}</td>
+                            <td style="text-align: left;">\${row.name || '-'}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -80,7 +81,7 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="2" style="text-align: center; padding: 15px; font-weight: bold;">
-                            Total Districts: ${data.data.length}
+                            Total Districts: \${data.data.length}
                         </td>
                     `;
                     tfoot.appendChild(ft);
@@ -94,7 +95,8 @@
                 console.error('Error:', error);
             });
         });
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

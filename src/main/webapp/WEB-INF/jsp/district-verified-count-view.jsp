@@ -122,6 +122,7 @@
 
 
 
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -220,6 +221,7 @@
             URL.revokeObjectURL(url);
         }
     
+
 
 
 

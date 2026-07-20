@@ -29,7 +29,7 @@
 <body class="nodal-body">
     <%@ include file="header.jsp" %>
     <div class="nodal-page-title">
-        <h2>DistWise Admitted Seats Abstract</h2>
+        <h2 id="reportTitle">DistWise Admitted Seats Abstract</h2>
     </div>
 
     <div class="container mt-4" id="selectionView">
@@ -94,6 +94,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -128,11 +129,11 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${row.distName || '-'}</td>
-                            <td class="num">${row.totalStrength || 0}</td>
-                            <td class="num text-success">${row.filled || 0}</td>
-                            <td class="num text-danger">${row.vacant || 0}</td>
-                            <td class="num">${row.fillPercentage != null ? row.fillPercentage.toFixed(2) : '0.00'}</td>
+                            <td style="text-align: left;">\${row.distName || '-'}</td>
+                            <td class="num">\${row.totalStrength || 0}</td>
+                            <td class="num text-success">\${row.filled || 0}</td>
+                            <td class="num text-danger">\${row.vacant || 0}</td>
+                            <td class="num">\${row.fillPercentage != null ? row.fillPercentage.toFixed(2) : '0.00'}</td>
                         `;
                         tbody.appendChild(tr);
                         totalStrength += row.totalStrength || 0;
@@ -143,10 +144,10 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="1" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">${totalStrength}</td>
-                        <td class="num text-success">${totalFill}</td>
-                        <td class="num text-danger">${totalStrength - totalFill}</td>
-                        <td class="num">${totalStrength > 0 ? (totalFill / totalStrength * 100).toFixed(2) : '0.00'}</td>
+                        <td class="num">\${totalStrength}</td>
+                        <td class="num text-success">\${totalFill}</td>
+                        <td class="num text-danger">\${totalStrength - totalFill}</td>
+                        <td class="num">\${totalStrength > 0 ? (totalFill / totalStrength * 100).toFixed(2) : '0.00'}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -160,7 +161,8 @@
                 console.error('Error:', error);
             });
         }
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

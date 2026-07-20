@@ -29,7 +29,7 @@
 <body class="nodal-body">
     <%@ include file="header.jsp" %>
     <div class="nodal-page-title">
-        <h2>TradeWise Vacant Position</h2>
+        <h2 id="reportTitle">TradeWise Vacant Position</h2>
     </div>
 
     <div class="container mt-4" id="selectionView">
@@ -92,6 +92,7 @@
     </div>
 
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -126,9 +127,9 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">${row.tradeName || '-'}</td>
-                            <td>${row.tradeCode || '-'}</td>
-                            <td class="num text-danger">${row.vacantPosition != null ? row.vacantPosition : 0}</td>
+                            <td style="text-align: left;">\${row.tradeName || '-'}</td>
+                            <td>\${row.tradeCode || '-'}</td>
+                            <td class="num text-danger">\${row.vacantPosition != null ? row.vacantPosition : 0}</td>
                         `;
                         tbody.appendChild(tr);
                         totalVacant += row.vacantPosition || 0;
@@ -138,7 +139,7 @@
                     ft.className = 'total-row';
                     ft.innerHTML = `
                         <td colspan="2" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num text-danger">${totalVacant}</td>
+                        <td class="num text-danger">\${totalVacant}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -152,7 +153,8 @@
                 console.error('Error:', error);
             });
         }
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

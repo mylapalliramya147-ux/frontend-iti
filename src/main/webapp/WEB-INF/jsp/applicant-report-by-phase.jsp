@@ -233,6 +233,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -306,6 +307,7 @@
                 phaseSelect.value = "1";
             }
         });
-    </script>
+    
+</script>
 </body>
 </html>

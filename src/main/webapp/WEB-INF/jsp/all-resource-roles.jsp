@@ -30,9 +30,12 @@
                 <table class="table table-bordered table-sm table-hover text-center report-table" id="reportTable">
                     <thead>
                         <tr>
-                            <th>Role ID</th>
                             <th>Role Name</th>
-                            <th>Description</th>
+                            <th>User Name</th>
+                            <th>District Name</th>
+                            <th>ITI Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -48,6 +51,7 @@
     </div>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.getElementById('tableBody');
             const tfoot = document.getElementById('tableFoot');
@@ -71,9 +75,12 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td>${row.roleId || '-'}</td>
-                            <td style="text-align: left;">${row.roleName || '-'}</td>
-                            <td style="text-align: left;">${row.description || '-'}</td>
+                            <td style="text-align: left;">\${row.roleName || '-'}</td>
+                            <td style="text-align: left;">\${row.userName || '-'}</td>
+                            <td style="text-align: left;">\${row.distName || '-'}</td>
+                            <td style="text-align: left;">\${row.itiName || '-'}</td>
+                            <td>\${row.mobile || '-'}</td>
+                            <td style="text-align: left;">\${row.email || '-'}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -81,13 +88,13 @@
                     const ft = document.createElement('tr');
                     ft.className = 'total-row';
                     ft.innerHTML = `
-                        <td colspan="3" style="text-align: center; padding: 15px; font-weight: bold;">
-                            Total Roles: ${data.data.length}
+                        <td colspan="6" style="text-align: center; padding: 15px; font-weight: bold;">
+                            Total Records: \${data.data.length}
                         </td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
                 }
             })
             .catch(error => {
@@ -96,7 +103,8 @@
                 console.error('Error:', error);
             });
         });
-    </script>
+    
+</script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -120,6 +120,54 @@
             if (localDistCode) {
                 document.getElementById('distCode').value = localDistCode;
             }
+            
+            fetch('${backendApiUrl}/trade-display/districts', {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const distSelect = document.getElementById('distCode');
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(dist => {
+                        const option = document.createElement('option');
+                        option.value = dist.code;
+                        option.textContent = dist.name;
+                        distSelect.appendChild(option);
+                    });
+                    if (localDistCode) {
+                        distSelect.value = localDistCode;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading districts:', error);
+            });
+        });
+        
+        document.getElementById('distCode').addEventListener('change', function() {
+            const distCode = this.value;
+            const itiSelect = document.getElementById('itiCode');
+            itiSelect.innerHTML = '<option value="All">All ITIs</option>';
+            
+            if (!distCode) return;
+            
+            fetch('${backendApiUrl}/dsc-options?dist_code=' + encodeURIComponent(distCode), {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.itis && data.itis.length > 0) {
+                    data.itis.forEach(iti => {
+                        const option = document.createElement('option');
+                        option.value = iti.iti_code;
+                        option.textContent = iti.iti_code + ' - ' + iti.iti_name;
+                        itiSelect.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error loading ITIs:', error);
+            });
         });
     
 
