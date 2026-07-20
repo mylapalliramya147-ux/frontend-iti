@@ -33,7 +33,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+<<<<<<< HEAD
 			<artifactId>spring-boot-starter-web</artifactId>
+=======
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+>>>>>>> 323130512ef7dc9c2a7cd70b91c4419daeda0a1e
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -46,8 +54,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-    		<groupId>org.glassfish.web</groupId>
-    		<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
