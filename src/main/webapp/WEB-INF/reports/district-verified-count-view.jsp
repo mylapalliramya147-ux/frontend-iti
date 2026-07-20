@@ -127,7 +127,7 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('http://10.72.4.135:5051/reports/verified-application-count', { credentials: 'include',
+            fetch('${backendApiUrl}/verified-application-count', { credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',

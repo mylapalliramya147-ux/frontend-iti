@@ -58,4 +58,13 @@ public class ReportsController {
         return "reports/iti-student-list-view";
     }
 
+    @GetMapping("/reports")
+    public String reportsDashboard() {
+        return "reports/reports";
+    }
+
+    @GetMapping("/api-docs")
+    public String apiDocs() {
+        return "reports/swagger";
+    }
 }
