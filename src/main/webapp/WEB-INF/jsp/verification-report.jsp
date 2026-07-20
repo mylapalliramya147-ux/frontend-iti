@@ -307,6 +307,7 @@
 
 
 
+
         // Global State
         window.unverifiedCandidates = [];
         window.currentCandidateIndex = -1;
@@ -632,6 +633,7 @@
         });
 
     
+
 
 
 

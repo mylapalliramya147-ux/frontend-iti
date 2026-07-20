@@ -121,6 +121,7 @@
 
 
 
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -135,7 +136,7 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('\${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
+            fetch('${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -160,10 +161,10 @@
 
                 if (data.data && data.data.length > 0) {
                     data.data.forEach((row, index) => {
-                        const totalApp = parseInt(row.totalApplications) || 0;
-                        const approved = parseInt(row.approved) || 0;
-                        const rejected = parseInt(row.rejected) || 0;
-                        const unverified = parseInt(row.unverified) || 0;
+                        const totalApp = parseInt(row['Total Applications']) || 0;
+                        const approved = parseInt(row['Approved']) || 0;
+                        const rejected = parseInt(row['Rejected']) || 0;
+                        const unverified = parseInt(row['Unverified']) || 0;
 
                         gTotal += totalApp;
                         gApproved += approved;
@@ -173,7 +174,7 @@
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
                             <td style="font-weight: 600; color: #64748b;">\${index + 1}</td>
-                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${row.districtName || ''}</td>
+                            <td style="text-align: left; padding-left: 20px; font-weight: 600;">\${row['District Name'] || ''}</td>
                             <td class="fw-bold">\${totalApp}</td>
                             <td style="color: #10b981; font-weight: bold;">\${approved}</td>
                             <td style="color: #ef4444; font-weight: bold;">\${rejected}</td>
@@ -219,6 +220,7 @@
             URL.revokeObjectURL(url);
         }
     
+
 
 
 

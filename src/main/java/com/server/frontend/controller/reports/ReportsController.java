@@ -12,6 +12,11 @@ public class ReportsController {
         return "redirect:/reports/test-all";
     }
 
+    @GetMapping("/reports/applicant-report-by-phase")
+    public String applicantReportByPhase() {
+        return "applicant-report-by-phase";
+    }
+
     @GetMapping("/reports/admission-report")
     public String admissionReport() {
         return "admission_report";
@@ -32,11 +37,6 @@ public class ReportsController {
         return "district-caste-wise-view";
     }
 
-    @GetMapping("/reports/district-iti-wise-year")
-    public String districtItiWiseYear() {
-        return "district-iti-wise-year-view";
-    }
-
     @GetMapping("/reports/district-permitted-shift")
     public String districtPermittedShift() {
         return "district-permitted-shift-view";
@@ -45,16 +45,6 @@ public class ReportsController {
     @GetMapping("/reports/district-verified-count")
     public String districtVerifiedCount() {
         return "district-verified-count-view";
-    }
-
-    @GetMapping("/reports/iti-wise-status-view")
-    public String itiWiseStatusView() {
-        return "iti-wise-status-view";
-    }
-
-    @GetMapping("/reports/iti-student-list-view")
-    public String itiStudentListView() {
-        return "iti-student-list-view";
     }
 
     @GetMapping("/reports/phase-wise-report")
@@ -77,11 +67,6 @@ public class ReportsController {
         return "govt-pvt-seats";
     }
 
-    @GetMapping("/reports/iti-admissions-report")
-    public String itiAdmissionsReport() {
-        return "iti-admissions-report";
-    }
-
     @GetMapping("/reports/student-registration-details")
     public String studentRegistrationDetails() {
         return "student-registration-details";
@@ -90,11 +75,6 @@ public class ReportsController {
     @GetMapping("/reports/applicant-report-state-wise")
     public String applicantReportStateWise() {
         return "applicant-report-state-wise";
-    }
-
-    @GetMapping("/reports/open-seats-abstract")
-    public String openSeatsAbstract() {
-        return "open-seats-abstract";
     }
 
     @GetMapping("/reports/district-wise-application-count")
@@ -127,6 +107,36 @@ public class ReportsController {
         return "trade-wise-report";
     }
 
+    @GetMapping("/reports/district-schedule")
+    public String districtSchedule() {
+        return "district-schedule";
+    }
+
+    @GetMapping("/reports/all-resource-roles")
+    public String allResourceRoles() {
+        return "all-resource-roles";
+    }
+
+    @GetMapping("/reports/strength-filled-seats")
+    public String strengthFilledSeats() {
+        return "strength-filled-seats";
+    }
+
+    @GetMapping("/reports/open-seats")
+    public String openSeats() {
+        return "open-seats";
+    }
+
+    @GetMapping("/reports/trade-vacant-positions")
+    public String tradeVacantPositions() {
+        return "trade-vacant-positions";
+    }
+
+    @GetMapping("/reports/trade-display/districts")
+    public String tradeDisplayDistricts() {
+        return "trade-display-districts";
+    }
+
     @GetMapping("/reports/test-all")
     public String testAllReports() {
         return "reports-test";
@@ -135,5 +145,15 @@ public class ReportsController {
     @GetMapping("/reports/api-docs")
     public String apiDocs() {
         return "swagger";
+    }
+
+    @GetMapping("/reports/about-strive")
+    public String aboutStrive() {
+        return "aboutstrive";
+    }
+
+    @GetMapping("/reports/disclosure-management")
+    public String disclosureManagement() {
+        return "disclosuremanagement";
     }
 }

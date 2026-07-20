@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Wise Report</title>
+    <title>DistWise Admitted Seats Abstract</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
@@ -29,7 +29,7 @@
 <body class="nodal-body">
     <%@ include file="header.jsp" %>
     <div class="nodal-page-title">
-        <h2 id="reportTitle">Trade Wise Report</h2>
+        <h2>DistWise Admitted Seats Abstract</h2>
     </div>
 
     <div class="container mt-4" id="selectionView">
@@ -61,7 +61,7 @@
 
     <div class="loader-spinner" id="loader">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <p class="mt-3 fw-bold">Generating Trade Wise Report...</p>
+        <p class="mt-3 fw-bold">Generating DistWise Admitted Seats Abstract...</p>
     </div>
 
     <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
@@ -79,11 +79,11 @@
                 <table class="table table-bordered table-sm table-hover text-center report-table" id="reportTable">
                     <thead>
                         <tr>
-                            <th>Trade Name</th>
-                            <th>Trade Code</th>
+                            <th>District</th>
                             <th>Total Strength</th>
                             <th>Filled</th>
                             <th>Vacant</th>
+                            <th>Fill %</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -94,10 +94,6 @@
     </div>
 
     <script>
-
-
-
-
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -110,7 +106,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/trade-wise-report?year=' + encodeURIComponent(year), {
+            fetch('${backendApiUrl}/strength-filled-seats?year=' + encodeURIComponent(year), {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -120,7 +116,7 @@
                 if(data.error) throw new Error(data.error);
 
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Trade Wise Report (' + year + ')';
+                document.getElementById('reportTitle').innerText = 'DistWise Admitted Seats Abstract (' + year + ')';
 
                 const tbody = document.getElementById('tableBody');
                 const tfoot = document.getElementById('tableFoot');
@@ -128,29 +124,29 @@
                 tfoot.innerHTML = '';
 
                 if (data.data && data.data.length > 0) {
-                    let totalStrength = 0, totalFilled = 0, totalVacant = 0;
+                    let totalStrength = 0, totalFill = 0;
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.tradeName || '-'}</td>
-                            <td>\${row.tradeCode || '-'}</td>
-                            <td class="num">\${row.totalStrength || 0}</td>
-                            <td class="num text-success">\${row.filled || 0}</td>
-                            <td class="num text-danger">\${row.vacant || 0}</td>
+                            <td style="text-align: left;">${row.distName || '-'}</td>
+                            <td class="num">${row.totalStrength || 0}</td>
+                            <td class="num text-success">${row.filled || 0}</td>
+                            <td class="num text-danger">${row.vacant || 0}</td>
+                            <td class="num">${row.fillPercentage != null ? row.fillPercentage.toFixed(2) : '0.00'}</td>
                         `;
                         tbody.appendChild(tr);
                         totalStrength += row.totalStrength || 0;
-                        totalFilled += row.filled || 0;
-                        totalVacant += row.vacant || 0;
+                        totalFill += row.filled || 0;
                     });
 
                     const ft = document.createElement('tr');
                     ft.className = 'total-row';
                     ft.innerHTML = `
-                        <td colspan="2" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
-                        <td class="num">\${totalStrength}</td>
-                        <td class="num text-success">\${totalFilled}</td>
-                        <td class="num text-danger">\${totalVacant}</td>
+                        <td colspan="1" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
+                        <td class="num">${totalStrength}</td>
+                        <td class="num text-success">${totalFill}</td>
+                        <td class="num text-danger">${totalStrength - totalFill}</td>
+                        <td class="num">${totalStrength > 0 ? (totalFill / totalStrength * 100).toFixed(2) : '0.00'}</td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
@@ -164,11 +160,7 @@
                 console.error('Error:', error);
             });
         }
-    
-
-
-
-</script>
+    </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Seats Abstract | ITI Admissions</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=12">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* DASHBOARD UI OVERRIDES */
         .nodal-dashboard-navbar {
@@ -121,14 +121,14 @@
                             <tr style="border-bottom: 1px solid #e2e8f0;">
                                 <td class="text-secondary" style="font-weight: 600;">${loop.index + 1}</td>
                                 <td class="text-start" style="padding-left: 35px;">
-                                    <a href="${pageContext.request.contextPath}/nodal-report/reports/open-seats-college?year=${year}&dist_code=\${row.dist_code}" 
+                                    <a href="${pageContext.request.contextPath}/nodal-report/reports/open-seats-college?year=${year}&dist_code=${row.dist_code}" 
                                        class="text-decoration-none" style="color: #003366; font-weight: 800; font-size: 1.05rem;">
-                                        \${row.dist_name}
+                                        ${row.dist_name}
                                     </a>
                                 </td>
-                                <td style="font-weight: 800; color: #1e293b;">\${row.no_of_seats}</td>
-                                <td style="font-weight: 800; color: #1a4a72;">\${row.fill}</td>
-                                <td style="font-weight: 800;" class="\${row.vacant < 0 ? 'text-danger' : 'text-success'}">\${row.vacant}</td>
+                                <td style="font-weight: 800; color: #1e293b;">${row.no_of_seats}</td>
+                                <td style="font-weight: 800; color: #1a4a72;">${row.fill}</td>
+                                <td style="font-weight: 800;" class="${row.vacant < 0 ? 'text-danger' : 'text-success'}">${row.vacant}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -158,14 +158,6 @@
     </div>
 
     <script>
-
-
-
-
-
-
-
-
         function exportTableToExcel(tableID, filename = '') {
             var tableSelect = document.getElementById(tableID);
             var html = tableSelect.outerHTML;
@@ -179,14 +171,6 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    
-
-
-
-
-
-
-
-</script>
+    </script>
 </body>
 </html>

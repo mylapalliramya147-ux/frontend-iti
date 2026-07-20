@@ -79,13 +79,14 @@
 
 
 
+
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('\${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=All&gender=All', {
+            fetch('${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=All&gender=All', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -113,6 +114,7 @@
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
     
+
 
 
 

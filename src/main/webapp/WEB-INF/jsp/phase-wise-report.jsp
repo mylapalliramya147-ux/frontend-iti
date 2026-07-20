@@ -190,6 +190,7 @@
 
 
 
+
         // Insert short current date dynamically like in screenshot
         document.addEventListener('DOMContentLoaded', () => {
             const dateSpan = document.getElementById('currentDate');
@@ -216,6 +217,7 @@
             URL.revokeObjectURL(url);
         }
     
+
 
 
 

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today Schedule - ITI Admission</title>
+    <title>All Resource Role</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
@@ -21,7 +21,7 @@
 <body class="nodal-body">
     <%@ include file="header.jsp" %>
     <div class="nodal-page-title">
-        <h2 id="reportTitle">Today Schedule - ITI Admission</h2>
+        <h2>All Resource Role</h2>
     </div>
 
     <div class="container mt-4">
@@ -30,12 +30,9 @@
                 <table class="table table-bordered table-sm table-hover text-center report-table" id="reportTable">
                     <thead>
                         <tr>
-                            <th>District</th>
-                            <th>ITI Name</th>
-                            <th>Merit From</th>
-                            <th>Merit To</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>Role ID</th>
+                            <th>Role Name</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -47,13 +44,10 @@
 
     <div class="loader-spinner" id="loader">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <p class="mt-3 fw-bold">Loading Today Schedule...</p>
+        <p class="mt-3 fw-bold">Loading All Resource Roles...</p>
     </div>
 
     <script>
-
-
-
         document.addEventListener('DOMContentLoaded', () => {
             const tbody = document.getElementById('tableBody');
             const tfoot = document.getElementById('tableFoot');
@@ -61,7 +55,7 @@
 
             loader.style.display = 'block';
 
-            fetch('${backendApiUrl}/today-schedule', {
+            fetch('${backendApiUrl}/all-resource-roles', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => {
@@ -77,12 +71,9 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="text-align: left;">\${row.distName || '-'}</td>
-                            <td style="text-align: left;">\${row.itiName || '-'}</td>
-                            <td>\${row.meritFrom != null ? row.meritFrom : '-'}</td>
-                            <td>\${row.meritTo != null ? row.meritTo : '-'}</td>
-                            <td>\${row.calDate || '-'}</td>
-                            <td>\${row.calTime || '-'}</td>
+                            <td>${row.roleId || '-'}</td>
+                            <td style="text-align: left;">${row.roleName || '-'}</td>
+                            <td style="text-align: left;">${row.description || '-'}</td>
                         `;
                         tbody.appendChild(tr);
                     });
@@ -90,13 +81,13 @@
                     const ft = document.createElement('tr');
                     ft.className = 'total-row';
                     ft.innerHTML = `
-                        <td colspan="6" style="text-align: center; padding: 15px; font-weight: bold;">
-                            Total Records: \${data.data.length}
+                        <td colspan="3" style="text-align: center; padding: 15px; font-weight: bold;">
+                            Total Roles: ${data.data.length}
                         </td>
                     `;
                     tfoot.appendChild(ft);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No schedule found for today.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
                 }
             })
             .catch(error => {
@@ -105,10 +96,7 @@
                 console.error('Error:', error);
             });
         });
-    
-
-
-</script>
+    </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
