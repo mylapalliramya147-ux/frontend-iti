@@ -108,17 +108,22 @@
             const rowCount = document.getElementById("rowCount");
 
             // Fetch Data
-            fetch("http://localhost:8080/ItiapInstitute/api/itis")
-                .then(response => response.json())
-                .then(data => {
-                    allData = data;
-                    renderTable(allData);
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                    tableBody.innerHTML = "<tr><td colspan='7' class='text-center text-danger'>No data retrieved from back-end server.</td></tr>";
-                });
-
+           fetch("http://localhost:8080/ItiapInstitute/api/itis")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+        return response.json();
+    })
+    .then(data => {
+        allData = data;
+        renderTable(allData);
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error);
+        tableBody.innerHTML =
+            "<tr><td colspan='7' class='text-center text-danger'>No data retrieved from back-end server.</td></tr>";
+    });
             function renderTable(dataToRender) {
                 tableBody.innerHTML = "";
                 if (dataToRender.length === 0) {
@@ -142,19 +147,26 @@
                 });
                 rowCount.textContent = `Showing \${dataToRender.length} entries`;
             }
+           function applyFilter() {
+    const term = searchInput.value.toLowerCase().trim();
 
-            function applyFilter() {
-               const filtered = allData.filter(item =>
-                 (item.itiCode && item.itiCode.toLowerCase().includes(term)) ||
-                   (item.itiName && item.itiName.toLowerCase().includes(term)) ||
-                  (item.principalName && item.principalName.toLowerCase().includes(term)) ||
-                (item.email && item.email.toLowerCase().includes(term)) ||
-               (item.mobile && item.mobile.toLowerCase().includes(term)) ||
-              (item.address && item.address.toLowerCase().includes(term)) ||
-            (item.cityTown && item.cityTown.toLowerCase().includes(term))
-            );
-                renderTable(filtered);
-            }
+    const filtered = allData.filter(item =>
+        (item.itiCode && item.itiCode.toLowerCase().includes(term)) ||
+        (item.ncvtCode && item.ncvtCode.toLowerCase().includes(term)) ||
+        (item.itiName && item.itiName.toLowerCase().includes(term)) ||
+        (item.principalName && item.principalName.toLowerCase().includes(term)) ||
+        (item.email && item.email.toLowerCase().includes(term)) ||
+        (item.mobile && item.mobile.toLowerCase().includes(term)) ||
+        (item.cityTown && item.cityTown.toLowerCase().includes(term)) ||
+        (item.address && item.address.toLowerCase().includes(term)) ||
+        (item.distCode && item.distCode.toLowerCase().includes(term)) ||
+        (item.itiType && item.itiType.toLowerCase().includes(term)) ||
+        (item.description && item.description.toLowerCase().includes(term))
+    );
+
+    renderTable(filtered);
+}
+              
 
             searchBtn.addEventListener("click", applyFilter);
             searchInput.addEventListener("keyup", function(e) {
