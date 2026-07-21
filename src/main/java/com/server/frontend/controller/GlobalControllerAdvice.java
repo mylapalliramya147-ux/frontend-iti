@@ -15,7 +15,7 @@ public class GlobalControllerAdvice {
 
     @ModelAttribute("backendApiUrl")
     public String getBackendApiUrl() {
-        return backendApiConfig.getFullReportsUrl();
+        return backendApiConfig.getFullitiUrl();
     }
 
     @ModelAttribute("backendBaseUrl")
