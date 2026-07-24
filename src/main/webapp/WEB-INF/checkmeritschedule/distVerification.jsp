@@ -28,11 +28,10 @@
 <body onload="getReady();">
 	<div id="404Msg" align="center">
 		<img src="./images/gen.jpg" class="img-fluid" />
-		<%@include file="/WEB-INF/openNavbar.jsp"%>
 	</div>
 	<div id="navbar">
-		<%@include file="/WEB-INF/banner.jsp"%>
-		<%@include file="/WEB-INF/navbar.jsp"%>
+		<jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+		<jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 <%-- 		<%@include file="/WEB-INF/userpages/Navbar.jsp"%> --%>
 	</div>
 	
@@ -558,6 +557,6 @@
 	<br>
 	<br>
 	<br>
-	<%@include file="/WEB-INF/footer.jsp"%>
+	<jsp:include page="/WEB-INF/reports/footer.jsp" />
 </body>
 </html>

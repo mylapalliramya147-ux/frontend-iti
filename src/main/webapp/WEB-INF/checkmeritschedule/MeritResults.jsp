@@ -31,8 +31,8 @@
 </head>
 <body class="bg-light">
     <!-- Header -->
-    <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="results-container">
         <div class="outer-border shadow-lg">
@@ -101,7 +101,7 @@
     </div>
 
     <footer class="print-hide">
-        <jsp:include page="/WEB-INF/footer.jsp" />
+        <jsp:include page="/WEB-INF/reports/footer.jsp" />
     </footer>
 
     <script>

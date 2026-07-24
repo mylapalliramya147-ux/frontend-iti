@@ -288,8 +288,8 @@
 </head>
 <body>
 
-    <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="container main-container">
         <!-- Section 1: Filter Selection -->
@@ -588,7 +588,7 @@
             return false;
         };
 
-        const NODE_API_BASE = 'http://10.72.4.135:5051';
+        const NODE_API_BASE = 'http://localhost:8080/itiapchecklistmeritlist'; // Adjust as needed for production
         let currentStudent = null;
         let seatMatrixData = [];
 
@@ -604,7 +604,7 @@
 
         async function initPage() {
             try {
-                const statusResp = await fetch(`\${NODE_API_BASE}/api/status`, { credentials: 'include', 
+                const statusResp = await fetch(`\${NODE_API_BASE}/admission-timings`, { credentials: 'include', 
                     method: 'POST',
                     credentials: 'include' 
                 });
@@ -725,7 +725,7 @@
             }
 
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/api/admission/view-timings`, { credentials: 'include',
+                const resp = await fetch(`\${NODE_API_BASE}/admission-timings`, { credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -774,7 +774,7 @@
             e.preventDefault();
             const rank = document.getElementById('rankInput').value;
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/api/admission/get-student-by-rank`, {
+                const resp = await fetch(`\${NODE_API_BASE}/admission-timings`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',

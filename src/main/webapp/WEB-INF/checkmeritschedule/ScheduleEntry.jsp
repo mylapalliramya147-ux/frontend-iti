@@ -107,8 +107,8 @@
 </head>
 <body class="bg-light">
 
-    <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="page-header-custom text-center">
         <div class="container">
@@ -225,6 +225,7 @@
     </div>
 
     <script>
+        const API_BASE = "<%= request.getContextPath() %>/admission-timings";
         const NODE_API_BASE = 'http://10.72.4.135:5051';
         let currentInitData = null;
 
@@ -232,14 +233,20 @@
         async function fetchCastes() {
             try {
                 // Fetch Global Status (Year/Phase)
-                const statusResp = await fetch(NODE_API_BASE + '/api/status', { credentials: 'include', method: 'POST' }, { credentials: 'include' });
+                const statusResp = await fetch(`${NODE_API_BASE}/api/status`, { 
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
                 const statusRes = await statusResp.json();
                 if (statusRes.success) {
                     document.getElementById('headerPhase').innerText = statusRes.phase;
                 }
 
                 // Fetch Caste List
-                const response = await fetch(NODE_API_BASE + '/api/dsc/caste-list', { credentials: 'include', credentials: 'include' }, { credentials: 'include' });
+                const response = await fetch(`${NODE_API_BASE}/api/dsc/caste-list`, { 
+                    credentials: 'include'
+                });
                 const result = await response.json();
                 if (result.success && result.data) {
                     const select = document.getElementById('casteSelect');
@@ -262,17 +269,25 @@
             const payload = { reservation: caste, minqul: qual };
 
             try {
-                const response = await fetch(NODE_API_BASE + '/api/schedule-entry/create', { credentials: 'include',
+                const response = await fetch(API_BASE + '/schedule-entry/create', { 
+                    credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
                 if (result.success) {
                     currentInitData = payload;
-                    showTimingForm(result.data);
+                    // Handle placeholder response - build data from payload if not provided
+                    const responseData = result.data || {
+                        dist_name: localStorage.getItem('displayName') || 'Unknown',
+                        iti_name: localStorage.getItem('displayName') || 'Unknown',
+                        reservation: payload.reservation,
+                        minqul: payload.minqul,
+                        phase: document.getElementById('headerPhase').innerText
+                    };
+                    showTimingForm(responseData);
                 } else {
                     alert("Initialization Failed: " + (result.error || result.message || "Unknown error"));
                 }
@@ -285,9 +300,9 @@
             // Populate display fields: Priority to Backend Data, Fallback to Session displayName
             const sessionName = localStorage.getItem('displayName') || 'Unknown';
             document.getElementById('dispEntity').innerText = data.dist_name || data.iti_name || sessionName;
-            document.getElementById('dispQual').innerText = data.minqul;
-            document.getElementById('dispCaste').innerText = data.caste;
-            document.getElementById('dispPhase').innerText = data.phase || '-';
+            document.getElementById('dispQual').innerText = data.minqul || '-';
+            document.getElementById('dispCaste').innerText = data.reservation || '-';
+            document.getElementById('dispPhase').innerText = data.phase || document.getElementById('headerPhase').innerText || '-';
 
             // Show container
             document.getElementById('timingContainer').style.display = 'block';
@@ -322,11 +337,11 @@
             }
 
             try {
-                const response = await fetch(NODE_API_BASE + '/api/schedule-entry/add-timings', { credentials: 'include',
-                    method: 'POST',
+                const response = await fetch(API_BASE + '/timings', { 
+                    credentials: 'include',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
