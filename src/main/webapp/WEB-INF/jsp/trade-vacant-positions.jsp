@@ -129,10 +129,10 @@
                         tr.innerHTML = `
                             <td style="text-align: left;">\${row.tradeName || '-'}</td>
                             <td>\${row.tradeCode || '-'}</td>
-                            <td class="num text-danger">\${row.vacantPosition != null ? row.vacantPosition : 0}</td>
+                            <td class="num text-danger">\${row.totalVacant != null ? row.totalVacant : 0}</td>
                         `;
                         tbody.appendChild(tr);
-                        totalVacant += row.vacantPosition || 0;
+                        totalVacant += row.totalVacant || 0;
                     });
 
                     const ft = document.createElement('tr');

@@ -79,6 +79,8 @@
                 <table class="table table-bordered table-sm table-hover text-center report-table" id="reportTable">
                     <thead>
                         <tr>
+                            <th>ITI Code</th>
+                            <th>ITI Name</th>
                             <th>District</th>
                             <th>Total Strength</th>
                             <th>Filled</th>
@@ -129,21 +131,23 @@
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
+                            <td style="text-align: left;">\${row.itiCode || '-'}</td>
+                            <td style="text-align: left;">\${row.itiName || '-'}</td>
                             <td style="text-align: left;">\${row.distName || '-'}</td>
-                            <td class="num">\${row.totalStrength || 0}</td>
-                            <td class="num text-success">\${row.filled || 0}</td>
+                            <td class="num">\${row.strength || 0}</td>
+                            <td class="num text-success">\${row.strengthFill || 0}</td>
                             <td class="num text-danger">\${row.vacant || 0}</td>
                             <td class="num">\${row.fillPercentage != null ? row.fillPercentage.toFixed(2) : '0.00'}</td>
                         `;
                         tbody.appendChild(tr);
-                        totalStrength += row.totalStrength || 0;
-                        totalFill += row.filled || 0;
+                        totalStrength += row.strength || 0;
+                        totalFill += row.strengthFill || 0;
                     });
 
                     const ft = document.createElement('tr');
                     ft.className = 'total-row';
                     ft.innerHTML = `
-                        <td colspan="1" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
+                        <td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td>
                         <td class="num">\${totalStrength}</td>
                         <td class="num text-success">\${totalFill}</td>
                         <td class="num text-danger">\${totalStrength - totalFill}</td>

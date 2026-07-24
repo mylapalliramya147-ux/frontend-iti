@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +8,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=12">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* DASHBOARD UI OVERRIDES */
         .nodal-dashboard-navbar {
             background: #002244;
             padding: 0;
@@ -79,31 +76,73 @@
             justify-content: center;
             font-size: 1rem;
         }
+        .selection-form {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .selection-form label {
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+        .nodal-download-btn-black {
+            background: #000;
+            color: #fff;
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nodal-download-btn-black:hover {
+            background: #222;
+            color: #fff;
+        }
     </style>
 </head>
 <body class="nodal-body">
-    <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     
     <c:set var="activeTab" value="open_seats" />
     <%@ include file="nodal_navbar.jsp" %>
 
-    
-    <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">
         <h2>Open Seats Abstract — District Wise Summary</h2>
     </div>
 
     <div class="container mt-4 mb-5">
-        <div class="no-print d-flex justify-content-center mb-4">
+        <div class="no-print d-flex justify-content-center mb-4" id="downloadSection" style="display:none;">
             <button class="nodal-download-btn-black shadow-sm" style="padding: 12px 35px !important; font-size: 0.85rem !important;" onclick="exportTableToExcel('resultsTable', 'District_Wise_Open_Seats')">
                 <i class="fas fa-file-excel me-2"></i>EXCEL DOWNLOAD
             </button>
         </div>
 
-        <div class="nodal-report-card shadow-lg" style="max-width: 1000px; margin: 0 auto;">
+        <div class="selection-form" id="selectionView">
+            <form onsubmit="fetchReport(event)">
+                <div class="mb-3">
+                    <label for="year" class="form-label">SELECT YEAR</label>
+                    <select class="form-select" id="year" required>
+                        <option value="">-- Select Year --</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="nodal-btn-primary" style="padding: 12px; font-weight: 800;">
+                        <i class="fas fa-search me-2"></i> VIEW REPORT
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="nodal-report-card shadow-lg" style="max-width: 1000px; margin: 0 auto; display:none;" id="reportView">
             <div class="nodal-card-header-dashboard">
-                <i class="fas fa-chart-bar me-2"></i> OPEN SEATS ABSTRACT FOR THE YEAR: ${year}
+                <i class="fas fa-chart-bar me-2"></i> OPEN SEATS ABSTRACT FOR THE YEAR: <span id="reportTitle"></span>
             </div>
             <div class="p-0">
                 <table class="nodal-table mb-0" id="resultsTable">
@@ -116,41 +155,21 @@
                             <th style="width: 180px;">VACANT</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size: 1.05rem;">
-                        <c:forEach items="${reportData}" var="row" varStatus="loop">
-                            <tr style="border-bottom: 1px solid #e2e8f0;">
-                                <td class="text-secondary" style="font-weight: 600;">${loop.index + 1}</td>
-                                <td class="text-start" style="padding-left: 35px;">
-                                    <a href="${pageContext.request.contextPath}/nodal-report/reports/open-seats-college?year=${year}&dist_code=${row.dist_code}" 
-                                       class="text-decoration-none" style="color: #003366; font-weight: 800; font-size: 1.05rem;">
-                                        ${row.dist_name}
-                                    </a>
-                                </td>
-                                <td style="font-weight: 800; color: #1e293b;">${row.no_of_seats}</td>
-                                <td style="font-weight: 800; color: #1a4a72;">${row.fill}</td>
-                                <td style="font-weight: 800;" class="${row.vacant < 0 ? 'text-danger' : 'text-success'}">${row.vacant}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                    
-                    <c:if test="${not empty totals}">
-                        <tfoot class="nodal-total-row">
-                            <tr style="font-size: 1.1rem; border-top: 2px solid #003366;">
-                                <td colspan="2" style="text-align: center; padding: 15px; font-weight: 900;">GRAND TOTAL</td>
-                                <td style="font-weight: 900; color: #1e293b;">${totals.no_of_seats}</td>
-                                <td style="font-weight: 900; color: #1a4a72;">${totals.fill}</td>
-                                <td style="font-weight: 900; color: #059669;">${totals.vacant}</td>
-                            </tr>
-                        </tfoot>
-                    </c:if>
+                    <tbody style="font-size: 1.05rem;" id="tableBody"></tbody>
+                    <tfoot id="tableFoot"></tfoot>
                 </table>
             </div>
+        </div>
+
+        <div class="loader-spinner" id="loader" style="display:none;">
+            <i class="fas fa-spinner fa-spin fa-3x"></i>
+            <p class="mt-3 fw-bold">Loading Open Seats Abstract...</p>
         </div>
 
         <div class="row no-print" style="margin-top: 50px; text-align: center;">
             <div class="d-flex justify-content-center">
                 <button class="nodal-btn-primary" style="width: auto; padding: 12px 50px; border-radius: 8px;" 
-                        onclick="window.location.href='${pageContext.request.contextPath}/nodal-report/open-seats-report'">
+                        onclick="showSelection()">
                     <i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION
                 </button>
             </div>
@@ -158,6 +177,80 @@
     </div>
 
     <script>
+        function showSelection() {
+            document.getElementById('reportView').style.display = 'none';
+            document.getElementById('selectionView').style.display = 'block';
+            document.getElementById('downloadSection').style.display = 'none';
+        }
+
+        function fetchReport(event) {
+            event.preventDefault();
+            const year = document.getElementById('year').value;
+
+            document.getElementById('selectionView').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+
+            fetch('${backendApiUrl}/open-seats?year=' + encodeURIComponent(year), {
+                method: 'GET', headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+
+                if(data.error) throw new Error(data.error);
+
+                document.getElementById('reportView').style.display = 'block';
+                document.getElementById('downloadSection').style.display = 'block';
+                document.getElementById('reportTitle').innerText = year;
+
+                const tbody = document.getElementById('tableBody');
+                const tfoot = document.getElementById('tableFoot');
+                tbody.innerHTML = '';
+                tfoot.innerHTML = '';
+
+                if (data.data && data.data.length > 0) {
+                    let totalSeats = 0, totalFill = 0, totalVacant = 0;
+                    data.data.forEach((row, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td class="text-secondary" style="font-weight: 600;">\${index + 1}</td>
+                            <td class="text-start" style="padding-left: 35px;">
+                                <a href="${pageContext.request.contextPath}/nodal-report/reports/open-seats-college?year=\${year}&dist_code=\${row.distCode}" 
+                                   class="text-decoration-none" style="color: #003366; font-weight: 800; font-size: 1.05rem;">
+                                    \${row.distName}
+                                </a>
+                            </td>
+                            <td style="font-weight: 800; color: #1e293b;">\${row.noOfSeats || 0}</td>
+                            <td style="font-weight: 800; color: #1a4a72;">\${row.fill || 0}</td>
+                            <td style="font-weight: 800;" class="\${row.vacant < 0 ? 'text-danger' : 'text-success'}">\${row.vacant || 0}</td>
+                        `;
+                        tbody.appendChild(tr);
+                        totalSeats += row.noOfSeats || 0;
+                        totalFill += row.fill || 0;
+                        totalVacant += row.vacant || 0;
+                    });
+
+                    const ft = document.createElement('tr');
+                    ft.className = 'nodal-total-row';
+                    ft.innerHTML = `
+                        <td colspan="2" style="text-align: center; padding: 15px; font-weight: 900;">GRAND TOTAL</td>
+                        <td style="font-weight: 900; color: #1e293b;">\${totalSeats}</td>
+                        <td style="font-weight: 900; color: #1a4a72;">\${totalFill}</td>
+                        <td style="font-weight: 900; color: #059669;">\${totalVacant}</td>
+                    `;
+                    tfoot.appendChild(ft);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('selectionView').style.display = 'block';
+                alert('Error loading data: ' + error.message);
+                console.error('Error:', error);
+            });
+        }
+
         function exportTableToExcel(tableID, filename = '') {
             var tableSelect = document.getElementById(tableID);
             var html = tableSelect.outerHTML;
