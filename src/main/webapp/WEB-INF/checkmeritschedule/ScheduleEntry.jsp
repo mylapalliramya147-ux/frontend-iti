@@ -225,8 +225,8 @@
     </div>
 
     <script>
-        const API_BASE = "<%= request.getContextPath() %>/admission-timings";
-        const NODE_API_BASE = 'http://10.72.4.135:5051';
+        const API_BASE = "http://localhost:8080/itiapchecklistmeritlist/admission-timings";
+        const NODE_API_BASE = 'http://localhost:8080/itiapchecklistmeritlist';
         let currentInitData = null;
 
         // Fetch Caste List
@@ -269,7 +269,7 @@
             const payload = { reservation: caste, minqul: qual };
 
             try {
-                const response = await fetch(API_BASE + '/schedule-entry/create', { 
+                const response = await fetch(API_BASE + '/entry', { 
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -317,20 +317,20 @@
 
             const payload = {
                 ...currentInitData,
-                merit_from: document.getElementById('meritFrom').value,
-                merit_to: document.getElementById('meritTo').value,
-                cal_date: document.getElementById('calDate').value,
-                cal_time: document.getElementById('calTime').value
+                meritFrom:parseInt(document.getElementById('meritFrom').value),
+                meritTo: parseInt(document.getElementById('meritTo').value),
+                calDate: document.getElementById('calDate').value,
+                calTime: document.getElementById('calTime').value
             };
 
             // Basic Validation
-            if (!payload.merit_from || !payload.merit_to || !payload.cal_date || !payload.cal_time) {
+            if (!payload.meritFrom || !payload.meritTo || !payload.calDate || !payload.calTime) {
                 setFeedback("Please fill all timing fields.", "text-danger");
                 return;
             }
 
             // Time Validation (08:00 to 18:00)
-            const [hours, minutes] = payload.cal_time.split(':').map(Number);
+            const [hours, minutes] = payload.calTime.split(':').map(Number);
             if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
                 setFeedback("Error: Time must be between 08:00 and 18:00 (Office Timings).", "text-danger");
                 return;
