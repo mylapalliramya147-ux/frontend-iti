@@ -252,7 +252,7 @@
                     const select = document.getElementById('casteSelect');
                     result.data.forEach(item => {
                         const opt = document.createElement('option');
-                        opt.value = opt.textContent = item.caste_code;
+                        opt.value = opt.textContent = item.casteCode;
                         select.appendChild(opt);
                     });
                 }
