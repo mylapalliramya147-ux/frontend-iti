@@ -1,4 +1,8 @@
 package com.server.frontend.config;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fbde2adcc50f300886bfc66e204bdc842cd0547a
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
