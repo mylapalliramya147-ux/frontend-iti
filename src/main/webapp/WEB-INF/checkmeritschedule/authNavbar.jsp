@@ -135,7 +135,7 @@
             const navPhaseItem = document.getElementById('nav-admission-phase');
             if (navPhaseItem) {
                 try {
-                    const response = await fetch('http://localhost:8080/itiapchecklistmeritlist/admission-timings', { credentials: 'include',
+                    const response = await fetch('http://localhost:8080/itiapchecklistmeritlist/api/status', { credentials: 'include',
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' }
                     });
