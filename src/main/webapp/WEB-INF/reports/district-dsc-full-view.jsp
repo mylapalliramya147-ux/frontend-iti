@@ -151,10 +151,8 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/dsc-full', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ iti_code, trade_code, year, phase, mode_adm, dist_code: "ALL" })
+            fetch('${backendApiUrl}/dsc-full?distCode=' + encodeURIComponent("ALL") + '&itiCode=' + encodeURIComponent(iti_code) + '&tradeCode=' + encodeURIComponent(trade_code) + '&phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&modeAdm=' + encodeURIComponent(mode_adm), {
+                method: 'GET'
             })
             .then(response => response.json())
             .then(data => {
