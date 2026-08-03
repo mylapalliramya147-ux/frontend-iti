@@ -7,16 +7,16 @@
         <a href="${pageContext.request.contextPath}/authHome" class="nodal-dashboard-link ${activeTab == 'home' ? 'active' : ''}">
             <i class="fas fa-home me-1"></i> Home
         </a>
-        <a href="${pageContext.request.contextPath}/nodal-report/dashboard" class="nodal-dashboard-link ${activeTab == 'api_dashboard' ? 'active' : ''}">API Dashboard</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/phase-wise" class="nodal-dashboard-link ${activeTab == 'phase_wise' ? 'active' : ''}">Phase-Wise</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/admission-report" class="nodal-dashboard-link ${activeTab == 'admission_report' ? 'active' : ''}">Admission</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/nodal_selection" class="nodal-dashboard-link ${activeTab == 'nodal_report' ? 'active' : ''}">Nodal Reports</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/iti_admissions_report" class="nodal-dashboard-link ${activeTab == 'iti_admissions' ? 'active' : ''}">ITI Admissions</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/open-seats-report" class="nodal-dashboard-link ${activeTab == 'open_seats' ? 'active' : ''}">Open Seats</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/trade-duration-report" class="nodal-dashboard-link ${activeTab == 'trade_duration' ? 'active' : ''}">Trade Duration</a>
-        <a href="${pageContext.request.contextPath}/nodal-report/candidate-details" class="nodal-dashboard-link ${activeTab == 'candidate_details' ? 'active' : ''}">Candidate Info</a>
-        
-
+        <a href="${pageContext.request.contextPath}/reports/state-dashboard" class="nodal-dashboard-link ${activeTab == 'api_dashboard' ? 'active' : ''}">State Dashboard</a>
+        <a href="${pageContext.request.contextPath}/reports/phase-wise" class="nodal-dashboard-link ${activeTab == 'phase_wise' ? 'active' : ''}">Phase-Wise</a>
+        <a href="${pageContext.request.contextPath}/reports/today-schedule" class="nodal-dashboard-link ${activeTab == 'today_schedule' ? 'active' : ''}">Today Schedule</a>
+        <a href="${pageContext.request.contextPath}/reports/trade-wise-report" class="nodal-dashboard-link ${activeTab == 'trade_wise' ? 'active' : ''}">Trade-Wise</a>
+        <a href="${pageContext.request.contextPath}/reports/applicant-report-state-wise" class="nodal-dashboard-link ${activeTab == 'applicant_state' ? 'active' : ''}">Applicant Report</a>
+        <a href="${pageContext.request.contextPath}/reports/open-seats" class="nodal-dashboard-link ${activeTab == 'open_seats' ? 'active' : ''}">Open Seats</a>
+        <a href="${pageContext.request.contextPath}/reports/trade-duration-seats" class="nodal-dashboard-link ${activeTab == 'trade_duration' ? 'active' : ''}">Trade Duration</a>
+        <a href="${pageContext.request.contextPath}/reports/govt-pvt-seats" class="nodal-dashboard-link ${activeTab == 'govt_pvt' ? 'active' : ''}">Govt/Pvt Seats</a>
+        <a href="${pageContext.request.contextPath}/reports/student-details" class="nodal-dashboard-link ${activeTab == 'student_details' ? 'active' : ''}">Student Details</a>
+        <a href="${pageContext.request.contextPath}/reports/district-wise-application-count" class="nodal-dashboard-link ${activeTab == 'district_app_count' ? 'active' : ''}">District App Count</a>
         <a href="${pageContext.request.contextPath}/logout" class="nodal-dashboard-link ms-auto logout-link" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out
         </a>
