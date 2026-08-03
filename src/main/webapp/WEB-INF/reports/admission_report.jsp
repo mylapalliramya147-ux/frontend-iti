@@ -28,9 +28,9 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
+    <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="admission_report" />
-    <%@ include file="iti_navbar.jsp" />
+    <%@ include file="iti_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Trade-wise Admission Report</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">

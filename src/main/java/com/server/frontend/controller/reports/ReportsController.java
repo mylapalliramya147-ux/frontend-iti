@@ -14,6 +14,11 @@ public class ReportsController {
         return "reports/reports";
     }
 
+    @GetMapping("/unified-reports")
+    public String unifiedReports() {
+        return "reports/reports";
+    }
+
     // ========== ITI LEVEL REPORTS (Role 4) ==========
 
     @GetMapping("/iti-wise-status")

@@ -26,6 +26,9 @@ public class BackendApiConfig {
     }
 
     public String getFullReportsUrl() {
+        if (baseUrl.endsWith("/") && reportsPath.startsWith("/")) {
+            return baseUrl + reportsPath.substring(1);
+        }
         return baseUrl + reportsPath;
     }
 }
