@@ -263,6 +263,7 @@
                 if (data.error) throw new Error(data.error);
 
                 if (data.data && data.data.length > 0) {
+                    let totals = { total: 0, success: 0, pending_sid: 0, verified: 0, to_be_verified: 0, to_be_updated: 0, phone_duplicate_records: 0, email_duplicate_records: 0, aadhar_duplicate_records: 0 };
                     data.data.forEach(row => {
                          const tr = document.createElement('tr');
                           tr.innerHTML = '<td style="text-align: left;">' + (row.distName || '-') + '</td><td style="text-align: left;">' + (row.itiName || '-') + '</td><td>' + (row.itiCode || '-') + '</td><td class="num" style="color: #003366;">' + (row.total || 0) + '</td><td class="num text-success">' + (row.success || 0) + '</td><td class="num text-warning">' + (row.pendingSid || 0) + '</td><td class="num text-primary">' + (row.verified || 0) + '</td><td class="num text-danger">' + (row.toBeVerified || 0) + '</td><td class="num">' + (row.toBeUpdated || 0) + '</td><td class="num text-danger">' + (row.phoneDuplicateRecords || 0) + '</td><td class="num text-danger">' + (row.emailDuplicateRecords || 0) + '</td><td class="num text-danger">' + (row.aadharDuplicateRecords || 0) + '</td>';
@@ -279,7 +280,6 @@
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
                     ft.innerHTML = '<td colspan="3" style="text-align: right; padding-right: 30px;">GRAND TOTAL</td><td class="num">' + totals.total + '</td><td class="num">' + totals.success + '</td><td class="num">' + totals.pending_sid + '</td><td class="num">' + totals.verified + '</td><td class="num">' + totals.to_be_verified + '</td><td class="num">' + totals.to_be_updated + '</td><td class="num">' + totals.phone_duplicate_records + '</td><td class="num">' + totals.email_duplicate_records + '</td><td class="num">' + totals.aadhar_duplicate_records + '</td>';
-                    tfoot.appendChild(ft);
                     tfoot.appendChild(ft);
                 } else {
                     tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';

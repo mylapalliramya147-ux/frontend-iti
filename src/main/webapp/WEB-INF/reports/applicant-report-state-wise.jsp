@@ -87,7 +87,7 @@
             const distCode = document.getElementById('distCode').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/applicant-report-by-state-wise?year=' + encodeURIComponent(year) + (distCode ? '&distCode=' + encodeURIComponent(distCode) : ''), { method: 'GET' })
+            fetch('${backendApiUrl}/applicant-report-by-state-wise?year=' + encodeURIComponent(year) + (distCode ? '&distCode=' + encodeURIComponent(distCode) : '') + '&page=0&size=500', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';

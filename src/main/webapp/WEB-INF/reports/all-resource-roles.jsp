@@ -66,7 +66,7 @@
         function fetchReport() {
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/all-resource-roles', { method: 'GET' })
+            fetch('${backendApiUrl}/all-resource-roles?page=0&size=500', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';

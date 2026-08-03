@@ -86,7 +86,7 @@
             const distCode = document.getElementById('distCode').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            let params = 'year=' + encodeURIComponent(year);
+            let params = 'year=' + encodeURIComponent(year) + '&page=0&size=500';
             if (distCode) params += '&distCode=' + encodeURIComponent(distCode);
             fetch('${backendApiUrl}/district-schedule?' + params, { method: 'GET' })
             .then(response => response.json())

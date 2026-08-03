@@ -96,7 +96,7 @@
             const govt = document.getElementById('govt').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            let params = 'year=' + encodeURIComponent(year);
+            let params = 'year=' + encodeURIComponent(year) + '&page=0&size=500';
             if (distCode) params += '&distCode=' + encodeURIComponent(distCode);
             if (govt) params += '&govt=' + encodeURIComponent(govt);
             fetch('${backendApiUrl}/iti-admissions?' + params, { method: 'GET' })
