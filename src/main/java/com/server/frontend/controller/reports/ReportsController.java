@@ -117,14 +117,14 @@ public class ReportsController {
 
     // ========== STATE LEVEL REPORTS (Role 1) ==========
 
-    @GetMapping("/iti-student-list-view")
-    public String itiStudentListView() {
-        return "reports/iti-student-list-view";
-    }
-
     @GetMapping("/district-iti-wise-year")
     public String districtItiWiseYear() {
         return "reports/district-iti-wise-year-view";
+    }
+
+    @GetMapping("/itiprofile")
+    public String itiProfile() {
+        return "reports/itiprofile";
     }
 
     @GetMapping("/district-schedule")

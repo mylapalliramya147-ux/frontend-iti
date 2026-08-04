@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading application counts...</p></div>
-    <div class="container px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         <div class="text-center mb-4" style="color: #003366;">
             <h2 class="fw-bold fs-4 mb-2" id="reportTitle">Verification Report</h2>
             <p class="text-muted" style="font-size: 1.1rem;" id="reportDistInfo"></p>
@@ -87,20 +87,20 @@
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
                 document.getElementById('reportTitle').innerText = 'Verification Report - Year ' + year;
-                document.getElementById('reportDistInfo').innerText = 'District Code: ' + (data.dist_code || 'N/A');
+                document.getElementById('reportDistInfo').innerText = 'District Code: ' + (data['dist_code'] || 'N/A');
                 const tbody = document.getElementById('tableBody');
                 tbody.innerHTML = '';
                 if (data.error) throw new Error(data.error);
                 let gTotal = 0, gApproved = 0, gRejected = 0, gUnverified = 0;
                 if (data.data && data.data.length > 0) {
                     data.data.forEach((row, index) => {
-                        const totalApp = row.totalApplications || 0;
-                        const approved = row.approved || 0;
-                        const rejected = row.rejected || 0;
-                        const unverified = row.unverified || 0;
+                        const totalApp = row["Total Applications"] || 0;
+                        const approved = row["Approved"] || 0;
+                        const rejected = row["Rejected"] || 0;
+                        const unverified = row["Unverified"] || 0;
                         gTotal += totalApp; gApproved += approved; gRejected += rejected; gUnverified += unverified;
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;">' + (row.districtName || '-') + '</td><td>' + totalApp + '</td><td style="color: #10b981; font-weight: bold;">' + approved + '</td><td style="color: #ef4444; font-weight: bold;">' + rejected + '</td><td style="color: #f59e0b; font-weight: bold;">' + unverified + '</td>';
+                        tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;">' + (row["District Name"] || '-') + '</td><td>' + totalApp + '</td><td style="color: #10b981; font-weight: bold;">' + approved + '</td><td style="color: #ef4444; font-weight: bold;">' + rejected + '</td><td style="color: #f59e0b; font-weight: bold;">' + unverified + '</td>';
                         tbody.appendChild(tr);
                     });
                     const tRow = document.createElement('tr');

@@ -176,7 +176,7 @@
     </div>
 
     <!-- REPORT VIEW -->
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         
         <div class="text-center mb-3" style="color: #003366;">
             <h2 class="fw-bold fs-4 mb-2" id="reportTitle">ITI-Wise Admission Status Report</h2>
@@ -245,7 +245,7 @@
 
             const requestBody = { year: year };
 
-            fetch('${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All&page=0&size=500', {
+            fetch('${backendApiUrl}/iti-wise-status?year=' + encodeURIComponent(year) + '&distCode=All&itiCode=All&page=0&size=10000', {
                 method: 'GET'
             })
             .then(response => response.json())

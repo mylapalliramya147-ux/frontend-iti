@@ -73,7 +73,7 @@
     </div>
 
     <!-- REPORT VIEW -->
-    <div class="container px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         
         <div class="text-center mb-4" style="color: #003366;">
             <h2 class="fw-bold fs-4 mb-2" id="reportTitle">Verified Application Count</h2>
@@ -142,7 +142,7 @@
                 document.getElementById('reportView').style.display = 'block';
                 
                 document.getElementById('reportTitle').innerText = 'Verified Application Count ' + (data.year ? ' - Year ' + data.year : '');
-                document.getElementById('reportDistInfo').innerText = 'District Code: ' + (data.dist_code || 'N/A');
+                document.getElementById('reportDistInfo').innerText = 'District Code: ' + (data['dist_code'] || 'N/A');
                 
                 const tbody = document.getElementById('tableBody');
                 tbody.innerHTML = '';

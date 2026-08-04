@@ -112,7 +112,7 @@
     </div>
 
     <!-- REPORT VIEW -->
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         
         <div class="no-print d-flex justify-content-center gap-3 mb-4">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">

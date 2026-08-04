@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading govt/pvt seats...</p></div>
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Govt./Pvt. ITI Seats Abstract</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
@@ -61,8 +61,8 @@
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 700px;">
-                    <thead><tr><th>ITI Type</th><th class="num">Strength</th><th class="num">Fill</th><th class="num">Vacant</th><th class="num">Fill %</th></tr></thead>
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 1200px;">
+                    <thead><tr><th>District Name</th><th class="num">Govt Strength</th><th class="num">Govt Fill</th><th class="num">Govt Vacant</th><th class="num">Pvt Strength</th><th class="num">Pvt Fill</th><th class="num">Pvt Vacant</th><th class="num">Total Strength</th><th class="num">Total Fill</th><th class="num">Total Vacant</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
@@ -88,18 +88,20 @@
                 const tfoot = document.getElementById('tableFoot');
                 tbody.innerHTML = ''; tfoot.innerHTML = '';
                 if (data.error) throw new Error(data.error);
-                let totals = { strength: 0, fill: 0, vacant: 0 };
+                let totals = { govtStrength: 0, govtFill: 0, govtVacant: 0, pvtStrength: 0, pvtFill: 0, pvtVacant: 0, totalStrength: 0, totalFill: 0, totalVacant: 0 };
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.itiType || '-') + '</td><td class="num">' + (row.strength || 0) + '</td><td class="num text-primary">' + (row.fill || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td><td class="num">' + (row.fillPercentage || 0) + '%</td>';
+                        tr.innerHTML = '<td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.govtStrength || 0) + '</td><td class="num text-primary">' + (row.govtFill || 0) + '</td><td class="num text-success">' + (row.govtVacant || 0) + '</td><td class="num">' + (row.pvtStrength || 0) + '</td><td class="num text-primary">' + (row.pvtFill || 0) + '</td><td class="num text-success">' + (row.pvtVacant || 0) + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num">' + (row.totalFill || 0) + '</td><td class="num">' + (row.totalVacant || 0) + '</td>';
                         tbody.appendChild(tr);
-                        totals.strength += row.strength || 0; totals.fill += row.fill || 0; totals.vacant += row.vacant || 0;
+                        totals.govtStrength += row.govtStrength || 0; totals.govtFill += row.govtFill || 0; totals.govtVacant += row.govtVacant || 0;
+                        totals.pvtStrength += row.pvtStrength || 0; totals.pvtFill += row.pvtFill || 0; totals.pvtVacant += row.pvtVacant || 0;
+                        totals.totalStrength += row.totalStrength || 0; totals.totalFill += row.totalFill || 0; totals.totalVacant += row.totalVacant || 0;
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.strength + '</td><td class="num">' + totals.fill + '</td><td class="num">' + totals.vacant + '</td><td class="num">-</td>';
+                    ft.innerHTML = '<td colspan="7" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.totalStrength + '</td><td class="num">' + totals.totalFill + '</td><td class="num">' + totals.totalVacant + '</td>';
                     tfoot.appendChild(ft);
-                } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+                } else { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }

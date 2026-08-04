@@ -1,0 +1,181 @@
+/* Shared styles for all report pages */
+
+/* Limit table width with side gaps on all report pages */
+#reportView .container-fluid,
+.report-view-wrapper {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Table responsive wrapper for smaller screens */
+.table-responsive-wrapper {
+    overflow-x: auto;
+}
+
+/* Report table styling */
+.report-table {
+    font-size: 13px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0;
+}
+.report-table th {
+    font-size: 12px;
+    padding: 12px 5px;
+    background: #0f2c4e !important;
+    color: white !important;
+    text-transform: uppercase;
+}
+.report-table td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+/* Nodal dashboard styling */
+.nodal-page-title-dashboard {
+    text-align: center;
+    padding: 30px 0;
+    color: #003366;
+    font-weight: 800;
+    background: #f8fbff;
+    border-bottom: 1px solid #e1ecf8;
+    margin-bottom: 40px;
+}
+.nodal-page-title-dashboard h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+}
+
+.nodal-report-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1);
+}
+.nodal-card-header-dashboard {
+    background: linear-gradient(135deg, #003366 0%, #1a4a72 100%);
+    color: white;
+    padding: 22px 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.nodal-card-header-dashboard i {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+.form-label-official {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #445566;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: block;
+}
+.form-select-official, .form-control-official {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 1.05rem;
+    color: #2d3748;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+.form-select-official:focus, .form-control-official:focus {
+    border-color: #003366;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+}
+.btn-submit-official-navy {
+    background-color: #003366;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: none;
+    transition: all 0.2s ease;
+}
+.btn-submit-official-navy:hover {
+    background-color: #002244;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2);
+    color: white;
+}
+.loader-spinner {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #003366;
+}
+.num {
+    text-align: center;
+    font-weight: 700 !important;
+}
+
+/* Report dashboard cards */
+.report-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e8f0;
+    height: 100%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    color: inherit;
+}
+.report-card i {
+    font-size: 2rem;
+    color: #003366;
+    margin-bottom: 10px;
+}
+.report-card h5 {
+    margin: 10px 0 5px 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+.report-card p {
+    font-size: 0.85rem;
+    color: #718096;
+    margin: 0;
+}
+.api-badge {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #4a5568;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-top: 5px;
+    font-family: monospace;
+}
+.report-section-title {
+    color: #003366;
+    font-weight: 800;
+    border-left: 5px solid #003366;
+    padding-left: 15px;
+    margin-bottom: 25px;
+    margin-top: 30px;
+    font-size: 1.4rem;
+}

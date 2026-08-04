@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading vacant positions...</p></div>
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Trade-wise Vacant Positions</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
@@ -70,7 +70,7 @@
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
                 <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 900px;">
-                    <thead><tr><th>District</th><th>ITI Code</th><th style="text-align: left;">ITI Name</th><th>Trade Code</th><th style="text-align: left;">Trade Name</th><th class="num">Total Seats</th><th class="num">Filled</th><th class="num">Vacant</th></tr></thead>
+                    <thead><tr><th>Trade Code</th><th style="text-align: left;">Trade Name</th><th class="num">Total Strength</th><th class="num">Filled</th><th class="num">Vacant</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
@@ -81,6 +81,23 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
+        function loadDistricts() {
+            fetch('${backendApiUrl}/trade-display/districts', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('distCode');
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(dist => {
+                        const option = document.createElement('option');
+                        option.value = dist.code;
+                        option.textContent = dist.name;
+                        select.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading districts:', error));
+        }
+        window.addEventListener('load', loadDistricts);
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
@@ -101,14 +118,14 @@
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.distName || '-') + '</td><td>' + (row.itiCode || '-') + '</td><td style="text-align: left;">' + (row.itiName || '-') + '</td><td>' + (row.tradeCode || '-') + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.totalSeats || 0) + '</td><td class="num text-primary">' + (row.filled || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td>';
+                        tr.innerHTML = '<td>' + (row.tradeCode || '-') + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num text-primary">' + (row.totalFilled || 0) + '</td><td class="num text-success">' + (row.totalVacant || 0) + '</td>';
                         tbody.appendChild(tr);
-                        totals.total += row.totalSeats || 0; totals.filled += row.filled || 0; totals.vacant += row.vacant || 0;
+                        totals.total += row.totalStrength || 0; totals.filled += row.totalFilled || 0; totals.vacant += row.totalVacant || 0;
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td colspan="5" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.total + '</td><td class="num">' + totals.filled + '</td><td class="num">' + totals.vacant + '</td>';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.total + '</td><td class="num">' + totals.filled + '</td><td class="num">' + totals.vacant + '</td>';
                     tfoot.appendChild(ft);
-                } else { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+                } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
