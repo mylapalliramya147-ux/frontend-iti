@@ -247,7 +247,7 @@
             const localDistCode = localStorage.getItem('insCode') || '';
             const url = '${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
             
-            fetch(url, { credentials: 'include' })
+            fetch(url)
                 .then(response => {
                     console.log('DSC options response status:', response.status);
                     if (!response.ok) throw new Error('HTTP error ' + response.status);
@@ -292,7 +292,7 @@
                             fetchUrl += '&iti_code=' + selectedIti;
                         }
                         
-                        fetch(fetchUrl, { credentials: 'include' })
+                        fetch(fetchUrl)
                             .then(response => {
                                 if (!response.ok) throw new Error('HTTP error ' + response.status);
                                 return response.json();
