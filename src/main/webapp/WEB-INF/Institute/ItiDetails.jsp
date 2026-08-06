@@ -89,7 +89,7 @@
 
     <!-- Header -->
     <header>
-        <%@ include file="bannernew.jsp" %>
+        <%@ include file="../reports/bannernew.jsp" %>
     </header>
 
 
@@ -699,7 +699,7 @@
         </div>
         <!--Footer-->
         <footer>
-        <%@include file="footer.jsp" %>
+        <%@include file="../reports/footer.jsp" %>
         </footer>
         <script>
 
@@ -992,7 +992,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-</script>
 </script>
 </body>
 </html>

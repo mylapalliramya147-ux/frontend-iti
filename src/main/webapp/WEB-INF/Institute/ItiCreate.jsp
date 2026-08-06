@@ -1,6 +1,47 @@
-import <frontenditi class="frontend-iti src main webapp WEB-INF reports">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
 
-</frontenditi>bannernew.jsp
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>CREATE ITI</title>
+    <style>
+        .page-title {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .breadcrumb-text {
+            color: #888;
+            font-size: 14px;
+        }
+        .details-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            background-color: #fff;
+        }
+        .details-card-header {
+            background-color: #212529;
+            color: white;
+            padding: 12px 18px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .details-card-body {
+            padding: 20px;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
 
 <body>
 
@@ -710,7 +751,10 @@ import <frontenditi class="frontend-iti src main webapp WEB-INF reports">
     </div>
 
 </div>
-        </form>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>Create ITI
+        </button>
+    </form>
 
     </div>
             
@@ -719,4 +763,130 @@ import <frontenditi class="frontend-iti src main webapp WEB-INF reports">
         <%@ include file="../reports/footer.jsp" %>
     </footer>
 
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const itiApiUrl = "${itiApiUrl}";
+    const districtApiUrl = "${districtApiUrl}";
+    const designationApiUrl = "${designationApiUrl}";
+
+    // Load districts
+    fetch(districtApiUrl)
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById("districtName");
+            select.innerHTML = '<option value="">Select District</option>';
+            data.forEach(d => {
+                const opt = document.createElement("option");
+                opt.value = d.distCode || d.code || d;
+                opt.textContent = d.distName || d.name || d;
+                select.appendChild(opt);
+            });
+            select.addEventListener("change", function() {
+                document.getElementById("distCode").value = this.value;
+            });
+        })
+        .catch(err => {
+            console.error("Failed to load districts", err);
+            document.getElementById("districtName").innerHTML = '<option>Failed to load</option>';
+        });
+
+    // Load designations
+    fetch(designationApiUrl)
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById("designationContainer");
+            container.innerHTML = "";
+            data.forEach(d => {
+                const div = document.createElement("div");
+                div.className = "form-check";
+                div.innerHTML = `<input class="form-check-input" type="checkbox" value="${d.id || d}" id="desig_${d.id || d}">
+                                 <label class="form-check-label" for="desig_${d.id || d}">${d.name || d}</label>`;
+                container.appendChild(div);
+            });
+        })
+        .catch(err => {
+            console.error("Failed to load designations", err);
+            document.getElementById("designationContainer").innerHTML = "Failed to load designations";
+        });
+
+    // Form submission
+    document.getElementById("itiCreateForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const btn = document.querySelector("#itiCreateForm button[type=submit]");
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Saving...';
+
+        const payload = {
+            itiCode: document.getElementById("itiCode").value,
+            itiName: document.getElementById("itiName").value,
+            govt: document.getElementById("govt").value,
+            distCode: document.getElementById("distCode").value,
+            itiNoniti: document.getElementById("itiNoniti").value,
+            olditicode: document.getElementById("olditicode").value,
+            ncvtCode: document.getElementById("ncvtCode").value,
+            dgetItiCode: document.getElementById("dgetItiCode").value,
+            address: document.getElementById("address").value,
+            cityTown: document.getElementById("cityTown").value,
+            pinCode: document.getElementById("pinCode").value,
+            email: document.getElementById("email").value,
+            mobile: document.getElementById("mobile").value,
+            landlineNumber: document.getElementById("landlineNumber").value,
+            website: document.getElementById("website").value,
+            principalName: document.getElementById("principalName").value,
+            roleId: document.getElementById("roleId").value,
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+            description: document.getElementById("description").value,
+            capacity: document.getElementById("capacity").value,
+            allocated: document.getElementById("allocated").value,
+            remainingCapacity: document.getElementById("remainingCapacity").value,
+            totStrength: document.getElementById("totStrength").value,
+            examconductingStrength: document.getElementById("examconductingStrength").value,
+            land: document.getElementById("land").value,
+            builtupArea: document.getElementById("builtupArea").value,
+            noofToilets: document.getElementById("noofToilets").value,
+            noofLabs: document.getElementById("noofLabs").value,
+            noofClassrooms: document.getElementById("noofClassrooms").value,
+            availableDrinkingwater: document.getElementById("availableDrinkingwater").value,
+            yearEst: document.getElementById("yearEst").value,
+            region: document.getElementById("region").value,
+            urbanRural: document.getElementById("urbanRural").value,
+            vtp: document.getElementById("vtp").value,
+            vtpRegno: document.getElementById("vtpRegno").value,
+            admissionPermission: document.getElementById("admissionPermission").value,
+            toolStatus: document.getElementById("toolStatus").value
+        };
+
+        fetch(itiApiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to create ITI");
+            return res.json();
+        })
+        .then(() => {
+            btn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-success");
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.classList.remove("btn-success");
+                btn.classList.add("btn-primary");
+                document.getElementById("itiCreateForm").reset();
+            }, 1500);
+        })
+        .catch(err => {
+            console.error(err);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            alert("Error: " + err.message);
+        });
+    });
+});
+</script>
 </body>
+</html>

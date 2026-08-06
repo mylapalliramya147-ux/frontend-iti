@@ -16,7 +16,11 @@ public class ItipageController {
     }
     
     @GetMapping("/itiList")
-    public String getItiList() {
+    public String getItiList(Model model) {
+        model.addAttribute(
+                "itiApiUrl",
+                backendApiConfig.getFullitiUrl()
+        );
         return "Institute/ItiList";
     }
  
