@@ -17,7 +17,7 @@ public class ItipageController {
     
     @GetMapping("/itiList")
     public String getItiList() {
-        return "reports/ItiList";
+        return "Institute/ItiList";
     }
  
 
@@ -29,6 +29,26 @@ public class ItipageController {
                 backendApiConfig.getFullitiUrl()
         );
 
-        return "reports/ItiDetails";
+        return "Institute/ItiDetails";
     }
+    @GetMapping("/iti-create")
+public String itiCreate(Model model) {
+
+    model.addAttribute(
+            "itiApiUrl",
+            backendApiConfig.getFullitiUrl()
+    );
+
+    model.addAttribute(
+            "districtApiUrl",
+            backendApiConfig.getFullDistrictUrl()
+    );
+
+    model.addAttribute(
+            "designationApiUrl",
+            backendApiConfig.getFullDesignationUrl()
+    );
+
+    return "Institute/ItiCreate";
+}
 }
