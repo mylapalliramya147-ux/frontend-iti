@@ -147,20 +147,20 @@
     </footer>
 
     <script>
-        const NODE_API_BASE = "http://" + window.location.hostname + ":5051";
+        const NODE_API_BASE = "http://" + window.location.hostname + ":8080/itiapchecklistmeritlist";
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List
             try {
-                const response = await fetch(NODE_API_BASE + '/api/dsc/caste-list', { credentials: 'include', credentials: 'include' }, { credentials: 'include' });
+                const response = await fetch(NODE_API_BASE + '/api/dsc/caste-list',{ credentials: 'include' });
                 const result = await response.json();
                 
                 if (result.success && result.data) {
                     const categorySelect = document.getElementById('categorySelect');
                     result.data.forEach(item => {
                         const opt = document.createElement('option');
-                        opt.value = item.caste_code;
-                        opt.textContent = item.caste_code;
+                        opt.value = item.casteCode;
+                        opt.textContent = item.casteName;
                         categorySelect.appendChild(opt);
                     });
                 }
@@ -186,13 +186,12 @@
             
             try {
                 // Pointing to existing merit generation endpoint
-                const response = await fetch(NODE_API_BASE + '/api/merit/generate', { credentials: 'include',
+                const response = await fetch(NODE_API_BASE + '/api/meritlist/generate', { credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload),
                     credentials: 'include'
                 });
-                
                 const result = await response.json();
                 if (result.success) {
                     // Store data and redirect to results page

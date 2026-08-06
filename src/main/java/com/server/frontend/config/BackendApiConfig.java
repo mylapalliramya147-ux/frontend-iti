@@ -31,9 +31,17 @@ public class BackendApiConfig {
         this.itiPath = itiPath;
     }
 
+<<<<<<< HEAD
 
     public String getDistrictPath() {
         return districtPath;
+=======
+    public String getFullReportsUrl() {
+        if (baseUrl.endsWith("/") && reportsPath.startsWith("/")) {
+            return baseUrl + reportsPath.substring(1);
+        }
+        return baseUrl + reportsPath;
+>>>>>>> a317127a22e142bf3652103f7718e164c052c2f7
     }
 
     public void setDistrictPath(String districtPath) {

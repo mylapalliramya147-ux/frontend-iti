@@ -36,13 +36,13 @@
         <a href="${pageContext.request.contextPath}/authHome" class="district-dashboard-link">
             <i class="fas fa-home me-1"></i> Home
         </a>
-        <a href="${pageContext.request.contextPath}/district-dsc-full" class="district-dashboard-link ${activeTab == 'dsc_full' ? 'active' : ''}">DSC Full</a>
-        <a href="${pageContext.request.contextPath}/district-applicant-report" class="district-dashboard-link ${activeTab == 'dist_applicant' ? 'active' : ''}">Applicant Report</a>
-        <a href="${pageContext.request.contextPath}/district-iti-wise-year" class="district-dashboard-link ${activeTab == 'iti_wise_year' ? 'active' : ''}">ITI Wise Status</a>
-        <a href="${pageContext.request.contextPath}/district-caste-wise" class="district-dashboard-link ${activeTab == 'caste_wise' ? 'active' : ''}">Caste Wise</a>
-        <a href="${pageContext.request.contextPath}/district-verified-count" class="district-dashboard-link ${activeTab == 'verified_count' ? 'active' : ''}">Verified Count</a>
-        <a href="${pageContext.request.contextPath}/district-permitted-shift" class="district-dashboard-link ${activeTab == 'permitted_shift' ? 'active' : ''}">Permitted Shift</a>
-        
+        <a href="${pageContext.request.contextPath}/reports/dsc-full" class="district-dashboard-link ${activeTab == 'dsc_full' ? 'active' : ''}">DSC Full</a>
+        <a href="${pageContext.request.contextPath}/reports/applicant-report-by-phase" class="district-dashboard-link ${activeTab == 'applicant_phase' ? 'active' : ''}">Applicant Report</a>
+        <a href="${pageContext.request.contextPath}/reports/caste-wise-admissions" class="district-dashboard-link ${activeTab == 'caste_wise' ? 'active' : ''}">Caste Wise</a>
+        <a href="${pageContext.request.contextPath}/reports/applicant-mobile-address" class="district-dashboard-link ${activeTab == 'applicant_mobile' ? 'active' : ''}">Applicant Mobile</a>
+        <a href="${pageContext.request.contextPath}/reports/verified-application-count" class="district-dashboard-link ${activeTab == 'verified_count' ? 'active' : ''}">Verified Count</a>
+        <a href="${pageContext.request.contextPath}/reports/api-dashboard" class="district-dashboard-link ${activeTab == 'api_dashboard' ? 'active' : ''}">API Dashboard</a>
+
         <a href="${pageContext.request.contextPath}/logout" class="district-dashboard-link ms-auto" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out
         </a>

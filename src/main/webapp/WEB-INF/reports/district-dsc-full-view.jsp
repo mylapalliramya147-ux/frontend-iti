@@ -112,7 +112,7 @@
     </div>
 
     <!-- REPORT VIEW -->
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         
         <div class="no-print d-flex justify-content-center gap-3 mb-4">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">
@@ -151,10 +151,8 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/dsc-full', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ iti_code, trade_code, year, phase, mode_adm, dist_code: "ALL" })
+            fetch('${backendApiUrl}/dsc-full?distCode=' + encodeURIComponent("ALL") + '&itiCode=' + encodeURIComponent(iti_code) + '&tradeCode=' + encodeURIComponent(trade_code) + '&phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&modeAdm=' + encodeURIComponent(mode_adm), {
+                method: 'GET'
             })
             .then(response => response.json())
             .then(data => {
@@ -249,7 +247,7 @@
             const localDistCode = localStorage.getItem('insCode') || '';
             const url = '${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
             
-            fetch(url, { credentials: 'include' })
+            fetch(url)
                 .then(response => {
                     console.log('DSC options response status:', response.status);
                     if (!response.ok) throw new Error('HTTP error ' + response.status);
@@ -294,7 +292,7 @@
                             fetchUrl += '&iti_code=' + selectedIti;
                         }
                         
-                        fetch(fetchUrl, { credentials: 'include' })
+                        fetch(fetchUrl)
                             .then(response => {
                                 if (!response.ok) throw new Error('HTTP error ' + response.status);
                                 return response.json();
