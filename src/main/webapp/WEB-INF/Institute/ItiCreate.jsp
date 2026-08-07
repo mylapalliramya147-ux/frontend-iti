@@ -772,128 +772,77 @@
     </footer>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const itiApiUrl = "${itiApiUrl}";
+function loadDistricts() {
     const districtApiUrl = "${districtApiUrl}";
-    const designationApiUrl = "${designationApiUrl}";
 
-    // Load districts
     fetch(districtApiUrl)
         .then(res => res.json())
         .then(data => {
             const select = document.getElementById("districtName");
             select.innerHTML = '<option value="">Select District</option>';
-            data.forEach(d => {
+
+            data.forEach(district => {
                 const opt = document.createElement("option");
-                opt.value = d.distCode || d.code || d;
-                opt.textContent = d.distName || d.name || d;
+                opt.value = district.code;
+                opt.textContent = district.name;
                 select.appendChild(opt);
             });
+
             select.addEventListener("change", function() {
                 document.getElementById("distCode").value = this.value;
             });
         })
         .catch(err => {
             console.error("Failed to load districts", err);
-            document.getElementById("districtName").innerHTML = '<option>Failed to load</option>';
+            document.getElementById("districtName").innerHTML = '<option>Failed to load districts</option>';
         });
+}
 
-    // Load designations
+function loadDesignations() {
+    const designationApiUrl = "${designationApiUrl}";
+
     fetch(designationApiUrl)
         .then(res => res.json())
         .then(data => {
             const container = document.getElementById("designationContainer");
             container.innerHTML = "";
-            data.forEach(d => {
-                const div = document.createElement("div");
-                div.className = "form-check";
-                div.innerHTML = `<input class="form-check-input" type="checkbox" value="${d.id || d}" id="desig_${d.id || d}">
-                                 <label class="form-check-label" for="desig_${d.id || d}">${d.name || d}</label>`;
-                container.appendChild(div);
+
+            data.sort((a, b) => a.displayOrder - b.displayOrder);
+
+            data.forEach(desig => {
+                const colDiv = document.createElement("div");
+                colDiv.className = "col-md-4";
+
+                const formCheckDiv = document.createElement("div");
+                formCheckDiv.className = "form-check";
+
+                const checkbox = document.createElement("input");
+                checkbox.className = "form-check-input";
+                checkbox.type = "checkbox";
+                checkbox.name = "designation";
+                checkbox.value = desig.desigCode;
+                checkbox.id = "desig_" + desig.desigCode;
+
+                const label = document.createElement("label");
+                label.className = "form-check-label";
+                label.htmlFor = "desig_" + desig.desigCode;
+                label.textContent = desig.designation;
+
+                formCheckDiv.appendChild(checkbox);
+                formCheckDiv.appendChild(label);
+                colDiv.appendChild(formCheckDiv);
+                container.appendChild(colDiv);
             });
         })
         .catch(err => {
             console.error("Failed to load designations", err);
-            document.getElementById("designationContainer").innerHTML = "Failed to load designations";
+            document.getElementById("designationContainer").innerHTML = "Failed to load Designations";
         });
+}
 
-    // Form submission
-    document.getElementById("itiCreateForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const btn = document.querySelector("#itiCreateForm button[type=submit]");
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Saving...';
-
-        const payload = {
-            itiCode: document.getElementById("itiCode").value,
-            itiName: document.getElementById("itiName").value,
-            govt: document.getElementById("govt").value,
-            distCode: document.getElementById("distCode").value,
-            itiNoniti: document.getElementById("itiNoniti").value,
-            olditicode: document.getElementById("olditicode").value,
-            ncvtCode: document.getElementById("ncvtCode").value,
-            dgetItiCode: document.getElementById("dgetItiCode").value,
-            address: document.getElementById("address").value,
-            cityTown: document.getElementById("cityTown").value,
-            pinCode: document.getElementById("pinCode").value,
-            email: document.getElementById("email").value,
-            mobile: document.getElementById("mobile").value,
-            landlineNumber: document.getElementById("landlineNumber").value,
-            website: document.getElementById("website").value,
-            principalName: document.getElementById("principalName").value,
-            roleId: document.getElementById("roleId").value,
-            username: document.getElementById("username").value,
-            password: document.getElementById("password").value,
-            description: document.getElementById("description").value,
-            capacity: document.getElementById("capacity").value,
-            allocated: document.getElementById("allocated").value,
-            remainingCapacity: document.getElementById("remainingCapacity").value,
-            totStrength: document.getElementById("totStrength").value,
-            examconductingStrength: document.getElementById("examconductingStrength").value,
-            land: document.getElementById("land").value,
-            builtupArea: document.getElementById("builtupArea").value,
-            noofToilets: document.getElementById("noofToilets").value,
-            noofLabs: document.getElementById("noofLabs").value,
-            noofClassrooms: document.getElementById("noofClassrooms").value,
-            availableDrinkingwater: document.getElementById("availableDrinkingwater").value,
-            yearEst: document.getElementById("yearEst").value,
-            region: document.getElementById("region").value,
-            urbanRural: document.getElementById("urbanRural").value,
-            vtp: document.getElementById("vtp").value,
-            vtpRegno: document.getElementById("vtpRegno").value,
-            admissionPermission: document.getElementById("admissionPermission").value,
-            toolStatus: document.getElementById("toolStatus").value
-        };
-
-        fetch(itiApiUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        })
-        .then(res => {
-            if (!res.ok) throw new Error("Failed to create ITI");
-            return res.json();
-        })
-        .then(() => {
-            btn.innerHTML = '<i class="fas fa-check"></i> Saved!';
-            btn.classList.remove("btn-primary");
-            btn.classList.add("btn-success");
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.remove("btn-success");
-                btn.classList.add("btn-primary");
-                document.getElementById("itiCreateForm").reset();
-            }, 1500);
-        })
-        .catch(err => {
-            console.error(err);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            alert("Error: " + err.message);
-        });
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    loadDistricts();
+    loadDesignations();
 });
 </script>
 </body>
