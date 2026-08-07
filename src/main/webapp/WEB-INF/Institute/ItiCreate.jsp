@@ -840,9 +840,68 @@ function loadDesignations() {
         });
 }
 
+function collectFormData() {
+    const payload = {
+        itiCode: document.getElementById("itiCode").value,
+        itiName: document.getElementById("itiName").value,
+        govt: document.getElementById("govt").value,
+        distCode: document.getElementById("distCode").value,
+        itiNoniti: document.getElementById("itiNoniti").value,
+        olditicode: document.getElementById("olditicode").value,
+        ncvtCode: document.getElementById("ncvtCode").value,
+        dgetItiCode: document.getElementById("dgetItiCode").value,
+        address: document.getElementById("address").value,
+        cityTown: document.getElementById("cityTown").value,
+        email: document.getElementById("email").value,
+        mobile: document.getElementById("mobile").value,
+        landlineNumber: document.getElementById("landlineNumber").value,
+        pinCode: document.getElementById("pinCode").value,
+        website: document.getElementById("website").value,
+        principalName: document.getElementById("principalName").value,
+        roleId: document.getElementById("roleId").value,
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value,
+        description: document.getElementById("description").value,
+        capacity: document.getElementById("capacity").value,
+        allocated: document.getElementById("allocated").value,
+        remainingCapacity: document.getElementById("remainingCapacity").value,
+        totStrength: document.getElementById("totStrength").value,
+        examconductingStrength: document.getElementById("examconductingStrength").value,
+        land: document.getElementById("land").value,
+        builtupArea: document.getElementById("builtupArea").value,
+        noofToilets: document.getElementById("noofToilets").value,
+        noofLabs: document.getElementById("noofLabs").value,
+        noofClassrooms: document.getElementById("noofClassrooms").value,
+        availableDrinkingwater: document.getElementById("availableDrinkingwater").value,
+        yearEst: document.getElementById("yearEst").value,
+        region: document.getElementById("region").value,
+        urbanRural: document.getElementById("urbanRural").value,
+        vtp: document.getElementById("vtp").value,
+        vtpRegno: document.getElementById("vtpRegno").value,
+        admissionPermission: document.getElementById("admissionPermission").value,
+        toolStatus: document.getElementById("toolStatus").value
+    };
+
+    const designationCodes = [];
+    const checkedDesignations = document.querySelectorAll('input[name="designation"]:checked');
+    checkedDesignations.forEach(checkbox => {
+        designationCodes.push(checkbox.value);
+    });
+
+    payload.designationCodes = designationCodes;
+
+    return payload;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     loadDistricts();
     loadDesignations();
+
+    document.getElementById("itiCreateForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const payload = collectFormData();
+        console.log(payload);
+    });
 });
 </script>
 </body>
