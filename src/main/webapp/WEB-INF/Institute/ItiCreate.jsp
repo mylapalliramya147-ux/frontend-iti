@@ -225,7 +225,7 @@
                 </div>
                 
             </div>
-           <!-- Contact Details -->
+            <!-- Contact Details -->
 <div class="details-card">
 
     <div class="details-card-header">
@@ -238,7 +238,7 @@
         <div class="row g-3">
 
             <!-- Address -->
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label class="form-label">
                     Address
                 </label>
@@ -249,7 +249,7 @@
             </div>
 
             <!-- City / Town -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label">
                     City / Town
                 </label>
@@ -259,43 +259,27 @@
                        class="form-control">
             </div>
 
-            <!-- PIN Code -->
-            <div class="col-md-4">
-                <label class="form-label">
-                    PIN Code
-                </label>
-
-                <input type="text"
-                       id="pinCode"
-                       class="form-control"
-                       maxlength="6">
-            </div>
-
             <!-- Email -->
             <div class="col-md-4">
                 <label class="form-label">
                     Email
-                    <span class="text-danger">*</span>
                 </label>
 
                 <input type="email"
                        id="email"
-                       class="form-control"
-                       required>
+                       class="form-control">
             </div>
 
             <!-- Mobile -->
             <div class="col-md-4">
                 <label class="form-label">
                     Mobile
-                    <span class="text-danger">*</span>
                 </label>
 
                 <input type="text"
                        id="mobile"
                        class="form-control"
-                       maxlength="10"
-                       required>
+                       maxlength="10">
             </div>
 
             <!-- Landline Number -->
@@ -309,8 +293,19 @@
                        class="form-control">
             </div>
 
-            <!-- Website -->
+            <!-- PIN Code -->
             <div class="col-md-4">
+                <label class="form-label">
+                    PIN Code
+                </label>
+
+                <input type="number"
+                       id="pinCode"
+                       class="form-control">
+            </div>
+
+            <!-- Website -->
+            <div class="col-md-8">
                 <label class="form-label">
                     Website
                 </label>
@@ -399,6 +394,19 @@
                 <textarea id="description"
                           rows="3"
                           class="form-control"></textarea>
+
+            </div>
+
+            <!-- Year Established -->
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Year Established
+                </label>
+
+                <input type="text"
+                       id="yearEst"
+                       class="form-control">
 
             </div>
 
