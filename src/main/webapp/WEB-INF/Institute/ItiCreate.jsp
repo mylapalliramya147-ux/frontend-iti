@@ -647,8 +647,8 @@
                         class="form-select">
 
                     <option value="">Select</option>
-                    <option value="Urban">Urban</option>
-                    <option value="Rural">Rural</option>
+                    <option value="U">Urban</option>
+                    <option value="R">Rural</option>
 
                 </select>
 
@@ -855,31 +855,31 @@ function collectFormData() {
         email: document.getElementById("email").value,
         mobile: document.getElementById("mobile").value,
         landlineNumber: document.getElementById("landlineNumber").value,
-        pinCode: document.getElementById("pinCode").value,
+        pinCode: document.getElementById("pinCode").value ? parseInt(document.getElementById("pinCode").value) : null,
         website: document.getElementById("website").value,
         principalName: document.getElementById("principalName").value,
-        roleId: document.getElementById("roleId").value,
+        roleId: document.getElementById("roleId").value ? parseInt(document.getElementById("roleId").value) : null,
         username: document.getElementById("username").value,
         password: document.getElementById("password").value,
         description: document.getElementById("description").value,
-        capacity: document.getElementById("capacity").value,
-        allocated: document.getElementById("allocated").value,
-        remainingCapacity: document.getElementById("remainingCapacity").value,
-        totStrength: document.getElementById("totStrength").value,
-        examconductingStrength: document.getElementById("examconductingStrength").value,
+        capacity: document.getElementById("capacity").value ? parseInt(document.getElementById("capacity").value) : null,
+        allocated: document.getElementById("allocated").value ? parseInt(document.getElementById("allocated").value) : null,
+        remainingCapacity: document.getElementById("remainingCapacity").value ? parseInt(document.getElementById("remainingCapacity").value) : null,
+        totStrength: document.getElementById("totStrength").value ? parseInt(document.getElementById("totStrength").value) : null,
+        examconductingStrength: document.getElementById("examconductingStrength").value ? parseInt(document.getElementById("examconductingStrength").value) : null,
         land: document.getElementById("land").value,
         builtupArea: document.getElementById("builtupArea").value,
-        noofToilets: document.getElementById("noofToilets").value,
-        noofLabs: document.getElementById("noofLabs").value,
-        noofClassrooms: document.getElementById("noofClassrooms").value,
-        availableDrinkingwater: document.getElementById("availableDrinkingwater").value,
+        noofToilets: document.getElementById("noofToilets").value ? parseInt(document.getElementById("noofToilets").value) : null,
+        noofLabs: document.getElementById("noofLabs").value ? parseInt(document.getElementById("noofLabs").value) : null,
+        noofClassrooms: document.getElementById("noofClassrooms").value ? parseInt(document.getElementById("noofClassrooms").value) : null,
+        availableDrinkingwater: document.getElementById("availableDrinkingwater").value ? (document.getElementById("availableDrinkingwater").value === "true") : null,
         yearEst: document.getElementById("yearEst").value,
         region: document.getElementById("region").value,
         urbanRural: document.getElementById("urbanRural").value,
-        vtp: document.getElementById("vtp").value,
+        vtp: document.getElementById("vtp").value ? (document.getElementById("vtp").value === "true") : null,
         vtpRegno: document.getElementById("vtpRegno").value,
-        admissionPermission: document.getElementById("admissionPermission").value,
-        toolStatus: document.getElementById("toolStatus").value
+        admissionPermission: document.getElementById("admissionPermission").value ? (document.getElementById("admissionPermission").value === "true") : null,
+        toolStatus: document.getElementById("toolStatus").value ? (document.getElementById("toolStatus").value === "true") : null
     };
 
     const designationCodes = [];
@@ -900,7 +900,33 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("itiCreateForm").addEventListener("submit", function(e) {
         e.preventDefault();
         const payload = collectFormData();
-        console.log(payload);
+        console.log("POST payload:", payload);
+
+        fetch("http://localhost:8080/ItiapInstitute/api/itis", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(data => {
+                    throw { status: res.status, data: data };
+                }).catch(() => {
+                    throw { status: res.status, data: null };
+                });
+            }
+            return res.json();
+        })
+        .then(responseData => {
+            console.log("ITI created successfully:", responseData);
+        })
+        .catch(err => {
+            if (err.status) {
+                console.error("ITI creation failed:", err.status, err.data);
+            } else {
+                console.error("Error creating ITI:", err);
+            }
+        });
     });
 });
 </script>
