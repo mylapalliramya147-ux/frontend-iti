@@ -36,23 +36,36 @@ public class ItipageController {
         return "Institute/ItiDetails";
     }
     @GetMapping("/iti-create")
-public String itiCreate(Model model) {
+    public String itiCreate(Model model) {
 
-    model.addAttribute(
-            "itiApiUrl",
-            backendApiConfig.getFullitiUrl()
-    );
+        model.addAttribute(
+                "itiApiUrl",
+                backendApiConfig.getFullitiUrl()
+        );
 
-    model.addAttribute(
-            "districtApiUrl",
-            backendApiConfig.getFullDistrictUrl()
-    );
+        model.addAttribute(
+                "districtApiUrl",
+                backendApiConfig.getFullDistrictUrl()
+        );
 
-    model.addAttribute(
-            "designationApiUrl",
-            backendApiConfig.getFullDesignationUrl()
-    );
+        model.addAttribute(
+                "designationApiUrl",
+                backendApiConfig.getFullDesignationUrl()
+        );
 
-    return "Institute/ItiCreate";
-}
+        return "Institute/ItiCreate";
+    }
+
+    @GetMapping("/iti-trade-selection")
+    public String itiTradeSelection(Model model) {
+        model.addAttribute(
+                "itiApiUrl",
+                backendApiConfig.getFullitiUrl()
+        );
+        model.addAttribute(
+                "backendApiBaseUrl",
+                backendApiConfig.getBaseUrl()
+        );
+        return "Institute/ItiTradeSelection";
+    }
 }

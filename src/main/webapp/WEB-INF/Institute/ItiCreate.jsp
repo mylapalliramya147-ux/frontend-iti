@@ -694,7 +694,7 @@
 
                 <select id="admissionPermission"
                         class="form-select">
-
+  
                     <option value="">Select</option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
