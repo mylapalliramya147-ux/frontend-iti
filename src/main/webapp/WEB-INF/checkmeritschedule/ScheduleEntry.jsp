@@ -324,11 +324,23 @@
             };
 
             // Basic Validation
-            if (!payload.meritFrom || !payload.meritTo || !payload.calDate || !payload.calTime) {
+            if(Number.isNaN(payload.meritFrom) || Number.isNaN(payload.meritTo) || !payload.calDate || !payload.calTime) {
                 setFeedback("Please fill all timing fields.", "text-danger");
                 return;
             }
-
+                if(payload.meritFrom <= 0 ){
+                setFeedback("Error: 'Merit Rank From' must be greater than 0.", "text-danger");
+                return;
+                } 
+                if(payload.meritTo <= 0 ){
+                setFeedback("Error: 'Merit Rank To' must be greater than 0.", "text-danger");
+                return;
+                }
+                
+                 if(payload.meritFrom>payload.meritTo) {
+                setFeedback("Error: 'Merit Rank From' cannot be greater than 'Merit Rank To'.", "text-danger");
+                return;
+                 }
             // Time Validation (08:00 to 18:00)
             const [hours, minutes] = payload.calTime.split(':').map(Number);
             if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
@@ -345,7 +357,7 @@
                 });
 
                 const result = await response.json();
-                if (result.success) {
+                if (response.ok&&result.success) {
                     setFeedback("Schedule entered successfully!", "text-success");
                     // Optionally clear or scroll
                 } else {
