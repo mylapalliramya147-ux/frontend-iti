@@ -63,6 +63,6 @@ public class HomeController {
 
     @GetMapping("/nodal-report/dashboard")
     public String nodalReportDashboard() {
-        return "reports/reports"; // Placeholder - needs a dedicated JSP if required
+        return "reports/state-dashboard";
     }
 }

@@ -28,9 +28,9 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
+    <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="caste_wise" />
-    <%@ include file="district_navbar.jsp" />
+    <%@ include file="district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Caste-wise Admissions Abstract</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading caste-wise report...</p></div>
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+    <div class="container mt-4" id="reportView" style="display: none;">
         <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Caste-wise Admissions Abstract</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
@@ -78,8 +78,8 @@
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/caste-wise-admissions', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ year, distCode: "All", govt: "All", phase: "All", gender: "All" })
+            fetch('${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=All&gender=All', {
+                method: 'GET'
             })
             .then(response => response.json())
             .then(data => {

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applicant Report | District</title>
+    <title>Applicant Mobile Address Report | District Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -23,31 +23,24 @@
         .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
         .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
+        .num { text-align: center; font-weight: 700 !important; }
     </style>
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
-    <c:set var="activeTab" value="dist_applicant" />
+    <c:set var="activeTab" value="applicant_mobile" />
     <%@ include file="district_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Phase-wise Applicant Report</h2></div>
+    <div class="nodal-page-title-dashboard"><h2>Applicant Address With Mobile</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
             <div class="p-5 bg-white rounded-bottom">
                 <form id="reportForm" onsubmit="fetchReport(event)">
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="phase" class="form-label-official mb-md-0">Phase *</label></div>
+                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
                         <div class="col-md-7">
-                            <select name="phase" id="phase" class="form-select-official w-100" required>
-                                <option value="1">Phase 1</option><option value="2">Phase 2</option><option value="3">Phase 3</option><option value="4">Phase 4</option><option value="5">Phase 5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Year</label></div>
-                        <div class="col-md-7">
-                            <select name="year" id="year" class="form-select-official w-100">
+                            <select name="year" id="year" class="form-select-official w-100" required>
                                 <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
                             </select>
                         </div>
@@ -59,17 +52,17 @@
             </div>
         </div>
     </div>
-    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading applicant report...</p></div>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading applicant address data...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Phase-wise Applicant Report</h2></div>
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Applicant Address With Mobile</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>SSC Reg No</th><th>Mobile No</th><th>Reg ID</th><th>Name</th><th>Father Name</th><th>Mother Name</th></tr></thead>
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 1000px;">
+                    <thead><tr><th>Reg ID</th><th>Name</th><th>Father Name</th><th>Mobile</th><th>Address</th><th>District</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                 </table>
             </div>
@@ -81,25 +74,24 @@
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function fetchReport(event) {
             event.preventDefault();
-            const phase = document.getElementById('phase').value;
             const year = document.getElementById('year').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/applicant-report-by-phase?phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&itiCode=All&distCode=All&page=0&size=10000', {
+            fetch('${backendApiUrl}/applicant-mobile-address?year=' + encodeURIComponent(year) + '&distCode=All&page=0&size=10000', {
                 method: 'GET'
             })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Phase ' + phase + ' Applicant Report (' + year + ')';
+                document.getElementById('reportTitle').innerText = 'Applicant Address With Mobile (' + year + ')';
                 const tbody = document.getElementById('tableBody');
                 tbody.innerHTML = '';
                 if (data.error) throw new Error(data.error);
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.sscRegno || '-') + '</td><td>' + (row.mobileNo || '-') + '</td><td>' + (row.regId || '-') + '</td><td style="text-align: left;">' + (row.name || '-') + '</td><td style="text-align: left;">' + (row.fatherName || '-') + '</td><td style="text-align: left;">' + (row.motherName || '-') + '</td>';
+                        tr.innerHTML = '<td>' + (row.regId || '-') + '</td><td style="text-align: left;">' + (row.name || '-') + '</td><td style="text-align: left;">' + (row.fatherName || '-') + '</td><td>' + (row.mobile || '-') + '</td><td style="text-align: left;">' + (row.address || '-') + '</td><td>' + (row.distName || '-') + '</td>';
                         tbody.appendChild(tr);
                     });
                 } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }

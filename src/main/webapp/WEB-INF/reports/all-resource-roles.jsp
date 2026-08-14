@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applicant Report | District</title>
+    <title>All Resource Roles | State Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -16,52 +16,36 @@
         .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
         .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
         .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
-        .form-select-official, .form-control-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
-        .form-select-official:focus, .form-control-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
+        .form-select-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
+        .form-select-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
         .btn-submit-official-navy { background-color: #003366; color: white; padding: 12px 30px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; border: none; transition: all 0.2s ease; }
         .btn-submit-official-navy:hover { background-color: #002244; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2); color: white; }
         .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
         .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
+        .num { text-align: center; font-weight: 700 !important; }
     </style>
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
-    <c:set var="activeTab" value="dist_applicant" />
-    <%@ include file="district_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Phase-wise Applicant Report</h2></div>
+    <c:set var="activeTab" value="all_resources" />
+    <%@ include file="state_navbar.jsp" %>
+    <div class="nodal-page-title-dashboard"><h2>All Resource Roles Report</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
-            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
+            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-info-circle me-2"></i> Report Info</div>
             <div class="p-5 bg-white rounded-bottom">
-                <form id="reportForm" onsubmit="fetchReport(event)">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="phase" class="form-label-official mb-md-0">Phase *</label></div>
-                        <div class="col-md-7">
-                            <select name="phase" id="phase" class="form-select-official w-100" required>
-                                <option value="1">Phase 1</option><option value="2">Phase 2</option><option value="3">Phase 3</option><option value="4">Phase 4</option><option value="5">Phase 5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Year</label></div>
-                        <div class="col-md-7">
-                            <select name="year" id="year" class="form-select-official w-100">
-                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
-                    </div>
-                </form>
+                <p class="text-muted mb-4">This report shows all resource roles across the state.</p>
+                <div class="mt-5 text-center">
+                    <button type="button" class="btn-submit-official-navy w-100" onclick="fetchReport()"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading applicant report...</p></div>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading resource roles...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Phase-wise Applicant Report</h2></div>
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">All Resource Roles Report</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
@@ -69,7 +53,7 @@
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
                 <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>SSC Reg No</th><th>Mobile No</th><th>Reg ID</th><th>Name</th><th>Father Name</th><th>Mother Name</th></tr></thead>
+                    <thead><tr><th>Role Name</th><th style="text-align: left;">User Name</th><th>District</th><th style="text-align: left;">ITI Name</th><th>Mobile</th><th>Email</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                 </table>
             </div>
@@ -79,27 +63,21 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
-        function fetchReport(event) {
-            event.preventDefault();
-            const phase = document.getElementById('phase').value;
-            const year = document.getElementById('year').value;
+        function fetchReport() {
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/applicant-report-by-phase?phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&itiCode=All&distCode=All&page=0&size=10000', {
-                method: 'GET'
-            })
+            fetch('${backendApiUrl}/all-resource-roles?page=0&size=10000', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Phase ' + phase + ' Applicant Report (' + year + ')';
                 const tbody = document.getElementById('tableBody');
                 tbody.innerHTML = '';
                 if (data.error) throw new Error(data.error);
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.sscRegno || '-') + '</td><td>' + (row.mobileNo || '-') + '</td><td>' + (row.regId || '-') + '</td><td style="text-align: left;">' + (row.name || '-') + '</td><td style="text-align: left;">' + (row.fatherName || '-') + '</td><td style="text-align: left;">' + (row.motherName || '-') + '</td>';
+                        tr.innerHTML = '<td>' + (row.roleName || '-') + '</td><td style="text-align: left;">' + (row.userName || '-') + '</td><td>' + (row.distName || '-') + '</td><td style="text-align: left;">' + (row.itiName || '-') + '</td><td>' + (row.mobile || '-') + '</td><td>' + (row.email || '-') + '</td>';
                         tbody.appendChild(tr);
                     });
                 } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }

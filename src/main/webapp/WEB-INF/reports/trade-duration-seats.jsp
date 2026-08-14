@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applicant Report | District</title>
+    <title>Trade Duration Seats Abstract | Nodal Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -23,32 +23,41 @@
         .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
         .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
+        .num { text-align: center; font-weight: 700 !important; }
     </style>
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
-    <c:set var="activeTab" value="dist_applicant" />
-    <%@ include file="district_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Phase-wise Applicant Report</h2></div>
+    <c:set var="activeTab" value="trade_duration" />
+    <%@ include file="nodal_navbar.jsp" %>
+    <div class="nodal-page-title-dashboard"><h2>Duration Wise Trade Seats Abstract</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
             <div class="p-5 bg-white rounded-bottom">
                 <form id="reportForm" onsubmit="fetchReport(event)">
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="phase" class="form-label-official mb-md-0">Phase *</label></div>
+                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
                         <div class="col-md-7">
-                            <select name="phase" id="phase" class="form-select-official w-100" required>
-                                <option value="1">Phase 1</option><option value="2">Phase 2</option><option value="3">Phase 3</option><option value="4">Phase 4</option><option value="5">Phase 5</option>
+                            <select name="year" id="year" class="form-select-official w-100" required>
+                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
                             </select>
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Year</label></div>
+                        <div class="col-md-5"><label for="durationMonths" class="form-label-official mb-md-0">Duration (Months) *</label></div>
                         <div class="col-md-7">
-                            <select name="year" id="year" class="form-select-official w-100">
-                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+                            <select name="durationMonths" id="durationMonths" class="form-select-official w-100" required>
+                                <option value="12">12 Months</option><option value="24">24 Months</option><option value="36">36 Months</option><option value="48">48 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label for="itiType" class="form-label-official mb-md-0">ITI Type</label></div>
+                        <div class="col-md-7">
+                            <select name="itiType" id="itiType" class="form-select-official w-100">
+                                <option value="All">All Types</option><option value="Govt">Government</option><option value="Pvt">Private</option>
                             </select>
                         </div>
                     </div>
@@ -59,18 +68,19 @@
             </div>
         </div>
     </div>
-    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading applicant report...</p></div>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading trade duration seats...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Phase-wise Applicant Report</h2></div>
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Duration Wise Trade Seats Abstract</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>SSC Reg No</th><th>Mobile No</th><th>Reg ID</th><th>Name</th><th>Father Name</th><th>Mother Name</th></tr></thead>
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 900px;">
+                    <thead><tr><th>Trade Code</th><th style="text-align: left;">Trade Name</th><th class="num">Strength</th><th class="num">Fill</th><th class="num">Vacant</th><th class="num">Fill %</th></tr></thead>
                     <tbody id="tableBody"></tbody>
+                    <tfoot id="tableFoot"></tfoot>
                 </table>
             </div>
         </div>
@@ -81,27 +91,32 @@
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function fetchReport(event) {
             event.preventDefault();
-            const phase = document.getElementById('phase').value;
             const year = document.getElementById('year').value;
+            const durationMonths = document.getElementById('durationMonths').value;
+            const itiType = document.getElementById('itiType').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/applicant-report-by-phase?phase=' + encodeURIComponent(phase) + '&year=' + encodeURIComponent(year) + '&itiCode=All&distCode=All&page=0&size=10000', {
-                method: 'GET'
-            })
+            fetch('${backendApiUrl}/trade-duration-seats?year=' + encodeURIComponent(year) + '&durationMonths=' + encodeURIComponent(durationMonths) + '&itiType=' + encodeURIComponent(itiType), { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Phase ' + phase + ' Applicant Report (' + year + ')';
+                document.getElementById('reportTitle').innerText = 'Duration Wise Trade Seats Abstract (' + year + ')';
                 const tbody = document.getElementById('tableBody');
-                tbody.innerHTML = '';
+                const tfoot = document.getElementById('tableFoot');
+                tbody.innerHTML = ''; tfoot.innerHTML = '';
                 if (data.error) throw new Error(data.error);
+                let totals = { strength: 0, fill: 0, vacant: 0 };
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.sscRegno || '-') + '</td><td>' + (row.mobileNo || '-') + '</td><td>' + (row.regId || '-') + '</td><td style="text-align: left;">' + (row.name || '-') + '</td><td style="text-align: left;">' + (row.fatherName || '-') + '</td><td style="text-align: left;">' + (row.motherName || '-') + '</td>';
+                        tr.innerHTML = '<td>' + (row.tradeCode || '-') + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.strength || 0) + '</td><td class="num text-primary">' + (row.fill || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td><td class="num">' + (row.fillPercentage || 0) + '%</td>';
                         tbody.appendChild(tr);
+                        totals.strength += row.strength || 0; totals.fill += row.fill || 0; totals.vacant += row.vacant || 0;
                     });
+                    const ft = document.createElement('tr'); ft.className = 'total-row';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.strength + '</td><td class="num">' + totals.fill + '</td><td class="num">' + totals.vacant + '</td><td class="num">-</td>';
+                    tfoot.appendChild(ft);
                 } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });

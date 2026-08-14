@@ -127,11 +127,8 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('http://10.72.4.135:5051/reports/verified-application-count', { credentials: 'include',
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ year: year })
+            fetch('${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), {
+                method: 'GET'
             })
             .then(response => response.json())
             .then(data => {

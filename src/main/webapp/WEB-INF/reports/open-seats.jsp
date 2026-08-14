@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student List | ITI</title>
+    <title>Open Seats Abstract | Nodal Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -28,10 +28,10 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
-    <c:set var="activeTab" value="student_list" />
-    <%@ include file="iti_navbar.jsp" />
-    <div class="nodal-page-title-dashboard"><h2>ITI Student List</h2></div>
+    <%@ include file="header.jsp" %>
+    <c:set var="activeTab" value="open_seats" />
+    <%@ include file="nodal_navbar.jsp" %>
+    <div class="nodal-page-title-dashboard"><h2>DIST/ITI/Trade Wise Seats Abstract</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
@@ -45,14 +45,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="itiCode" class="form-label-official mb-md-0">ITI Code</label></div>
-                        <div class="col-md-7">
-                            <select name="itiCode" id="itiCode" class="form-select-official w-100">
-                                <option value="All">All ITIs</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="mt-5 text-center">
                         <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
                     </div>
@@ -60,18 +52,19 @@
             </div>
         </div>
     </div>
-    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading student list...</p></div>
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">ITI Student List</h2></div>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading open seats abstract...</p></div>
+    <div class="container mt-4" id="reportView" style="display: none;">
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">DIST/ITI/Trade Wise Seats Abstract</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 1200px;">
-                    <thead><tr><th>Admission No</th><th>Trade Code</th><th>SSC Hall Ticket</th><th>Name</th><th>Father Name</th><th>Mother Name</th><th>DOB</th><th>Mobile</th><th>Email</th><th>Shift</th><th>Unit</th><th>PWD</th><th>EWS</th><th>Dual Mode</th></tr></thead>
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
+                    <thead><tr><th>District Name</th><th class="num">Seats</th><th class="num">Fill</th><th class="num">Vacant</th></tr></thead>
                     <tbody id="tableBody"></tbody>
+                    <tfoot id="tableFoot"></tfoot>
                 </table>
             </div>
         </div>
@@ -83,12 +76,32 @@
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
-            const itiCode = document.getElementById('itiCode').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            alert('Note: The student list report endpoint is not yet available in the backend. This page will be functional once the backend endpoint is implemented.\n\nExpected endpoint: GET /api/reports/student-list?year=' + year + '&itiCode=' + itiCode);
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('selectionView').style.display = 'block';
+            fetch('${backendApiUrl}/open-seats?year=' + encodeURIComponent(year), { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('reportView').style.display = 'block';
+                document.getElementById('reportTitle').innerText = 'DIST/ITI/Trade Wise Seats Abstract (' + year + ')';
+                const tbody = document.getElementById('tableBody');
+                const tfoot = document.getElementById('tableFoot');
+                tbody.innerHTML = ''; tfoot.innerHTML = '';
+                if (data.error) throw new Error(data.error);
+                let totals = { seats: 0, fill: 0, vacant: 0 };
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.noOfSeats || 0) + '</td><td class="num text-primary">' + (row.fill || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td>';
+                        tbody.appendChild(tr);
+                        totals.seats += row.noOfSeats || 0; totals.fill += row.fill || 0; totals.vacant += row.vacant || 0;
+                    });
+                    const ft = document.createElement('tr'); ft.className = 'total-row';
+                    ft.innerHTML = '<td style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.seats + '</td><td class="num">' + totals.fill + '</td><td class="num">' + totals.vacant + '</td>';
+                    tfoot.appendChild(ft);
+                } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+            })
+            .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
     </script>
 </body>

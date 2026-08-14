@@ -3,6 +3,8 @@
 <html>
 
 <head>
+
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
@@ -11,7 +13,7 @@
     <title>ATC/ITI DETAILS</title>
     <style>
         .page-title {
-            color: #333;
+            color: #333; 
             font-size: 28px;
             font-weight: 600;
         }
@@ -44,7 +46,7 @@
 <body>
     <!-- Global Header -->
     <header>
-        <%@ include file="bannernew.jsp" %>
+        <%@ include file="../reports/bannernew.jsp" %>
     </header>
 
     <div class="container-fluid px-5 mt-4 mb-5" style="min-height: 50vh;">
@@ -58,7 +60,7 @@
         <div class="search-area">
             <div class="row g-3">
                 <div class="col-md-10">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Search by ITI Name, Code, District, or Type...">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search by ITI Name, Code, DistrictCode, or Type...">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-primary w-100" id="searchBtn">Search</button>
@@ -96,7 +98,7 @@
 
     <!-- Global Footer -->
     <footer>
-        <%@ include file="footer.jsp" %>
+        <%@ include file="../reports/footer.jsp" %>
     </footer>
 
     <script>
@@ -108,21 +110,32 @@
             const rowCount = document.getElementById("rowCount");
 
             // Fetch Data
-           fetch("http://localhost:8080/ItiapInstitute/api/itis")
+           const itiApiUrl = "${itiApiUrl}";
+
+fetch(itiApiUrl)
     .then(response => {
+
         if (!response.ok) {
-            throw new Error("Failed to fetch data");
+            throw new Error("Failed to fetch ITI data");
         }
+
         return response.json();
     })
     .then(data => {
+
         allData = data;
         renderTable(allData);
     })
     .catch(error => {
-        console.error("Error fetching data:", error);
+
+        console.error(error);
+
         tableBody.innerHTML =
-            "<tr><td colspan='7' class='text-center text-danger'>No data retrieved from back-end server.</td></tr>";
+            "<tr>" +
+            "<td colspan='7' class='text-center text-danger'>" +
+            "Failed to load ITI data" +
+            "</td>" +
+            "</tr>";
     });
             function renderTable(dataToRender) {
                 tableBody.innerHTML = "";
@@ -133,18 +146,44 @@
                 }
 
                 dataToRender.forEach((item, index) => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td><strong>\${index + 1}</strong></td>
-                        <td style="color: #2563eb; font-weight: bold;">\${item.itiCode || ''}</td>
-                        <td style="color: #059669; font-weight: bold;">\${item.ncvtCode || ''}</td>
-                        <td style="font-weight: 600;">\${item.itiName || ''}</td>
-                        <td>\${item.principalName || ''}</td>
-                        <td>\${item.email || ''}</td>
-                        <td>\${item.mobile || ''}</td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td><strong>\${index + 1}</strong></td>
+
+        <td>
+            <a href="${pageContext.request.contextPath}/iti-details?itiCode=\${encodeURIComponent(item.itiCode)}"
+               style="color: #2563eb; font-weight: bold; text-decoration: none;">
+
+                \${item.itiCode || ''}
+
+            </a>
+        </td>
+
+        <td style="color: #059669; font-weight: bold;">
+            \${item.ncvtCode || ''}
+        </td>
+
+        <td style="font-weight: 600;">
+            \${item.itiName || ''}
+        </td>
+
+        <td>
+            \${item.principalName || ''}
+        </td>
+
+        <td>
+            \${item.email || ''}
+        </td>
+
+        <td>
+            \${item.mobile || ''}
+        </td>
+    `;
+
+    tableBody.appendChild(tr);
+});
+        
                 rowCount.textContent = `Showing \${dataToRender.length} entries`;
             }
            function applyFilter() {
