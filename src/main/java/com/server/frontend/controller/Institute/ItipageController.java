@@ -68,4 +68,13 @@ public class ItipageController {
         );
         return "Institute/ItiTradeSelection";
     }
+
+    @GetMapping("/shift-unit-permitted")
+    public String shiftUnitPermitted(Model model) {
+        model.addAttribute(
+                "backendApiBaseUrl",
+                backendApiConfig.getBaseUrl()
+        );
+        return "Institute/ShiftUnitPermitted";
+    }
 }

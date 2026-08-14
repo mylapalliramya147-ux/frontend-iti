@@ -329,19 +329,26 @@ tradeTableBody.appendChild(tr);
                 }
             }
 
-            function goToShiftUnitPage(trade) {
-                const itiCode = itiSelect.value;
-                const tradeCode = String(trade.tradecode);
-                const tradeShort = trade.tradeshort;
+           function goToShiftUnitPage(trade) {
 
-                const url =
-                    'ShiftUnitPermitted.jsp?itiCode=' + encodeURIComponent(itiCode) +
-                    '&tradeCode=' + encodeURIComponent(tradeCode) +
-                    '&tradeShort=' + encodeURIComponent(tradeShort);
+    const itiCode = itiSelect.value;
 
-                window.location.href = url;
-            }
+    const iti = allItis.find(i => String(i.itiCode) === String(itiCode));
 
+    const itiName = iti ? iti.itiName : '';
+
+    const tradeCode = String(trade.tradecode);
+    const tradeShort = trade.tradeshort || '';
+
+   const url =
+    '${pageContext.request.contextPath}/shift-unit-permitted' +
+    '?itiCode=' + encodeURIComponent(itiCode) +
+    '&tradeCode=' + encodeURIComponent(tradeCode) +
+    '&tradeShort=' + encodeURIComponent(tradeShort) +
+    '&itiName=' + encodeURIComponent(itiName);
+
+window.location.href = url;
+}
             function showLoading(show) {
                 loadingMessage.style.display = show ? "block" : "none";
                 if (show) {
