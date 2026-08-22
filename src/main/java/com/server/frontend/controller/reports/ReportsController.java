@@ -16,51 +16,46 @@ public class ReportsController {
 
     // ========== ITI LEVEL REPORTS (Role 4) ==========
 
-    @GetMapping("/iti-wise-status")
-    public String itiWiseStatus() {
-        return "reports/iti-wise-status-view";
+    @GetMapping("/getDashboardreport_iti")
+    public String getDashboardreport_iti() {
+        return "reports/getDashboardreport_iti";
     }
 
-    @GetMapping("/applicant-report-by-phase")
-    public String applicantReportByPhase() {
-        return "reports/district-applicant-report-view";
+    @GetMapping("/Applicant_Report")
+    public String Applicant_Report() {
+        return "reports/Applicant_Report";
     }
 
-    @GetMapping("/admission-report-iti")
-    public String admissionReportIti() {
-        return "reports/admission-report-iti";
+    @GetMapping("/api_report")
+    public String api_report() {
+        return "reports/api_report";
     }
 
-    @GetMapping("/dsc-full")
-    public String dscFull() {
-        return "reports/district-dsc-full-view";
-    }
-
-    @GetMapping("/dsc-list")
-    public String dscList() {
-        return "reports/dsc-list";
+    @GetMapping("/DSC_List_secondphase")
+    public String DSC_List_secondphase() {
+        return "reports/DSC_List_secondphase";
     }
 
     // ========== DISTRICT LEVEL REPORTS (Role 3) ==========
 
-    @GetMapping("/caste-wise-admissions")
-    public String casteWiseAdmissions() {
-        return "reports/district-caste-wise-view";
+    @GetMapping("/statewidecastewiseabstractinter")
+    public String statewidecastewiseabstractinter() {
+        return "reports/statewidecastewiseabstractinter";
     }
 
-    @GetMapping("/applicant-mobile-address")
-    public String applicantMobileAddress() {
-        return "reports/applicant-mobile-address";
+    @GetMapping("/Applicant_mobile_addr")
+    public String Applicant_mobile_addr() {
+        return "reports/Applicant_mobile_addr";
     }
 
-    @GetMapping("/api-dashboard")
-    public String apiDashboard() {
-        return "reports/api-dashboard";
+    @GetMapping("/getDashboardreport_dist")
+    public String getDashboardreport_dist() {
+        return "reports/getDashboardreport_dist";
     }
 
-    @GetMapping("/verified-application-count")
-    public String verifiedApplicationCount() {
-        return "reports/district-verified-count-view";
+    @GetMapping("/District_Wise_Application_count")
+    public String District_Wise_Application_count() {
+        return "reports/District_Wise_Application_count";
     }
 
     // ========== NODAL LEVEL REPORTS (Role 10) ==========
