@@ -279,6 +279,14 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter" class="report-card">
+                        <i class="fas fa-id-card"></i>
+                        <h5>Caste Wise Admissions Abstract</h5>
+                        <p>Category-wise admission counts</p>
+                        <span class="api-badge">${backendApiUrl}/caste-wise-admissions</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/district_schedule" class="report-card">
                         <i class="fas fa-calendar-alt"></i>
                         <h5>District Schedule</h5>

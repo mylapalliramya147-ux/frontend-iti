@@ -20,9 +20,8 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="api_dashboard" />
-    <%@ include file="nodal_navbar.jsp" />
+    <%@ include file="nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>District Dashboard</h2></div>
 
     <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
@@ -74,10 +73,9 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const distCode = urlParams.get('distCode') || '${param.distCode}';
+            let distCode = urlParams.get('distCode') || '${param.distCode}';
             if (!distCode) {
-                alert('District code is required.');
-                return;
+                distCode = 'All';
             }
             fetch('${backendApiUrl}/current-admission-phase')
                 .then(r => r.json())
