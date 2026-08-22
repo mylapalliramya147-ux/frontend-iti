@@ -46,12 +46,12 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>SSC Hallticket</th>
-                            <th>Mobile No</th>
-                            <th>Reg Id</th>
+                            <th>Registration id</th>
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>Mother Name</th>
+                            <th>Mobile</th>
+                            <th>Address</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -91,12 +91,12 @@
                     const tr = document.createElement('tr');
                     tr.innerHTML =
                         '<td>' + (index + 1) + '</td>' +
-                        '<td>' + (row.sscRegno || '-') + '</td>' +
-                        '<td>' + (row.mobile || '-') + '</td>' +
                         '<td>' + (row.regId || '-') + '</td>' +
                         '<td style="text-align: left;">' + (row.name || '-') + '</td>' +
                         '<td style="text-align: left;">' + (row.fatherName || '-') + '</td>' +
-                        '<td style="text-align: left;">' + (row.motherName || '-') + '</td>';
+                        '<td style="text-align: left;">' + (row.motherName || '-') + '</td>' +
+                        '<td>' + (row.mobile || '-') + '</td>' +
+                        '<td style="text-align: left;">' + (row.address || '-') + '</td>';
                     tbody.appendChild(tr);
                 });
 

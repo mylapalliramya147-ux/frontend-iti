@@ -109,11 +109,11 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/district-iti-wise-year" class="report-card">
-                        <i class="fas fa-chart-bar"></i>
-                        <h5>ITI Wise Status</h5>
-                        <p>ITI-wise admission status</p>
-                        <span class="api-badge">${backendApiUrl}/iti-wise-status</span>
+                    <a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase" class="report-card">
+                        <i class="fas fa-file-contract"></i>
+                        <h5>DSC List</h5>
+                        <p>District seat matrix details</p>
+                        <span class="api-badge">${backendApiUrl}/dsc-full</span>
                     </a>
                 </div>
             </div>

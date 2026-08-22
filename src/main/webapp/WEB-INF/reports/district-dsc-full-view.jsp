@@ -171,28 +171,28 @@
                 const iti = data.iti || {};
                 const trade = data.trade || {};
                 
-                let metaHtml = `
+                let metaHtml = '
                     <div class="text-center mb-4">
-                        <h3 class="fw-bold" style="color: #003366;">\${meta.selection_type || 'DSC Report'}</h3>
-                        <h5 class="text-muted">SESSION: \${meta.session || ''} - Phase \${meta.phase || ''}</h5>
+                        <h3 class="fw-bold" style="color: #003366;">\' + (meta.selection_type || 'DSC Report') + '</h3>
+                        <h5 class="text-muted">SESSION: \' + (meta.session || '') + ' - Phase \' + (meta.phase || '') + '</h5>
                     </div>
                     <div class="meta-info">
-                        <div class="meta-item"><span class="meta-label">District</span><span class="meta-value">\${meta.dist_code || 'N/A'}</span></div>
-                        <div class="meta-item"><span class="meta-label">ITI Code & Name</span><span class="meta-value">\${iti.iti_code || ''} - \${iti.iti_name || 'N/A'}</span></div>
-                        <div class="meta-item"><span class="meta-label">Trade</span><span class="meta-value">\${trade.trade_code || ''} - \${trade.trade_name || 'N/A'}</span></div>
-                        <div class="meta-item"><span class="meta-label">Total Trade Strength</span><span class="meta-value">\${trade.total_strength || 0}</span></div>
+                        <div class="meta-item"><span class="meta-label">District</span><span class="meta-value">\' + (meta.dist_code || 'N/A') + '</span></div>
+                        <div class="meta-item"><span class="meta-label">ITI Code & Name</span><span class="meta-value">\' + (iti.iti_code || '') + ' - \' + (iti.iti_name || 'N/A') + '</span></div>
+                        <div class="meta-item"><span class="meta-label">Trade</span><span class="meta-value">\' + (trade.trade_code || '') + ' - \' + (trade.trade_name || 'N/A') + '</span></div>
+                        <div class="meta-item"><span class="meta-label">Total Trade Strength</span><span class="meta-value">\' + (trade.total_strength || 0) + '</span></div>
                     </div>
-                `;
+                ';
                 document.getElementById('reportContent').innerHTML = metaHtml;
 
                 // Render Categories
                 let catHtml = '';
                 if(data.categories && data.categories.length > 0) {
                     data.categories.forEach(cat => {
-                        catHtml += `
+                        catHtml += '
                             <div class="category-header">
-                                <span>Category: \${cat.category_code}</span>
-                                <span>Strength: \${cat.strength} | Filled: \${cat.filled} | Vacant: \${cat.vacant}</span>
+                                <span>Category: \' + (cat.category_code) + '</span>
+                                <span>Strength: \' + (cat.strength) + ' | Filled: \' + (cat.filled) + ' | Vacant: \' + (cat.vacant) + '</span>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-sm table-hover text-center report-table">
@@ -208,26 +208,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                        `;
+                        ';
                         if(cat.candidates && cat.candidates.length > 0) {
                             cat.candidates.forEach(cand => {
                                 const isVacant = cand.admission_number === 'VACANT';
-                                catHtml += `
-                                    <tr style="\${isVacant ? 'background-color: #fff5f5; color: #dc3545;' : ''}">
-                                        <td>\${cand.rank || '-'}</td>
-                                        <td style="font-weight: \${isVacant ? 'bold' : 'normal'};\${isVacant ? 'color: #dc3545;' : ''}">\${cand.admission_number || '-'}</td>
-                                        <td style="text-align: left; padding-left: 10px;">\${cand.name || '-'}</td>
-                                        <td style="text-align: left; padding-left: 10px;">\${cand.father_name || '-'}</td>
-                                        <td>\${cand.gender || '-'}</td>
-                                        <td>\${cand.date_of_birth || '-'}</td>
-                                        <td>\${cand.caste || '-'}</td>
+                                catHtml += '
+                                    <tr style="\' + (isVacant ? 'background-color: #fff5f5; color: #dc3545;' : '') + '">
+                                        <td>\' + (cand.rank || '-') + '</td>
+                                        <td style="font-weight: \${isVacant ? 'bold' : 'normal'};\${isVacant ? 'color: #dc3545;' : ''}">\' + (cand.admission_number || '-') + '</td>
+                                        <td style="text-align: left; padding-left: 10px;">\' + (cand.name || '-') + '</td>
+                                        <td style="text-align: left; padding-left: 10px;">\' + (cand.father_name || '-') + '</td>
+                                        <td>\' + (cand.gender || '-') + '</td>
+                                        <td>\' + (cand.date_of_birth || '-') + '</td>
+                                        <td>\' + (cand.caste || '-') + '</td>
                                     </tr>
-                                `;
+                                ';
                             });
                         } else {
-                            catHtml += `<tr><td colspan="7" class="text-muted">No candidates</td></tr>`;
+                            catHtml += '<tr><td colspan="7" class="text-muted">No candidates</td></tr>';
                         }
-                        catHtml += `</tbody></table></div>`;
+                        catHtml += '</tbody></table></div>';
                     });
                 } else {
                     catHtml = '<div class="alert alert-info">No category data found for this selection.</div>';
@@ -313,7 +313,7 @@
                             });
                     });
 
-                    // Auto-submit with current phase/year
+                    // Auto-set current phase/year
                     fetch('${backendApiUrl}/current-admission-phase')
                         .then(r => r.json())
                         .then(config => {
@@ -323,10 +323,6 @@
                             const phaseSelect = document.getElementById('phase');
                             if (yearSelect) yearSelect.value = year;
                             if (phaseSelect && phase) phaseSelect.value = String(phase);
-                            const form = document.getElementById('reportForm');
-                            if (form) {
-                                form.dispatchEvent(new Event('submit'));
-                            }
                         })
                         .catch(err => console.error('Failed to load current phase:', err));
                 })

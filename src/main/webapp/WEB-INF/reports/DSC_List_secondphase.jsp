@@ -144,7 +144,7 @@
         }
 
         function loadOptions() {
-            fetch('${backendApiUrl}/dsc-options', { credentials: 'include' })
+            return fetch('${backendApiUrl}/dsc-options', { credentials: 'include' })
                 .then(r => r.json())
                 .then(data => {
                     const itiSelect = document.getElementById('iti_code');
@@ -153,12 +153,12 @@
                     tradeSelect.innerHTML = '<option value="">Select Trade</option>';
                     if (data.itis && data.itis.length > 0) {
                         data.itis.forEach(iti => {
-                            itiSelect.innerHTML += `<option value="${iti.iti_code}">${iti.iti_name}</option>`;
+                            itiSelect.innerHTML += '<option value="' + iti.iti_code + '">' + iti.iti_name + '</option>';
                         });
                     }
                     if (data.trades && data.trades.length > 0) {
                         data.trades.forEach(trade => {
-                            tradeSelect.innerHTML += `<option value="${trade.trade_code}">${trade.trade_name}</option>`;
+                            tradeSelect.innerHTML += '<option value="' + trade.trade_code + '">' + trade.trade_name + '</option>';
                         });
                     }
                 })
@@ -203,7 +203,7 @@
                 data.categories.forEach(cat => {
                     if (cat.candidates && cat.candidates.length > 0) {
                         const headerRow = document.createElement('tr');
-                        headerRow.innerHTML = `<td colspan="8" class="category-header">Category : ${cat.category_code || 'Unknown'} Strength (${cat.strength || 0}) Strength Fill (${cat.filled || 0}) and Strength Vacant (${cat.vacant || 0})</td>`;
+                        headerRow.innerHTML = '<td colspan="8" class="category-header">Category : ' + (cat.category_code || 'Unknown') + ' Strength (' + (cat.strength || 0) + ') Strength Fill (' + (cat.filled || 0) + ') and Strength Vacant (' + (cat.vacant || 0) + ')</td>';
                         tbody.appendChild(headerRow);
 
                         cat.candidates.forEach(cand => {
@@ -249,19 +249,11 @@
                     const phaseSelect = document.getElementById('phase');
                     if (yearSelect) yearSelect.value = year;
                     if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    loadOptions();
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
+                    return loadOptions();
                 })
                 .catch(err => {
                     console.error('Failed to load current phase:', err);
-                    loadOptions();
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
+                    return loadOptions();
                 });
         });
     </script>
