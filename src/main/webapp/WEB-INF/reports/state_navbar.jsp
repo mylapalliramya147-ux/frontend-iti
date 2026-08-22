@@ -36,6 +36,7 @@
         <a href="${pageContext.request.contextPath}/authHome" class="state-dashboard-link">
             <i class="fas fa-home me-1"></i> Home
         </a>
+        <a href="${pageContext.request.contextPath}/reports/state-dashboard" class="state-dashboard-link ${activeTab == 'state_dashboard' ? 'active' : ''}">State Dashboard</a>
         <a href="${pageContext.request.contextPath}/reports/district-schedule" class="state-dashboard-link ${activeTab == 'district_schedule' ? 'active' : ''}">District Schedule</a>
         <a href="${pageContext.request.contextPath}/reports/district-permitted-shift-view" class="state-dashboard-link ${activeTab == 'shift_unit' ? 'active' : ''}">Shift/Unit Report</a>
         <a href="${pageContext.request.contextPath}/reports/iti-admissions" class="state-dashboard-link ${activeTab == 'iti_admissions' ? 'active' : ''}">ITI Admissions</a>

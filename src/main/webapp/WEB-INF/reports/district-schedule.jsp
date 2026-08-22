@@ -106,7 +106,7 @@
             document.getElementById('loader').style.display = 'block';
             let params = 'year=' + encodeURIComponent(year) + '&page=0&size=10000';
             if (distCode) params += '&distCode=' + encodeURIComponent(distCode);
-            fetch('${backendApiUrl}/district-schedule?&year=' + year + '' + params, { method: 'GET' })
+            fetch('${backendApiUrl}/district-schedule?' + params, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
