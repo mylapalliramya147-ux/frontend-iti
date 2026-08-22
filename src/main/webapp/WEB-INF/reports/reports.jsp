@@ -201,14 +201,6 @@
                         <span class="api-badge">${backendApiUrl}/student-details</span>
                     </a>
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/district-wise-application-count" class="report-card">
-                        <i class="fas fa-hashtag"></i>
-                        <h5>Verification Report</h5>
-                        <p>Application counts by district</p>
-                        <span class="api-badge">${backendApiUrl}/district-wise-application-count</span>
-                    </a>
-                </div>
             </div>
 
             <!-- State Level Reports (Role 1) -->
