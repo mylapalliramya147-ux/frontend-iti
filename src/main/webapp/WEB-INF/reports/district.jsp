@@ -209,6 +209,23 @@
             a.click();
             URL.revokeObjectURL(url);
         }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('year');
+                    if (yearSelect) yearSelect.value = year;
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
+        });
+
     </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

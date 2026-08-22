@@ -40,7 +40,7 @@
             <h3 class="report-section-title"><i class="fas fa-university me-2"></i> ITI Level Reports (Role 4)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/iti-wise-status" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/getDashboardreport_iti" class="report-card">
                         <i class="fas fa-tachometer-alt"></i>
                         <h5>API Dashboard (ITI)</h5>
                         <p>Admission status by ITI</p>
@@ -48,7 +48,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/applicant-report-by-phase" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Applicant_Report" class="report-card">
                         <i class="fas fa-user-check"></i>
                         <h5>Applicant Report</h5>
                         <p>Phase-wise applicant list</p>
@@ -56,7 +56,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/admission-report-iti" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/api_report" class="report-card">
                         <i class="fas fa-clipboard-list"></i>
                         <h5>Admission Report (ITI)</h5>
                         <p>Trade-wise admission stats</p>
@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/dsc-list" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase" class="report-card">
                         <i class="fas fa-file-contract"></i>
                         <h5>DSC List</h5>
                         <p>District seat matrix details</p>
@@ -77,7 +77,7 @@
             <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> District Level Reports (Role 3)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/caste-wise-admissions" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter" class="report-card">
                         <i class="fas fa-id-card"></i>
                         <h5>Caste Wise Admissions Abstract</h5>
                         <p>Category-wise admission counts</p>
@@ -85,7 +85,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/applicant-mobile-address" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Applicant_mobile_addr" class="report-card">
                         <i class="fas fa-mobile-alt"></i>
                         <h5>Applicant Address With Mobile</h5>
                         <p>Applicant contact details</p>
@@ -93,7 +93,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/api-dashboard" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/getDashboardreport_dist" class="report-card">
                         <i class="fas fa-chalkboard-teacher"></i>
                         <h5>API Dashboard (District)</h5>
                         <p>District-wide admission dashboard</p>
@@ -101,7 +101,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/verified-application-count" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="report-card">
                         <i class="fas fa-check-circle"></i>
                         <h5>Verification Report (District)</h5>
                         <p>Verification status by district</p>

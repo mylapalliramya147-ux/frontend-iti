@@ -66,11 +66,11 @@
     <script>
         let dataTable;
 
-        function loadReport() {
+        function loadReport(year, phase) {
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('${backendApiUrl}/applicant-mobile-address?page=0&size=10000', {
+            fetch('${backendApiUrl}/applicant-mobile-address?year=' + year + '&page=0&size=10000', {
                 method: 'GET'
             })
             .then(response => response.json())
@@ -117,7 +117,21 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', loadReport);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    loadReport(year, phase);
+                })
+                .catch(err => {
+                    console.error('Failed to load current phase:', err);
+                    loadReport(String(new Date().getFullYear()), '');
+                });
+        });
+
     </script>
 </body>
 </html>

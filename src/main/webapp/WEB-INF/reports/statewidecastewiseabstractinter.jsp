@@ -258,13 +258,21 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('dist_code').addEventListener('change', function() {
-                if (this.value === '') {
-                    document.getElementById('govt').value = '';
-                    document.getElementById('phase').value = '';
-                    document.getElementById('gender').value = '';
-                }
-            });
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('acadamic_year');
+                    const phaseSelect = document.getElementById('phase');
+                    if (yearSelect) yearSelect.value = year;
+                    if (phaseSelect && phase) phaseSelect.value = String(phase);
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
         });
     </script>
 </body>

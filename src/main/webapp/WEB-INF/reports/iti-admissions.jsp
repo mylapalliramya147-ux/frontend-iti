@@ -89,7 +89,8 @@
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function loadDistricts() {
-            fetch('${backendApiUrl}/trade-display/districts', { method: 'GET' })
+            const year = document.getElementById('year').value;
+            fetch('${backendApiUrl}/trade-display/districts?year=' + year + '', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 const select = document.getElementById('distCode');
@@ -115,7 +116,7 @@
             let params = 'year=' + encodeURIComponent(year) + '&page=0&size=10000';
             if (distCode && distCode !== 'All') params += '&distCode=' + encodeURIComponent(distCode);
             if (govt && govt !== 'All') params += '&govt=' + encodeURIComponent(govt);
-            fetch('${backendApiUrl}/iti-admissions?' + params, { method: 'GET' })
+            fetch('${backendApiUrl}/iti-admissions?&year=' + year + '' + params, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
@@ -134,6 +135,25 @@
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
+    
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('year');
+                    const phaseSelect = document.getElementById('phase');
+                    if (yearSelect) yearSelect.value = year;
+                    if (phaseSelect && phase) phaseSelect.value = String(phase);
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
+        });
     </script>
 </body>
 </html>

@@ -111,6 +111,25 @@
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
+    
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('year');
+                    const phaseSelect = document.getElementById('phase');
+                    if (yearSelect) yearSelect.value = year;
+                    if (phaseSelect && phase) phaseSelect.value = String(phase);
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
+        });
     </script>
 </body>
 </html>

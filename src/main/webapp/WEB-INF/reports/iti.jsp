@@ -228,7 +228,19 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // Simplified: only year selection
+            try {
+                const res = await fetch('${backendApiUrl}/current-admission-phase');
+                const config = await res.json();
+                const year = config.year || String(new Date().getFullYear());
+                const yearSelect = document.getElementById('year');
+                if (yearSelect) yearSelect.value = year;
+                const form = document.getElementById('reportForm');
+                if (form) {
+                    form.dispatchEvent(new Event('submit'));
+                }
+            } catch (err) {
+                console.error('Failed to load current phase:', err);
+            }
         });
 
         function showSelection() {

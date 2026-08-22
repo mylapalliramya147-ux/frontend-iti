@@ -83,7 +83,31 @@
             </div>
         </div>
     </div>
-    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.min.js">
+        
+
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('year');
+                    const phaseSelect = document.getElementById('phase');
+                    const distCodeSelect = document.getElementById('distCode');
+                    if (yearSelect) yearSelect.value = year;
+                    if (phaseSelect && phase) phaseSelect.value = String(phase);
+                    if (distCodeSelect) distCodeSelect.value = 'All';
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
+        });
+
+    </script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }

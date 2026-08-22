@@ -240,7 +240,29 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            loadOptions();
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const phase = config.phase || '';
+                    const yearSelect = document.getElementById('year');
+                    const phaseSelect = document.getElementById('phase');
+                    if (yearSelect) yearSelect.value = year;
+                    if (phaseSelect && phase) phaseSelect.value = String(phase);
+                    loadOptions();
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to load current phase:', err);
+                    loadOptions();
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                });
         });
     </script>
 </body>
