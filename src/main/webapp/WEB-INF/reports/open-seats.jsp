@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Seats Abstract | Nodal Reports</title>
+    <title>DIST/ITI/Trade Wise Seats Abstract | Nodal Reports</title>
+    <link rel="shortcut icon" type="image/ico" href="iti.png" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -24,6 +25,11 @@
         .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
         .num { text-align: center; font-weight: 700 !important; }
+        #root { margin: 0 auto; width: 90%; max-width: 1200px; }
+        #disttable { margin: 0 auto; float: none; width: auto; }
+        #dist, #iti { float: none; width: auto; margin: 20px auto; }
+        .district-link { color: #003366; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .district-link:hover { color: #0057AF; text-decoration: underline; }
     </style>
 </head>
 <body class="nodal-body">
@@ -32,6 +38,7 @@
     <c:set var="activeTab" value="open_seats" />
     <%@ include file="nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>DIST/ITI/Trade Wise Seats Abstract</h2></div>
+
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
@@ -41,7 +48,11 @@
                         <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
                         <div class="col-md-7">
                             <select name="year" id="year" class="form-select-official w-100" required>
-                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+                                <option value="">Select Year</option>
+                                <option value='2019'>2019</option><option value='2020'>2020</option>
+                                <option value='2021'>2021</option><option value='2022'>2022</option>
+                                <option value='2023'>2023</option><option value='2024'>2024</option>
+                                <option value='2025'>2025</option><option value='2026'>2026</option>
                             </select>
                         </div>
                     </div>
@@ -52,75 +63,141 @@
             </div>
         </div>
     </div>
+
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading open seats abstract...</p></div>
-    <div class="container mt-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">DIST/ITI/Trade Wise Seats Abstract</h2></div>
+
+    <div id="reportView" style="display: none;">
+        <div class="text-center mb-3" style="color: #003366;">
+            <h2 class="fw-bold fs-4 mb-2" id="reportTitle">DIST/ITI/Trade Wise Seats Abstract</h2>
+            <p class="mb-0">For the Year: <span id="yearDisplay" class="fw-bold"></span></p>
+        </div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
         </div>
-        <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-            <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>District Name</th><th class="num">Seats</th><th class="num">Fill</th><th class="num">Vacant</th></tr></thead>
-                    <tbody id="tableBody"></tbody>
-                    <tfoot id="tableFoot"></tfoot>
-                </table>
+
+        <div id="root">
+            <div id="disttable">
+                <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+                    <div style="overflow-y: auto; max-height: 600px;">
+                        <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th style="text-align: left;">District Name</th>
+                                    <th class="num">No.Of Seats</th>
+                                    <th class="num">Fill</th>
+                                    <th class="num">Vacant</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                            <tfoot id="tableFoot"></tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <div id="dist"></div>
+            <div id="iti"></div>
         </div>
     </div>
+
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
+
+        function dist_code(distCode, year) {
+            $('#iti').hide();
+            $('#dist').show();
+            document.getElementById('dist').innerHTML = '<div class="loader-spinner"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading ITI details...</p></div>';
+            fetch('${backendApiUrl}/open-seats?year=' + encodeURIComponent(year) + '&distCode=' + encodeURIComponent(distCode))
+                .then(r => r.json())
+                .then(response => {
+                    const data = response.data || [];
+                    if (data.length === 0) {
+                        document.getElementById('dist').innerHTML = '<div class="alert alert-info">No ITI data found for this district.</div>';
+                        return;
+                    }
+                    let html = '<div class="shadow mt-3" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;"><div style="overflow-y: auto; max-height: 400px;"><table class="table table-bordered mb-0 table-hover text-center report-table"><thead><tr><th>SNO</th><th style="text-align: left;">ITI Name</th><th class="num">Seats</th><th class="num">Fill</th><th class="num">Vacant</th></tr></thead><tbody>';
+                    data.forEach((row, index) => {
+                        html += '<tr><td>' + (index + 1) + '</td><td style="text-align: left;"><a href="javascript:iti_code(\'' + row.itiCode + '\', \'' + year + '\')" class="district-link">' + (row.itiName || '-') + '</a></td><td class="num">' + (row.noOfSeats || 0) + '</td><td class="num">' + (row.fill || 0) + '</td><td class="num">' + (row.vacant || 0) + '</td></tr>';
+                    });
+                    html += '</tbody></table></div></div>';
+                    document.getElementById('dist').innerHTML = html;
+                })
+                .catch(err => {
+                    document.getElementById('dist').innerHTML = '<div class="alert alert-danger">Error loading ITI data: ' + err.message + '</div>';
+                    console.error('Error:', err);
+                });
+        }
+
+        function iti_code(itiCode, year) {
+            $('#iti').show();
+            document.getElementById('iti').innerHTML = '<div class="loader-spinner"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading trade details...</p></div>';
+            fetch('${backendApiUrl}/trade-wise-report?year=' + encodeURIComponent(year) + '&itiCode=' + encodeURIComponent(itiCode))
+                .then(r => r.json())
+                .then(response => {
+                    const data = response.data || [];
+                    if (data.length === 0) {
+                        document.getElementById('iti').innerHTML = '<div class="alert alert-info">No trade data found for this ITI.</div>';
+                        return;
+                    }
+                    let html = '<div class="shadow mt-3" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;"><div style="overflow-y: auto; max-height: 400px;"><table class="table table-bordered mb-0 table-hover text-center report-table"><thead><tr><th>SNO</th><th style="text-align: left;">Trade Name</th><th class="num">Seats</th><th class="num">Fill</th><th class="num">Vacant</th></tr></thead><tbody>';
+                    data.forEach((row, index) => {
+                        html += '<tr><td>' + (index + 1) + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num">' + (row.filled || 0) + '</td><td class="num">' + (row.vacant || 0) + '</td></tr>';
+                    });
+                    html += '</tbody></table></div></div>';
+                    document.getElementById('iti').innerHTML = html;
+                })
+                .catch(err => {
+                    document.getElementById('iti').innerHTML = '<div class="alert alert-danger">Error loading trade data: ' + err.message + '</div>';
+                    console.error('Error:', err);
+                });
+        }
+
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
+            if (!year) { alert('Please select a year'); return; }
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/open-seats?year=' + encodeURIComponent(year), { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'DIST/ITI/Trade Wise Seats Abstract (' + year + ')';
-                const tbody = document.getElementById('tableBody');
-                const tfoot = document.getElementById('tableFoot');
-                tbody.innerHTML = ''; tfoot.innerHTML = '';
-                if (data.error) throw new Error(data.error);
-                let totals = { seats: 0, fill: 0, vacant: 0 };
-                if (data.data && data.data.length > 0) {
-                    data.data.forEach(row => {
+            document.getElementById('reportView').style.display = 'none';
+            document.getElementById('yearDisplay').innerText = year;
+            fetch('${backendApiUrl}/open-seats?year=' + encodeURIComponent(year))
+                .then(r => r.json())
+                .then(response => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('reportView').style.display = 'block';
+                    document.getElementById('reportTitle').innerText = 'DIST/ITI/Trade Wise Seats Abstract (' + year + ')';
+                    const tbody = document.getElementById('tableBody');
+                    const tfoot = document.getElementById('tableFoot');
+                    tbody.innerHTML = ''; tfoot.innerHTML = '';
+                    const data = response.data || [];
+                    if (data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                        return;
+                    }
+                    let totals = { seats: 0, fill: 0, vacant: 0 };
+                    data.forEach((row, index) => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.noOfSeats || 0) + '</td><td class="num text-primary">' + (row.fill || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td>';
+                        tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;"><a href="javascript:dist_code(\'' + row.distCode + '\', \'' + year + '\')" class="district-link">' + (row.distName || '-') + '</a></td><td class="num">' + (row.noOfSeats || 0) + '</td><td class="num">' + (row.fill || 0) + '</td><td class="num">' + (row.vacant || 0) + '</td>';
                         tbody.appendChild(tr);
                         totals.seats += row.noOfSeats || 0; totals.fill += row.fill || 0; totals.vacant += row.vacant || 0;
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.seats + '</td><td class="num">' + totals.fill + '</td><td class="num">' + totals.vacant + '</td>';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.seats + '</td><td class="num">' + totals.fill + '</td><td class="num">' + totals.vacant + '</td>';
                     tfoot.appendChild(ft);
-                } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
-            })
-            .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
+                })
+                .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
-    
 
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
+            const urlParams = new URLSearchParams(window.location.search);
+            const year = urlParams.get('year');
+            if (year) {
+                document.getElementById('year').value = year;
+                fetchReport(new Event('submit'));
+            }
         });
     </script>
 </body>

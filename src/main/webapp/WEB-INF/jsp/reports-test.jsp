@@ -17,7 +17,7 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>All Reports (25 Reports from AboutITIProject.txt)</h2>
-            <a href="${pageContext.request.contextPath}/reports/api-docs" class="btn btn-primary" target="_blank">Swagger UI</a>
+            <a href="${pageContext.request.contextPath}/reports/swagger" class="btn btn-primary" target="_blank">Swagger UI</a>
         </div>
         <p class="text-muted">Base URL: <code>${backendApiUrl}</code></p>
 
@@ -26,7 +26,7 @@
                 <div class="section-title">ITI Login Reports (Role 4)</div>
                 <a href="${pageContext.request.contextPath}/reports/api-dashboard" class="btn btn-outline-info report-btn">1. API Dashboard</a>
                 <a href="${pageContext.request.contextPath}/reports/applicant-report-by-phase" class="btn btn-outline-info report-btn">2. Applicant Report</a>
-                <a href="${pageContext.request.contextPath}/reports/admission-report" class="btn btn-outline-info report-btn">3. Admission Report</a>
+                <a href="${pageContext.request.contextPath}/reports/admission_report" class="btn btn-outline-info report-btn">3. Admission Report</a>
                 <a href="${pageContext.request.contextPath}/reports/district-dsc-full" class="btn btn-outline-info report-btn">4. DSC List</a>
 
                 <div class="section-title">District Login Reports (Role 3)</div>
@@ -55,12 +55,12 @@
                 <a href="${pageContext.request.contextPath}/reports/open-seats" class="btn btn-outline-primary report-btn">21. Admitted Seats Abstract</a>
                 <a href="${pageContext.request.contextPath}/reports/all-resource-roles" class="btn btn-outline-primary report-btn">22. All Resource Role</a>
                 <a href="${pageContext.request.contextPath}/reports/strength-filled-seats" class="btn btn-outline-primary report-btn">23. DistWise Admitted Seats Abstract</a>
-                <a href="${pageContext.request.contextPath}/reports/admission-report" class="btn btn-outline-primary report-btn">24. Trade/Dist Wise Admission Report</a>
+                <a href="${pageContext.request.contextPath}/reports/admission_report" class="btn btn-outline-primary report-btn">24. Trade/Dist Wise Admission Report</a>
                 <a href="${pageContext.request.contextPath}/reports/trade-vacant-positions" class="btn btn-outline-primary report-btn">25. TradeWise Vacant Position</a>
 
                 <div class="section-title">Public Pages</div>
-                <a href="${pageContext.request.contextPath}/reports/about-strive" class="btn btn-outline-secondary report-btn">26. About STRIVE</a>
-                <a href="${pageContext.request.contextPath}/reports/disclosure-management" class="btn btn-outline-secondary report-btn">27. Disclosure Management</a>
+                <a href="${pageContext.request.contextPath}/reports/aboutstrive" class="btn btn-outline-secondary report-btn">26. About STRIVE</a>
+                <a href="${pageContext.request.contextPath}/reports/disclosuremanagement" class="btn btn-outline-secondary report-btn">27. Disclosure Management</a>
                 <a href="${pageContext.request.contextPath}/reports/trade-display/districts" class="btn btn-outline-secondary report-btn">28. Trade Display Districts</a>
             </div>
         </div>

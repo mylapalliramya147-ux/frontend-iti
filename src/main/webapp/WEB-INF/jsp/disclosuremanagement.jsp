@@ -89,8 +89,8 @@
         <li>
             <a href="javascript:void(0);">STRIVE</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/reports/about-strive">ABOUT STRIVE</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/disclosure-management">Disclosure Management</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/aboutstrive">ABOUT STRIVE</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/disclosuremanagement">Disclosure Management</a></li>
             </ul>
         </li>
         <li>

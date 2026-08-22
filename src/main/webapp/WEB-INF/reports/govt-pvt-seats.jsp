@@ -45,6 +45,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label for="govt" class="form-label-official mb-md-0">ITI Type</label></div>
+                        <div class="col-md-7">
+                            <select name="govt" id="govt" class="form-select-official w-100">
+                                <option value="All">All Types</option>
+                                <option value="G">Government</option>
+                                <option value="P">Private</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="mt-5 text-center">
                         <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
                     </div>
@@ -58,11 +68,12 @@
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
+            <button class="btn btn-success shadow-sm px-4 rounded-pill fw-bold" onclick="fnExcelReport()"><i class="fas fa-file-excel me-2"></i>EXCEL</button>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 1200px;">
-                    <thead><tr><th>District Name</th><th class="num">Govt Strength</th><th class="num">Govt Fill</th><th class="num">Govt Vacant</th><th class="num">Pvt Strength</th><th class="num">Pvt Fill</th><th class="num">Pvt Vacant</th><th class="num">Total Strength</th><th class="num">Total Fill</th><th class="num">Total Vacant</th></tr></thead>
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="tot" style="min-width: 1200px;">
+                    <thead><tr><th>District Code</th><th style="text-align: left;">District Name</th><th class="num">Govt Strength</th><th class="num">Govt Fill</th><th class="num">Govt Vacant</th><th class="num">Pvt Strength</th><th class="num">Pvt Fill</th><th class="num">Pvt Vacant</th><th class="num">Total Strength</th><th class="num">Total Fill</th><th class="num">Total Vacant</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
@@ -73,12 +84,37 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
+        function fnExcelReport() {
+            var tab_text = "<table border='1px'><tr bgcolor='#87AFC6'>";
+            var tab = document.getElementById('tot');
+            for (var j = 0; j < tab.rows.length; j++) {
+                tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+            }
+            tab_text = tab_text + "</table>";
+            tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+            tab_text = tab_text.replace(/<img[^>]*>/gi, "");
+            tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                txtArea1.document.open("txt/html", "replace");
+                txtArea1.document.write(tab_text);
+                txtArea1.document.close();
+                txtArea1.focus();
+                sa = txtArea1.document.execCommand("SaveAs", true, "GovtPvtSeatsAbstract.xls");
+            } else {
+                sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+            }
+            return sa;
+        }
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
+            const govt = document.getElementById('govt').value;
+            if (!year) { alert('Please select a year'); return; }
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/govt-pvt-seats?year=' + encodeURIComponent(year), { method: 'GET' })
+            fetch('${backendApiUrl}/govt-pvt-seats?year=' + encodeURIComponent(year) + '&govt=' + encodeURIComponent(govt), { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
@@ -92,37 +128,26 @@
                 if (data.data && data.data.length > 0) {
                     data.data.forEach(row => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.govtStrength || 0) + '</td><td class="num text-primary">' + (row.govtFill || 0) + '</td><td class="num text-success">' + (row.govtVacant || 0) + '</td><td class="num">' + (row.pvtStrength || 0) + '</td><td class="num text-primary">' + (row.pvtFill || 0) + '</td><td class="num text-success">' + (row.pvtVacant || 0) + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num">' + (row.totalFill || 0) + '</td><td class="num">' + (row.totalVacant || 0) + '</td>';
+                        tr.innerHTML = '<td style="text-align: center;">' + (row.distCode || '-') + '</td><td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.govtStrength || 0) + '</td><td class="num text-primary">' + (row.govtFill || 0) + '</td><td class="num text-success">' + (row.govtVacant || 0) + '</td><td class="num">' + (row.pvtStrength || 0) + '</td><td class="num text-primary">' + (row.pvtFill || 0) + '</td><td class="num text-success">' + (row.pvtVacant || 0) + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num">' + (row.totalFill || 0) + '</td><td class="num">' + (row.totalVacant || 0) + '</td>';
                         tbody.appendChild(tr);
                         totals.govtStrength += row.govtStrength || 0; totals.govtFill += row.govtFill || 0; totals.govtVacant += row.govtVacant || 0;
                         totals.pvtStrength += row.pvtStrength || 0; totals.pvtFill += row.pvtFill || 0; totals.pvtVacant += row.pvtVacant || 0;
                         totals.totalStrength += row.totalStrength || 0; totals.totalFill += row.totalFill || 0; totals.totalVacant += row.totalVacant || 0;
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td colspan="7" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.totalStrength + '</td><td class="num">' + totals.totalFill + '</td><td class="num">' + totals.totalVacant + '</td>';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.govtStrength + '</td><td class="num">' + totals.govtFill + '</td><td class="num">' + totals.govtVacant + '</td><td class="num">' + totals.pvtStrength + '</td><td class="num">' + totals.pvtFill + '</td><td class="num">' + totals.pvtVacant + '</td><td class="num">' + totals.totalStrength + '</td><td class="num">' + totals.totalFill + '</td><td class="num">' + totals.totalVacant + '</td>';
                     tfoot.appendChild(ft);
-                } else { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+                } else { tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
-    
-
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
+            const urlParams = new URLSearchParams(window.location.search);
+            const year = urlParams.get('year');
+            if (year) {
+                document.getElementById('year').value = year;
+                fetchReport(new Event('submit'));
+            }
         });
     </script>
 </body>

@@ -42,7 +42,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/getDashboardreport_iti" class="report-card">
                         <i class="fas fa-tachometer-alt"></i>
-                        <h5>API Dashboard (ITI)</h5>
+                        <h5>API Dashboard</h5>
                         <p>Admission status by ITI</p>
                         <span class="api-badge">${backendApiUrl}/iti-wise-status</span>
                     </a>
@@ -58,7 +58,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/api_report" class="report-card">
                         <i class="fas fa-clipboard-list"></i>
-                        <h5>Admission Report (ITI)</h5>
+                        <h5>Admission Report</h5>
                         <p>Trade-wise admission stats</p>
                         <span class="api-badge">${backendApiUrl}/admission-report-iti</span>
                     </a>
@@ -103,7 +103,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="report-card">
                         <i class="fas fa-check-circle"></i>
-                        <h5>Verification Report (District)</h5>
+                        <h5>Verification Report</h5>
                         <p>Verification status by district</p>
                         <span class="api-badge">${backendApiUrl}/verified-application-count</span>
                     </a>
@@ -154,6 +154,14 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter" class="report-card">
+                        <i class="fas fa-id-card"></i>
+                        <h5>Caste Wise Admissions Abstract</h5>
+                        <p>Category-wise admission counts</p>
+                        <span class="api-badge">${backendApiUrl}/caste-wise-admissions</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/applicant-report-state-wise" class="report-card">
                         <i class="fas fa-users"></i>
                         <h5>Applicant Report Dist Wise</h5>
@@ -180,7 +188,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/govt-pvt-seats" class="report-card">
                         <i class="fas fa-building"></i>
-                        <h5>Govt/Pvt District Wise Seats Abstract</h5>
+                        <h5>Govt or Pvt Dist Wise Seats Abstract</h5>
                         <p>Govt vs Private seats</p>
                         <span class="api-badge">${backendApiUrl}/govt-pvt-seats</span>
                     </a>
@@ -196,7 +204,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/district-wise-application-count" class="report-card">
                         <i class="fas fa-hashtag"></i>
-                        <h5>Verification Report (District)</h5>
+                        <h5>Verification Report</h5>
                         <p>Application counts by district</p>
                         <span class="api-badge">${backendApiUrl}/district-wise-application-count</span>
                     </a>
@@ -215,7 +223,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/shift-unit-report" class="report-card">
+                     <a href="${pageContext.request.contextPath}/reports/district-permitted-shift-view" class="report-card">
                         <i class="fas fa-exchange-alt"></i>
                         <h5>Shift Unit Report</h5>
                         <p>Permitted shift units</p>
@@ -255,7 +263,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/admission-report" class="report-card">
+                     <a href="${pageContext.request.contextPath}/reports/admission_report" class="report-card">
                         <i class="fas fa-chart-pie"></i>
                         <h5>Trade/Dist Wise Admission Report</h5>
                         <p>Admission summary report</p>
@@ -275,21 +283,21 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/about-strive" class="report-card">
+                     <a href="${pageContext.request.contextPath}/reports/aboutstrive" class="report-card">
                         <i class="fas fa-info-circle"></i>
                         <h5>About STRIVE</h5>
                         <p>About the project</p>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/disclosure-management" class="report-card">
+                     <a href="${pageContext.request.contextPath}/reports/disclosuremanagement" class="report-card">
                         <i class="fas fa-shield-alt"></i>
                         <h5>Disclosure Management</h5>
                         <p>Public disclosure info</p>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/api-docs" class="report-card">
+                     <a href="${pageContext.request.contextPath}/reports/swagger" class="report-card">
                         <i class="fas fa-book"></i>
                         <h5>API Documentation</h5>
                         <p>Swagger UI</p>

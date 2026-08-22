@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Duration Seats Abstract | Nodal Reports</title>
+    <title>Duration Wise Trade Seats Abstract | Nodal Reports</title>
+    <link rel="shortcut icon" type="image/ico" href="iti.png" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -32,6 +33,7 @@
     <c:set var="activeTab" value="trade_duration" />
     <%@ include file="nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Duration Wise Trade Seats Abstract</h2></div>
+
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
@@ -41,7 +43,11 @@
                         <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
                         <div class="col-md-7">
                             <select name="year" id="year" class="form-select-official w-100" required>
-                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+                                <option value="">Select Year</option>
+                                <option value='2019'>2019</option><option value='2020'>2020</option>
+                                <option value='2021'>2021</option><option value='2022'>2022</option>
+                                <option value='2023'>2023</option><option value='2024'>2024</option>
+                                <option value='2025'>2025</option><option value='2026'>2026</option>
                             </select>
                         </div>
                     </div>
@@ -49,7 +55,7 @@
                         <div class="col-md-5"><label for="durationMonths" class="form-label-official mb-md-0">Duration (Months) *</label></div>
                         <div class="col-md-7">
                             <select name="durationMonths" id="durationMonths" class="form-select-official w-100" required>
-                                <option value="12">12 Months</option><option value="24">24 Months</option><option value="36">36 Months</option><option value="48">48 Months</option>
+                                <option value="6">6 Months</option><option value="12">12 Months</option><option value="24">24 Months</option><option value="36">36 Months</option><option value="48">48 Months</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +63,7 @@
                         <div class="col-md-5"><label for="itiType" class="form-label-official mb-md-0">ITI Type</label></div>
                         <div class="col-md-7">
                             <select name="itiType" id="itiType" class="form-select-official w-100">
-                                <option value="All">All Types</option><option value="Govt">Government</option><option value="Pvt">Private</option>
+                                <option value="All">All Types</option><option value="G">Government</option><option value="P">Private</option>
                             </select>
                         </div>
                     </div>
@@ -68,6 +74,7 @@
             </div>
         </div>
     </div>
+
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading trade duration seats...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
         <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Duration Wise Trade Seats Abstract</h2></div>
@@ -78,13 +85,14 @@
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
                 <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 900px;">
-                    <thead><tr><th>Trade Code</th><th style="text-align: left;">Trade Name</th><th class="num">Strength</th><th class="num">Fill</th><th class="num">Vacant</th><th class="num">Fill %</th></tr></thead>
+                    <thead><tr><th>District Code</th><th style="text-align: left;">District Name</th><th class="num">Strength</th><th class="num">Fill</th><th class="num">Vacant</th><th class="num">Fill %</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
             </div>
         </div>
     </div>
+
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -94,6 +102,8 @@
             const year = document.getElementById('year').value;
             const durationMonths = document.getElementById('durationMonths').value;
             const itiType = document.getElementById('itiType').value;
+            if (!year) { alert('Please select a year'); return; }
+            if (!durationMonths) { alert('Please select trade duration'); return; }
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
             fetch('${backendApiUrl}/trade-duration-seats?year=' + encodeURIComponent(year) + '&durationMonths=' + encodeURIComponent(durationMonths) + '&itiType=' + encodeURIComponent(itiType), { method: 'GET' })
@@ -121,24 +131,15 @@
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
-    
-
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
+            const urlParams = new URLSearchParams(window.location.search);
+            const year = urlParams.get('year');
+            const durationMonths = urlParams.get('durationMonths');
+            const itiType = urlParams.get('itiType');
+            if (year) document.getElementById('year').value = year;
+            if (durationMonths) document.getElementById('durationMonths').value = durationMonths;
+            if (itiType) document.getElementById('itiType').value = itiType;
+            if (year && durationMonths) fetchReport(new Event('submit'));
         });
     </script>
 </body>

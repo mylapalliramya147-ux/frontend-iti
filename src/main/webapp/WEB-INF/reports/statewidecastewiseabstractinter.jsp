@@ -5,21 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caste-wise Admissions Abstract | Reports</title>
+    <title>Caste-wise Admissions Abstract | Nodal Reports</title>
+    <link rel="shortcut icon" type="image/ico" href="iti.png" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
+        .nodal-report-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
+        .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
+        .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
         .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
         .form-select-official, .form-control-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
         .form-select-official:focus, .form-control-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
         .btn-submit-official-navy { background-color: #003366; color: white; padding: 12px 30px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; border: none; transition: all 0.2s ease; }
         .btn-submit-official-navy:hover { background-color: #002244; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2); color: white; }
-        .report-table th { font-size: 12px; padding: 12px 8px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
-        .report-table td { font-size: 13px; padding: 10px 8px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
+        .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
+        .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
         .num { text-align: center; font-weight: 700 !important; }
     </style>
@@ -28,82 +31,49 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="caste_wise" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Caste-wise Admissions Abstract</h2></div>
 
     <div class="container mt-4" id="selectionView">
-        <div class="nodal-report-card shadow-lg" style="max-width: 750px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
+        <div class="nodal-report-card shadow-lg" style="max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
-            <div class="p-4 bg-white rounded-bottom">
+            <div class="p-5 bg-white rounded-bottom">
                 <form id="reportForm" onsubmit="fetchReport(event)">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label-official">District</label>
-                            <select name="dist_code" id="dist_code" class="form-select-official">
-                                <option value="">All</option>
-                                <option value='25'>Alluri Sitaramaraju</option>
-                                <option value='24'>Anakapalli</option>
-                                <option value='22'>Anantapur</option>
-                                <option value='33'>Annamayya</option>
-                                <option value='32'>Bapatla</option>
-                                <option value='23'>Chittoor</option>
-                                <option value='14'>East Godavari</option>
-                                <option value='29'>Eluru</option>
-                                <option value='17'>Guntur</option>
-                                <option value='27'>Kakinada</option>
-                                <option value='28'>Konaseema</option>
-                                <option value='16'>Krishna</option>
-                                <option value='21'>Kurnool</option>
-                                <option value='38'>Markapuram</option>
-                                <option value='34'>Nandyal</option>
-                                <option value='19'>Nellore</option>
-                                <option value='30'>NTR</option>
-                                <option value='31'>Palnadu</option>
-                                <option value='26'>Parvathipuram-Manyam</option>
-                                <option value='37'>Polavaram</option>
-                                <option value='18'>Prakasam</option>
-                                <option value='11'>Srikakulam</option>
-                                <option value='35'>Sri Satyasai</option>
-                                <option value='36'>Tirupati</option>
-                                <option value='13'>Visakhapatnam</option>
-                                <option value='12'>Vizianagaram</option>
-                                <option value='15'>West Godavari</option>
-                                <option value='20'>YSR</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mt-3 mt-md-0">
-                            <label class="form-label-official">Year</label>
-                            <select name="acadamic_year" id="acadamic_year" class="form-select-official">
-                                <option value="">All</option>
-                                <option value="2025" selected>2025-26</option>
-                                <option value="2024">2024-25</option>
-                                <option value="2023">2023-24</option>
-                                <option value="2022">2022-23</option>
-                                <option value="2021">2021-22</option>
-                                <option value="2020">2020-21</option>
-                                <option value="2019">2019-20</option>
-                                <option value="2018">2018-19</option>
-                                <option value="2017">2017-18</option>
-                                <option value="2016">2016-17</option>
-                                <option value="2015">2015-16</option>
-                                <option value="2014">2014-15</option>
-                                <option value="2013">2013-14</option>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4"><label for="distCode" class="form-label-official mb-md-0">District</label></div>
+                        <div class="col-md-8">
+                            <select name="distCode" id="distCode" class="form-select-official w-100">
+                                <option value="All">All</option>
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label-official">Govt/Pvt</label>
-                            <select name="govt" id="govt" class="form-select-official">
-                                <option value="">All</option>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4"><label for="year" class="form-label-official mb-md-0">Year *</label></div>
+                        <div class="col-md-8">
+                            <select name="year" id="year" class="form-select-official w-100" required>
+                                <option value="">Select Year</option>
+                                <option value='2019'>2019</option><option value='2020'>2020</option>
+                                <option value='2021'>2021</option><option value='2022'>2022</option>
+                                <option value='2023'>2023</option><option value='2024'>2024</option>
+                                <option value='2025'>2025</option><option value='2026'>2026</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4"><label for="govt" class="form-label-official mb-md-0">Govt/Pvt</label></div>
+                        <div class="col-md-8">
+                            <select name="govt" id="govt" class="form-select-official w-100">
+                                <option value="All">All</option>
                                 <option value="G">Govt</option>
                                 <option value="P">Pvt</option>
                             </select>
                         </div>
-                        <div class="col-md-4 mt-3 mt-md-0">
-                            <label class="form-label-official">Phase</label>
-                            <select name="phase" id="phase" class="form-select-official">
-                                <option value="">All</option>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4"><label for="phase" class="form-label-official mb-md-0">Phase</label></div>
+                        <div class="col-md-8">
+                            <select name="phase" id="phase" class="form-select-official w-100">
+                                <option value="All">All</option>
                                 <option value="1">Phase 1</option>
                                 <option value="2">Phase 2</option>
                                 <option value="3">Phase 3</option>
@@ -111,16 +81,18 @@
                                 <option value="5">Phase 5</option>
                             </select>
                         </div>
-                        <div class="col-md-4 mt-3 mt-md-0">
-                            <label class="form-label-official">Gender</label>
-                            <select name="gender" id="gender" class="form-select-official">
-                                <option value="">All</option>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-4"><label for="gender" class="form-label-official mb-md-0">Gender</label></div>
+                        <div class="col-md-8">
+                            <select name="gender" id="gender" class="form-select-official w-100">
+                                <option value="All">All</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
                         </div>
                     </div>
-                    <div class="mt-4 text-center">
+                    <div class="mt-5 text-center">
                         <button type="submit" class="btn-submit-official-navy"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
                     </div>
                 </form>
@@ -128,34 +100,20 @@
         </div>
     </div>
 
-    <div class="loader-spinner" id="loader">
-        <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <p class="mt-3 fw-bold">Loading caste-wise report...</p>
-    </div>
-
-    <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;">
-            <h2 class="fw-bold fs-4 mb-2" id="reportTitle">Caste-wise Admissions Abstract</h2>
-            <div id="reportSubtitle" class="text-muted"></div>
-        </div>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading caste-wise report...</p></div>
+    <div class="container mt-4" id="reportView" style="display: none;">
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Caste-wise Admissions Abstract</h2></div>
         <div class="no-print d-flex justify-content-center gap-3 mb-5">
-            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">
-                <i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION
-            </button>
-            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;">
-                <i class="fas fa-print me-2"></i>PRINT REPORT
-            </button>
-            <button class="btn btn-success shadow-sm px-4 rounded-pill fw-bold" onclick="exportToExcel()">
-                <i class="fas fa-file-excel me-2"></i>EXCEL DOWNLOAD
-            </button>
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
+            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="casteTable" style="min-width: 1200px;">
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="tot" style="min-width: 1000px;">
                     <thead>
                         <tr>
                             <th>District Code</th>
-                            <th>District Name</th>
+                            <th style="text-align: left;">District Name</th>
                             <th class="num">BC-A</th>
                             <th class="num">BC-B</th>
                             <th class="num">BC-C</th>
@@ -182,93 +140,134 @@
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
-        let dataTable;
-
-        function showSelection() {
-            document.getElementById('reportView').style.display = 'none';
-            document.getElementById('selectionView').style.display = 'block';
+        function loadDistricts() {
+            fetch('${backendApiUrl}/trade-display/districts', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('distCode');
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach(dist => {
+                        const option = document.createElement('option');
+                        option.value = dist.code;
+                        option.textContent = dist.name;
+                        select.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading districts:', error));
         }
+        window.addEventListener('load', loadDistricts);
+
+        function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
 
         function fetchReport(event) {
             event.preventDefault();
-            const distCode = document.getElementById('dist_code').value || 'All';
-            const year = document.getElementById('acadamic_year').value || '';
-            const govt = document.getElementById('govt').value || 'All';
-            const phase = document.getElementById('phase').value || 'All';
-            const gender = document.getElementById('gender').value || 'All';
-
+            const year = document.getElementById('year').value;
+            const distCode = document.getElementById('distCode').value;
+            const govt = document.getElementById('govt').value;
+            const phase = document.getElementById('phase').value;
+            const gender = document.getElementById('gender').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-
-            fetch('${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=' + encodeURIComponent(distCode) + '&govt=' + encodeURIComponent(govt) + '&phase=' + encodeURIComponent(phase) + '&gender=' + encodeURIComponent(gender), {
-                method: 'GET'
-            })
+            let apiUrl = '${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=' + encodeURIComponent(distCode) + '&govt=' + encodeURIComponent(govt) + '&phase=' + encodeURIComponent(phase) + '&gender=' + encodeURIComponent(gender);
+            fetch(apiUrl, { method: 'GET' })
             .then(response => response.json())
-            .then(data => {
+            .then(response => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
-
+                document.getElementById('reportTitle').innerText = 'Caste-wise Admissions Abstract (' + year + ')';
                 const tbody = document.getElementById('tableBody');
                 const tfoot = document.getElementById('tableFoot');
                 tbody.innerHTML = ''; tfoot.innerHTML = '';
-
-                if (data.error) throw new Error(data.error);
-
-                let subtitle = 'Year ';
-                if (year) subtitle += year + ' ';
-                else subtitle += 'All ';
-                subtitle += 'and Govt ' + (govt || 'All') + ' and Phase ' + (phase || 'All') + ' and Gender ' + (gender || 'All');
-                document.getElementById('reportSubtitle').innerText = subtitle;
-
-                if (data.data && data.data.length > 0) {
-                    let totals = { bcA: 0, bcB: 0, bcC: 0, bcD: 0, bcE: 0, ews: 0, exS: 0, im: 0, oc: 0, ph: 0, scI: 0, scII: 0, scIII: 0, sp: 0, st: 0 };
-                    data.data.forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = '<td>' + (row.districtCode || '-') + '</td><td style="text-align: left;">' + (row.districtName || '-') + '</td><td class="num">' + (row.bcA || 0) + '</td><td class="num">' + (row.bcB || 0) + '</td><td class="num">' + (row.bcC || 0) + '</td><td class="num">' + (row.bcD || 0) + '</td><td class="num">' + (row.bcE || 0) + '</td><td class="num">' + (row.ews || 0) + '</td><td class="num">' + (row.exS || 0) + '</td><td class="num">' + (row.im || 0) + '</td><td class="num">' + (row.oc || 0) + '</td><td class="num">' + (row.ph || 0) + '</td><td class="num">' + (row.scI || 0) + '</td><td class="num">' + (row.scII || 0) + '</td><td class="num">' + (row.scIII || 0) + '</td><td class="num">' + (row.sp || 0) + '</td><td class="num">' + (row.st || 0) + '</td>';
-                        tbody.appendChild(tr);
-                        totals.bcA += row.bcA || 0; totals.bcB += row.bcB || 0; totals.bcC += row.bcC || 0; totals.bcD += row.bcD || 0; totals.bcE += row.bcE || 0; totals.ews += row.ews || 0; totals.exS += row.exS || 0; totals.im += row.im || 0; totals.oc += row.oc || 0; totals.ph += row.ph || 0; totals.scI += row.scI || 0; totals.scII += row.scII || 0; totals.scIII += row.scIII || 0; totals.sp += row.sp || 0; totals.st += row.st || 0;
-                    });
-                    const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.bcA + '</td><td class="num">' + totals.bcB + '</td><td class="num">' + totals.bcC + '</td><td class="num">' + totals.bcD + '</td><td class="num">' + totals.bcE + '</td><td class="num">' + totals.ews + '</td><td class="num">' + totals.exS + '</td><td class="num">' + totals.im + '</td><td class="num">' + totals.oc + '</td><td class="num">' + totals.ph + '</td><td class="num">' + totals.scI + '</td><td class="num">' + totals.scII + '</td><td class="num">' + totals.scIII + '</td><td class="num">' + totals.sp + '</td><td class="num">' + totals.st + '</td>';
-                    tfoot.appendChild(ft);
-                } else {
+                const data = response.data || [];
+                if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="17" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                    return;
                 }
+                let totals = { bcA: 0, bcB: 0, bcC: 0, bcD: 0, bcE: 0, ews: 0, exS: 0, im: 0, oc: 0, ph: 0, scI: 0, scII: 0, scIII: 0, sp: 0, st: 0 };
+                data.forEach((row, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML =
+                        '<td style="text-align: center;">' + (row.districtCode || '-') + '</td>' +
+                        '<td style="text-align: left;">' + (row.districtName || '-') + '</td>' +
+                        '<td class="num">' + (row.bcA || 0) + '</td>' +
+                        '<td class="num">' + (row.bcB || 0) + '</td>' +
+                        '<td class="num">' + (row.bcC || 0) + '</td>' +
+                        '<td class="num">' + (row.bcD || 0) + '</td>' +
+                        '<td class="num">' + (row.bcE || 0) + '</td>' +
+                        '<td class="num">' + (row.ews || 0) + '</td>' +
+                        '<td class="num">' + (row.exS || 0) + '</td>' +
+                        '<td class="num">' + (row.im || 0) + '</td>' +
+                        '<td class="num">' + (row.oc || 0) + '</td>' +
+                        '<td class="num">' + (row.ph || 0) + '</td>' +
+                        '<td class="num">' + (row.scI || 0) + '</td>' +
+                        '<td class="num">' + (row.scII || 0) + '</td>' +
+                        '<td class="num">' + (row.scIII || 0) + '</td>' +
+                        '<td class="num">' + (row.sp || 0) + '</td>' +
+                        '<td class="num">' + (row.st || 0) + '</td>';
+                    tbody.appendChild(tr);
+                    totals.bcA += row.bcA || 0; totals.bcB += row.bcB || 0; totals.bcC += row.bcC || 0;
+                    totals.bcD += row.bcD || 0; totals.bcE += row.bcE || 0; totals.ews += row.ews || 0;
+                    totals.exS += row.exS || 0; totals.im += row.im || 0; totals.oc += row.oc || 0;
+                    totals.ph += row.ph || 0; totals.scI += row.scI || 0; totals.scII += row.scII || 0;
+                    totals.scIII += row.scIII || 0; totals.sp += row.sp || 0; totals.st += row.st || 0;
+                });
+                const ft = document.createElement('tr');
+                ft.style.fontWeight = '800';
+                ft.style.backgroundColor = '#0057AF';
+                ft.style.color = 'white';
+                ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 20px;">Total</td>' +
+                    '<td class="num">' + totals.bcA + '</td>' +
+                    '<td class="num">' + totals.bcB + '</td>' +
+                    '<td class="num">' + totals.bcC + '</td>' +
+                    '<td class="num">' + totals.bcD + '</td>' +
+                    '<td class="num">' + totals.bcE + '</td>' +
+                    '<td class="num">' + totals.ews + '</td>' +
+                    '<td class="num">' + totals.exS + '</td>' +
+                    '<td class="num">' + totals.im + '</td>' +
+                    '<td class="num">' + totals.oc + '</td>' +
+                    '<td class="num">' + totals.ph + '</td>' +
+                    '<td class="num">' + totals.scI + '</td>' +
+                    '<td class="num">' + totals.scII + '</td>' +
+                    '<td class="num">' + totals.scIII + '</td>' +
+                    '<td class="num">' + totals.sp + '</td>' +
+                    '<td class="num">' + totals.st + '</td>';
+                tfoot.appendChild(ft);
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('reportView').style.display = 'block';
+                document.getElementById('selectionView').style.display = 'block';
                 alert('Error loading data: ' + error.message);
                 console.error('Error:', error);
             });
         }
 
-        function exportToExcel() {
-            const table = document.getElementById('casteTable');
-            const html = table.outerHTML;
-            const blob = new Blob(['\ufeff', html], { type: "application/vnd.ms-excel" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = 'Caste_Wise_Admissions_Abstract.xls';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('acadamic_year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
+            const urlParams = new URLSearchParams(window.location.search);
+            const year = urlParams.get('year');
+            const distCode = urlParams.get('distCode');
+            const govt = urlParams.get('govt');
+            const phase = urlParams.get('phase');
+            const gender = urlParams.get('gender');
+            if (year) {
+                document.getElementById('year').value = year;
+            }
+            if (distCode) {
+                document.getElementById('distCode').value = distCode;
+            }
+            if (govt) {
+                document.getElementById('govt').value = govt;
+            }
+            if (phase) {
+                document.getElementById('phase').value = phase;
+            }
+            if (gender) {
+                document.getElementById('gender').value = gender;
+            }
+            if (year) {
+                fetchReport(new Event('submit'));
+            }
         });
     </script>
 </body>

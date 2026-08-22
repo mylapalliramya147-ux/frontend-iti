@@ -37,12 +37,12 @@
             <i class="fas fa-home me-1"></i> Home
         </a>
         <a href="${pageContext.request.contextPath}/reports/district-schedule" class="state-dashboard-link ${activeTab == 'district_schedule' ? 'active' : ''}">District Schedule</a>
-        <a href="${pageContext.request.contextPath}/reports/shift-unit-report" class="state-dashboard-link ${activeTab == 'shift_unit' ? 'active' : ''}">Shift/Unit Report</a>
+        <a href="${pageContext.request.contextPath}/reports/district-permitted-shift-view" class="state-dashboard-link ${activeTab == 'shift_unit' ? 'active' : ''}">Shift/Unit Report</a>
         <a href="${pageContext.request.contextPath}/reports/iti-admissions" class="state-dashboard-link ${activeTab == 'iti_admissions' ? 'active' : ''}">ITI Admissions</a>
         <a href="${pageContext.request.contextPath}/reports/all-resource-roles" class="state-dashboard-link ${activeTab == 'all_resources' ? 'active' : ''}">All Resource Roles</a>
         <a href="${pageContext.request.contextPath}/reports/strength-filled-seats" class="state-dashboard-link ${activeTab == 'strength_filled' ? 'active' : ''}">Strength & Fill</a>
         <a href="${pageContext.request.contextPath}/reports/trade-vacant-positions" class="state-dashboard-link ${activeTab == 'trade_vacant' ? 'active' : ''}">Trade Vacant</a>
-        <a href="${pageContext.request.contextPath}/reports/admission-report" class="state-dashboard-link ${activeTab == 'admission_report' ? 'active' : ''}">Admission Report</a>
+        <a href="${pageContext.request.contextPath}/reports/admission_report" class="state-dashboard-link ${activeTab == 'admission_report' ? 'active' : ''}">Admission Report</a>
 
         <a href="${pageContext.request.contextPath}/logout" class="state-dashboard-link ms-auto" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out

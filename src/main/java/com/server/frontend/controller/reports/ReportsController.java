@@ -80,6 +80,11 @@ public class ReportsController {
         return "reports/trade-wise-report";
     }
 
+    @GetMapping("/admissiongenderwise")
+    public String admissionGenderWise() {
+        return "reports/admissiongenderwise";
+    }
+
     @GetMapping("/applicant-report-state-wise")
     public String applicantReportStateWise() {
         return "reports/applicant-report-state-wise";
@@ -112,7 +117,7 @@ public class ReportsController {
 
     // ========== STATE LEVEL REPORTS (Role 1) ==========
 
-    @GetMapping("/district-iti-wise-year")
+    @GetMapping("/district-iti-wise-year-view")
     public String districtItiWiseYear() {
         return "reports/district-iti-wise-year-view";
     }
@@ -127,7 +132,7 @@ public class ReportsController {
         return "reports/district-schedule";
     }
 
-    @GetMapping("/shift-unit-report")
+    @GetMapping("/district-permitted-shift-view")
     public String shiftUnitReport() {
         return "reports/district-permitted-shift-view";
     }
@@ -147,7 +152,7 @@ public class ReportsController {
         return "reports/strength-filled-seats";
     }
 
-    @GetMapping("/admission-report")
+    @GetMapping("/admission_report")
     public String admissionReport() {
         return "reports/admission_report";
     }
@@ -159,19 +164,19 @@ public class ReportsController {
 
     // ========== PUBLIC PAGES ==========
 
-    @GetMapping("/about-strive")
+    @GetMapping("/aboutstrive")
     public String aboutStrive() {
         return "reports/aboutstrive";
     }
 
-    @GetMapping("/disclosure-management")
+    @GetMapping("/disclosuremanagement")
     public String disclosureManagement() {
         return "reports/disclosuremanagement";
     }
 
     // ========== UTILITY ==========
 
-    @GetMapping("/api-docs")
+    @GetMapping("/swagger")
     public String apiDocs() {
         return "reports/swagger";
     }

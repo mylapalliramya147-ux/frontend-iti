@@ -94,7 +94,7 @@
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/district-iti-wise-year" class="report-card-link">
+                        <a href="${pageContext.request.contextPath}/reports/district-iti-wise-year-view" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-building"></i>
                                 <h5>ITI Wise Status</h5>

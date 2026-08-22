@@ -62,8 +62,6 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        let dataTable;
-
         function tableToExcel(tableID, name = '') {
             var table = document.getElementById(tableID);
             var html = table.outerHTML;
@@ -147,13 +145,6 @@
                     '<td class="num">' + gAadhar + '</td>' +
                     '<td class="num">' + gEmail + '</td>';
                 tfoot.appendChild(ft);
-
-                if (dataTable) { dataTable.destroy(); }
-                dataTable = $('#tot').DataTable({
-                    dom: 'T<"clear">lfrtip',
-                    pageLength: 50,
-                    order: [[0, 'asc']]
-                });
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';

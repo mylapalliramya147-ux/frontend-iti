@@ -46,11 +46,25 @@
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="govt" class="form-label-official mb-md-0">ITI Type</label></div>
+                        <div class="col-md-5"><label for="cast_type" class="form-label-official mb-md-0">Cast Type</label></div>
                         <div class="col-md-7">
-                            <select name="govt" id="govt" class="form-select-official w-100">
-                                <option value="All">All Types</option><option value="Govt">Government</option><option value="Pvt">Private</option>
+                            <select name="cast_type" id="cast_type" class="form-select-official w-100">
+                                <option value="All">All</option>
+                                <option value="OC">OC</option>
+                                <option value="BC">BC</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label class="form-label-official mb-md-0">PWD</label></div>
+                        <div class="col-md-7">
+                            <div class="d-flex gap-4 mt-2">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_all" value="All" checked><label class="form-check-label" for="pwd_all">All</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_yes" value="Yes"><label class="form-check-label" for="pwd_yes">Yes</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_no" value="No"><label class="form-check-label" for="pwd_no">No</label></div>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-5 text-center">
@@ -70,7 +84,7 @@
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
                 <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>Trade Name</th><th>Code</th><th class="num">Strength</th><th class="num">Filled</th><th class="num">Vacant</th></tr></thead>
+                    <thead><tr><th>#</th><th style="text-align: left;">Trade Name</th><th class="num">Boys</th><th class="num">Girls</th><th class="num">Total</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
@@ -84,10 +98,12 @@
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
-            const itiType = document.getElementById('govt').value;
+            const caste = document.getElementById('cast_type').value;
+            const pwd = document.querySelector('input[name="pwd"]:checked').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/trade-wise-report?year=' + encodeURIComponent(year) + '&itiType=' + encodeURIComponent(itiType), { method: 'GET' })
+            let apiUrl = '${backendApiUrl}/admission-report?year=' + encodeURIComponent(year) + '&caste=' + encodeURIComponent(caste) + '&pwd=' + encodeURIComponent(pwd);
+            fetch(apiUrl, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
@@ -97,39 +113,34 @@
                 const tfoot = document.getElementById('tableFoot');
                 tbody.innerHTML = ''; tfoot.innerHTML = '';
                 if (data.error) throw new Error(data.error);
-                let totals = { strength: 0, filled: 0, vacant: 0 };
+                let totalBoys = 0, totalGirls = 0, grandTotal = 0;
                 if (data.data && data.data.length > 0) {
-                    data.data.forEach(row => {
+                    data.data.forEach((row, index) => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="text-align: left;">' + (row.tradeName || '-') + '</td><td>' + (row.tradeCode || '-') + '</td><td class="num">' + (row.totalStrength || 0) + '</td><td class="num text-primary">' + (row.filled || 0) + '</td><td class="num text-success">' + (row.vacant || 0) + '</td>';
+                        tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.boys || 0) + '</td><td class="num">' + (row.girls || 0) + '</td><td class="num">' + (row.total || 0) + '</td>';
                         tbody.appendChild(tr);
-                        totals.strength += row.totalStrength || 0; totals.filled += row.filled || 0; totals.vacant += row.vacant || 0;
+                        totalBoys += row.boys || 0; totalGirls += row.girls || 0; grandTotal += row.total || 0;
                     });
                     const ft = document.createElement('tr'); ft.className = 'total-row';
-                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totals.strength + '</td><td class="num">' + totals.filled + '</td><td class="num">' + totals.vacant + '</td>';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totalBoys + '</td><td class="num">' + totalGirls + '</td><td class="num">' + grandTotal + '</td>';
                     tfoot.appendChild(ft);
                 } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
-    
 
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
+            const urlParams = new URLSearchParams(window.location.search);
+            const year = urlParams.get('year');
+            const caste = urlParams.get('cast_type') || 'All';
+            const pwd = urlParams.get('pwd') || 'All';
+            if (year) {
+                document.getElementById('year').value = year;
+                document.getElementById('cast_type').value = caste;
+                const pwdRadio = document.querySelector('input[name="pwd"][value="' + pwd + '"]');
+                if (pwdRadio) pwdRadio.checked = true;
+                fetchReport(new Event('submit'));
+            }
         });
     </script>
 </body>
