@@ -7,16 +7,16 @@
         <a href="${pageContext.request.contextPath}/authHome" class="nodal-dashboard-link ${activeTab == 'home' ? 'active' : ''}">
             <i class="fas fa-home me-1"></i> Home
         </a>
-        <a href="${pageContext.request.contextPath}/reports/state-dashboard" class="nodal-dashboard-link ${activeTab == 'api_dashboard' ? 'active' : ''}">State Dashboard</a>
-        <a href="${pageContext.request.contextPath}/reports/phase-wise" class="nodal-dashboard-link ${activeTab == 'phase_wise' ? 'active' : ''}">Phase-Wise</a>
-        <a href="${pageContext.request.contextPath}/reports/today-schedule" class="nodal-dashboard-link ${activeTab == 'today_schedule' ? 'active' : ''}">Today Schedule</a>
-        <a href="${pageContext.request.contextPath}/reports/trade-wise-report" class="nodal-dashboard-link ${activeTab == 'trade_wise' ? 'active' : ''}">Trade-Wise</a>
-        <a href="${pageContext.request.contextPath}/reports/applicant-report-state-wise" class="nodal-dashboard-link ${activeTab == 'applicant_state' ? 'active' : ''}">Applicant Report</a>
-        <a href="${pageContext.request.contextPath}/reports/open-seats" class="nodal-dashboard-link ${activeTab == 'open_seats' ? 'active' : ''}">Open Seats</a>
-        <a href="${pageContext.request.contextPath}/reports/trade-duration-seats" class="nodal-dashboard-link ${activeTab == 'trade_duration' ? 'active' : ''}">Trade Duration</a>
-        <a href="${pageContext.request.contextPath}/reports/govt-pvt-seats" class="nodal-dashboard-link ${activeTab == 'govt_pvt' ? 'active' : ''}">Govt/Pvt Seats</a>
-        <a href="${pageContext.request.contextPath}/reports/student-details" class="nodal-dashboard-link ${activeTab == 'student_details' ? 'active' : ''}">Student Details</a>
-        <a href="${pageContext.request.contextPath}/reports/district-wise-application-count" class="nodal-dashboard-link ${activeTab == 'district_app_count' ? 'active' : ''}">District App Count</a>
+        <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport" class="nodal-dashboard-link ${activeTab == 'api_dashboard' ? 'active' : ''}">Api Dashboard</a>
+        <a href="${pageContext.request.contextPath}/reports/PhaseWiseAdmissionReport" class="nodal-dashboard-link ${activeTab == 'phase_wise' ? 'active' : ''}">Phase Wise Admissions Details</a>
+        <a href="${pageContext.request.contextPath}/reports/AdmissionScheduleITI" class="nodal-dashboard-link ${activeTab == 'today_schedule' ? 'active' : ''}">Today Schedule ITIs</a>
+        <a href="${pageContext.request.contextPath}/reports/admissiongenderwise" class="nodal-dashboard-link ${activeTab == 'trade_wise' ? 'active' : ''}">Trade Wise Report</a>
+        <a href="${pageContext.request.contextPath}/reports/Applicant_Report_StateWise" class="nodal-dashboard-link ${activeTab == 'applicant_state' ? 'active' : ''}">Applicant Report Dist Wise</a>
+        <a href="${pageContext.request.contextPath}/reports/Dist_wise_open_seats" class="nodal-dashboard-link ${activeTab == 'open_seats' ? 'active' : ''}">DIST/ITI/Trade Wise Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/trade_seats_abstract_duration_wise" class="nodal-dashboard-link ${activeTab == 'trade_duration' ? 'active' : ''}">Duration Wise Trade Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/govt_pvt_dist_seats_abstract" class="nodal-dashboard-link ${activeTab == 'govt_pvt' ? 'active' : ''}">Govt or Pvt Dist Wise Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/std_reg_details_report" class="nodal-dashboard-link ${activeTab == 'student_details' ? 'active' : ''}">STUDENT REG DETAILS</a>
+        <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="nodal-dashboard-link ${activeTab == 'district_app_count' ? 'active' : ''}">Verification Report</a>
         <a href="${pageContext.request.contextPath}/logout" class="nodal-dashboard-link ms-auto logout-link" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out
         </a>

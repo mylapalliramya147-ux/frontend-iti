@@ -4,299 +4,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>:: ITI ::</title>
-    <link rel="shortcut icon" type="image/ico" href="iti.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade-wise Report | Nodal Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        #menu-bar {
-            width: 100%;
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
-            height: 30px;
-            line-height: 100%;
-            border-radius: 0px;
-            -webkit-border-radius: 24px;
-            -moz-border-radius: 24px;
-            box-shadow: 2px 2px 2px #666666;
-            -webkit-box-shadow: 2px 2px 2px #666666;
-            -moz-box-shadow: 2px 2px 2px #666666;
-            background: #e4eeb9;
-            position: relative;
-            z-index: 999;
-        }
-        #menu-bar li {
-            margin: 0px 0px 6px 0px;
-            padding: 0px 6px 0px 6px;
-            float: left;
-            position: relative;
-            list-style: none;
-        }
-        #menu-bar a {
-            font-weight: bold;
-            font-family: verdana;
-            font-size: 14px;
-            color: #000000;
-            background: #e4eeb9;
-            text-decoration: none;
-            display: block;
-            padding: 6px 20px 6px 20px;
-            margin: 0;
-            margin-bottom: 6px;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-        }
-        #menu-bar li ul li a { margin: 0; }
-        #menu-bar .active a, #menu-bar li:hover > a {
-            background: blue;
-            background: lightblue;
-            background: -ms-linear-gradient(top, #EB4954, #A19197);
-            background: -webkit-gradient(linear, left top, left bottom, from(#EB4954), to(#A19197));
-            background: -moz-linear-gradient(top, #EB4954, #A19197);
-            color: white;
-            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-        }
-        #menu-bar ul li:hover a, #menu-bar li:hover li a {
-            background: lightgoldenrodyellow;
-            color: #000000;
-            -box-shadow: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-        }
-        #menu-bar ul a:hover {
-            background: lightblue !important;
-            color: black !important;
-            border-radius: 0;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-        }
-        #menu-bar li:hover > ul { display: block; }
-        #menu-bar ul {
-            background: block;
-            background: linear-gradient(top, #FFD21C, #CF7688);
-            background: -ms-linear-gradient(top, #FFD21C, #CF7688);
-            background: -webkit-gradient(linear, left top, left bottom, from(#FFD21C), to(#CF7688));
-            background: -moz-linear-gradient(top, #FFD21C, #CF7688);
-            display: none;
-            margin: 0;
-            padding: 0;
-            width: 300px;
-            position: absolute;
-            top: 30px;
-            left: 0;
-            border-radius: 0px;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            -webkit-box-shadow: 2px 2px 3px #222222;
-            -moz-box-shadow: 2px 2px 3px #222222;
-            box-shadow: 2px 2px 3px #222222;
-        }
-        #menu-bar ul li {
-            float: none;
-            margin: 0;
-            padding: 0;
-        }
-        #menu-bar ul a {
-            padding: 10px 0px 10px 15px;
-            background: gold;
-            color: grey;
-            font-size: 13px;
-            font-style: normal;
-            font-family: verdana;
-            font-weight: normal;
-            text-shadow: 2px 2px 3px #FFFFFF;
-        }
-        #menu-bar ul li:first-child > a {
-            border-top-left-radius: 10px;
-            -webkit-border-top-left-radius: 10px;
-            -moz-border-radius-topleft: 10px;
-            border-top-right-radius: 10px;
-            -webkit-border-top-right-radius: 10px;
-            -moz-border-radius-topright: 10px;
-        }
-        #menu-bar ul li:last-child > a {
-            border-bottom-left-radius: 10px;
-            -webkit-border-bottom-left-radius: 10px;
-            -moz-border-radius-bottomleft: 10px;
-            border-bottom-right-radius: 10px;
-            -webkit-border-bottom-right-radius: 10px;
-            -moz-border-radius-bottomright: 10px;
-        }
-        #menu-bar:after {
-            content: ".";
-            display: block;
-            clear: both;
-            visibility: hidden;
-            line-height: 0;
-            height: 0;
-        }
-        #menu-bar { display: inline-block; }
-        html[xmlns] #menu-bar { display: block; }
-        * html #menu-bar { height: 1%; }
-        .report-table th {
-            font-size: 12px;
-            padding: 12px 5px;
-            background: #0f2c4e !important;
-            color: white !important;
-            text-transform: uppercase;
-        }
-        .report-table td {
-            font-size: 13px;
-            padding: 10px 5px;
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: 500;
-            color: #1e293b;
-        }
+        .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
+        .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
+        .nodal-report-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
+        .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
+        .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
+        .form-select-official, .form-control-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
+        .form-select-official:focus, .form-control-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
+        .btn-submit-official-navy { background-color: #003366; color: white; padding: 12px 30px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; border: none; transition: all 0.2s ease; }
+        .btn-submit-official-navy:hover { background-color: #002244; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2); color: white; }
+        .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
+        .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
         .num { text-align: center; font-weight: 700 !important; }
-        #footer {
-            position: fixed;
-            bottom: 0px;
-            width: 100%;
-            height: 25px;
-            padding-top: 8px;
-            text-align: center;
-            background-color: #0E4878;
-            border-top: 1px #000000 solid;
-            font-size: 12px;
-            font-family: arial, verdana;
-            color: #ffffff;
-        }
     </style>
 </head>
-<body>
+<body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
-
-    <br>
-    <div align="center">
-        <font size="4" color="blue" id="pageTitle">Admission Report</font>
+    <c:set var="activeTab" value="trade_wise" />
+    <%@ include file="nodal_navbar.jsp" %>
+    <div class="nodal-page-title-dashboard"><h2>Trade-wise Report</h2></div>
+    <div class="container mt-4" id="selectionView">
+        <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
+            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
+            <div class="p-5 bg-white rounded-bottom">
+                <form id="reportForm" onsubmit="fetchReport(event)">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
+                        <div class="col-md-7">
+                            <select name="year" id="year" class="form-select-official w-100" required>
+                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label for="cast_type" class="form-label-official mb-md-0">Cast Type</label></div>
+                        <div class="col-md-7">
+                            <select name="cast_type" id="cast_type" class="form-select-official w-100">
+                                <option value="All">All</option>
+                                <option value="OC">OC</option>
+                                <option value="BC">BC</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label class="form-label-official mb-md-0">PWD</label></div>
+                        <div class="col-md-7">
+                            <div class="d-flex gap-4 mt-2">
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_all" value="All" checked><label class="form-check-label" for="pwd_all">All</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_yes" value="Yes"><label class="form-check-label" for="pwd_yes">Yes</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="pwd" id="pwd_no" value="No"><label class="form-check-label" for="pwd_no">No</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <br>
-
-    <form method="get" action="${pageContext.request.contextPath}/reports/admissiongenderwise" id="filterForm">
-        <table align="center" border="1" bgcolor="#e4eeb9">
-            <tr>
-                <td>
-                    <label for="year">Select Year :</label>
-                    <select name="year" id="year" required>
-                        <option value="">Select Year</option>
-                        <option value='' selected>--select--</option>
-                        <option value='2019'>2019</option><option value='2020'>2020</option>
-                        <option value='2021'>2021</option><option value='2022'>2022</option>
-                        <option value='2023'>2023</option><option value='2024'>2024</option>
-                        <option value='2025'>2025</option><option value='2026'>2026</option>
-                    </select>
-                    &nbsp;&nbsp;&nbsp;
-                    <label for="cast_type">Select Cast Type :</label>
-                    <select name="cast_type" id="cast_type">
-                        <option value="">Select Cast</option>
-                        <option value="OC">OC</option>
-                        <option value="BC">BC</option>
-                        <option value="SC">SC</option>
-                        <option value="ST">ST</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="pwd">Select PWD :</label>
-                    <input type="radio" name="pwd" value="t" id="pwd_yes"> Yes
-                    <input type="radio" name="pwd" value="f" id="pwd_no"> No
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <input type="submit" name="submit" value="submit" style="background-color: #ff6666; color: black; font-weight: bold;"/>
-                </td>
-            </tr>
-        </table>
-    </form>
-
-    <br>
-
-    <div class="loader-spinner" id="loader">
-        <i class="fas fa-spinner fa-spin fa-3x"></i>
-        <p class="mt-3 fw-bold">Loading admission report...</p>
-    </div>
-
-    <div id="wrapper" style="display: none;">
-        <div class="content">
-            <div align="center">
-                <table align="center" border="2" width="70%" id="tot" bgcolor="#e4eeb9">
-                    <thead>
-                        <p align="center" class="style4">
-                            <font color="blue" size="4" id="yearTitle">For Year: 2026</font>
-                        </p>
-                        <tr>
-                            <td><b>#</b></td>
-                            <td><b>Trade Name</b></td>
-                            <td><b>Boys</b></td>
-                            <td><b>Girls</b></td>
-                            <td><b>Total</b></td>
-                        </tr>
-                    </thead>
+    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading trade-wise report...</p></div>
+    <div class="container mt-4" id="reportView" style="display: none;">
+        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Trade-wise Report</h2></div>
+        <div class="no-print d-flex justify-content-center gap-3 mb-5">
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
+            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
+        </div>
+        <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
+            <div style="overflow-y: auto; max-height: 600px;">
+                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
+                    <thead><tr><th>#</th><th style="text-align: left;">Trade Name</th><th class="num">Boys</th><th class="num">Girls</th><th class="num">Total</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                     <tfoot id="tableFoot"></tfoot>
                 </table>
             </div>
         </div>
     </div>
-
-    <br><br><br><br>
-
-    <div id="footer">
-        2013 @ All Rights Reserved &nbsp;&nbsp; Designed by &nbsp; National Informatics Center
-        <font color="white"><a href="http://www.ap.nic.in" title="">National Informatics Center </a></font>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <font color="white"><a href="disclaimer.jsp">Disclaimer</a></font>
-    </div>
-
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        function fnExcelReport() {
-            var tab_text = "<table border='1px'><tr bgcolor='#87AFC6'>";
-            var tab = document.getElementById('tot');
-            for (var j = 0; j < tab.rows.length; j++) {
-                tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-            }
-            tab_text = tab_text + "</table>";
-            tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
-            tab_text = tab_text.replace(/<img[^>]*>/gi, "");
-            tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
-            var ua = window.navigator.userAgent;
-            var msie = ua.indexOf("MSIE ");
-            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-                txtArea1.document.open("txt/html", "replace");
-                txtArea1.document.write(tab_text);
-                txtArea1.document.close();
-                txtArea1.focus();
-                sa = txtArea1.document.execCommand("SaveAs", true, "TradeWiseReport.xls");
-            } else {
-                sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-            }
-            return sa;
-        }
-
-        function printpage() {
-            var printButton = document.getElementById("printpagebutton");
-            var navmenu = document.getElementById("banner-id");
-            var banner = document.getElementById("menu-bar");
-            var foot = document.getElementById("footer");
-            document.getElementById("tot").style.width = "100%";
-            printButton.style.visibility = 'hidden';
-            navmenu.style.display = 'none';
-            banner.style.display = 'none';
-            foot.style.display = 'none';
-            window.print();
-            printButton.style.visibility = 'visible';
-            navmenu.style.display = 'block';
-            banner.style.display = 'block';
-            foot.style.display = 'block';
-            document.getElementById("tot").style.width = "60%";
+        function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
+        function fetchReport(event) {
+            event.preventDefault();
+            const year = document.getElementById('year').value;
+            const caste = document.getElementById('cast_type').value;
+            const pwd = document.querySelector('input[name="pwd"]:checked').value;
+            document.getElementById('selectionView').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            let apiUrl = '${backendApiUrl}/admission-report?year=' + encodeURIComponent(year) + '&caste=' + encodeURIComponent(caste) + '&pwd=' + encodeURIComponent(pwd);
+            fetch(apiUrl, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('reportView').style.display = 'block';
+                document.getElementById('reportTitle').innerText = 'Trade-wise Report (' + year + ')';
+                const tbody = document.getElementById('tableBody');
+                const tfoot = document.getElementById('tableFoot');
+                tbody.innerHTML = ''; tfoot.innerHTML = '';
+                if (data.error) throw new Error(data.error);
+                let totalBoys = 0, totalGirls = 0, grandTotal = 0;
+                if (data.data && data.data.length > 0) {
+                    data.data.forEach((row, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.boys || 0) + '</td><td class="num">' + (row.girls || 0) + '</td><td class="num">' + (row.total || 0) + '</td>';
+                        tbody.appendChild(tr);
+                        totalBoys += row.boys || 0; totalGirls += row.girls || 0; grandTotal += row.total || 0;
+                    });
+                    const ft = document.createElement('tr'); ft.className = 'total-row';
+                    ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 30px; font-weight: bold;">GRAND TOTAL</td><td class="num">' + totalBoys + '</td><td class="num">' + totalGirls + '</td><td class="num">' + grandTotal + '</td>';
+                    tfoot.appendChild(ft);
+                } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+            })
+            .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -304,91 +134,14 @@
             const year = urlParams.get('year');
             const caste = urlParams.get('cast_type') || 'All';
             const pwd = urlParams.get('pwd') || 'All';
-
             if (year) {
                 document.getElementById('year').value = year;
-                document.getElementById('yearTitle').innerText = 'For Year: ' + year;
-                loadReport(year, caste, pwd);
+                document.getElementById('cast_type').value = caste;
+                const pwdRadio = document.querySelector('input[name="pwd"][value="' + pwd + '"]');
+                if (pwdRadio) pwdRadio.checked = true;
+                fetchReport(new Event('submit'));
             }
         });
-
-        document.getElementById('filterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const year = document.getElementById('year').value;
-            const caste = document.getElementById('cast_type').value || 'All';
-            const pwd = document.querySelector('input[name="pwd"]:checked');
-            const pwdVal = pwd ? (pwd.value === 't' ? 'Yes' : 'No') : 'All';
-
-            if (!year) {
-                alert('Please select a year');
-                return;
-            }
-
-            const url = '${pageContext.request.contextPath}/reports/admissiongenderwise?year=' + encodeURIComponent(year) + '&cast_type=' + encodeURIComponent(caste) + '&pwd=' + encodeURIComponent(pwdVal);
-            window.location.href = url;
-        });
-
-        function loadReport(year, caste, pwd) {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('wrapper').style.display = 'none';
-
-            let apiUrl = '${backendApiUrl}/admission-report?year=' + encodeURIComponent(year);
-            if (caste && caste !== 'All') {
-                apiUrl += '&caste=' + encodeURIComponent(caste);
-            }
-            if (pwd && pwd !== 'All') {
-                apiUrl += '&pwd=' + encodeURIComponent(pwd);
-            }
-
-            fetch(apiUrl, { method: 'GET' })
-            .then(response => response.json())
-            .then(response => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('wrapper').style.display = 'block';
-
-                const tbody = document.getElementById('tableBody');
-                const tfoot = document.getElementById('tableFoot');
-                tbody.innerHTML = ''; tfoot.innerHTML = '';
-
-                const data = response.data || [];
-                if (data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
-                    return;
-                }
-
-                let totalBoys = 0, totalGirls = 0, grandTotal = 0;
-
-                data.forEach((row, index) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML =
-                        '<td>' + (index + 1) + '</td>' +
-                        '<td style="text-align: left;">' + (row.tradeName || '-') + '</td>' +
-                        '<td class="num">' + (row.boys || 0) + '</td>' +
-                        '<td class="num">' + (row.girls || 0) + '</td>' +
-                        '<td class="num">' + (row.total || 0) + '</td>';
-                    tbody.appendChild(tr);
-
-                    totalBoys += row.boys || 0;
-                    totalGirls += row.girls || 0;
-                    grandTotal += row.total || 0;
-                });
-
-                const ft = document.createElement('tr');
-                ft.style.fontWeight = '800';
-                ft.style.backgroundColor = '#e2e8f0';
-                ft.innerHTML = '<td colspan="2" style="text-align: right; padding-right: 20px;">Total</td>' +
-                    '<td class="num">' + totalBoys + '</td>' +
-                    '<td class="num">' + totalGirls + '</td>' +
-                    '<td class="num">' + grandTotal + '</td>';
-                tfoot.appendChild(ft);
-            })
-            .catch(error => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('wrapper').style.display = 'block';
-                alert('Error loading data: ' + error.message);
-                console.error('Error:', error);
-            });
-        }
     </script>
 </body>
 </html>

@@ -36,14 +36,22 @@
         <a href="${pageContext.request.contextPath}/authHome" class="state-dashboard-link">
             <i class="fas fa-home me-1"></i> Home
         </a>
-        <a href="${pageContext.request.contextPath}/reports/state-dashboard" class="state-dashboard-link ${activeTab == 'state_dashboard' ? 'active' : ''}">State Dashboard</a>
-        <a href="${pageContext.request.contextPath}/reports/district-schedule" class="state-dashboard-link ${activeTab == 'district_schedule' ? 'active' : ''}">District Schedule</a>
-        <a href="${pageContext.request.contextPath}/reports/district-permitted-shift-view" class="state-dashboard-link ${activeTab == 'shift_unit' ? 'active' : ''}">Shift/Unit Report</a>
-        <a href="${pageContext.request.contextPath}/reports/iti-admissions" class="state-dashboard-link ${activeTab == 'iti_admissions' ? 'active' : ''}">ITI Admissions</a>
-        <a href="${pageContext.request.contextPath}/reports/all-resource-roles" class="state-dashboard-link ${activeTab == 'all_resources' ? 'active' : ''}">All Resource Roles</a>
-        <a href="${pageContext.request.contextPath}/reports/strength-filled-seats" class="state-dashboard-link ${activeTab == 'strength_filled' ? 'active' : ''}">Strength & Fill</a>
-        <a href="${pageContext.request.contextPath}/reports/trade-vacant-positions" class="state-dashboard-link ${activeTab == 'trade_vacant' ? 'active' : ''}">Trade Vacant</a>
-        <a href="${pageContext.request.contextPath}/reports/admission_report" class="state-dashboard-link ${activeTab == 'admission_report' ? 'active' : ''}">Admission Report</a>
+        <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport" class="state-dashboard-link ${activeTab == 'state_dashboard' ? 'active' : ''}">Api Dashboard</a>
+        <a href="${pageContext.request.contextPath}/reports/PhaseWiseAdmissionReport" class="state-dashboard-link ${activeTab == 'phase_wise' ? 'active' : ''}">Phase Wise Admissions Details</a>
+        <a href="${pageContext.request.contextPath}/reports/AdmissionScheduleITI" class="state-dashboard-link ${activeTab == 'today_schedule' ? 'active' : ''}">Today Schedule ITIs</a>
+        <a href="${pageContext.request.contextPath}/reports/Dist_wise_open_seats" class="state-dashboard-link ${activeTab == 'open_seats' ? 'active' : ''}">DIST/ITI/Trade Wise Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/trade_seats_abstract_duration_wise" class="state-dashboard-link ${activeTab == 'trade_duration' ? 'active' : ''}">Duration Wise Trade Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/govt_pvt_dist_seats_abstract" class="state-dashboard-link ${activeTab == 'govt_pvt' ? 'active' : ''}">Govt or Pvt Dist Wise Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="state-dashboard-link ${activeTab == 'district_app_count' ? 'active' : ''}">Verification Report</a>
+        <a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase" class="state-dashboard-link ${activeTab == 'dsc_list' ? 'active' : ''}">DSC List</a>
+        <a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter" class="state-dashboard-link ${activeTab == 'caste_wise' ? 'active' : ''}">Caste Wise Admissions Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/district_schedule" class="state-dashboard-link ${activeTab == 'district_schedule' ? 'active' : ''}">District Schedule</a>
+        <a href="${pageContext.request.contextPath}/reports/Shift_Unit_Report" class="state-dashboard-link ${activeTab == 'shift_unit' ? 'active' : ''}">Shift Unit Report</a>
+        <a href="${pageContext.request.contextPath}/reports/Govt_Pvt_admitted_seats_abstract" class="state-dashboard-link ${activeTab == 'iti_admissions' ? 'active' : ''}">Admitted Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/RolesReport" class="state-dashboard-link ${activeTab == 'all_resources' ? 'active' : ''}">All Resource Role</a>
+        <a href="${pageContext.request.contextPath}/reports/Seats_Abstract_Strength_filled_Interface" class="state-dashboard-link ${activeTab == 'strength_filled' ? 'active' : ''}">DistWise Admitted Seats Abstract</a>
+        <a href="${pageContext.request.contextPath}/reports/tradewise_admission_report" class="state-dashboard-link ${activeTab == 'admission_report' ? 'active' : ''}">Trade/Dist Wise Admission Report</a>
+        <a href="${pageContext.request.contextPath}/reports/tradewise_vacant_position" class="state-dashboard-link ${activeTab == 'trade_vacant' ? 'active' : ''}">TradeWise Vacant Position</a>
 
         <a href="${pageContext.request.contextPath}/logout" class="state-dashboard-link ms-auto" onclick="clearAuthCookie()">
             <i class="fas fa-sign-out-alt me-1"></i> Log out

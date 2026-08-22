@@ -95,7 +95,7 @@
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/getDashboardreport_dist" class="report-card">
                         <i class="fas fa-chalkboard-teacher"></i>
-                        <h5>API Dashboard (District)</h5>
+                        <h5>API Dashboard</h5>
                         <p>District-wide admission dashboard</p>
                         <span class="api-badge">${backendApiUrl}/api-dashboard</span>
                     </a>
@@ -122,15 +122,15 @@
             <h3 class="report-section-title"><i class="fas fa-layer-group me-2"></i> Nodal Level Reports (Role 10)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/state-dashboard" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport" class="report-card">
                         <i class="fas fa-tachometer-alt"></i>
-                        <h5>State Dashboard</h5>
+                        <h5>Api Dashboard</h5>
                         <p>ITI-wise strength dashboard</p>
                         <span class="api-badge">${backendApiUrl}/state-dashboard</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/phase-wise" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/PhaseWiseAdmissionReport" class="report-card">
                         <i class="fas fa-clock"></i>
                         <h5>Phase Wise Admissions Details</h5>
                         <p>Admissions by phase</p>
@@ -138,7 +138,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/today-schedule" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/AdmissionScheduleITI" class="report-card">
                         <i class="fas fa-calendar-day"></i>
                         <h5>Today Schedule ITIs</h5>
                         <p>Today's admission schedule</p>
@@ -146,11 +146,59 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/trade-wise-report" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/admissiongenderwise" class="report-card">
                         <i class="fas fa-cogs"></i>
                         <h5>Trade Wise Report</h5>
                         <p>Seats by trade</p>
                         <span class="api-badge">${backendApiUrl}/trade-wise-report</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/Applicant_Report_StateWise" class="report-card">
+                        <i class="fas fa-users"></i>
+                        <h5>Applicant Report Dist Wise</h5>
+                        <p>District-wise applicants</p>
+                        <span class="api-badge">${backendApiUrl}/applicant-report-state-wise</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/Dist_wise_open_seats" class="report-card">
+                        <i class="fas fa-door-open"></i>
+                        <h5>DIST/ITI/Trade Wise Seats Abstract</h5>
+                        <p>Open seats abstract</p>
+                        <span class="api-badge">${backendApiUrl}/open-seats</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/trade_seats_abstract_duration_wise" class="report-card">
+                        <i class="fas fa-hourglass-half"></i>
+                        <h5>Duration Wise Trade Seats Abstract</h5>
+                        <p>Duration-wise seat report</p>
+                        <span class="api-badge">${backendApiUrl}/trade-duration-seats</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/govt_pvt_dist_seats_abstract" class="report-card">
+                        <i class="fas fa-building"></i>
+                        <h5>Govt or Pvt Dist Wise Seats Abstract</h5>
+                        <p>Govt vs Private seats</p>
+                        <span class="api-badge">${backendApiUrl}/govt-pvt-seats</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/std_reg_details_report" class="report-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <h5>STUDENT REG DETAILS</h5>
+                        <p>Student admission details</p>
+                        <span class="api-badge">${backendApiUrl}/student-details</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="report-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h5>Verification Report</h5>
+                        <p>Verification status by district</p>
+                        <span class="api-badge">${backendApiUrl}/district-wise-application-count</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -161,16 +209,37 @@
                         <span class="api-badge">${backendApiUrl}/caste-wise-admissions</span>
                     </a>
                 </div>
+            </div>
+
+            <!-- State Level Reports (Role 1) -->
+            <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> State Level Reports (Role 1)</h3>
+            <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/applicant-report-state-wise" class="report-card">
-                        <i class="fas fa-users"></i>
-                        <h5>Applicant Report Dist Wise</h5>
-                        <p>District-wise applicants</p>
-                        <span class="api-badge">${backendApiUrl}/applicant-report-state-wise</span>
+                    <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport" class="report-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h5>Api Dashboard</h5>
+                        <p>ITI-wise strength dashboard</p>
+                        <span class="api-badge">${backendApiUrl}/state-dashboard</span>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/open-seats" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/PhaseWiseAdmissionReport" class="report-card">
+                        <i class="fas fa-clock"></i>
+                        <h5>Phase Wise Admissions Details</h5>
+                        <p>Admissions by phase</p>
+                        <span class="api-badge">${backendApiUrl}/phase-wise</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/AdmissionScheduleITI" class="report-card">
+                        <i class="fas fa-calendar-day"></i>
+                        <h5>Today Schedule ITIs</h5>
+                        <p>Today's admission schedule</p>
+                        <span class="api-badge">${backendApiUrl}/today-schedule</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/Dist_wise_open_seats" class="report-card">
                         <i class="fas fa-door-open"></i>
                         <h5>DIST/ITI/Trade Wise Seats Abstract</h5>
                         <p>Open seats abstract</p>
@@ -178,7 +247,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/trade-duration-seats" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/trade_seats_abstract_duration_wise" class="report-card">
                         <i class="fas fa-hourglass-half"></i>
                         <h5>Duration Wise Trade Seats Abstract</h5>
                         <p>Duration-wise seat report</p>
@@ -186,7 +255,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/govt-pvt-seats" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/govt_pvt_dist_seats_abstract" class="report-card">
                         <i class="fas fa-building"></i>
                         <h5>Govt or Pvt Dist Wise Seats Abstract</h5>
                         <p>Govt vs Private seats</p>
@@ -194,20 +263,23 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/student-details" class="report-card">
-                        <i class="fas fa-user-graduate"></i>
-                        <h5>Student Reg Details</h5>
-                        <p>Student admission details</p>
-                        <span class="api-badge">${backendApiUrl}/student-details</span>
+                    <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="report-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h5>Verification Report</h5>
+                        <p>Verification status by district</p>
+                        <span class="api-badge">${backendApiUrl}/district-wise-application-count</span>
                     </a>
                 </div>
-            </div>
-
-            <!-- State Level Reports (Role 1) -->
-            <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> State Level Reports (Role 1)</h3>
-            <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/district-schedule" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase" class="report-card">
+                        <i class="fas fa-file-contract"></i>
+                        <h5>DSC List</h5>
+                        <p>District seat matrix details</p>
+                        <span class="api-badge">${backendApiUrl}/dsc-full</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/district_schedule" class="report-card">
                         <i class="fas fa-calendar-alt"></i>
                         <h5>District Schedule</h5>
                         <p>District-wise schedule</p>
@@ -215,7 +287,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                     <a href="${pageContext.request.contextPath}/reports/district-permitted-shift-view" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Shift_Unit_Report" class="report-card">
                         <i class="fas fa-exchange-alt"></i>
                         <h5>Shift Unit Report</h5>
                         <p>Permitted shift units</p>
@@ -223,7 +295,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/iti-admissions" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Govt_Pvt_admitted_seats_abstract" class="report-card">
                         <i class="fas fa-school"></i>
                         <h5>Admitted Seats Abstract</h5>
                         <p>State-level ITI admissions</p>
@@ -231,7 +303,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/all-resource-roles" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/RolesReport" class="report-card">
                         <i class="fas fa-server"></i>
                         <h5>All Resource Role</h5>
                         <p>Resource roles report</p>
@@ -239,7 +311,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/strength-filled-seats" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/Seats_Abstract_Strength_filled_Interface" class="report-card">
                         <i class="fas fa-bed"></i>
                         <h5>DistWise Admitted Seats Abstract</h5>
                         <p>Strength vs filled seats</p>
@@ -247,19 +319,19 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/trade-vacant-positions" class="report-card">
-                        <i class="fas fa-clipboard-check"></i>
-                        <h5>TradeWise Vacant Position</h5>
-                        <p>Vacant seats by trade</p>
-                        <span class="api-badge">${backendApiUrl}/trade-vacant-positions</span>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                     <a href="${pageContext.request.contextPath}/reports/admission_report" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/tradewise_admission_report" class="report-card">
                         <i class="fas fa-chart-pie"></i>
                         <h5>Trade/Dist Wise Admission Report</h5>
                         <p>Admission summary report</p>
                         <span class="api-badge">${backendApiUrl}/admission-report</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/tradewise_vacant_position" class="report-card">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h5>TradeWise Vacant Position</h5>
+                        <p>Vacant seats by trade</p>
+                        <span class="api-badge">${backendApiUrl}/trade-vacant-positions</span>
                     </a>
                 </div>
             </div>

@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "reports", description = "Reports UI pages and documentation endpoints")
 @Controller
 @RequestMapping("/reports")
 public class ReportsController {
@@ -60,24 +63,19 @@ public class ReportsController {
 
     // ========== NODAL LEVEL REPORTS (Role 10) ==========
 
-    @GetMapping("/state-dashboard")
-    public String stateDashboard() {
-        return "reports/state-dashboard";
+    @GetMapping("/Jdgetdasboardreport")
+    public String Jdgetdasboardreport() {
+        return "reports/Jdgetdasboardreport";
     }
 
-    @GetMapping("/phase-wise")
-    public String phaseWise() {
-        return "reports/phase-wise";
+    @GetMapping("/PhaseWiseAdmissionReport")
+    public String PhaseWiseAdmissionReport() {
+        return "reports/PhaseWiseAdmissionReport";
     }
 
-    @GetMapping("/today-schedule")
-    public String todaySchedule() {
-        return "reports/today-schedule";
-    }
-
-    @GetMapping("/trade-wise-report")
-    public String tradeWiseReport() {
-        return "reports/trade-wise-report";
+    @GetMapping("/AdmissionScheduleITI")
+    public String AdmissionScheduleITI() {
+        return "reports/AdmissionScheduleITI";
     }
 
     @GetMapping("/admissiongenderwise")
@@ -85,34 +83,34 @@ public class ReportsController {
         return "reports/admissiongenderwise";
     }
 
-    @GetMapping("/applicant-report-state-wise")
-    public String applicantReportStateWise() {
-        return "reports/applicant-report-state-wise";
+    @GetMapping("/Applicant_Report_StateWise")
+    public String Applicant_Report_StateWise() {
+        return "reports/Applicant_Report_StateWise";
     }
 
-    @GetMapping("/open-seats")
-    public String openSeats() {
-        return "reports/open-seats";
+    @GetMapping("/Dist_wise_open_seats")
+    public String Dist_wise_open_seats() {
+        return "reports/Dist_wise_open_seats";
     }
 
-    @GetMapping("/trade-duration-seats")
-    public String tradeDurationSeats() {
-        return "reports/trade-duration-seats";
+    @GetMapping("/trade_seats_abstract_duration_wise")
+    public String tradeSeatsAbstractDurationWise() {
+        return "reports/trade_seats_abstract_duration_wise";
     }
 
-    @GetMapping("/govt-pvt-seats")
-    public String govtPvtSeats() {
-        return "reports/govt-pvt-seats";
+    @GetMapping("/govt_pvt_dist_seats_abstract")
+    public String govtPvtDistSeatsAbstract() {
+        return "reports/govt_pvt_dist_seats_abstract";
     }
 
-    @GetMapping("/student-details")
-    public String studentDetails() {
-        return "reports/student-details";
+    @GetMapping("/std_reg_details_report")
+    public String stdRegDetailsReport() {
+        return "reports/std_reg_details_report";
     }
 
-    @GetMapping("/district-wise-application-count")
+    @GetMapping("/District_Wise_Application_count")
     public String districtWiseApplicationCount() {
-        return "reports/district-wise-application-count";
+        return "reports/District_Wise_Application_count";
     }
 
     // ========== STATE LEVEL REPORTS (Role 1) ==========
@@ -127,39 +125,39 @@ public class ReportsController {
         return "reports/itiprofile";
     }
 
-    @GetMapping("/district-schedule")
+    @GetMapping("/district_schedule")
     public String districtSchedule() {
-        return "reports/district-schedule";
+        return "reports/district_schedule";
     }
 
-    @GetMapping("/district-permitted-shift-view")
+    @GetMapping("/Shift_Unit_Report")
     public String shiftUnitReport() {
-        return "reports/district-permitted-shift-view";
+        return "reports/Shift_Unit_Report";
     }
 
-    @GetMapping("/iti-admissions")
-    public String itiAdmissions() {
-        return "reports/iti-admissions";
+    @GetMapping("/Govt_Pvt_admitted_seats_abstract")
+    public String Govt_Pvt_admitted_seats_abstract() {
+        return "reports/Govt_Pvt_admitted_seats_abstract";
     }
 
-    @GetMapping("/all-resource-roles")
-    public String allResourceRoles() {
-        return "reports/all-resource-roles";
+    @GetMapping("/RolesReport")
+    public String RolesReport() {
+        return "reports/RolesReport";
     }
 
-    @GetMapping("/strength-filled-seats")
-    public String strengthFilledSeats() {
-        return "reports/strength-filled-seats";
+    @GetMapping("/Seats_Abstract_Strength_filled_Interface")
+    public String Seats_Abstract_Strength_filled_Interface() {
+        return "reports/Seats_Abstract_Strength_filled_Interface";
     }
 
-    @GetMapping("/admission_report")
-    public String admissionReport() {
-        return "reports/admission_report";
+    @GetMapping("/tradewise_admission_report")
+    public String tradewise_admission_report() {
+        return "reports/tradewise_admission_report";
     }
 
-    @GetMapping("/trade-vacant-positions")
-    public String tradeWiseVacantPositions() {
-        return "reports/trade-vacant-positions";
+    @GetMapping("/tradewise_vacant_position")
+    public String tradewise_vacant_position() {
+        return "reports/tradewise_vacant_position";
     }
 
     // ========== PUBLIC PAGES ==========
