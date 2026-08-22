@@ -25,7 +25,7 @@
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="state_dashboard" />
     <%@ include file="state_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>API Dashboard across the Districts</h2></div>
+    <div class="nodal-page-title-dashboard"><h2>Api Dashboard</h2></div>
 
     <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
         <input type="button" value="Excel Download" class="btn btn-success btn-sm" onclick="tableToExcel('tot', 'State Dashboard')">

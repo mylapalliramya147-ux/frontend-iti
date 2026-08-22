@@ -31,7 +31,7 @@
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="admission_report" />
     <%@ include file="iti_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Trade-wise Admission Report</h2></div>
+    <div class="nodal-page-title-dashboard"><h2>Trade/Dist Wise Admission Report</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>

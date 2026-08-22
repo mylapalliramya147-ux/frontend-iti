@@ -175,7 +175,7 @@
 
     <br>
     <div align="center">
-        <font size="4" color="blue" id="pageTitle">Total Applicant's Count in Phase</font>
+        <font size="4" color="blue" id="pageTitle">Applicant Report Dist Wise</font>
     </div>
     <br>
 

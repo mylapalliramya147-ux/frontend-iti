@@ -190,7 +190,7 @@
 
     <br>
     <div align="center">
-        <font size="4" color="blue" id="pageTitle">Today Admission Schedule ITI's</font>
+        <font size="4" color="blue" id="pageTitle">Today Schedule ITIs</font>
     </div>
     <br>
 

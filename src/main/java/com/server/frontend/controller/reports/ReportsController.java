@@ -108,11 +108,6 @@ public class ReportsController {
         return "reports/std_reg_details_report";
     }
 
-    @GetMapping("/District_Wise_Application_count")
-    public String districtWiseApplicationCount() {
-        return "reports/District_Wise_Application_count";
-    }
-
     // ========== STATE LEVEL REPORTS (Role 1) ==========
 
     @GetMapping("/district-iti-wise-year-view")

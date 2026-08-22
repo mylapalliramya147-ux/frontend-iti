@@ -26,7 +26,7 @@
     <%@ include file="nodal_navbar.jsp" %>
 
     <div class="nodal-page-title-dashboard">
-        <h2 id="reportTitle">Phase-wise Admissions Details</h2>
+        <h2 id="reportTitle">Phase Wise Admissions Details</h2>
     </div>
 
     <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">

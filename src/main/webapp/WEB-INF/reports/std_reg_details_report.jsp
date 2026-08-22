@@ -35,7 +35,7 @@
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="student_details" />
     <%@ include file="nodal_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Student Complete Details</h2></div>
+    <div class="nodal-page-title-dashboard"><h2>STUDENT REG DETAILS</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
             <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-search me-2"></i> Search Student</div>
