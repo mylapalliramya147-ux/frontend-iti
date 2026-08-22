@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="${pageContext.request.contextPath}/reports/dsc-full" class="report-card">
+                    <a href="${pageContext.request.contextPath}/reports/dsc-list" class="report-card">
                         <i class="fas fa-file-contract"></i>
                         <h5>DSC List</h5>
                         <p>District seat matrix details</p>

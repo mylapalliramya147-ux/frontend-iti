@@ -36,6 +36,11 @@ public class ReportsController {
         return "reports/district-dsc-full-view";
     }
 
+    @GetMapping("/dsc-list")
+    public String dscList() {
+        return "reports/dsc-list";
+    }
+
     // ========== DISTRICT LEVEL REPORTS (Role 3) ==========
 
     @GetMapping("/caste-wise-admissions")
