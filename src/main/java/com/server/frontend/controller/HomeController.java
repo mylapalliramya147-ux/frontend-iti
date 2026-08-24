@@ -60,4 +60,9 @@ public class HomeController {
     public String nodalReportDashboard() {
         return "reports/state-dashboard";
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "jsp/index";
+    }
 }
