@@ -10,7 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/md5/2.18.0/md5.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script>
-	let baseUrl = "https://itiadmissions.ap.gov.in/placementsbe/";
+	let baseUrl = "${pageContext.request.contextPath}/api/placements/";
 
 	$(document).ready(function() {
 		generateCaptcha();

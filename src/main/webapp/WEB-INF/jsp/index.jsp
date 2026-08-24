@@ -252,7 +252,7 @@
 </li>
 
 <li>
-<a href="${pageContext.request.contextPath}/placements" target="_blank">PLACEMENTS / IN-PLANT TRAINING</a>
+<a href="/placements">PLACEMENTS / IN-PLANT TRAINING</a>
 </li>
 </ul>
 
@@ -425,17 +425,6 @@ $(document).ready(function () {
         if (ev.keyCode === 13) $('#mysubmit').click();
     });
 });
-</script>
-
-<SCRIPT type='text/javascript'>
-window.history.forward();
-function noBack() { window.history.forward(); }
-</SCRIPT>
-
-<script type="text/javascript">
-function preventBack() { window.history.forward(); }
-setTimeout("preventBack()", 0);
-window.onunload = function () { null };
 </script>
 
 <style>
