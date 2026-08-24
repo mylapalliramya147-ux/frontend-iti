@@ -1,135 +1,602 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permitted Shift Report | District</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title> Shift & Unit Permitted Report</title>
     <style>
-        .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
-        .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
-        .nodal-report-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.1); }
-        .nodal-card-header-dashboard { background: linear-gradient(135deg, #003366 0%, #1a4a72 100%); color: white; padding: 22px 30px; font-weight: 700; display: flex; align-items: center; gap: 15px; }
-        .nodal-card-header-dashboard i { width: 38px; height: 38px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-        .form-label-official { font-size: 0.85rem; font-weight: 700; color: #445566; text-transform: uppercase; letter-spacing: 0.8px; display: block; }
-        .form-select-official, .form-control-official { border: 1px solid #ced4da; border-radius: 6px; padding: 10px 15px; font-size: 1.05rem; color: #2d3748; background-color: #ffffff; transition: border-color 0.2s ease; width: 100%; }
-        .form-select-official:focus, .form-control-official:focus { border-color: #003366; outline: none; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
-        .btn-submit-official-navy { background-color: #003366; color: white; padding: 12px 30px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; border: none; transition: all 0.2s ease; }
-        .btn-submit-official-navy:hover { background-color: #002244; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 34, 68, 0.2); color: white; }
-        .report-table th { font-size: 12px; padding: 12px 5px; background: #0f2c4e !important; color: white !important; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
-        .report-table td { font-size: 13px; padding: 10px 5px; border-bottom: 1px solid #f0f0f0; font-weight: 500; color: #1e293b; }
-        .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
-        .num { text-align: center; font-weight: 700 !important; }
-    </style>
-</head>
-<body class="nodal-body">
-    <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" %>
-    <c:set var="activeTab" value="permitted_shift" />
-    <%@ include file="district_navbar.jsp" %>
-    <div class="nodal-page-title-dashboard"><h2>Shift Unit Report</h2></div>
-    <div class="container mt-4" id="selectionView">
-        <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
-            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
-            <div class="p-5 bg-white rounded-bottom">
-                <form id="reportForm" onsubmit="fetchReport(event)">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="distCode" class="form-label-official mb-md-0">District *</label></div>
-                        <div class="col-md-7">
-                            <select name="distCode" id="distCode" class="form-select-official w-100" required>
-                                <option value="">Select District</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="itiCode" class="form-label-official mb-md-0">ITI</label></div>
-                        <div class="col-md-7">
-                            <select name="itiCode" id="itiCode" class="form-select-official w-100">
-                                <option value="All">All ITIs</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading permitted shift report...</p></div>
-    <div class="container mt-4" id="reportView" style="display: none;">
-        <div class="text-center mb-3" style="color: #003366;"><h2 class="fw-bold fs-4 mb-2" id="reportTitle">Permitted Shift Unit Report</h2></div>
-        <div class="no-print d-flex justify-content-center gap-3 mb-5">
-            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()"><i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION</button>
-            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;"><i class="fas fa-print me-2"></i>PRINT REPORT</button>
-        </div>
-        <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
-            <div style="overflow-y: auto; max-height: 600px;">
-                <table class="table table-bordered mb-0 table-hover text-center report-table" id="statusTable" style="min-width: 800px;">
-                    <thead><tr><th>ITI NAME</th><th>TYPE</th><th>TRADE NAME</th><th class="num">STRENGTH</th><th>SHIFT</th><th>UNIT</th></tr></thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+    table {
+        border-collapse: collapse;
+        width: 80%;           /* Adjusted width */
+        margin: 6px auto;
+        font-weight: bold;    /* Makes all text bold */
+        font-size: 10px;      /* Slightly smaller font for tighter layout */
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 4px 6px;    /* Reduced padding for smaller height */
+        text-align: center;
+         vertical-align: middle; /* Ensures text sits more tightly */
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 14px;
+    }
+
+    .link {
+        color: blue;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .section {
+        margin: 10px auto;
+        width: 60%;
+        display: none;
+        transition: max-height 0.4s ease-in-out;
+        overflow: hidden;
+    }
+
+    .loader {
+        display: none;
+        text-align: center;
+        margin: 10px auto;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #4CAF50;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 0.8s linear infinite;
+        margin: auto;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+
     <script>
-        function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
-        function loadDistricts() {
-            fetch('${backendApiUrl}/trade-display/districts', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('distCode');
-                if (data.data && data.data.length > 0) {
-                    data.data.forEach(dist => {
-                        const option = document.createElement('option');
-                        option.value = dist.code;
-                        option.textContent = dist.name;
-                        select.appendChild(option);
-                    });
-                }
-            })
-            .catch(error => console.error('Error loading districts:', error));
+        function showLoader(id) {
+            document.getElementById(id).style.display = 'block';
         }
-        window.addEventListener('load', loadDistricts);
-        function fetchReport(event) {
-            event.preventDefault();
-            const distCode = document.getElementById('distCode').value;
-            const itiCode = document.getElementById('itiCode').value;
-            document.getElementById('selectionView').style.display = 'none';
-            document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/permitted-shift-unit?distCode=' + encodeURIComponent(distCode) + '&itiCode=' + encodeURIComponent(itiCode) + '&page=0&size=10000', {
-                method: 'GET', headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Permitted Shift Unit Report';
-                const tbody = document.getElementById('tableBody');
-                tbody.innerHTML = '';
-                if (data.error) throw new Error(data.error);
-                if (data.data && data.data.length > 0) {
-                    data.data.forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="text-align: left;">' + (row.itiName || '-') + '</td><td>' + (row.itiType || '-') + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.strength || 0) + '</td><td>' + (row.shift || '-') + '</td><td>' + (row.unit || '-') + '</td>';
-                        tbody.appendChild(tr);
-                    });
-                } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
-            })
-            .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
+
+        function hideLoader(id) {
+            document.getElementById(id).style.display = 'none';
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            const localDistCode = localStorage.getItem('insCode') || '';
-            if (localDistCode) {
-                document.getElementById('distCode').value = localDistCode;
-            }
-        });
+
+        function showSection(id) {
+            const section = document.getElementById(id);
+            section.style.display = 'block';
+            section.style.maxHeight = section.scrollHeight + "px";
+        }
+
+        function clearSection(id) {
+            const section = document.getElementById(id);
+            section.innerHTML = "";
+            section.style.display = 'none';
+        }
+
+        function loadDistrictReport(distCode) {
+            showLoader("districtLoader");
+            clearSection("itiSection");
+
+            fetch('districtReport.jsp?distCode=' + distCode)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('districtSection').innerHTML = html;
+                    showSection("districtSection");
+                })
+                .catch(err => {
+                    document.getElementById('districtSection').innerHTML = "<p style='color:red;'>Error loading district data</p>";
+                })
+                .finally(() => {
+                    hideLoader("districtLoader");
+                });
+        }
+
+        function loadITIReport(itiCode) {
+            showLoader("itiLoader");
+
+            fetch('itiReport.jsp?itiCode=' + itiCode)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('itiSection').innerHTML = html;
+                    showSection("itiSection");
+                })
+                .catch(err => {
+                    document.getElementById('itiSection').innerHTML = "<p style='color:red;'>Error loading ITI data</p>";
+                })
+                .finally(() => {
+                    hideLoader("itiLoader");
+                });
+        }
     </script>
+    
+    
+</head>
+<body>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>:: ITI  ::</title>
+<link rel="shortcut icon" type="image/ico" href="iti.png" />
+<link rel="stylesheet" href="stylesheets/expe1011.css">
+<script type="text/javascript" src="js1/jquery.min.js"></script>
+
+<style>
+    #menu-bar {
+  width: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  height: 30px;
+  line-height: 100%;
+  border-radius: 0px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  box-shadow: 2px 2px 2px #666666;
+  -webkit-box-shadow: 2px 2px 2px #666666;
+  -moz-box-shadow: 2px 2px 2px #666666;
+  background: #e4eeb9;
+  
+/*border: solid 1px #6D6D6D*/
+  position:relative;
+  z-index:999;
+}
+#menu-bar li {
+  margin: 0px 0px 6px 0px;
+  padding: 0px 6px 0px 6px;
+  float: left;
+  position: relative;
+  list-style: none;
+}
+#menu-bar a {
+  font-weight: bold;
+  font-family: verdana;
+ /*font-style: oblique;*/
+  font-size: 14px;
+  color: #000000;
+    background: #e4eeb9;
+  text-decoration: none;
+  display: block;
+  padding: 6px 20px 6px 20px;
+  margin: 0;
+  margin-bottom: 6px;
+ /*border-radius: 10px;*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+ /*text-shadow: 0px 0px 0px #000000;*/
+}
+#menu-bar li ul li a {
+  margin: 0;
+}
+#menu-bar .active a, #menu-bar li:hover > a {
+  background:blue;
+  background: lightblue;
+ background: -ms-linear-gradient(top,  #EB4954,  #A19197);
+  background: -webkit-gradient(linear, left top, left bottom, from(#EB4954), to(#A19197));
+  background: -moz-linear-gradient(top,  #EB4954,  #A19197);
+  color: white;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+ /*text-shadow: 3px 2px 3px #FFFFFF;*/
+}
+#menu-bar ul li:hover a, #menu-bar li:hover li a {
+  background: lightgoldenrodyellow;
+ /*border: none;*/
+  color: #000000;
+  -box-shadow: none;
+ -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+#menu-bar ul a:hover {
+  background: lightblue!important;
+ /*background: linear-gradient(top,  #EC95DD,  #BAA0B7) !important;*/
+ /*background: -ms-linear-gradient(top,  #EC95DD,  #BAA0B7) !important;*/
+ /*background: -webkit-gradient(linear, left top, left bottom, from(#EC95DD), to(#BAA0B7)) !important;*/
+ /*background: -moz-linear-gradient(top,  #EC95DD,  #BAA0B7) !important;*/
+  color: black !important;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+ /*text-shadow: 20px -12px 0px #FFBFD9;*/
+}
+#menu-bar li:hover > ul {
+  display: block;
+}
+#menu-bar ul {
+  background: block;
+  background: linear-gradient(top,  #FFD21C,  #CF7688);
+  background: -ms-linear-gradient(top,  #FFD21C,  #CF7688);
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFD21C), to(#CF7688));
+  background: -moz-linear-gradient(top,  #FFD21C,  #CF7688);
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  position: absolute;
+  top: 30px;
+  left: 0;
+ /*border: groove 4px #14B439;*/
+  border-radius: 0px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 3px #222222;
+  -moz-box-shadow: 2px 2px 3px #222222;
+  box-shadow: 2px 2px 3px #222222;
+}
+#menu-bar ul li {
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+#menu-bar ul a {
+  padding:10px 0px 10px 15px;
+   background: gold;
+  color:grey;
+  font-size:13px;
+  font-style:normal;
+   /*font-style: oblique;*/
+
+  font-family:verdana;
+  font-weight: normal;
+  text-shadow: 2px 2px 3px #FFFFFF;
+}
+#menu-bar ul li:first-child > a {
+  border-top-left-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+}
+#menu-bar ul li:last-child > a {
+  border-bottom-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+}
+#menu-bar:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#menu-bar {
+  display: inline-block;
+}
+  html[xmlns] #menu-bar {
+  display: block;
+}
+* html #menu-bar {
+  height: 1%;
+} 
+</style>
+</head>
+
+
+<center>
+    <img src="js/img/gen.jpg" id="banner-id" width="100%"></img>
+</center>
+
+
+
+
+
+ 
+
+    <ul id="menu-bar" style="height: 45px;">
+        
+       
+           <li> <a href="loginsuccess.jsp">Home</a> </li>
+         
+                <li>
+                    <a href="#">ITI Services</a>
+                    <ul>
+                        <li><span class="top"></span><span class="bottom"></span></li>
+                    <li><a href="Password_change.jsp"  title="null">Change Particular User Password </a></li><li><a href="Dget_Iti_Code_Interface.jsp"  title="null">DGET ITI CODE </a></li><li><a href="district_schedule.jsp"  title="null">District Schedule </a></li><li><a href="scrollupload_interface.jsp"  title="null">Scroll Update </a></li><li><a href="Shift_Unit_Report.jsp"  title="null">Shift Unit Report </a></li><li><a href="addsub.do"  title="Add subjects for relavent trades">Trade Name Change </a></li><li><a href="fileupload_interface.jsp"  title="null">Upload News And Updates </a></li><li><a href="Register_new_user.jsp"  title="null">NEW USER CREATION </a></li><li><a href="login_history.jsp"  title="It shows the Login history for your details b/w two given dates">Login History </a></li><li><a href="Registration.jsp"  title="Add New ITI for Master Table">Add ITI Master </a></li>
+                    </ul>
+                    
+                </li>
+        
+                <li>
+                    <a href="#">ITI Reports</a>
+                    <ul>
+                        <li><span class="top"></span><span class="bottom"></span></li>
+                    <li><a href="Govt_Pvt_admitted_seats_abstract.jsp"  title="null">Admitted Seats Abstract </a></li><li><a href="Jdgetdasboardreport.jsp"  title="null">Api Dashboard </a></li><li><a href="Seats_Abstract_Strength_filled_Interface.jsp"  title="null">DistrictWise Admitted Seats Abstract </a></li><li><a href="PhaseWiseAdmissionReport.jsp"  title="null">Phase Wise Admissions Details </a></li><li><a href="AdmissionScheduleITI.jsp"  title="null">Today Schedule ITIs </a></li><li><a href="tradewise_admission_report.jsp"  title="null">Trade/District Wise Admission Report </a></li><li><a href="tradewise_vacant_position.jsp"  title="null">TradeWise Vacant Position </a></li><li><a href="Iti_Report.jsp"  title="null">Update ITI </a></li><li><a href="statewidecastewiseabstractinter.jsp"  title="null">Caste Wise Admissions Abstract </a></li><li><a href="AdmissionsReport3.jsp"  title="null">Admissions Report </a></li><li><a href="Dist_wise_open_seats.jsp"  title="null">District/ITI/Trade Wise Seats Abstract </a></li><li><a href="trade_seats_abstract_duration_wise.jsp"  title="null">Duration Wise Trade Seats Abstract </a></li><li><a href="govt_pvt_dist_seats_abstract.jsp"  title="null">Govt or Pvt Dist Wise Seats Abstract </a></li>
+                    </ul>
+                    
+                </li>
+        
+                <li>
+                    <a href="#">Admissions</a>
+                    <ul>
+                        <li><span class="top"></span><span class="bottom"></span></li>
+                    <li><a href="permitted_shift_unit_nodal_report.jsp"  title="Permitted Shifts Units Report">DGT Permitted Shifts Units Report </a></li><li><a href="StatusMaster.jsp"  title="null">Freeze or UnFreeze  </a></li><li><a href="Iti_adm_interface.jsp"  title="null">Search </a></li><li><a href="District_Wise_Application_count.jsp"  title="Verification Report">Verification Report - Dist wise </a></li><li><a href="DSC_List_secondphase.jsp"  title="null">DSC List </a></li><li><a href="DeleteAdmission_interface.jsp"  title="null">DISCHARGE ADMISSION </a></li>
+                    </ul>
+                    
+                </li>
+        
+                <li>
+                    <a href="#">SCVT Exams</a>
+                    <ul>
+                        <li><span class="top"></span><span class="bottom"></span></li>
+                    <li><a href="semester_consolidated_marks_statement.jsp"  title="null">Sem Certificate Printing </a></li><li><a href="SCVTExamInitialization.jsp"  title="SCVT Exam Initialization">SCVT Exam Initialization </a></li><li><a href="SCVTResult_Processing.jsp"  title="SCVT Result Processing">SCVT Result Processing </a></li><li><a href="scvt_certificate_interface.jsp"  title="SCVT Certificate ">SCVT Certificate  </a></li>
+                    </ul>
+                    
+                </li>
+        
+          
+            <li><a href="logout.jsp">Logout</a>
+            <ul>
+                <li><span class="top"></span><span class="bottom"></span></li>
+                <a href="ChangePassword_Interface.jsp">Change Password  </a>
+            </ul>
+            </li>
+            
+            <li><span style="color: blue; font-size: 10px;" >
+                        Welcome, LOGINADMIN<br>
+                         Admin JD Exams,2
+                    </span> </li>
+    </ul>
+     
+    
+
+
+<h2 align="center">1. Overall Report (by District)</h2>
+
+<table align="center">
+    <tr>
+        <th>Sl. No</th>
+        <th>District</th>
+        <th>Total No of ITIs</th>
+        <th>ITIs shift & unit entered</th>
+        <th>ITIs shift & unit not entered</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td><span class="link" onclick="loadDistrictReport('25')">Alluri Sitaramaraju</span></td>
+        <td>3</td>
+        <td>3</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>2</td>
+        <td><span class="link" onclick="loadDistrictReport('24')">Anakapalli</span></td>
+        <td>33</td>
+        <td>33</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>3</td>
+        <td><span class="link" onclick="loadDistrictReport('22')">Anantapur</span></td>
+        <td>23</td>
+        <td>23</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>4</td>
+        <td><span class="link" onclick="loadDistrictReport('33')">Annamayya</span></td>
+        <td>14</td>
+        <td>14</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>5</td>
+        <td><span class="link" onclick="loadDistrictReport('32')">Bapatla</span></td>
+        <td>17</td>
+        <td>17</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>6</td>
+        <td><span class="link" onclick="loadDistrictReport('23')">Chittoor</span></td>
+        <td>14</td>
+        <td>14</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>7</td>
+        <td><span class="link" onclick="loadDistrictReport('14')">East Godavari</span></td>
+        <td>14</td>
+        <td>14</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>8</td>
+        <td><span class="link" onclick="loadDistrictReport('29')">Eluru</span></td>
+        <td>19</td>
+        <td>19</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>9</td>
+        <td><span class="link" onclick="loadDistrictReport('17')">Guntur</span></td>
+        <td>12</td>
+        <td>12</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>10</td>
+        <td><span class="link" onclick="loadDistrictReport('27')">Kakinada</span></td>
+        <td>14</td>
+        <td>14</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>11</td>
+        <td><span class="link" onclick="loadDistrictReport('28')">Konaseema</span></td>
+        <td>14</td>
+        <td>14</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>12</td>
+        <td><span class="link" onclick="loadDistrictReport('16')">Krishna</span></td>
+        <td>19</td>
+        <td>19</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>13</td>
+        <td><span class="link" onclick="loadDistrictReport('21')">Kurnool</span></td>
+        <td>18</td>
+        <td>18</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>14</td>
+        <td><span class="link" onclick="loadDistrictReport('38')">Markapuram</span></td>
+        <td>25</td>
+        <td>25</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>15</td>
+        <td><span class="link" onclick="loadDistrictReport('34')">Nandyal</span></td>
+        <td>21</td>
+        <td>21</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>16</td>
+        <td><span class="link" onclick="loadDistrictReport('19')">Nellore</span></td>
+        <td>24</td>
+        <td>23</td>
+        <td>1</td>
+    </tr>
+
+    <tr>
+        <td>17</td>
+        <td><span class="link" onclick="loadDistrictReport('30')">NTR</span></td>
+        <td>11</td>
+        <td>11</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>18</td>
+        <td><span class="link" onclick="loadDistrictReport('31')">Palnadu</span></td>
+        <td>18</td>
+        <td>18</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>19</td>
+        <td><span class="link" onclick="loadDistrictReport('26')">Parvathipuram-Manyam</span></td>
+        <td>7</td>
+        <td>7</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>20</td>
+        <td><span class="link" onclick="loadDistrictReport('37')">Polavaram</span></td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>21</td>
+        <td><span class="link" onclick="loadDistrictReport('18')">Prakasam</span></td>
+        <td>19</td>
+        <td>18</td>
+        <td>1</td>
+    </tr>
+
+    <tr>
+        <td>22</td>
+        <td><span class="link" onclick="loadDistrictReport('11')">Srikakulam</span></td>
+        <td>23</td>
+        <td>23</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>23</td>
+        <td><span class="link" onclick="loadDistrictReport('35')">Sri Satyasai</span></td>
+        <td>15</td>
+        <td>15</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>24</td>
+        <td><span class="link" onclick="loadDistrictReport('36')">Tirupati</span></td>
+        <td>25</td>
+        <td>25</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>25</td>
+        <td><span class="link" onclick="loadDistrictReport('13')">Visakhapatnam</span></td>
+        <td>33</td>
+        <td>33</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>26</td>
+        <td><span class="link" onclick="loadDistrictReport('12')">Vizianagaram</span></td>
+        <td>29</td>
+        <td>29</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>27</td>
+        <td><span class="link" onclick="loadDistrictReport('15')">West Godavari</span></td>
+        <td>18</td>
+        <td>18</td>
+        <td>0</td>
+    </tr>
+
+    <tr>
+        <td>28</td>
+        <td><span class="link" onclick="loadDistrictReport('20')">YSR</span></td>
+        <td>35</td>
+        <td>35</td>
+        <td>0</td>
+    </tr>
+
+</table>
+
+<!-- Loader for district -->
+<div id="districtLoader" class="loader"><div class="spinner"></div></div>
+<div id="districtSection" class="section"></div>
+
+<!-- Loader for ITI -->
+<div id="itiLoader" class="loader"><div class="spinner"></div></div>
+<div id="itiSection" class="section"></div>
+
 </body>
 </html>
