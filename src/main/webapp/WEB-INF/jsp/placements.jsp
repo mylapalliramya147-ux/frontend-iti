@@ -10,7 +10,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/md5/2.18.0/md5.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script>
-	let baseUrl = "http://localhost:5050/api/placements/";
+	let baseUrl = "http://localhost:5050/api/placements";
+	let implantUrl = "http://localhost:5050/api/implant";
+	let labsUrl = "http://localhost:5050/api/labs";
 
 	$(document).ready(function() {
 		generateCaptcha();
@@ -55,16 +57,49 @@
 	}
 
 	function overviewdetails() {
+		console.log("Fetching overviewdetails...");
 		$.ajax({
 			type : 'get',
-			url : baseUrl + 'masterdata/overviewdetails',
+			url : baseUrl + '/overviewdetails',
 			cache : false,
 			timeout : 600000,
 			success : function(response) {
+				console.log("placements overview success:", response);
 				$("#allPlacement").append(response.allPlacement.toLocaleString("en-US"));
-				$("#allImplants").append(response.allImplants.toLocaleString("en-US"));
-				$("#allLabs").append(response.allLabs.toLocaleString("en-US"));
 				countPlacementsGroupedByPtype();
+			},
+			error : function(xhr, status, error) {
+				console.error("placements overview failed:", status, error, xhr.responseText);
+				$("#spinnerdiv").hide();
+				alert("Failed to load placements overview: " + (xhr.responseText || status));
+			}
+		});
+		
+		$.ajax({
+			type : 'get',
+			url : implantUrl + '/overviewdetails',
+			cache : false,
+			timeout : 600000,
+			success : function(response) {
+				console.log("implant overview success:", response);
+				$("#allImplants").append(response.inplantTotal.toLocaleString("en-US"));
+			},
+			error : function(xhr, status, error) {
+				console.error("implant overview failed:", status, error, xhr.responseText);
+			}
+		});
+		
+		$.ajax({
+			type : 'get',
+			url : labsUrl + '/overviewdetails',
+			cache : false,
+			timeout : 600000,
+			success : function(response) {
+				console.log("labs overview success:", response);
+				$("#allLabs").append(response.labsTotal.toLocaleString("en-US"));
+			},
+			error : function(xhr, status, error) {
+				console.error("labs overview failed:", status, error, xhr.responseText);
 			}
 		});
 	}
@@ -72,7 +107,7 @@
 	function countPlacementsGroupedByPtype() {
 		$.ajax({
 			type : 'get',
-			url : baseUrl + 'masterdata/countPlacementsGroupedByPtype',
+			url : baseUrl + '/countPlacementsGroupedByPtype',
 			cache : false,
 			timeout : 600000,
 			success : function(response) {
@@ -90,7 +125,7 @@
 	function getdDistinctItiCodesByPtype() {
 		$.ajax({
 			type : 'get',
-			url : baseUrl + 'masterdata/getdDistinctItiCodesByPtype',
+			url : baseUrl + '/getdDistinctItiCodesByPtype',
 			cache : false,
 			timeout : 600000,
 			success : function(response) {
@@ -108,7 +143,7 @@
 	function inplantDashboardDetails() {
 		$.ajax({
 			type : 'get',
-			url : baseUrl + 'masterdata/inplantDashboardDetails',
+			url : implantUrl + '/inplantDashboardDetails',
 			cache : false,
 			timeout : 600000,
 			success : function(response) {
@@ -134,7 +169,7 @@
 	function labsDashboardDetails() {
 		$.ajax({
 			type : 'get',
-			url : baseUrl + 'masterdata/labsDashboardDetails',
+			url : labsUrl + '/labsDashboardDetails',
 			cache : false,
 			timeout : 600000,
 			success : function(response) {
