@@ -146,7 +146,6 @@
             const year = urlParams.get('year');
             if (year) {
                 document.getElementById('year').value = year;
-                fetchReport(new Event('submit'));
             }
         });
     </script>

@@ -139,7 +139,6 @@
             if (year) document.getElementById('year').value = year;
             if (durationMonths) document.getElementById('durationMonths').value = durationMonths;
             if (itiType) document.getElementById('itiType').value = itiType;
-            if (year && durationMonths) fetchReport(new Event('submit'));
         });
     </script>
 </body>

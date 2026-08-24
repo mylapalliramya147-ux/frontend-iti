@@ -29,13 +29,38 @@
         <h2 id="reportTitle">Phase Wise Admissions Details</h2>
     </div>
 
-    <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
-        <input type="button" value="Excel Download" class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="tableToExcel('tot', 'PhaseWiseAdmissions')">
+    <div class="container mt-4" id="selectionView">
+        <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
+            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
+            <div class="p-5 bg-white rounded-bottom">
+                <form id="reportForm" onsubmit="fetchReport(event)">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
+                        <div class="col-md-7">
+                            <select name="year" id="year" class="form-select-official w-100" required>
+                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading phase-wise admissions...</p></div>
 
     <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
+        <div class="no-print d-flex justify-content-center gap-3 mb-4">
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">
+                <i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION
+            </button>
+        </div>
+        <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
+            <input type="button" value="Excel Download" class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="tableToExcel('tot', 'PhaseWiseAdmissions')">
+        </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
                 <table class="table table-bordered mb-0 table-hover text-center report-table" id="tot" style="min-width: 1000px;">
@@ -82,18 +107,24 @@
             return day + '-' + month + '-' + year;
         }
 
+        function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
+        function fetchReport(event) {
+            event.preventDefault();
+            const year = document.getElementById('year').value;
+            document.getElementById('selectionView').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            loadReport(year);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             fetch('${backendApiUrl}/current-admission-phase')
                 .then(r => r.json())
                 .then(config => {
                     const year = config.year || String(new Date().getFullYear());
-                    document.getElementById('reportTitle').innerText = 'Admissions Abstract as on ' + formatDate(new Date());
-                    loadReport(year);
+                    document.getElementById('year').value = year;
                 })
                 .catch(err => {
                     console.error('Failed to load current phase:', err);
-                    document.getElementById('reportTitle').innerText = 'Admissions Abstract as on ' + formatDate(new Date());
-                    loadReport(String(new Date().getFullYear()));
                 });
         });
 
@@ -107,6 +138,7 @@
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
                 document.getElementById('downloadSection').style.display = 'block';
+                document.getElementById('reportTitle').innerText = 'Phase Wise Admissions Details (' + year + ')';
 
                 const tbody = document.getElementById('tableBody');
                 const tfoot = document.getElementById('tableFoot');
@@ -153,7 +185,7 @@
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('reportView').style.display = 'block';
+                document.getElementById('selectionView').style.display = 'block';
                 alert('Error loading data: ' + error.message);
                 console.error('Error:', error);
             });

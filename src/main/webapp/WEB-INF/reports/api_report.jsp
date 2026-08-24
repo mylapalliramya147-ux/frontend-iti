@@ -79,7 +79,7 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('${backendApiUrl}/admission-report-iti', {
+            fetch('${backendApiUrl}/admission-report-iti?page=0&size=500', {
                 method: 'GET'
             })
             .then(response => response.json())

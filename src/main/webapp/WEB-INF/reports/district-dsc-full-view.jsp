@@ -44,66 +44,8 @@
     </div>
 
     <!-- SELECTION VIEW -->
-    <div class="container mt-4" id="selectionView">
-        <div class="nodal-report-card shadow-lg" style="max-width: 650px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
-            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;">
-                <i class="fas fa-filter me-2"></i> Selection Criteria
-            </div>
-            <div class="p-4 bg-white rounded-bottom">
-                <form id="reportForm" onsubmit="fetchReport(event)">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label-official">ITI Code</label>
-                            <select name="iti_code" id="iti_code" class="form-select-official" required>
-                                <option value="">Select ITI</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mt-3 mt-md-0">
-                            <label class="form-label-official">Trade Code</label>
-                            <select name="trade_code" id="trade_code" class="form-select-official" required>
-                                <option value="">Select Trade</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label-official">Year</label>
-                            <select name="year" id="year" class="form-select-official" required>
-                                <option value="2025">2025</option>
-                                <option value="2024" selected>2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mt-3 mt-md-0">
-                            <label class="form-label-official">Phase</label>
-                            <select name="phase" id="phase" class="form-select-official" required>
-                                <option value="1">Phase 1</option>
-                                <option value="2">Phase 2</option>
-                                <option value="3">Phase 3</option>
-                                <option value="4">Phase 4</option>
-                                <option value="5">Phase 5</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mt-3 mt-md-0">
-                            <label class="form-label-official">Admission Mode</label>
-                            <select name="mode_adm" id="mode_adm" class="form-select-official" required>
-                                <option value="CONVENER">Convener</option>
-                                <option value="MANAGEMENT">Management</option>
-                                <option value="SPOT">Spot</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 text-center">
-                        <button type="submit" class="btn-submit-official-navy w-100">
-                            <i class="fas fa-search me-2"></i>VIEW REPORT
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="container mt-4" id="selectionView" style="display: none;">
+        <p class="text-center">Loading DSC Report...</p>
     </div>
 
     <div class="loader-spinner" id="loader">
@@ -136,17 +78,15 @@
 
     <script>
         function showSelection() {
-            document.getElementById('reportView').style.display = 'none';
-            document.getElementById('selectionView').style.display = 'block';
+            window.location.reload();
         }
 
-        function fetchReport(event) {
-            event.preventDefault();
-            const iti_code = document.getElementById('iti_code').value;
-            const trade_code = document.getElementById('trade_code').value;
-            const year = document.getElementById('year').value;
-            const phase = document.getElementById('phase').value;
-            const mode_adm = document.getElementById('mode_adm').value;
+        function fetchReport() {
+            const iti_code = 'All';
+            const trade_code = 'All';
+            const year = '2024';
+            const phase = '1';
+            const mode_adm = 'CONVENER';
 
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
@@ -236,101 +176,12 @@
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('selectionView').style.display = 'block';
                 alert('Error loading data: ' + error.message);
                 console.error('Error:', error);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Fetching DSC options...');
-            const localDistCode = localStorage.getItem('insCode') || '';
-            const url = '${backendApiUrl}/dsc-options' + (localDistCode ? '?dist_code=' + localDistCode : '');
-            
-            fetch(url)
-                .then(response => {
-                    console.log('DSC options response status:', response.status);
-                    if (!response.ok) throw new Error('HTTP error ' + response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('DSC options data received:', data);
-                    const itiSelect = document.getElementById('iti_code');
-                    const tradeSelect = document.getElementById('trade_code');
-                    
-                    if (data.itis && data.itis.length > 0) {
-                        data.itis.forEach(iti => {
-                            const option = document.createElement('option');
-                            option.value = iti.iti_code;
-                            option.textContent = iti.iti_code + ' - ' + iti.iti_name;
-                            itiSelect.appendChild(option);
-                        });
-                        console.log('Populated ' + data.itis.length + ' ITIs');
-                    } else {
-                        console.warn('No ITIs found in options data');
-                    }
-                    
-                    if (data.trades && data.trades.length > 0) {
-                        data.trades.forEach(trade => {
-                            const option = document.createElement('option');
-                            option.value = trade.trade_code;
-                            option.textContent = trade.trade_code + ' - ' + trade.trade_name;
-                            tradeSelect.appendChild(option);
-                        });
-                        console.log('Populated ' + data.trades.length + ' trades');
-                    } else {
-                        console.warn('No trades found in options data');
-                    }
-
-                    // Dynamic filtering of trades based on selected ITI
-                    itiSelect.addEventListener('change', () => {
-                        const selectedIti = itiSelect.value;
-                        tradeSelect.innerHTML = '<option value="">Select Trade</option>';
-                        
-                        let fetchUrl = '${backendApiUrl}/dsc-options?dist_code=' + localDistCode;
-                        if (selectedIti) {
-                            fetchUrl += '&iti_code=' + selectedIti;
-                        }
-                        
-                        fetch(fetchUrl)
-                            .then(response => {
-                                if (!response.ok) throw new Error('HTTP error ' + response.status);
-                                return response.json();
-                            })
-                            .then(filteredData => {
-                                if (filteredData.trades && filteredData.trades.length > 0) {
-                                    filteredData.trades.forEach(trade => {
-                                        const option = document.createElement('option');
-                                        option.value = trade.trade_code;
-                                        option.textContent = trade.trade_code + ' - ' + trade.trade_name;
-                                        tradeSelect.appendChild(option);
-                                    });
-                                    console.log('Populated ' + filteredData.trades.length + ' filtered trades');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error fetching filtered trades:', error);
-                            });
-                    });
-
-                    // Auto-set current phase/year
-                    fetch('${backendApiUrl}/current-admission-phase')
-                        .then(r => r.json())
-                        .then(config => {
-                            const year = config.year || String(new Date().getFullYear());
-                            const phase = config.phase || '';
-                            const yearSelect = document.getElementById('year');
-                            const phaseSelect = document.getElementById('phase');
-                            if (yearSelect) yearSelect.value = year;
-                            if (phaseSelect && phase) phaseSelect.value = String(phase);
-                        })
-                        .catch(err => console.error('Failed to load current phase:', err));
-                })
-                .catch(error => {
-                    console.error('Error fetching options:', error);
-                    alert('Failed to load selection options. Please ensure you are logged in and the backend is running.');
-                });
-        });
+        document.addEventListener('DOMContentLoaded', fetchReport);
     </script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

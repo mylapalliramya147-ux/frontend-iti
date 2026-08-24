@@ -154,10 +154,6 @@
                     const phaseSelect = document.getElementById('phase');
                     if (yearSelect) yearSelect.value = year;
                     if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
                 })
                 .catch(err => console.error('Failed to load current phase:', err));
         });

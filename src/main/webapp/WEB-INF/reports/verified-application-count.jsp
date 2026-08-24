@@ -31,25 +31,8 @@
     <c:set var="activeTab" value="verified_count" />
     <%@ include file="district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Verification Report</h2></div>
-    <div class="container mt-4" id="selectionView">
-        <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
-            <div class="nodal-card-header-dashboard" style="padding: 15px 25px;"><i class="fas fa-filter me-2"></i> Selection Criteria</div>
-            <div class="p-5 bg-white rounded-bottom">
-                <form id="reportForm" onsubmit="fetchReport(event)">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="year" class="form-label-official mb-md-0">Admission Year *</label></div>
-                        <div class="col-md-7">
-                            <select name="year" id="year" class="form-select-official w-100" required>
-                                <option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button type="submit" class="btn-submit-official-navy w-100"><i class="fas fa-search me-2"></i>VIEW REPORT</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="container mt-4" id="selectionView" style="display: none;">
+        <p class="text-center">Loading verification report...</p>
     </div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading application counts...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
@@ -75,10 +58,9 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
-        function fetchReport(event) {
-            event.preventDefault();
-            const year = document.getElementById('year').value;
+        function showSelection() { window.location.reload(); }
+        function fetchReport() {
+            const year = '2025';
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
             fetch('${backendApiUrl}/verified-application-count?year=' + encodeURIComponent(year), { method: 'GET' })
@@ -109,27 +91,9 @@
                     tbody.appendChild(tRow);
                 } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No data found.</td></tr>'; }
             })
-            .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
-        }
-    
+            .catch(error => { document.getElementById('loader').style.display = 'none'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('${backendApiUrl}/current-admission-phase')
-                .then(r => r.json())
-                .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
-                    if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
-                    const form = document.getElementById('reportForm');
-                    if (form) {
-                        form.dispatchEvent(new Event('submit'));
-                    }
-                })
-                .catch(err => console.error('Failed to load current phase:', err));
-        });
+        document.addEventListener('DOMContentLoaded', fetchReport);
     </script>
 </body>
 </html>

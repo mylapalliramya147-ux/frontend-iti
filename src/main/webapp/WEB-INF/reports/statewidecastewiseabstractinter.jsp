@@ -168,7 +168,6 @@
             const govt = document.getElementById('govt').value;
             const phase = document.getElementById('phase').value;
             const gender = document.getElementById('gender').value;
-            document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
             let apiUrl = '${backendApiUrl}/caste-wise-admissions?year=' + encodeURIComponent(year) + '&distCode=' + encodeURIComponent(distCode) + '&govt=' + encodeURIComponent(govt) + '&phase=' + encodeURIComponent(phase) + '&gender=' + encodeURIComponent(gender);
             fetch(apiUrl, { method: 'GET' })
