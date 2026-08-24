@@ -61,6 +61,11 @@ public class HomeController {
         return "reports/state-dashboard";
     }
 
+    @GetMapping("/placements")
+    public String placements() {
+        return "jsp/placements";
+    }
+
     @GetMapping("/")
     public String home() {
         return "jsp/index";

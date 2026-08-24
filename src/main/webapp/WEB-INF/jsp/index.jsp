@@ -5,7 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>:: ITI ::</title>
 <link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/iti.png" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/expe1011.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js1/jquery.min.js"></script>
 
 <style>
@@ -146,7 +147,7 @@
 } 
 </style>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/expe1011.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <style>
 
@@ -221,31 +222,37 @@
 
 <body>
 
+<!-- ================= BANNER IMAGE ================= -->
+<center>
+    <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
+</center>
+<br>
+
 <!-- ================= MENU BAR ================= -->
 
 <ul id="menu-bar">
 <li>
-    <a href="${pageContext.request.contextPath}/login.jsp">Home</a>
+    <a href="${pageContext.request.contextPath}/">Home</a>
 </li>
 
 <li class="dropdown">
     <a href="javascript:void(0)">ITI Profile</a>
     <div class="dropdown-content">
-        <a href="${pageContext.request.contextPath}/trade_display1.jsp">ITI Profile</a>
-        <a href="${pageContext.request.contextPath}/itilist.jsp">ITI LIST</a>
+        <a href="${pageContext.request.contextPath}/reports/itiprofile">ITI Profile</a>
+        <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport">ITI LIST</a>
     </div>
 </li>
 
 <li>
 <a>STRIVE</a>
 <ul>
-<li><a href="${pageContext.request.contextPath}/AboutStrive.jsp">ABOUT STRIVE</a></li>
-<li><a href="${pageContext.request.contextPath}/strive.jsp">Disclosure Management</a></li>
+<li><a href="${pageContext.request.contextPath}/aboutstrive.jsp">ABOUT STRIVE</a></li>
+<li><a href="${pageContext.request.contextPath}/disclosuremanagement.jsp">Disclosure Management</a></li>
 </ul>
 </li>
 
 <li>
-<a href="https://itiadmissions.ap.gov.in/placementsfe/" target="_blank">PLACEMENTS / IN-PLANT TRAINING</a>
+<a href="${pageContext.request.contextPath}/placements" target="_blank">PLACEMENTS / IN-PLANT TRAINING</a>
 </li>
 </ul>
 
@@ -255,7 +262,7 @@
 <marquee onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="100">
 <b>
 <font color="blue" size="5">
-<a href="" target="_blank"> ITI Admissions 2026 Phase -3 registrations, applications and verifications available in all GovtPvts ITIs on 15-08-2026 and 19-08-2026. </a>
+<a href="#" target="_blank"> ITI Admissions 2026 Phase -3 registrations, applications and verifications available in all GovtPvts ITIs on 15-08-2026 and 19-08-2026. </a>
 </font>
 </b>
 </marquee>
@@ -263,11 +270,17 @@
 <!-- ================= POPUP SCRIPT ================= -->
 <script>
 window.onload = function () {
-    document.getElementById("airforcePopup").style.display = "block";
-    setTimeout(function () { closeAirforcePopup(); }, 10000);
+    var popup = document.getElementById("airforcePopup");
+    if (popup) {
+        popup.style.display = "block";
+        setTimeout(function () { closeAirforcePopup(); }, 10000);
+    }
 };
 function closeAirforcePopup() {
-    document.getElementById("airforcePopup").style.display = "none";
+    var popup = document.getElementById("airforcePopup");
+    if (popup) {
+        popup.style.display = "none";
+    }
 }
 </script>
 
@@ -365,7 +378,7 @@ function closeAirforcePopup() {
 function submit1() {
     var pwdd = $("#pwd").val();
     $("#pwdd").val(pwdd);
-    var salt = 'abcd6536522284716682249xyznull';
+    var salt = 'abcd3765321028297260356xyznull';
     var pwd = document.getElementById("pwd").value;
     var temp = hex_md5(pwd);
     temp = hex_md5(temp);
@@ -469,8 +482,8 @@ $(document).ready(function(){
     var modal = document.getElementById('myModal');
     var span = document.getElementsByClassName("close")[0];
     var image = document.getElementById("modalImage");
-    span.onclick = function() { modal.style.display = "none"; }
-    image.onclick = function() { modal.style.display = "none"; }
+    if (span) span.onclick = function() { modal.style.display = "none"; }
+    if (image) image.onclick = function() { modal.style.display = "none"; }
 });
 </script>
 </html>
