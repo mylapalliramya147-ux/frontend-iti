@@ -46,14 +46,6 @@
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="distCode" class="form-label-official mb-md-0">District</label></div>
-                        <div class="col-md-7">
-                            <select name="distCode" id="distCode" class="form-select-official w-100">
-                                <option value="All">All Districts</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row align-items-center mb-4">
                         <div class="col-md-5"><label for="govt" class="form-label-official mb-md-0">ITI Type</label></div>
                         <div class="col-md-7">
                             <select name="govt" id="govt" class="form-select-official w-100">
@@ -88,35 +80,13 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
-        function loadDistricts() {
-            const year = document.getElementById('year').value;
-            fetch('${backendApiUrl}/trade-display/districts?year=' + year + '', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('distCode');
-                if (data.data && data.data.length > 0) {
-                    data.data.forEach(dist => {
-                        const option = document.createElement('option');
-                        option.value = dist.code;
-                        option.textContent = dist.name;
-                        select.appendChild(option);
-                    });
-                }
-            })
-            .catch(error => console.error('Error loading districts:', error));
-        }
-        window.addEventListener('load', loadDistricts);
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
-            const distCode = document.getElementById('distCode').value;
             const govt = document.getElementById('govt').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            let params = 'year=' + encodeURIComponent(year) + '&page=0&size=10000';
-            if (distCode && distCode !== 'All') params += '&distCode=' + encodeURIComponent(distCode);
-            if (govt && govt !== 'All') params += '&govt=' + encodeURIComponent(govt);
-            fetch('${backendApiUrl}/iti-admissions?&year=' + year + '' + params, { method: 'GET' })
+            fetch('${backendApiUrl}/govt-pvt-seats?year=' + encodeURIComponent(year) + '&govt=' + encodeURIComponent(govt), { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';

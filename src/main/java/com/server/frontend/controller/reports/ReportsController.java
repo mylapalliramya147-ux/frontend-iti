@@ -120,6 +120,11 @@ public class ReportsController {
         return "reports/itiprofile";
     }
 
+    @GetMapping("/trade_display2")
+    public String tradeDisplay2() {
+        return "reports/trade_display2";
+    }
+
     @GetMapping("/district_schedule")
     public String districtSchedule() {
         return "reports/district_schedule";

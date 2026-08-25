@@ -46,14 +46,6 @@
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="distCode" class="form-label-official mb-md-0">District</label></div>
-                        <div class="col-md-7">
-                            <select name="distCode" id="distCode" class="form-select-official w-100">
-                                <option value="">-- Select District --</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row align-items-center mb-4">
                         <div class="col-md-5"><label for="govt" class="form-label-official mb-md-0">ITI Type</label></div>
                         <div class="col-md-7">
                             <select name="govt" id="govt" class="form-select-official w-100">
@@ -89,35 +81,15 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
-        function loadDistricts() {
-            const year = document.getElementById('year').value;
-            fetch('${backendApiUrl}/trade-display/districts?year=' + year + '', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('distCode');
-                if (data.data && data.data.length > 0) {
-                    data.data.forEach(dist => {
-                        const option = document.createElement('option');
-                        option.value = dist.code;
-                        option.textContent = dist.name;
-                        select.appendChild(option);
-                    });
-                }
-            })
-            .catch(error => console.error('Error loading districts:', error));
-        }
-        window.addEventListener('load', loadDistricts);
         function fetchReport(event) {
             event.preventDefault();
             const year = document.getElementById('year').value;
-            const distCode = document.getElementById('distCode').value;
             const govt = document.getElementById('govt').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
             let params = 'year=' + encodeURIComponent(year);
-            if (distCode) params += '&distCode=' + encodeURIComponent(distCode);
             if (govt) params += '&govt=' + encodeURIComponent(govt);
-            fetch('${backendApiUrl}/strength-filled-seats?&year=' + year + '' + params, { method: 'GET' })
+            fetch('${backendApiUrl}/strength-filled-seats?' + params, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
@@ -149,11 +121,8 @@
                 .then(r => r.json())
                 .then(config => {
                     const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
                     const yearSelect = document.getElementById('year');
-                    const phaseSelect = document.getElementById('phase');
                     if (yearSelect) yearSelect.value = year;
-                    if (phaseSelect && phase) phaseSelect.value = String(phase);
                 })
                 .catch(err => console.error('Failed to load current phase:', err));
         });
