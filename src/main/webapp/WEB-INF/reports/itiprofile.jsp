@@ -425,51 +425,29 @@
 <!-- ================= MENU BAR ================= -->
 
 <ul id="menu-bar">
-
-
-
-
 <li>
-    <a href="login.jsp">
-        Home
-    </a>
+    <a href="${pageContext.request.contextPath}/">Home</a>
 </li>
-
-
-</li>
-
-
-
 
 <li class="dropdown">
     <a href="javascript:void(0)">ITI Profile</a>
     <div class="dropdown-content">
-        <a href="trade_display1.jsp">
-            ITI Profile
-        </a>
+        <a href="${pageContext.request.contextPath}/reports/itiprofile">ITI Profile</a>
         <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
     </div>
 </li>
 
-
-</li>
-
-
 <li>
 <a>STRIVE</a>
 <ul>
-<li><a href="AboutStrive.jsp">ABOUT STRIVE</a></li>
-<li><a href="strive.jsp">Disclosure Management</a></li>
+<li><a href="${pageContext.request.contextPath}/reports/aboutstrive">ABOUT STRIVE</a></li>
+<li><a href="${pageContext.request.contextPath}/reports/disclosuremanagement">Disclosure Management</a></li>
 </ul>
 </li>
 
 <li>
-<a href="https://itiadmissions.ap.gov.in/placementsfe/"
-target="_blank">
-PLACEMENTS / IN-PLANT TRAINING
-</a>
+<a href="/placements">PLACEMENTS / IN-PLANT TRAINING</a>
 </li>
-
 </ul>
 
 <br><br>

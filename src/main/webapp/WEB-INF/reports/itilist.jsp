@@ -275,10 +275,7 @@
 </li>
 
 <li>
-<a href="https://itiadmissions.ap.gov.in/placementsfe/"
-target="_blank">
-PLACEMENTS / IN-PLANT TRAINING
-</a>
+<a href="/placements">PLACEMENTS / IN-PLANT TRAINING</a>
 </li>
 
 </ul>
