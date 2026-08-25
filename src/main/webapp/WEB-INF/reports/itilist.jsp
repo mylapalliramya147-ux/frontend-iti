@@ -1,33 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        <style>
-            .text1{
-                font-size: 20px;
-                padding-left:65px;
-            }
-            .text2{
-                font-size: 20px;
-                padding-left:25px;
-                line-height: 1.6;
-            }
-            p:before {
-                content: ' \25BA';
-            }
-
-        </style>
-        <script>
-
-            function iti_display() {
-                // alert("skljlsjfs");
-                document.getElementById("dispaly_itis").style.display = "block";
-            }
-
-        </script>
-
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>STRIVE</title>
-        
+        <title>ITI List</title>
+         
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>:: ITI  ::</title>
@@ -190,7 +165,6 @@
 </style>
 </head>
 
-
 <link rel="stylesheet" href="stylesheets/expe1011.css">
 
 <style>
@@ -276,20 +250,11 @@
 
 <ul id="menu-bar">
 
-
-
-
 <li>
     <a href="login.jsp">
         Home
     </a>
 </li>
-
-
-</li>
-
-
-
 
 <li class="dropdown">
     <a href="javascript:void(0)">ITI Profile</a>
@@ -297,13 +262,9 @@
         <a href="trade_display1.jsp">
             ITI Profile
         </a>
-        <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
+        <a href="itilist.jsp">ITI LIST</a>
     </div>
 </li>
-
-
-</li>
-
 
 <li>
 <a>STRIVE</a>
@@ -326,10 +287,6 @@ PLACEMENTS / IN-PLANT TRAINING
 
 <!-- ================= MARQUEE ================= -->
 
-
-
-
-
 <marquee onmouseover="this.stop();"
           onmouseout="this.start();"
           scrolldelay="100">
@@ -349,65 +306,176 @@ PLACEMENTS / IN-PLANT TRAINING
 
 </marquee>
 
+<br><br>
 
+<!-- ================= ITI LIST FORM ================= -->
 
-<!-- ================= POPUP SCRIPT ================= -->
+<form method="get" action="">
+    <p>&nbsp;</p>
+<h2 align="center" class="style1">
+    <strong>List of Government and Private ITIs</strong>
+</h2>
 
-<script>
+<table width="50%" align="center" bgcolor="#cbd6b2" cellpadding="8" cellspacing="0">
+    <tr bgcolor="#4ab131">
+        <td colspan="3" align="center" style="color:white;font-weight:bold;">
+            ITI List
+        </td>
+    </tr>
 
-// Show popup on page load
-window.onload = function () {
+<tr>
+    <td align="right" width="35%">
+        <b>Select ITI Type :</b>
+    </td>
 
-    document.getElementById(
-        "airforcePopup"
-    ).style.display = "block";
+    <td align="left" width="35%">
+        <select name="govt" style="width:180px;">
+            <option value="">-- Select --</option>
+              <option value="A" selected>
+                All
+            </option>
+            <option value="G" >
+                Government
+            </option>
+            <option value="P" >
+                Private
+            </option>
+        </select>
+    </td>
 
-    // Auto close after 10 sec
-    setTimeout(function () {
+    <td align="left" width="30%">
+        <input type="submit" value="Proceed">
+    </td>
+</tr>
 
-        closeAirforcePopup();
+</table>
 
-    }, 10000);
-};
-
-// Manual close
-function closeAirforcePopup() {
-    document.getElementById(
-        "airforcePopup"
-    ).style.display = "none";
-}
-
-</script>
+</form>
 
 <br>
-<h2 align="center"><b><u>Skills Strengthening of Industrial Value Enhancement (STRIVE) Project  in State of Andhra Pradesh</u></b></h2>
-<div class="text1">
-    <p>Objective of the scheme is to improve the relevance and efficiency of skills Training provided through Industrial Training Institutes (ITIs) and Apprenticeships, duly upgrading the infrastructure, equipment and machinery.  </p>
 
-    <p>STRIVE is a Central Sector Scheme with no State Contribution, assisted by World Bank.</p>
+<!-- ================= ITI LIST TABLE ================= -->
 
-    <p>	   It is a 5 Year Project , closing by November 2022.</p>
-    <p>	   STRIVE Scheme has four result areas. </p>
-    <p>	  Result Area 1 - Improved Performance of ITIs </p>
-    <p>	Result Area 2 - Increased Capacities of State Governments to support ITIs and Apprenticeship Training </p>
-    <p>	 Result Area 3 - Improved Teaching and Learning  </p>
-    <p>	Result Area 4 - Improved and Broadened Apprenticeship Training. </p>
-    <p>	 15 Govt. ITIs have been selected under the scheme and Institute Management Committees are also constituted in these ITIs.</p>
-    <p>	Govt. of A.P have made an Agreement (Performance Based Fund Agreement )  with Govt. of India in Feb 2019 accepting terms and Conditions of the Project.</p>
+<table border="1" width="90%" align="center">
 
+<tr bgcolor="#4ab131" style="color:white;">
 
+<th>SL.No</th>
+<th>DIstrict Name</th>
+<th>NIC ITI Code</th>
+<th>NCVT Code</th>
+<th>ITI Name</th>
+
+</tr>
+
+<tr>
+<td>1</td>
+<td>Alluri Sitaramaraju</td>
+<td>1368</td>
+<td>GU28000520</td>
+<td>GOVT ITI Narava</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Alluri Sitaramaraju</td>
+<td>1305</td>
+<td>GR28000244</td>
+<td>GOVT. R. I.T.I. ARAKU</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Alluri Sitaramaraju</td>
+<td>1306</td>
+<td>GR28000176</td>
+<td>GOVT. R. I.T.I. UPPER SILERU</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Anakapalli</td>
+<td>1310</td>
+<td>PR28000274</td>
+<td>ADITYA, PRIVATE I.T.I, PAYAKARAOPETA</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Anakapalli</td>
+<td>1309</td>
+<td>PR28000276</td>
+<td>A.S.S.N., PRIVATE I.T.I., ANAKAPALLI</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Anakapalli</td>
+<td>1354</td>
+<td>PR28000455</td>
+<td>Bhagavatula Charitable Trust Private ITI, Haripuram</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>Anakapalli</td>
+<td>1362</td>
+<td>PR28000462</td>
+<td>Chaitanya Private ITI, Parawada, VSP</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>Anakapalli</td>
+<td>2470</td>
+<td>PR28000542</td>
+<td>Dilshaj Pvt. ITI.,Rolugunta</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Anakapalli</td>
+<td>1355</td>
+<td>PR28000454</td>
+<td>DMK Private ITI, Sabbavaram</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Anakapalli</td>
+<td>1304</td>
+<td>GR28000341</td>
+<td>GOVT. I.T.I. NARSIPATNAM</td>
+</tr>
+
+</table>
+
+<br><br>
+
+<style>
+    #footer{
+        position:fixed;
+        bottom:0px;
+        width:100%;
+        height:25px;
+        padding-top: 8px;
+        text-align: center;
+        background-color: #0E4878;
+        border-top: 1px #000000 solid;
+        font-size: 12px;
+        font-family: arial, verdana;
+        color: #ffffff;
+    }
+</style>
+
+<br><br>
+<br><br>
+
+<div id="footer">
+    2013 @ All Rights Reserved &nbsp;&nbsp; Designed by &nbsp; National Informatics Center
+    <font color="white"><a href="http://www.ap.nic.in" title="">National Informatics Center </a></font>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="white"><a href="disclaimer.jsp">Disclaimer</a></font>
 </div>
-<br><br><br>
-<!--<div class="text2">
-<span><b>STEP-1:-</b> Display "Skills Strengthening of Industrial Value Enhancement (STRIVE) , by clicking on "Disclosures Management" is to be displayed.  </span><br>
-<span><b>STEP-2:-</b> Clicking on "Disclosures  Managemen"  the following are to be displayed.</span><br>
-<span style="padding-left:85px; "> 1) Approved Procurement Plan & updates  2) Invitation for Bids 3) Short list of consultants/Bidders 4) Contract Awards   5) Action taken </span><br>
-    <span style="padding-left:85px; " >reports & Complaints</span><br>
-<span><b>STEP-3:-</b> Upon clicking any item above, three items should be displayed as "(Goods, Services & Works) "</span><br>
-<span><b>STEP-4:-</b> Upon clicking Goods or Services or Works (15 ITIs list and SPIU)as shown below, is to be displayed </span>
-    
-    
-    </div>-->
 
 </body>
 </html>

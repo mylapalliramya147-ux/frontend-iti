@@ -447,7 +447,7 @@
         <a href="trade_display1.jsp">
             ITI Profile
         </a>
-        <a href="itilist.jsp">ITI LIST</a>
+        <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
     </div>
 </li>
 

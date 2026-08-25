@@ -120,6 +120,16 @@ public class ReportsController {
         return "reports/itiprofile";
     }
 
+    @GetMapping("/trade_display1")
+    public String tradeDisplay1() {
+        return "reports/trade_display1";
+    }
+
+    @GetMapping("/itilist")
+    public String itiList() {
+        return "reports/itilist";
+    }
+
     @GetMapping("/trade_display2")
     public String tradeDisplay2() {
         return "reports/trade_display2";

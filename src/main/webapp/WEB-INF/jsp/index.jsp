@@ -239,7 +239,7 @@
     <a href="javascript:void(0)">ITI Profile</a>
     <div class="dropdown-content">
         <a href="${pageContext.request.contextPath}/reports/itiprofile">ITI Profile</a>
-        <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport">ITI LIST</a>
+        <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
     </div>
 </li>
 
