@@ -246,8 +246,8 @@
 <li>
 <a>STRIVE</a>
 <ul>
-<li><a href="${pageContext.request.contextPath}/aboutstrive.jsp">ABOUT STRIVE</a></li>
-<li><a href="${pageContext.request.contextPath}/disclosuremanagement.jsp">Disclosure Management</a></li>
+<li><a href="${pageContext.request.contextPath}/reports/aboutstrive">ABOUT STRIVE</a></li>
+<li><a href="${pageContext.request.contextPath}/reports/disclosuremanagement">Disclosure Management</a></li>
 </ul>
 </li>
 
