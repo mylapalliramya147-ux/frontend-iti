@@ -251,7 +251,7 @@
 <ul id="menu-bar">
 
 <li>
-    <a href="login.jsp">
+    <a href="${pageContext.request.contextPath}/">
         Home
     </a>
 </li>
@@ -259,10 +259,10 @@
 <li class="dropdown">
     <a href="javascript:void(0)">ITI Profile</a>
     <div class="dropdown-content">
-        <a href="trade_display1.jsp">
+        <a href="${pageContext.request.contextPath}/reports/itiprofile">
             ITI Profile
         </a>
-        <a href="itilist.jsp">ITI LIST</a>
+        <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
     </div>
 </li>
 
@@ -310,11 +310,15 @@ PLACEMENTS / IN-PLANT TRAINING
 
 <!-- ================= ITI LIST FORM ================= -->
 
-<form method="get" action="">
+<form id="itiListForm">
     <p>&nbsp;</p>
 <h2 align="center" class="style1">
     <strong>List of Government and Private ITIs</strong>
 </h2>
+
+<div style="width:90%; margin:auto; text-align:right; margin-bottom:10px;">
+    <input type="button" value="Download Excel" onclick="exportToExcel();">
+</div>
 
 <table width="50%" align="center" bgcolor="#cbd6b2" cellpadding="8" cellspacing="0">
     <tr bgcolor="#4ab131">
@@ -329,7 +333,7 @@ PLACEMENTS / IN-PLANT TRAINING
     </td>
 
     <td align="left" width="35%">
-        <select name="govt" style="width:180px;">
+        <select id="govtType" style="width:180px;" onchange="loadItiList()">
             <option value="">-- Select --</option>
               <option value="A" selected>
                 All
@@ -344,7 +348,7 @@ PLACEMENTS / IN-PLANT TRAINING
     </td>
 
     <td align="left" width="30%">
-        <input type="submit" value="Proceed">
+        <input type="button" value="Proceed" onclick="loadItiList()">
     </td>
 </tr>
 
@@ -356,99 +360,53 @@ PLACEMENTS / IN-PLANT TRAINING
 
 <!-- ================= ITI LIST TABLE ================= -->
 
-<table border="1" width="90%" align="center">
+<div id="loader" style="display: none; text-align: center; padding: 20px;">
+    <img src="${pageContext.request.contextPath}/images/loading.gif" alt="Loading..." style="width: 40px; height: 40px;" />
+    <p>Loading ITI data...</p>
+</div>
+
+<style>
+    #itiListTableWrap {
+        display: none;
+        text-align: center;
+    }
+    #itiListTable {
+        border-collapse: collapse;
+        width: 98%;
+        margin: 0 auto;
+    }
+    #itiListTable th,
+    #itiListTable td {
+        border: 1px solid #2f7d1f;
+        padding: 8px;
+        text-align: left;
+    }
+    #itiListTable tbody tr:nth-child(even) {
+        background-color: #f2f8ec;
+    }
+    #itiListTable tbody tr:hover {
+        background-color: #dceecb;
+    }
+</style>
+
+<div id="itiListTableWrap">
+<table border="0" cellpadding="6" cellspacing="0" width="98%" align="center" id="itiListTable" style="border-collapse: collapse; margin-left: auto; margin-right: auto;">
 
 <tr bgcolor="#4ab131" style="color:white;">
 
-<th>SL.No</th>
-<th>DIstrict Name</th>
-<th>NIC ITI Code</th>
-<th>NCVT Code</th>
-<th>ITI Name</th>
+<th style="border: 1px solid #2f7d1f; padding: 8px;">SL.No</th>
+<th style="border: 1px solid #2f7d1f; padding: 8px;">District Name</th>
+<th style="border: 1px solid #2f7d1f; padding: 8px;">NIC ITI Code</th>
+<th style="border: 1px solid #2f7d1f; padding: 8px;">NCVT Code</th>
+<th style="border: 1px solid #2f7d1f; padding: 8px;">ITI Name</th>
 
 </tr>
 
-<tr>
-<td>1</td>
-<td>Alluri Sitaramaraju</td>
-<td>1368</td>
-<td>GU28000520</td>
-<td>GOVT ITI Narava</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td>Alluri Sitaramaraju</td>
-<td>1305</td>
-<td>GR28000244</td>
-<td>GOVT. R. I.T.I. ARAKU</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td>Alluri Sitaramaraju</td>
-<td>1306</td>
-<td>GR28000176</td>
-<td>GOVT. R. I.T.I. UPPER SILERU</td>
-</tr>
-
-<tr>
-<td>4</td>
-<td>Anakapalli</td>
-<td>1310</td>
-<td>PR28000274</td>
-<td>ADITYA, PRIVATE I.T.I, PAYAKARAOPETA</td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>Anakapalli</td>
-<td>1309</td>
-<td>PR28000276</td>
-<td>A.S.S.N., PRIVATE I.T.I., ANAKAPALLI</td>
-</tr>
-
-<tr>
-<td>6</td>
-<td>Anakapalli</td>
-<td>1354</td>
-<td>PR28000455</td>
-<td>Bhagavatula Charitable Trust Private ITI, Haripuram</td>
-</tr>
-
-<tr>
-<td>7</td>
-<td>Anakapalli</td>
-<td>1362</td>
-<td>PR28000462</td>
-<td>Chaitanya Private ITI, Parawada, VSP</td>
-</tr>
-
-<tr>
-<td>8</td>
-<td>Anakapalli</td>
-<td>2470</td>
-<td>PR28000542</td>
-<td>Dilshaj Pvt. ITI.,Rolugunta</td>
-</tr>
-
-<tr>
-<td>9</td>
-<td>Anakapalli</td>
-<td>1355</td>
-<td>PR28000454</td>
-<td>DMK Private ITI, Sabbavaram</td>
-</tr>
-
-<tr>
-<td>10</td>
-<td>Anakapalli</td>
-<td>1304</td>
-<td>GR28000341</td>
-<td>GOVT. I.T.I. NARSIPATNAM</td>
-</tr>
+<tbody id="itiTableBody">
+</tbody>
 
 </table>
+</div>
 
 <br><br>
 
@@ -476,6 +434,102 @@ PLACEMENTS / IN-PLANT TRAINING
     <font color="white"><a href="http://www.ap.nic.in" title="">National Informatics Center </a></font>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="white"><a href="disclaimer.jsp">Disclaimer</a></font>
 </div>
+
+<script>
+let itiDataCache = [];
+
+function loadItiList() {
+    const govtType = document.getElementById('govtType').value;
+    const loader = document.getElementById('loader');
+    const wrap = document.getElementById('itiListTableWrap');
+    const tbody = document.getElementById('itiTableBody');
+    
+    loader.style.display = 'block';
+    wrap.style.display = 'none';
+    tbody.innerHTML = '';
+
+    let url = '${backendApiUrl}/trade-display/iti-list';
+    if (govtType && govtType !== '') {
+        url += '?type=' + encodeURIComponent(govtType);
+    }
+
+    fetch(url, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            loader.style.display = 'none';
+            
+            if (!data.data || data.data.length === 0) {
+                itiDataCache = [];
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; font-weight: bold;">No ITIs found.</td></tr>';
+                wrap.style.display = 'block';
+                return;
+            }
+
+            itiDataCache = data.data;
+            let rows = '';
+            data.data.forEach((item, index) => {
+                rows += '<tr>' +
+                               '<td>' + (index + 1) + '</td>' +
+                               '<td>' + (item.districtName || '') + '</td>' +
+                               '<td>' + (item.nicItiCode || '') + '</td>' +
+                               '<td>' + (item.ncvtCode || '') + '</td>' +
+                               '<td>' + (item.itiName || '') + '</td>' +
+                               '</tr>';
+            });
+
+            tbody.innerHTML = rows;
+            wrap.style.display = 'block';
+        })
+        .catch(error => {
+            loader.style.display = 'none';
+            itiDataCache = [];
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; font-weight: bold; color: red;">Error loading ITI data. Please try again.</td></tr>';
+            wrap.style.display = 'block';
+            console.error('Error:', error);
+        });
+}
+
+// Export the currently-loaded data as an Excel (.xls HTML table) file
+function exportToExcel() {
+    if (!itiDataCache || itiDataCache.length === 0) {
+        alert('No data available to download. Please load the ITI list first.');
+        return;
+    }
+
+    let csv = '\ufeffSL.No,District Name,NIC ITI Code,NCVT Code,ITI Name\n';
+    itiDataCache.forEach((item, index) => {
+        const escape = (val) => {
+            const s = (val || '').toString();
+            return '"' + s.replace(/"/g, '""') + '"';
+        };
+        csv += (index + 1) + ',' +
+               escape(item.districtName) + ',' +
+               escape(item.nicItiCode) + ',' +
+               escape(item.ncvtCode) + ',' +
+               escape(item.itiName) + '\n';
+    });
+
+    const blob = new Blob([csv], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ITI_List.xls';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const govtType = urlParams.get('type');
+    if (govtType) {
+        document.getElementById('govtType').value = govtType;
+    }
+    // Load the ITI list automatically on page load (default type = All)
+    loadItiList();
+});
+</script>
 
 </body>
 </html>
