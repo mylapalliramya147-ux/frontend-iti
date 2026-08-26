@@ -68,6 +68,47 @@ public class LoginController {
         return "redirect:/authHome";
     }
 
+        @PostMapping("/placementsLogin.do")
+    public String placementsLogin(@RequestParam("uname") String uname,
+                                  @RequestParam("pwd") String pwd,
+                                  @RequestParam(value = "captcha", required = false) String captcha,
+                                  HttpServletRequest request) {
+        if (!CaptchaController.matches(request, captcha)) {
+            request.getSession().removeAttribute("sessionUser");
+            return "redirect:/placements?error=captcha";
+        }
+        Map<String, Object> result;
+        try {
+            Map<String, String> payload = Map.of(
+                    "username", uname == null ? "" : uname.trim(),
+                    "password", pwd == null ? "" : pwd,
+                    "ip", request.getRemoteAddr() == null ? "" : request.getRemoteAddr(),
+                    "sessionId", request.getSession().getId());
+            ResponseEntity<Map> resp = rest.postForEntity(AUTH_URL, payload, Map.class);
+            result = resp.getBody();
+        } catch (Exception e) {
+            return "redirect:/placements?error=server";
+        }
+
+        if (result == null || !Boolean.TRUE.equals(result.get("success"))) {
+            Object msg = result == null ? null : result.get("message");
+            String err = "inactive".equalsIgnoreCase(String.valueOf(msg)) || (msg != null && msg.toString().contains("inactive"))
+                    ? "inactive" : "invalid";
+            return "redirect:/placements?error=" + err;
+        }
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("sessionUser", result);
+        session.setAttribute("username", result.get("username"));
+        session.setAttribute("roleId", result.get("roleId"));
+        session.setAttribute("insCode", result.get("insCode"));
+        session.setAttribute("fullName", result.get("fullName"));
+        session.setAttribute("itiName", result.get("itiName"));
+        session.setAttribute("loginCount", result.get("loginCount"));
+        session.setAttribute("lastLogins", result.get("lastLogins"));
+        return "jsp/role_id";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession s = request.getSession(false);

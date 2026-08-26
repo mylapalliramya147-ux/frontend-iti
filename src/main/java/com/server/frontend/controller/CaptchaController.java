@@ -59,13 +59,29 @@ public class CaptchaController {
         out.flush();
     }
 
-    static boolean matches(HttpServletRequest request, String submitted) {
+            static boolean matches(HttpServletRequest request, String submitted) {
         Object expected = request.getSession().getAttribute(SESSION_KEY);
         return expected != null && submitted != null
                 && expected.toString().equalsIgnoreCase(submitted.trim());
     }
 
-    private String randomText(int len) {
+    /** Returns the current captcha text for this session, generating a fresh one if absent. */
+    static String current(HttpServletRequest request) {
+        Object expected = request.getSession().getAttribute(SESSION_KEY);
+        if (expected == null) {
+            expected = randomText(4);
+            request.getSession().setAttribute(SESSION_KEY, expected);
+        }
+        return String.valueOf(expected);
+    }
+
+    @GetMapping(value = "/captcha/text", produces = MediaType.TEXT_PLAIN_VALUE)
+    public void captchaText(HttpServletRequest request, java.io.OutputStream out) throws IOException {
+        out.write(current(request).getBytes());
+        out.flush();
+    }
+
+        private static String randomText(int len) {
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) sb.append(CHARS.charAt(RANDOM.nextInt(CHARS.length())));
         return sb.toString();

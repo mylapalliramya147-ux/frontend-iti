@@ -70,8 +70,9 @@ public class HomeController {
         return "reports/state-dashboard";
     }
 
-    @GetMapping("/placements")
-    public String placements() {
+        @GetMapping("/placements")
+    public String placements(HttpServletRequest request) {
+        request.setAttribute("captchaText", CaptchaController.current(request));
         return "jsp/placements";
     }
 

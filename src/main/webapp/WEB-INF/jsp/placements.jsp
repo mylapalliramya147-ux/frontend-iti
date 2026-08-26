@@ -14,11 +14,16 @@
 	let implantUrl = "http://localhost:5050/api/implant";
 	let labsUrl = "http://localhost:5050/api/labs";
 
-	$(document).ready(function() {
-		generateCaptcha();
+		$(document).ready(function() {
 		overviewdetails();
+				$("#captchaRef").click(function() {
+			$.get("${pageContext.request.contextPath}/captcha/text", function(txt) {
+				$("#mainCaptcha").val(txt);
+				$("#txtInput").val("");
+			});
+		});
 	});
-	
+
 	function validate() {
 		$("#tokenError").empty();
 
@@ -35,25 +40,8 @@
 			$("#password").focus();
 			return false;
 		}
-
-		var md5_1 = hex_md5(password);
-		var md5_2 = hex_md5(md5_1);
-
-		$("#password").val(md5_2);
+		// password sent as-is; backend hashes (bcrypt / legacy md5) server-side.
 		return true;
-	}
-
-	function generateCaptcha() {
-		var alpha = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-		var i;
-		for (i = 0; i < 4; i++) {
-			var a = alpha[Math.floor(Math.random() * alpha.length)];
-			var b = alpha[Math.floor(Math.random() * alpha.length)];
-			var c = alpha[Math.floor(Math.random() * alpha.length)];
-			var d = alpha[Math.floor(Math.random() * alpha.length)];
-		}
-		var code = a + '' + b + '' + '' + c + '' + d;
-		document.getElementById("mainCaptcha").value = code;
 	}
 
 	function overviewdetails() {
@@ -318,12 +306,12 @@
 						<div align="center">
 							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">OFFICIAL's LOGIN</h3>
 						</div>
-						<form id="bean" action="https://itiadmissions.ap.gov.in/placementsbe/userLogin" method="post">
+						<form id="bean" action="${pageContext.request.contextPath}/placementsLogin.do" method="post">
 
 						<div class="row m-2">
 							<div class="col-lg-12 col-md-6">
 							<label class="form-label">Username&nbsp;&nbsp;</label>
-							<input id="username" name="username" class="form-control" type="text" value=""/>
+							<input id="username" name="uname" class="form-control" type="text" value=""/>
 							
 							<span class="usernameSpan"></span>
 							</div>
@@ -331,26 +319,29 @@
 						<div class="row m-2">
 							<div class="col-lg-12 col-md-6">
 							<label class="form-label">Password&nbsp;&nbsp;</label>
-							<input id="password" name="password" class="form-control" type="password" value=""/>
+							<input id="password" name="pwd" class="form-control" type="password" value=""/>
 							
 							  <span class="passwordSpan"></span>
 							</div>
 						</div>
  
 						<div class="row m-2">
-							<div class="col-lg-5 col-md-3">
-								<label class="form-label">Captcha&nbsp;&nbsp;</label>
-								<input type="text" id="txtInput" class="form-control" autocomplete="off" maxlength="4" />
-							</div>
-							<div class="col-lg-7 col-md-3 d-flex align-items-center">
-								<div style="margin-top: 30px;">
-									<input type="text" id="mainCaptcha" readonly="readonly" class="form-control"
-										style='letter-spacing: 10px; font-weight: bolder; color: white; background-color: black;' />
-								</div>
-								<div style="margin-top: 30px;">
-									<i class="fas fa-sync fa-2x pt-2" onclick="generateCaptcha();"></i>
-								</div>
-							</div>
+														<div class="row m-2">
+                <div class="col-lg-5 col-md-3">
+                    <label class="form-label">Captcha&nbsp;&nbsp;</label>
+                    <input type="text" id="txtInput" name="captcha" class="form-control" autocomplete="off" maxlength="4" />
+                </div>
+                <div class="col-lg-7 col-md-3 d-flex align-items-center">
+                    <div style="margin-top: 30px;">
+                        <input type="text" id="mainCaptcha" readonly="readonly" class="form-control"
+                            style='letter-spacing:10px; font-weight:bolder; color:#FFFFFF; background-color:#000000;'
+                            value="${captchaText}" />
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <i class="fas fa-sync fa-2x pt-2" id="captchaRef" style="cursor:pointer;"></i>
+                    </div>
+                </div>
+            </div>
 						</div>
 						<div align="center">&nbsp;&nbsp;&nbsp;
 							<button type="submit" class="btn btn-success"
