@@ -309,13 +309,21 @@ function closeAirforcePopup() {
         <tr><td>
             <div id="content">
                 <div class="box">
-                    <center>
-                        <font color="red"><b></b></font>
-                    </center>
                     <center><h1>Welcome to ITI MIS</h1></center>
+                    <% String err = request.getParameter("error"); if (err != null) { %>
+                    <center>
+                        <font color="red"><b>
+                        <%= "captcha".equals(err) ? "Invalid captcha, please try again."
+                          : "invalid".equals(err) ? "Invalid username or password."
+                          : "inactive".equals(err) ? "Your account is inactive. Contact administrator."
+                          : "session".equals(err) ? "Please login to continue."
+                          : "Login service unavailable, please try again later." %>
+                        </b></font>
+                    </center>
+                    <% } %>
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
                         <tbody><tr>
-                            <center><img align="center" src="${pageContext.request.contextPath}/js/img/states/ap.jpg" alt="ANDHRA PRADESH" /></center>
+                            <center><img align="center" src="${pageContext.request.contextPath}/images/ap.png" alt="ANDHRA PRADESH" style="max-width:280px;" /></center>
                         </tr>
                     </tbody></table>
                 </div>
@@ -343,7 +351,7 @@ function closeAirforcePopup() {
         <tr>
             <td><label for="email">Captcha<font color="red">*</font>&nbsp;&nbsp;</label></td>
             <td>
-                <input type="text" autocomplete="off" id="captcha" name="captcha" tabindex="3" required
+                <input type="text" autocomplete="off" id="captcha" name="captcha" tabindex="3" maxlength="4" required
                        onblur="validateFreeSpace(this.value, this, 'Please Enter The Letters Shown In Picture')"
                        onkeypress="return (event);" />
             </td>
@@ -351,8 +359,13 @@ function closeAirforcePopup() {
         <tr>
             <td></td>
             <td align="center">
-                <image src="${pageContext.request.contextPath}/images/refresh_png.png" alt="refresh" width="40" height="30" id="captchaRef"/>
-                <img src="${pageContext.request.contextPath}/captcha.jsp" id="captchaImage" border="0" width="135px" height="30px" background="red" />
+                <span id="captchaRef" title="Get a new captcha" style="cursor:pointer; display:inline-block; vertical-align:middle;">
+                    <svg width="28" height="24" viewBox="0 0 24 24" fill="#1a6bb5" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-8 8h3a5 5 0 018.54-3.54L13 11h7V4l-2.35 2.35z"/>
+                        <path d="M6.35 17.65A7.958 7.958 0 0012 20c4.42 0 7.99-3.58 8-8h-3a5 5 0 01-8.54 3.54L11 13H4v7l2.35-2.35z"/>
+                    </svg>
+                </span>
+                <img src="${pageContext.request.contextPath}/captcha" id="captchaImage" border="0" width="135px" height="30px" background="red" />
             </td>
         </tr>
         <tr>
@@ -376,15 +389,8 @@ function closeAirforcePopup() {
 
 <script>
 function submit1() {
-    var pwdd = $("#pwd").val();
-    $("#pwdd").val(pwdd);
-    var salt = 'abcd3765321028297260356xyznull';
-    var pwd = document.getElementById("pwd").value;
-    var temp = hex_md5(pwd);
-    temp = hex_md5(temp);
-    temp2 = hex_md5(salt);
-    temp2 = temp2 + temp;
-    document.getElementById("pwd").value = temp2;
+    // Send the password as-is; the backend hashes (bcrypt / legacy md5) server-side.
+    // The old client-side md5(salt)+md5(md5(pwd)) obfuscation was removed.
 }
 </script>
 

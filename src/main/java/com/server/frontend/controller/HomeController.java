@@ -1,5 +1,6 @@
 package com.server.frontend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -7,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/authHome")
-    public String authHome() {
-        return "checkmeritschedule/ScheduleEntry";
+    public String authHome(HttpServletRequest request) {
+        if (request.getSession(false) == null || request.getSession().getAttribute("sessionUser") == null) {
+            return "redirect:/?error=session";
+        }
+        return "jsp/authHome";
     }
 
     @GetMapping("/MeritList")
