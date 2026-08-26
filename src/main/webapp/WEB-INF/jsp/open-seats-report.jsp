@@ -106,7 +106,7 @@
     </style>
 </head>
 <body class="nodal-body">
-    <%@ include file="header.jsp" %>
+    <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="open_seats" />
     <%@ include file="../nodal_navbar.jsp" %>

@@ -176,7 +176,7 @@
 
         <body class="bg-light">
             <!-- Global Header -->
-            <%@ include file="header.jsp" %>
+            <%@ include file="../reports/header.jsp" %>
 
             <div class="main-content">
                 <div class="container mt-5">

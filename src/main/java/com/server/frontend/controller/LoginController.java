@@ -37,10 +37,12 @@ public class LoginController {
         // 2. credentials are checked by the backend
         Map<String, Object> result;
         try {
-            ResponseEntity<Map> resp = rest.postForEntity(
-                    AUTH_URL, Map.of("username", uname == null ? "" : uname.trim(),
-                                     "password", pwd == null ? "" : pwd),
-                    Map.class);
+            Map<String, String> payload = Map.of(
+                    "username", uname == null ? "" : uname.trim(),
+                    "password", pwd == null ? "" : pwd,
+                    "ip", request.getRemoteAddr() == null ? "" : request.getRemoteAddr(),
+                    "sessionId", request.getSession().getId());
+            ResponseEntity<Map> resp = rest.postForEntity(AUTH_URL, payload, Map.class);
             result = resp.getBody();
         } catch (Exception e) {
             return "redirect:/?error=server";
@@ -59,8 +61,10 @@ public class LoginController {
         session.setAttribute("username", result.get("username"));
         session.setAttribute("roleId", result.get("roleId"));
         session.setAttribute("insCode", result.get("insCode"));
-        session.setAttribute("itiCode", result.get("itiCode"));
         session.setAttribute("fullName", result.get("fullName"));
+        session.setAttribute("itiName", result.get("itiName"));
+        session.setAttribute("loginCount", result.get("loginCount"));
+        session.setAttribute("lastLogins", result.get("lastLogins"));
         return "redirect:/authHome";
     }
 
