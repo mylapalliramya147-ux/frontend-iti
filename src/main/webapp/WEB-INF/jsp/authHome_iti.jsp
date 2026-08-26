@@ -29,7 +29,9 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/bannernew.jsp" />
+<center>
+    <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
+</center>
 
 <ul id="menu-bar">
     <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
