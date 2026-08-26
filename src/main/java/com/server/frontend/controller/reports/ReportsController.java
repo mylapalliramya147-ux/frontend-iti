@@ -122,7 +122,8 @@ public class ReportsController {
 
     @GetMapping("/trade_display1")
     public String tradeDisplay1() {
-        return "reports/trade_display1";
+        // trade_display1.jsp does not exist; the actual ITI Profile page is /reports/itiprofile
+        return "redirect:/reports/itiprofile";
     }
 
     @GetMapping("/itilist")
