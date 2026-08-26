@@ -523,8 +523,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (govtType) {
         document.getElementById('govtType').value = govtType;
     }
-    // Load the ITI list automatically on page load (default type = All)
-    loadItiList();
+    // Table stays hidden until the user picks an ITI type and clicks Proceed
 });
 </script>
 
