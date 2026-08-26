@@ -66,7 +66,7 @@
 </head>
 <body>
     <%@ include file="../header.jsp" %>
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
 
     <div class="nodal-dashboard-container">
         <div class="container">

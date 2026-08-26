@@ -28,7 +28,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="admission_report" />
-    <%@ include file="iti_navbar.jsp" %>
+    <%@ include file="../iti_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Admission Report</h2></div>
 
     <div class="loader-spinner" id="loader">

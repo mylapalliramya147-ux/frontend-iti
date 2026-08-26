@@ -32,7 +32,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="dsc_list" />
-    <%@ include file="iti_navbar.jsp" %>
+    <%@ include file="../iti_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>DSC List</h2></div>
 
     <div class="container mt-4" id="selectionView">

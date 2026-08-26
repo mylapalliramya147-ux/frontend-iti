@@ -47,7 +47,7 @@
 
     <!-- Header -->
     <header>
-        <%@ include file="../reports/bannernew.jsp" %>
+        <%@ include file="../bannernew.jsp" %>
     </header>
 
     <div class="container-fluid px-5 mt-4 mb-5">
@@ -768,7 +768,7 @@
             
     <!-- Footer -->
     <footer>
-        <%@ include file="../reports/footer.jsp" %>
+        <%@ include file="../footer.jsp" %>
     </footer>
 
     <script>

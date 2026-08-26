@@ -21,7 +21,7 @@
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
     <c:set var="activeTab" value="api_dashboard" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>District Dashboard</h2></div>
 
     <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">

@@ -89,7 +89,7 @@
     <%@ include file="header.jsp" %>
     
     <c:set var="activeTab" value="nodal_report" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
 
     
     <div class="container-fluid px-4 py-4">

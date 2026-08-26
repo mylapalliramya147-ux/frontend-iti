@@ -26,7 +26,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="applicant_mobile" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="../district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Applicant Address With Mobile</h2></div>
 
     <div class="loader-spinner" id="loader">

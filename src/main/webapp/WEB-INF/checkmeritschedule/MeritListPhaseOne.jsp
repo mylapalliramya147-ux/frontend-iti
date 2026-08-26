@@ -54,8 +54,8 @@ function exportToExcel() {
 	</div>
 	<div id="navbar">
 <%-- 		<%@include file="/WEB-INF/userpages/Navbar.jsp"%> --%>
-		<%@include file="/WEB-INF/banner.jsp"%>
-	<%@include file="/WEB-INF/navbar.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+	<%@include file="/WEB-INF/checkmeritschedule/authNavbar.jsp"%>
 	</div>
 
 	<div class="row text-danger">

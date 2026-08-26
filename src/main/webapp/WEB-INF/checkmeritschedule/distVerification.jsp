@@ -30,7 +30,7 @@
 		<img src="./images/gen.jpg" class="img-fluid" />
 	</div>
 	<div id="navbar">
-		<jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+		<jsp:include page="/WEB-INF/bannernew.jsp" />
 		<jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 <%-- 		<%@include file="/WEB-INF/userpages/Navbar.jsp"%> --%>
 	</div>
@@ -557,6 +557,6 @@
 	<br>
 	<br>
 	<br>
-	<jsp:include page="/WEB-INF/reports/footer.jsp" />
+	<jsp:include page="/WEB-INF/footer.jsp" />
 </body>
 </html>

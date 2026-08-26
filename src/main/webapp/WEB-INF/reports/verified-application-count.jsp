@@ -29,7 +29,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="verified_count" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="../district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Verification Report</h2></div>
     <div class="container mt-4" id="selectionView" style="display: none;">
         <p class="text-center">Loading verification report...</p>

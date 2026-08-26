@@ -30,7 +30,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="trade_vacant" />
-    <%@ include file="state_navbar.jsp" %>
+    <%@ include file="../state_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>TradeWise Vacant Position</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">

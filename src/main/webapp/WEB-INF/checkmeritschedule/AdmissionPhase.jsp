@@ -288,7 +288,7 @@
 </head>
 <body>
 
-    <jsp:include page="/WEB-INF/reports/bannernew.jsp" />
+    <jsp:include page="/WEB-INF/bannernew.jsp" />
     <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="container main-container">

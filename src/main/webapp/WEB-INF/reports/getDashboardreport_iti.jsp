@@ -27,7 +27,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="iti_status" />
-    <%@ include file="iti_navbar.jsp" %>
+    <%@ include file="../iti_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Industrial Training Institute — ITI-Wise Status Report</h2></div>
 
     <div class="loader-spinner" id="loader">

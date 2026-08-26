@@ -23,7 +23,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="phase_wise" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
 
     <div class="nodal-page-title-dashboard">
         <h2 id="reportTitle">Phase Wise Admissions Details</h2>

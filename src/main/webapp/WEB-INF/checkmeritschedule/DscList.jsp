@@ -79,7 +79,7 @@
 <body class="bg-light">
     <!-- Header Content -->
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
 
     <div class="container form-container">
         <div class="outer-border shadow-lg">

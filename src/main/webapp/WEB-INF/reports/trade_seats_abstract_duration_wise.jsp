@@ -31,7 +31,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="trade_duration" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>Duration Wise Trade Seats Abstract</h2></div>
 
     <div class="container mt-4" id="selectionView">

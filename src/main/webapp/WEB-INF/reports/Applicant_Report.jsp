@@ -29,7 +29,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="dist_applicant" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="../district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2 id="reportTitle">Loading Applicant Report...</h2></div>
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading applicant report...</p></div>
     <div class="container mt-4" id="reportView" style="display: none;">
