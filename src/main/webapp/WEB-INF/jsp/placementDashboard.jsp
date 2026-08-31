@@ -4,417 +4,445 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ITI Placements / In-Plant Training - Dashboard</title>
-    <!-- Local Bootstrap 5.3.8 + Font Awesome (shipped by ITIAP under /css) -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/all.min.css" rel="stylesheet">
-    <!-- Chart.js v2.9.4 (CDN — not shipped locally); matches new Chart(ctx,{type:'pie'}) API -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <!-- SheetJS xlsx (CDN) — used by the above/below-20% Excel export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <!-- jQuery (local) — dependency for Bootstrap bundle + all page scripts -->
-    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-    <!-- Page styles (kept from ITIAP) + data-table helper for the below-20% grid -->
-    <style>
-        body{margin:0;background:#f5f5f5;font-family:'Segoe UI',Arial,sans-serif;}
-        .header-banner{width:100%;height:110px;overflow:hidden;position:relative;background:#172233;}
-        .header-banner img{width:100%;height:110px;object-fit:cover;opacity:.85;}
-        .header-banner .banner-title{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:bold;text-shadow:1px 1px 4px rgba(0,0,0,.7);}
-        .navbar{background:#172233;padding:10px 16px;}
-        .navbar .brand{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-weight:700;font-size:18px;}
-        .navbar .brand img{height:34px;margin-right:10px;}
-        .navbar .navlinks{display:inline-flex;align-items:center;gap:14px;}
-        .navbar .navlinks a{color:#fff;text-decoration:none;font-size:14px;}
-        .navbar .navlinks a:hover{color:#ffc107;}
-        .navbar .user-dd{position:relative;display:inline-block;}
-        .navbar .dropdown-menu-right{position:absolute;right:0;top:30px;background:#fff;border:1px solid #ccc;border-radius:4px;min-width:170px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
-        .navbar .dropdown-menu-right a{display:block;padding:6px 12px;color:#212529;text-decoration:none;font-size:13px;}
-        .navbar .dropdown-menu-right a:hover{background:#f0f0f0;}
-        .card{border:none;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);}
-        .card-header{border-radius:8px 8px 0 0!important;background:#fff;border-bottom:2px solid #172233;color:#172233;font-weight:700;font-size:15px;}
-        .card-body{padding:14px 16px;}
-        .stat{font-size:26px;font-weight:700;color:#172233;}
-        .stat-sub{font-size:13px;color:#6c757d;}
-        .menu-list a{display:block;padding:4px 0;color:#212529;text-decoration:none;font-size:13px;}
-        .menu-list a:hover{background:#eef5ff;border-radius:3px;}
-        #tabledata th,#tabledata td{border:1px solid #dee2e6;padding:6px 10px;font-size:13px;text-align:center;}
-        #tabledata th{background:#172233;color:#fff;}
-    </style>
-    <!-- Session-derived auth. ITIAP authenticates via server sessions, NOT the
-         JWT the original page used — so role/ITI come from the session and
-         jwtToken is left empty (stubbed). The masterdata/** stats endpoints are
-         not yet implemented in the ITIAP Backend; their callers fail silently. -->
-    <script>
-        var roleId   = '<c:out value="${sessionScope.roleId}" default=""/>';
-        var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
-        var username = '<c:out value="${sessionScope.username}" default=""/>';
-        var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
-        var jwtToken = '';
-        var baseUrl  = "${backendBaseUrl}/";   /* e.g. http://localhost:5050/ */
-    </script>
-</head>
-<body>
-<div class="header-banner">
-    <img src="${pageContext.request.contextPath}/images/gen.jpg" alt="ITI Placements Banner">
-    <span class="banner-title">ITI Placements / In-Plant Training - Dashboard</span>
-</div>
-<nav class="navbar">
-  <div class="d-flex justify-content-between align-items-center w-100">
-    <a class="brand" href="${pageContext.request.contextPath}/placements/loginSuccess"><img src="${pageContext.request.contextPath}/images/gen.jpg" alt="ITI" class="img-fluid">ITIAP</a>
-    <div class="navlinks">
-      <a href="${pageContext.request.contextPath}/placements/loginSuccess"><i class="fa fa-home"></i> Home</a>
-      <span id="userinfo" style="color:#cfe3ff;font-size:13px;">&nbsp;</span>
-      <div class="user-dd dropdown">
-        <span class="name dropdown-toggle" id="userMenu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fa fa-user"></i>
-          <c:if test="${not empty sessionScope.username}">${sessionScope.username}</c:if>
-          <c:if test="${empty sessionScope.username}">User</c:if>
-        </span>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a class="dropdown-item" href="#">Change User Details</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ITI Login Success</title>
+<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<!-- Chart.js v4 (CDN - not shipped locally); matches source's new Chart(ctx,{type:'pie'}) API -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<!-- SheetJS xlsx (CDN) - used by the above/below-20% Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="${pageContext.request.contextPath}/css/all.min.css" rel="stylesheet">
+<style>
+.modal{position:fixed;z-index:1;padding-top:100px;left:0;top:0;width:100%;height:90%;overflow:auto;background-color:rgba(0,0,0,0.4);}
+.close{color:black;float:right;font-size:40px;font-weight:bold;background-color:#ff6600;width:100px;margin-right:80px;}
+.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer;}
+a>input[type=button]{border:none;background-color:#e4eeb9;color:black;font-weight:bolder;}
+#custom{border:1px solid red;background-color:#e4eeb9;margin-bottom:20px;border-radius:10px;height:40px;}
+.card{border:none;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.card-body{padding:14px 16px;}
+.card-title{font-size:16px;font-weight:700;margin-bottom:8px;}
+.card-link{font-size:13px;margin:0 4px;text-decoration:none;}
+#tabledata{margin-bottom:20px;}
+#tabledata th,#tabledata td{border:1px solid #dee2e6;padding:6px 10px;font-size:13px;text-align:center;}
+#tabledata th{background:#172233;color:#fff;}
+</style>
+<!-- Session-derived auth (ITIAP uses server sessions, NOT the JWT the original page used).
+     The masterdata/** endpoints and masterdata/findByItiCode do not exist in the ITIAP
+     Backend yet, so their JS callers below are stubbed / fail silently (no alerts). -->
 <script>
-$(function () {
-    // Populate the navbar user-info line from the session (source used a
-    // document.ready block with insName/insCode/username for #userinfo).
-    var parts = [];
-    if (insName) parts.push(insName);
-    if (insCode) parts.push('ITI Code: ' + insCode);
-    if (username) parts.push('User: ' + username);
-    $('#userinfo').text(parts.length ? parts.join('  |  ') : 'Welcome');
+var jwtToken = '';
+var roleId   = '<c:out value="${sessionScope.roleId}" default=""/>';
+var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
+var username = '<c:out value="${sessionScope.username}" default=""/>';
+var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
+var baseUrl  = "${backendBaseUrl}/";   /* e.g. http://localhost:5050/ */
+</script>
+<script>
+$(document).ready(function(){
+document.getElementById("userinfo").innerHTML =
+"<i class='fas fa-user'></i> " + username +
+" | <i class='fas fa-id-badge'></i> " + insCode +
+" | <i class='fas fa-building'></i> " + insName;
 });
 </script>
+</head>
+<body>
 
-<div class="container-fluid py-3">
-  <!-- Loading spinner (hidden once the stat fetches settle) -->
-  <div id="spinnerdiv" class="text-center py-5">
-    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading…</span></div>
-  </div>
+<img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border:1px solid black;width:100%;border-radius:2px;">
 
-  <div id="datadiv" style="display:none;">
-    <div id="dataheading" class="h5 mb-3">Overview</div>
-    <div id="tabledata" class="mb-4"></div>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container-fluid">
+<a class="navbar-brand" href="${pageContext.request.contextPath}/placements/loginSuccess"><i class="fas fa-home"></i> Home</a>
+<div class="text-white fw-bold">Welcome : <span id="userinfo"></span></div>
+<div><a href="${pageContext.request.contextPath}/logout" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
+</div>
+</nav>
 
-  <!-- Seat strength / fill-ratio pie charts (faithful to the source layout) -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-chair"></i> All Seats</div>
-        <div class="card-body">
-          <canvas id="dashBoardAllSeats" height="200"></canvas>
-          <hr>
-          <div class="d-flex justify-content-between stat-sub">Total&nbsp;<span id="dashBoardAllSeats-total">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Filled&nbsp;<span id="dashBoardAllSeats-filled">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Fill Ratio&nbsp;<span id="dashBoardAllSeats-fillratio">—%</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-building"></i> Govt ITI Seats</div>
-        <div class="card-body">
-          <canvas id="govtSeatsPieChart" height="200"></canvas>
-          <hr>
-          <div class="d-flex justify-content-between stat-sub">Total&nbsp;<span id="govtSeats-total">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Filled&nbsp;<span id="govtSeats-filled">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Fill Ratio&nbsp;<span id="govtSeats-fillratio">—%</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-hotel"></i> Pvt ITI Seats</div>
-        <div class="card-body">
-          <canvas id="pvtSeatsPieChart" height="200"></canvas>
-          <hr>
-          <div class="d-flex justify-content-between stat-sub">Total&nbsp;<span id="pvtSeats-total">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Filled&nbsp;<span id="pvtSeats-filled">—</span></div>
-          <div class="d-flex justify-content-between stat-sub">Fill Ratio&nbsp;<span id="pvtSeats-fillratio">—%</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container p-2">
+<!-- Aggregate stat charts are state/nodal level. ITI admin (role 4) sees only the menu cards. -->
+<c:if test="${sessionScope.roleId != '4'}">
+<div id="spinnerdiv" class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
+<div id="spinnerdiv2" class="text-center py-5" style="display:none;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
 
-  <!-- Above 20% fill ratio -->
-  <div class="card mb-4">
-    <div class="card-header"><i class="fa fa-thumbs-up"></i> ITIs with Fill Ratio Above 20%</div>
-    <div class="card-body">
-      <canvas id="above20PercentPieChart" height="110"></canvas>
-      <div class="row text-center mt-3">
-        <div class="col"><div class="stat" id="above20NoOfItis">—</div><div class="stat-sub">No. of ITIs</div></div>
-        <div class="col"><div class="stat" id="above20TotalSeats">—</div><div class="stat-sub">Total Seats</div></div>
-        <div class="col"><div class="stat" id="above20FilledSeats">—</div><div class="stat-sub">Filled Seats</div></div>
-      </div>
-      <div id="above20Tabledata" class="mt-3"></div>
-    </div>
-  </div>
-
-  <!-- Below 20% fill ratio -->
-  <div class="card mb-4">
-    <div class="card-header"><i class="fa fa-thumbs-down"></i> ITIs with Fill Ratio Below 20%</div>
-    <div class="card-body">
-      <canvas id="below20PercentPieChart" height="110"></canvas>
-      <div class="row text-center mt-3">
-        <div class="col"><div class="stat" id="below20NoOfItis">—</div><div class="stat-sub">No. of ITIs</div></div>
-        <div class="col"><div class="stat" id="below20TotalSeats">—</div><div class="stat-sub">Total Seats</div></div>
-        <div class="col"><div class="stat" id="below20FilledSeats">—</div><div class="stat-sub">Filled Seats</div></div>
-      </div>
-      <div id="below20Tabledata" class="mt-3"></div>
-      <div class="text-end mt-3">
-        <button type="button" class="btn btn-sm btn-outline-primary" onclick="fnExcelReport()">
-          <i class="fa fa-file-excel"></i> Export to Excel
-        </button>
-      </div>
-    </div>
-  </div>
+<div id="datadiv" style="display:none;">
+<div id="dataheading" class="h5 mb-3" style="color:blue;font-size:12px;text-decoration:underline;">Overview</div>
+<table id="tabledata" class="table table-bordered"><thead><tr><th>S.No</th><th>District</th><th>ITI Name</th><th>Strength</th><th>Filled</th><th>Vacant</th><th>Fill Ratio</th></tr></thead><tbody></tbody></table>
 </div>
 
-<div class="container-fluid pb-4">
-  <div class="row g-3">
-    <div class="col-md-3">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-cog"></i> SERVICES</div>
-        <div class="card-body">
-          <div class="menu-list">
-            <a href="#">Change User Details</a>
-            <a href="#">My Profile</a>
-            <a href="#">Change Password</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-briefcase"></i> PLACEMENTS</div>
-        <div class="card-body">
-          <div class="menu-list">
-            <a href="#">Placement Entry</a>
-            <a href="#">Placement Report</a>
-            <a href="#">Placement Schedule Entry</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-industry"></i> IN-PLANT TRAINING</div>
-        <div class="card-body">
-          <div class="menu-list">
-            <a href="#">In-Plant Entry</a>
-            <a href="#">In-Plant Report</a>
-            <a href="#">In-Plant Schedule Entry</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card h-100">
-        <div class="card-header"><i class="fa fa-flask"></i> LABORATORIES</div>
-        <div class="card-body">
-          <div class="menu-list">
-            <a href="#">Lab Entry</a>
-            <a href="#">Lab Item List</a>
-            <a href="#">Lab Report</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="row">
+<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-chair"></i> All Seats</div><div class="card-body">
+<canvas id="dashBoardAllSeats" height="200"></canvas>
+<span id="totaldashBoardAllSeats" class="card-link">Total Seats - --</span>
+<span id="fillrationdashBoardAllSeats" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-building"></i> Govt ITI Seats</div><div class="card-body">
+<canvas id="govtSeatsPieChart" height="200"></canvas>
+<span id="totalseatsgovtitis" class="card-link">Total Seats - --</span>
+<span id="fillrationgovtitis" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-hotel"></i> Pvt ITI Seats</div><div class="card-body">
+<canvas id="pvtSeatsPieChart" height="200"></canvas>
+<span id="totalseatspvtitis" class="card-link">Total Seats - --</span>
+<span id="fillrationpvtitis" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+</div>
+
+<div class="row mt-3">
+<div class="col-md-6 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-thumbs-up"></i> ITIs with Fill Ratio Above 20%</div><div class="card-body">
+<canvas id="above20PercentPieChart" height="110"></canvas>
+<span id="above20StrengthFill" class="card-link">Total Seats - --</span>
+<span id="above20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
+<span id="above20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
+</div></div></div>
+<div class="col-md-6 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-thumbs-down"></i> ITIs with Fill Ratio Below 20%</div><div class="card-body">
+<canvas id="below20PercentPieChart" height="110"></canvas>
+<span id="below20StrengthFill" class="card-link">Total Seats - --</span>
+<span id="below20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
+<span id="below20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
+<div class="text-end mt-3"><button type="button" class="btn btn-sm btn-outline-primary" onclick="fnExcelReport('tabledata')"><i class="fas fa-file-excel"></i> Export to Excel</button></div>
+</div></div></div>
+</div>
+
+</c:if>
+
+<div class="row mt-3">
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-cog"></i> SERVICES</div><div class="card-body" id="services"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-flask"></i> LABS</div><div class="card-body" id="labcard"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-industry"></i> IN-PLANT</div><div class="card-body" id="inplantcard"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-briefcase"></i> PLACEMENTS</div><div class="card-body" id="plcmtscard"></div></div></div>
+</div>
 </div>
 
 <script>
 // ============================================================================
 // Dashboard scripts (faithful to the ITI placements source, ITIAP-adapted).
-//
-// The source calls `masterdata/dashBoardData`, `masterdata/getAbove20PercentItisStats`
-// and `masterdata/getBelow20PercentItisStats` for these widgets. Those endpoints are
-// not implemented in the ITIAP Backend yet, so each call is wrapped so that on
-// failure it degrades silently (no alert) and leaves the charts/tables empty.
-// When the endpoints are added, the AJAX below will light these sections up
-// with no further page changes.
+// The source calls masterdata/dashBoardData, masterdata/getAbove20PercentItisStats,
+// masterdata/getBelow20PercentItisStats, masterdata/getAbove20PercentItis and
+// masterdata/getBelow20PercentItis for these widgets. Those endpoints are not
+// implemented in the ITIAP Backend yet, so their callers fail silently (console
+// only, no alerts). When the endpoints are added these light up with no page changes.
 // ============================================================================
 $(function () {
-    var call = function (url, options) {
-        // Wrap $.get with a silent fail handler. A JWT is not used in ITIAP
-        // (sessions instead), so the `Authorization` header is only sent if a
-        // token was ever injected (it is currently empty and therefore omitted).
-        var settings = options || {};
-        return $.get({
-            url: baseUrl + url,
-            headers: jwtToken ? { 'Authorization': 'Bearer ' + jwtToken } : undefined
-        }).done(settings.done || function () {}).fail(function (xhr, status, err) {
-            // masterdata/** is not available yet in ITIAP -> fail silently.
-            if (settings.error) settings.error(xhr, status, err);
-        });
-    };
+function sbgCall(url, done) {
+$.ajax({
+type: 'GET',
+url: baseUrl + url,
+cache: false,
+timeout: 600000,
+headers: jwtToken ? { 'Authorization': jwtToken } : undefined,
+success: done || function () {},
+error: function (xhr, st, err) { console.log('masterdata/' + url + ' not available:', err); }
+});
+}
 
-    var fillLabels = function (id, total, filled) {
-        $('#dashBoardAllSeats-total').text(total == null || isNaN(total) ? '—' : Number(total).toLocaleString('en-US'));
-        $('#dashBoardAllSeats-filled').text(filled == null || isNaN(filled) ? '—' : Number(filled).toLocaleString('en-US'));
-        if (total > 0) {
-            $('#dashBoardAllSeats-fillratio').text(((filled / total) * 100).toFixed(1) + '%');
-        } else { $('#dashBoardAllSeats-fillratio').text('—%'); }
-    };
+function renderPieChart(data, chartId) {
+var ctx = document.getElementById(chartId).getContext('2d');
+var chartData = {
+labels: ['Filled Seats-' + data.strength_fill, 'Vacant Seats-' + data.strength_vacant],
+datasets: [{ data: [data.strength_fill, data.strength_vacant], backgroundColor: ['#36A2EB', '#FF6384'], hoverOffset: 4 }]
+};
+new Chart(ctx, {
+type: 'pie',
+data: chartData,
+options: {
+responsive: true,
+plugins: {
+legend: { position: 'top' },
+tooltip: {
+callbacks: {
+label: function (tooltipItem) {
+var label = chartData.labels[tooltipItem.dataIndex] || '';
+var value = chartData.datasets[0].data[tooltipItem.dataIndex];
+return label + ': ' + value;
+}
+}
+}
+}
+}
+});
+}
 
-    function renderPieChart(canvasId, labels, values, title) {
-        var ctx = document.getElementById(canvasId);
-        if (!ctx) return;
-        if (window.dashPieCharts === undefined) window.dashPieCharts = {};
-        if (window.dashPieCharts[canvasId]) window.dashPieCharts[canvasId].destroy();
-        window.dashPieCharts[canvasId] = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: values,
-                    backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#17a2b8', '#6610f2', '#fd7e14', '#20c997'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                legend: { position: 'bottom' },
-                title: { display: !!title, text: title },
-                cutoutPercentage: 0
-            }
-        });
-    }
+function getPieChartsTotal(response) {
+var d = response.dashBoardAllSeats;
+renderPieChart(d, 'dashBoardAllSeats');
+$("#totaldashBoardAllSeats").empty();
+$("#fillrationdashBoardAllSeats").empty();
+$("#totaldashBoardAllSeats").append('Total Seats - ' + d.strength.toLocaleString("en-US"));
+$("#fillrationdashBoardAllSeats").append('<br>Fill Ratio - ' + d.fill_ratio + '%');
+}
+
+function getPieChartsGovt(response) {
+var d = response.dashBoardGovtSeats;
+renderPieChart(d, 'govtSeatsPieChart');
+$("#totalseatsgovtitis").empty();
+$("#fillrationgovtitis").empty();
+$("#totalseatsgovtitis").append('Total Seats - ' + d.strength.toLocaleString("en-US"));
+$("#fillrationgovtitis").append('<br>Fill Ratio - ' + d.fill_ratio + '%');
+}
+
+function getPieChartsPvt(response) {
+var d = response.dashBoardPvtSeats;
+renderPieChart(d, 'pvtSeatsPieChart');
+$("#totalseatspvtitis").empty();
+$("#fillrationpvtitis").empty();
+$("#totalseatspvtitis").append('Total Seats - ' + d.strength.toLocaleString("en-US"));
+$("#fillrationpvtitis").append('<br>Fill Ratio - ' + d.fill_ratio + '%');
+$("#spinnerdiv").hide();
+}
+
+function getPieChartsAbove20(response) {
+renderPieChart(response, 'above20PercentPieChart');
+$("#above20StrengthFill").empty();
+$("#above20FillRatio").empty();
+$("#above20NoOfItis").empty();
+$("#above20StrengthFill").append('Total Seats - ' + response.strength.toLocaleString("en-US"));
+$("#above20FillRatio").append('<br>Fill Ratio - ' + response.fill_ratio + '%');
+$("#above20NoOfItis").append('<br><a href="javascript:above20NoOfItis()">No Of ITIs : ' + response.noOfItis + '</a>');
+}
+
+function getPieChartsBelow20(response) {
+renderPieChart(response, 'below20PercentPieChart');
+$("#below20StrengthFill").empty();
+$("#below20FillRatio").empty();
+$("#below20NoOfItis").empty();
+$("#below20StrengthFill").append('Total Seats - ' + response.strength.toLocaleString("en-US"));
+$("#below20FillRatio").append('<br>Fill Ratio - ' + response.fill_ratio + '%');
+$("#below20NoOfItis").append('<br><a href="javascript:below20NoOfItis();">No Of ITIs : ' + response.noOfItis + '</a>');
+}
+
 function fetchDataAndRenderChart() {
-        call('masterdata/dashBoardData', {
-            done: function (data) {
-                var d = data || {};
-                var seatsTotal = Number(d.dashBoardAllSeats ? d.dashBoardAllSeats.strength : d.allSeatsTotal);
-                var seatsFilled = Number(d.dashBoardAllSeats ? d.dashBoardAllSeats.filledSheets : d.allSeatsFilled);
-                renderPieChart('dashBoardAllSeats', ['Filled', 'Vacant'],
-                    [isNaN(seatsFilled) ? 0 : seatsFilled, Math.max(isNaN(seatsTotal) ? 0 : seatsTotal - (isNaN(seatsFilled) ? 0 : seatsFilled), 0)],
-                    'All Seats');
-                fillLabels('dashBoardAllSeats', seatsTotal, seatsFilled);
-                $('#spinnerdiv').hide();
-                $('#datadiv').show();
-            },
-            error: function () {
-                $('#spinnerdiv').hide();
-                $('#datadiv').show();
-            }
-        });
-    }
+sbgCall('masterdata/dashBoardData', function (response) {
+getPieChartsTotal(response);
+getPieChartsGovt(response);
+getPieChartsPvt(response);
+});
+}
 
-    function getPieChartsGovt() {
-        call('masterdata/dashBoardData', {
-            done: function (data) {
-                var d = data || {};
-                var total = Number(d.govtSeatsTotal != null ? d.govtSeatsTotal : (d.dashBoardGovt ? d.dashBoardGovt.strength : 0));
-                var filled = Number(d.govtSeatsFilled != null ? d.govtSeatsFilled : (d.dashBoardGovt ? d.dashBoardGovt.filledSheets : 0));
-                renderPieChart('govtSeatsPieChart', ['Filled', 'Vacant'],
-                    [filled, Math.max(total - filled, 0)], 'Govt ITI Seats');
-                $('#govtSeats-total').text(isNaN(total) ? '—' : Number(total).toLocaleString('en-US'));
-                $('#govtSeats-filled').text(isNaN(filled) ? '—' : Number(filled).toLocaleString('en-US'));
-                $('#govtSeats-fillratio').text(total > 0 ? ((filled / total) * 100).toFixed(1) + '%' : '—%');
-            }
-        });
-    }
+function fetchAbove20PercentData() { sbgCall('masterdata/getAbove20PercentItisStats', getPieChartsAbove20); }
+function fetchBelow20PercentData() { sbgCall('masterdata/getBelow20PercentItisStats', getPieChartsBelow20); }
 
-    function getPieChartsPvt() {
-        call('masterdata/dashBoardData', {
-            done: function (data) {
-                var d = data || {};
-                var total = Number(d.pvtSeatsTotal != null ? d.pvtSeatsTotal : (d.dashBoardPvt ? d.dashBoardPvt.strength : 0));
-                var filled = Number(d.pvtSeatsFilled != null ? d.pvtSeatsFilled : (d.dashBoardPvt ? d.dashBoardPvt.filledSheets : 0));
-                renderPieChart('pvtSeatsPieChart', ['Filled', 'Vacant'],
-                    [filled, Math.max(total - filled, 0)], 'Pvt ITI Seats');
-                $('#pvtSeats-total').text(isNaN(total) ? '—' : Number(total).toLocaleString('en-US'));
-                $('#pvtSeats-filled').text(isNaN(filled) ? '—' : Number(filled).toLocaleString('en-US'));
-                $('#pvtSeats-fillratio').text(total > 0 ? ((filled / total) * 100).toFixed(1) + '%' : '—%');
-            }
-        });
-    }
-function fetchAbove20PercentData() {
-        call('masterdata/getAbove20PercentItisStats', {
-            done: function (data) {
-                var d = data || {};
-                $('#above20NoOfItis').text(d.noOfItis == null ? '—' : Number(d.noOfItis).toLocaleString('en-US'));
-                $('#above20TotalSeats').text(d.totalSeats == null ? '—' : Number(d.totalSeats).toLocaleString('en-US'));
-                $('#above20FilledSeats').text(d.filledSeats == null ? '—' : Number(d.filledSeats).toLocaleString('en-US'));
-                if (d.noOfItis != null) {
-                    renderPieChart('above20PercentPieChart', ['Above 20% ITIs', 'Others'],
-                        [Number(d.noOfItis), Number(d.noOfItis)], 'Above 20%');
-                }
-                if (d.itis && d.itis.length) {
-                    var rows = '<table class="table table-bordered table-sm mb-0"><thead><tr><th>ITI Code</th><th>ITI Name</th><th>Total Seats</th><th>Filled Seats</th><th>Fill Ratio</th></tr></thead><tbody>';
-                    d.itis.forEach(function (it) {
-                        rows += '<tr><td>' + (it.itiCode || '') + '</td><td>' + (it.itiName || '') + '</td><td>' + (it.totalSeats || 0) + '</td><td>' + (it.filledSeats || 0) + '</td><td>' + (it.fillratio != null ? it.fillratio : '') + '%</td></tr>';
-                    });
-                    rows += '</tbody></table>';
-                    $('#above20Tabledata').html(rows);
-                }
-            }
-        });
-    }
+function renderDrillTable(data, heading) {
+$("#datadiv").show();
+$("#spinnerdiv2").show();
+$("#dataheading").empty();
+$("#dataheading").append('<h5 class="h5" style="color: blue; font-size: 12px;text-decoration: underline;">' + heading + '</h5>');
+$("#tabledata tbody").empty();
+var arr = data || [];
+for (var i = 0; i < arr.length; i++) {
+var bean = arr[i];
+$("#tabledata tbody").append('<tr>'
++ '<td>' + (i + 1) + '</td>'
++ '<td>' + bean.dist_name + '</td>'
++ '<td>' + bean.iti_name + '</td>'
++ '<td>' + bean.strength + '</td>'
++ '<td>' + bean.strength_fill + '</td>'
++ '<td>' + bean.strength_vacant + '</td>'
++ '<td>' + bean.fill_ratio + '%</td>'
++ '</tr>');
+}
+$("#spinnerdiv2").hide();
+}
 
-    function fetchBelow20PercentData() {
-        call('masterdata/getBelow20PercentItisStats', {
-            done: function (data) {
-                var d = data || {};
-                $('#below20NoOfItis').text(d.noOfItis == null ? '—' : Number(d.noOfItis).toLocaleString('en-US'));
-                $('#below20TotalSeats').text(d.totalSeats == null ? '—' : Number(d.totalSeats).toLocaleString('en-US'));
-                $('#below20FilledSeats').text(d.filledSeats == null ? '—' : Number(d.filledSeats).toLocaleString('en-US'));
-                if (d.noOfItis != null) {
-                    renderPieChart('below20PercentPieChart', ['Below 20% ITIs', 'Others'],
-                        [Number(d.noOfItis), Number(d.noOfItis)], 'Below 20%');
-                }
-                if (d.itis && d.itis.length) {
-                    var rows = '<table class="table table-bordered table-sm mb-0"><thead><tr><th>ITI Code</th><th>ITI Name</th><th>Total Seats</th><th>Filled Seats</th><th>Fill Ratio</th></tr></thead><tbody>';
-                    d.itis.forEach(function (it) {
-                        rows += '<tr><td>' + (it.itiCode || '') + '</td><td>' + (it.itiName || '') + '</td><td>' + (it.totalSeats || 0) + '</td><td>' + (it.filledSeats || 0) + '</td><td>' + (it.fillratio != null ? it.fillratio : '') + '%</td></tr>';
-                    });
-                    rows += '</tbody></table>';
-                    $('#below20Tabledata').html(rows);
-                }
-            }
-        });
-    }
+window.below20NoOfItis = function () {
+renderDrillTable(window.__belowTable, ' < 20% ADMITTED ITIs DATA ');
+};
 
-    window.fnExcelReport = function () {
-        // Export the below-20% table to an .xlsx workbook (SheetJS).
-        var rows = [];
-        var $table = $('#below20Tabledata table');
-        if ($table.length) {
-            var colCount = $table.find('thead th').length;
-            var headers = [];
-            $table.find('thead th').each(function () { headers.push($(this).text()); });
-            rows.push(headers);
-            $table.find('tbody tr').each(function () {
-                var row = [];
-                $(this).find('td').each(function () { row.push($(this).text().replace('%', '')); });
-                while (row.length < colCount) row.push('');
-                rows.push(row);
-            });
-        }
-        if (!rows.length) rows.push(['ITI Code', 'ITI Name', 'Total Seats', 'Filled Seats', 'Fill Ratio']);
-        var ws = XLSX.utils.aoa_to_sheet(rows);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Below20Percent');
-        XLSX.writeFile(wb, 'Below20Percent_ITIs.xlsx');
-    };
+window.above20NoOfItis = function () {
+renderDrillTable(window.__aboveTable, ' >= 20% ADMITTED ITIs DATA ');
+};
 
-    // Kick off the overview + above/below-20% fetches (all fail silently for now).
-    fetchDataAndRenderChart();
-    getPieChartsGovt();
-    getPieChartsPvt();
-    fetchAbove20PercentData();
-    fetchBelow20PercentData();
-})(jQuery);
+window.__belowTable = [];
+window.__aboveTable = [];
+if (String(roleId).trim() !== '4') {
+	sbgCall('masterdata/getBelow20PercentItis', function (r) { window.__belowTable = r || []; });
+	sbgCall('masterdata/getAbove20PercentItis', function (r) { window.__aboveTable = r || []; });
+}
+
+window.fnExcelReport = function (a) {
+var table = document.getElementById(a);
+if (!table) return;
+var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+XLSX.writeFile(wb, 'Report.xlsx');
+};
+
+$("#datadiv").hide();
+if (String(roleId).trim() !== '4') {
+	fetchDataAndRenderChart();
+	fetchAbove20PercentData();
+	fetchBelow20PercentData();
+}
+});
+</script>
+
+<script>
+// ============================================================================
+// Role-based service menus (faithful to the source, ITIAP-adapted).
+// The original page called masterdata/findByItiCode (JWT-authenticated) and then
+// filled #services/#labcard/#inplantcard/#plcmtscard per roleId. In ITIAP there is
+// no /masterdata/** route or JWT, so findByItiCode is stubbed to invoke its callback
+// immediately with the session roleId. All feature links are href="#"
+// (target buttons do nothing) per the instruction; Home/Logout stay functional.
+// ============================================================================
+$(function () {
+window.findByItiCode = function (itiCode, success, error) {
+if (typeof success === 'function') success({ govt: '' });
+else if (typeof error === 'function') error({ message: 'stub' });
+};
+
+function link(text) {
+return '<a href="#" class="card-link">' + text + '</a><br>';
+}
+
+var r = String(roleId || '').trim();
+
+if (r === '3') {
+$("#services").empty();
+$("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
+$("#services").append('1. ' + link('Change My Password'));
+$("#services").append('2. ' + link('Private Students Data Entry'));
+$("#services").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#services").append('1. ' + link('Iti Infrastructure Report'));
+$("#labcard").empty();
+$("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
+$("#inplantcard").empty();
+$("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
+$("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#inplantcard").append('1. ' + link('In-Plant Report'));
+$("#plcmtscard").empty();
+$("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
+$("#plcmtscard").append('<h6 class="card-title text-success">Services</h6>');
+$("#plcmtscard").append('1. ' + link('Schedule Entry'));
+$("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#plcmtscard").append('2. ' + link('Dist Report'));
+} else if (r === '4') {
+$("#services").empty();
+$("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
+$("#services").append('<h6 class="card-title text-success">Services</h6>');
+$("#services").append('1. ' + link('Change My Password'));
+$("#services").append('2. ' + link('PRN & APAAR-ID'));
+$("#services").append('3. ' + link('ITI INFRASTRUCTURE ENTRY'));
+$("#services").append('4. ' + link('EMPLOYEE REGISTRATION'));
+$("#services").append('5. ' + link('SELF REPORTING ON INFRA Both Pvt & Govt ITIs'));
+$("#services").append('6. ' + link('ITI WISE EMPLOYEE DETAILS'));
+$("#services").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#services").append('1. ' + link('PRN & APAAR-ID Report'));
+$("#services").append('2. ' + link('ITI INFRASTRUCTURE Report'));
+$("#services").append('3. ' + link('EMPLOYEE REGISTRATION Report'));
+$("#services").append('4. ' + link('SELF REPORTING ON INFRA Both Pvt & Govt ITIs Report'));
+$("#labcard").empty();
+$("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
+$("#labcard").append('<h6 class="card-title text-success">Services</h6>');
+$("#labcard").append('1. ' + link('Lab Entry'));
+$("#labcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#labcard").append('2. ' + link('Lab Report'));
+$("#inplantcard").empty();
+$("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
+$("#inplantcard").append('<h6 class="card-title text-success">Services</h6>');
+$("#inplantcard").append('1. ' + link('In-Plant Training Entry'));
+$("#inplantcard").append('2. ' + link('ITI - Industry Mapping Entry'));
+$("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#inplantcard").append('3. ' + link('In-Plant Report'));
+$("#plcmtscard").empty();
+$("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
+$("#plcmtscard").append('<h6 class="card-title text-success">Services</h6>');
+$("#plcmtscard").append('1. ' + link('Placements Entry'));
+$("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#plcmtscard").append('2. ' + link('Placements ITI Report'));
+} else if (r === '10') {
+$("#services").empty();
+$("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
+$("#services").append('<h6 class="card-title text-success">Services</h6>');
+$("#services").append('1. ' + link('Change My Password'));
+$("#services").append('2. ' + link('New User Creation'));
+$("#services").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#services").append('1. ' + link('Available Users'));
+$("#services").append('2. ' + link('PRN & APAAR-ID Report'));
+$("#services").append('3. ' + link('Iti Infrastructure Report'));
+$("#services").append('4. ' + link('EMPLOYEE REGISTRATION Report'));
+$("#services").append('5. ' + link('SELF REPORTING ON INFRA(Pvt ITIs) Report'));
+$("#labcard").empty();
+$("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
+$("#labcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#labcard").append('1. ' + link('Labs Report'));
+$("#inplantcard").empty();
+$("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
+$("#inplantcard").append('<h6 class="card-title text-success">Services</h6>');
+$("#inplantcard").append('1. ' + link('Industry Master Entry'));
+$("#inplantcard").append('2. ' + link('Industry Master preview'));
+$("#inplantcard").append('3. ' + link('ITI - Industry Mapping Entry'));
+$("#inplantcard").append('4. ' + link('Industry Partner Details'));
+$("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#inplantcard").append('5. ' + link('In-Plant Report'));
+$("#inplantcard").append('6. ' + link('Industry Master Report'));
+$("#inplantcard").append('7. ' + link('Industry - ITI Mapping Report'));
+$("#inplantcard").append('8. ' + link('Trainees Report'));
+$("#inplantcard").append('9. ' + link('Datewise Report'));
+$("#inplantcard").append('10. ' + link('One Year &  ITIWise Report'));
+$("#inplantcard").append('11. ' + link('Two Years Inplant Training Report'));
+$("#inplantcard").append('12. ' + link('Industry Connected Trades Report'));
+$("#inplantcard").append('13. ' + link('Industry Not Connected Trades Report'));
+$("#inplantcard").append('14. ' + link('12 & 24 Months ITIWise Report'));
+$("#inplantcard").append('15. ' + link('District Wise IN-PLANT Report'));
+$("#plcmtscard").empty();
+$("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
+$("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#plcmtscard").append('1. ' + link('Schedulewise Data'));
+$("#plcmtscard").append('2. ' + link('Schedule Datewise Data'));
+$("#plcmtscard").append('3. ' + link('State Report'));
+$("#plcmtscard").append('4. ' + link('Yearwise Report'));
+$("#plcmtscard").append('5. ' + link('State Skill Development Plan Report'));
+$("#plcmtscard").append('6. ' + link('Placement Data Details Report'));
+} else if (r === '11') {
+$("#services").empty();
+$("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
+$("#services").append('1. ' + link('Change My Password'));
+$("#services").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#services").append('1. ' + link('Iti Infrastructure Report'));
+$("#services").append('2. ' + link('EMPLOYEE REGISTRATION Report'));
+$("#labcard").empty();
+$("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
+$("#labcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#labcard").append('1. ' + link('Labs Report'));
+$("#inplantcard").empty();
+$("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
+$("#inplantcard").append('<h6 class="card-title text-success">Services</h6>');
+$("#inplantcard").append('1. ' + link('Industry Partner Details'));
+$("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#inplantcard").append('1. ' + link('In-Plant Report'));
+$("#inplantcard").append('2. ' + link('Industry - ITI Mapping Report'));
+$("#inplantcard").append('3. ' + link('Trainees Report'));
+$("#inplantcard").append('4. ' + link('Industry Partner Details Report'));
+$("#inplantcard").append('5. ' + link('One Year & ITIWise Report'));
+$("#inplantcard").append('6. ' + link('Two Years Inplant Training Report'));
+$("#inplantcard").append('7. ' + link('Datewise Report'));
+$("#inplantcard").append('8. ' + link('Industry Connected Trades Report'));
+$("#inplantcard").append('9. ' + link('Industry Not Connected Trades Report'));
+$("#inplantcard").append('10. ' + link('12 & 24 Months ITIWise Report'));
+$("#inplantcard").append('11. ' + link('District Wise IN-PLANT Report'));
+$("#plcmtscard").empty();
+$("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
+$("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
+$("#plcmtscard").append('1. ' + link('Schedulewise Data'));
+$("#plcmtscard").append('2. ' + link('State Report'));
+$("#plcmtscard").append('3. ' + link('Yearwise Report'));
+$("#plcmtscard").append('4. ' + link('Schedule Datewise Data'));
+$("#plcmtscard").append('5. ' + link('Placement Data Details Report'));
+} else {
+// Unknown role -> generic ITI-level menu (all stubs).
+$("#services").empty();
+$("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
+$("#services").append('1. ' + link('Change My Password'));
+$("#labcard").empty();
+$("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
+$("#inplantcard").empty();
+$("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
+$("#plcmtscard").empty();
+$("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
+}
+});
 </script>
 </body>
 </html>
