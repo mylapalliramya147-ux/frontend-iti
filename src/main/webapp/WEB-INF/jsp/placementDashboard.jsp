@@ -62,8 +62,8 @@ document.getElementById("userinfo").innerHTML =
 </nav>
 
 <div class="container p-2">
-<!-- Aggregate stat charts are state/nodal level. ITI admin (role 4) sees only the menu cards. -->
-<c:if test="${sessionScope.roleId != '4'}">
+<!-- Aggregate stat charts are district/state level. ITI admin (role 4) and district (role 3) see only menu cards. -->
+<c:if test="${sessionScope.roleId != '4' and sessionScope.roleId != '3'}">
 <div id="spinnerdiv" class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
 <div id="spinnerdiv2" class="text-center py-5" style="display:none;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
 
@@ -256,7 +256,7 @@ renderDrillTable(window.__aboveTable, ' >= 20% ADMITTED ITIs DATA ');
 
 window.__belowTable = [];
 window.__aboveTable = [];
-if (String(roleId).trim() !== '4') {
+if (String(roleId).trim() !== '4' && String(roleId).trim() !== '3') {
 	sbgCall('masterdata/getBelow20PercentItis', function (r) { window.__belowTable = r || []; });
 	sbgCall('masterdata/getAbove20PercentItis', function (r) { window.__aboveTable = r || []; });
 }
@@ -269,7 +269,7 @@ XLSX.writeFile(wb, 'Report.xlsx');
 };
 
 $("#datadiv").hide();
-if (String(roleId).trim() !== '4') {
+if (String(roleId).trim() !== '4' && String(roleId).trim() !== '3') {
 	fetchDataAndRenderChart();
 	fetchAbove20PercentData();
 	fetchBelow20PercentData();
