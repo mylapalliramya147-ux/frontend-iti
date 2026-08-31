@@ -106,7 +106,7 @@ public class LoginController {
         session.setAttribute("itiName", result.get("itiName"));
         session.setAttribute("loginCount", result.get("loginCount"));
         session.setAttribute("lastLogins", result.get("lastLogins"));
-        return "jsp/role_id";
+                return "jsp/placementDashboard";
     }
 
     @GetMapping("/logout")

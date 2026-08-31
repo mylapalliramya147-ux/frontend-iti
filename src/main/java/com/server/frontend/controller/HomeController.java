@@ -70,10 +70,24 @@ public class HomeController {
         return "reports/state-dashboard";
     }
 
-        @GetMapping("/placements")
+    @GetMapping("/placements")
     public String placements(HttpServletRequest request) {
         request.setAttribute("captchaText", CaptchaController.current(request));
         return "jsp/placements";
+    }
+
+    /**
+     * Authenticated ITI placements dashboard (the page shown to ITI users after a
+     * successful placements login). Session is required; otherwise the request is
+     * bounced back to the placements login form.
+     */
+    @GetMapping("/placements/loginSuccess")
+    public String placementsLoginSuccess(HttpServletRequest request) {
+        if (request.getSession(false) == null
+                || request.getSession().getAttribute("sessionUser") == null) {
+            return "redirect:/placements?error=session";
+        }
+        return "jsp/placementDashboard";
     }
 
     @GetMapping("/")
