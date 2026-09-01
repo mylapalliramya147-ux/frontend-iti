@@ -305,6 +305,31 @@
 					<div class="card-body"  > 
 						<div align="center">
 							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">OFFICIAL's LOGIN</h3>
+                    <c:if test="${not empty param.error}">
+                        <div class="alert alert-danger py-2 text-center" role="alert" style="font-size:14px;">
+                            <c:choose>
+                                <c:when test="${param.error eq 'invalid'}">
+                                    <i class="fas fa-exclamation-circle"></i> Invalid username or password. Please try again.
+                                </c:when>
+                                <c:when test="${param.error eq 'captcha'}">
+                                    <i class="fas fa-exclamation-circle"></i> Incorrect captcha. Please try again.
+                                </c:when>
+                                <c:when test="${param.error eq 'inactive'}">
+                                    <i class="fas fa-ban"></i> Your account is inactive. Please contact the administrator.
+                                </c:when>
+                                <c:when test="${param.error eq 'session'}">
+                                    <i class="fas fa-exclamation-circle"></i> Your session has expired. Please log in again.
+                                </c:when>
+                                <c:when test="${param.error eq 'server'}">
+                                    <i class="fas fa-exclamation-triangle"></i> Server error. Please try again later.
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-exclamation-circle"></i> Login failed. Please try again.
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </c:if>
+
 						</div>
 						<form id="bean" action="${pageContext.request.contextPath}/placementsLogin.do" method="post">
 

@@ -62,8 +62,49 @@ document.getElementById("userinfo").innerHTML =
 </nav>
 
 <div class="container p-2">
+<c:if test="${sessionScope.roleId != '1' and sessionScope.roleId != '2'}">
+<div class="row">
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-cog"></i> SERVICES</div><div class="card-body" id="services"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-flask"></i> LABS</div><div class="card-body" id="labcard"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-industry"></i> IN-PLANT</div><div class="card-body" id="inplantcard"></div></div></div>
+<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-briefcase"></i> PLACEMENTS</div><div class="card-body" id="plcmtscard"></div></div></div>
+</div>
+</c:if>
+
 <!-- Aggregate stat charts are district/state level. ITI admin (role 4) and district (role 3) see only menu cards. -->
-<c:if test="${sessionScope.roleId != '4' and sessionScope.roleId != '3'}">
+<c:if test="${sessionScope.roleId != '4' and sessionScope.roleId != '3' and sessionScope.roleId != '1' and sessionScope.roleId != '2'}">
+<div class="row mt-3 g-2">
+<div class="col d-flex"><div class="card h-100 w-100"><div class="card-header text-center text-primary text-decoration-underline" style="font-size:13px;"><i class="fas fa-chair"></i> GOVT &amp; PRIVATE ITIs</div><div class="card-body">
+<div style="position:relative;height:170px;"><canvas id="dashBoardAllSeats"></canvas></div>
+<span id="totaldashBoardAllSeats" class="card-link">Total Seats - --</span>
+<span id="fillrationdashBoardAllSeats" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+<div class="col d-flex"><div class="card h-100 w-100"><div class="card-header text-center text-primary text-decoration-underline" style="font-size:13px;"><i class="fas fa-building"></i> GOVERNMENT ITI's</div><div class="card-body">
+<div style="position:relative;height:170px;"><canvas id="govtSeatsPieChart"></canvas></div>
+<span id="totalseatsgovtitis" class="card-link">Total Seats - --</span>
+<span id="fillrationgovtitis" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+<div class="col d-flex"><div class="card h-100 w-100"><div class="card-header text-center text-primary text-decoration-underline" style="font-size:13px;"><i class="fas fa-hotel"></i> PRIVATE ITI's</div><div class="card-body">
+<div style="position:relative;height:170px;"><canvas id="pvtSeatsPieChart"></canvas></div>
+<span id="totalseatspvtitis" class="card-link">Total Seats - --</span>
+<span id="fillrationpvtitis" class="card-link"><br>Fill Ratio - --%</span>
+</div></div></div>
+<div class="col d-flex"><div class="card h-100 w-100"><div class="card-header text-center text-primary text-decoration-underline" style="font-size:13px;"><i class="fas fa-thumbs-up"></i> &gt;= 20% ADMITTED ITIs</div><div class="card-body">
+<div style="position:relative;height:170px;"><canvas id="above20PercentPieChart"></canvas></div>
+<span id="above20StrengthFill" class="card-link">Total Seats - --</span>
+<span id="above20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
+<span id="above20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
+</div></div></div>
+<div class="col d-flex"><div class="card h-100 w-100"><div class="card-header text-center text-primary text-decoration-underline" style="font-size:13px;"><i class="fas fa-thumbs-down"></i> &lt;= 20% ADMITTED ITIs</div><div class="card-body">
+<div style="position:relative;height:170px;"><canvas id="below20PercentPieChart"></canvas></div>
+<span id="below20StrengthFill" class="card-link">Total Seats - --</span>
+<span id="below20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
+<span id="below20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
+</div></div></div>
+</div>
+
+<div class="text-end mt-2"><button type="button" class="btn btn-sm btn-outline-primary" onclick="fnExcelReport('tabledata')"><i class="fas fa-file-excel"></i> Export to Excel</button></div>
+
 <div id="spinnerdiv" class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
 <div id="spinnerdiv2" class="text-center py-5" style="display:none;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
 
@@ -72,48 +113,7 @@ document.getElementById("userinfo").innerHTML =
 <table id="tabledata" class="table table-bordered"><thead><tr><th>S.No</th><th>District</th><th>ITI Name</th><th>Strength</th><th>Filled</th><th>Vacant</th><th>Fill Ratio</th></tr></thead><tbody></tbody></table>
 </div>
 
-<div class="row">
-<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-chair"></i> All Seats</div><div class="card-body">
-<canvas id="dashBoardAllSeats" height="200"></canvas>
-<span id="totaldashBoardAllSeats" class="card-link">Total Seats - --</span>
-<span id="fillrationdashBoardAllSeats" class="card-link"><br>Fill Ratio - --%</span>
-</div></div></div>
-<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-building"></i> Govt ITI Seats</div><div class="card-body">
-<canvas id="govtSeatsPieChart" height="200"></canvas>
-<span id="totalseatsgovtitis" class="card-link">Total Seats - --</span>
-<span id="fillrationgovtitis" class="card-link"><br>Fill Ratio - --%</span>
-</div></div></div>
-<div class="col-md-4 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-hotel"></i> Pvt ITI Seats</div><div class="card-body">
-<canvas id="pvtSeatsPieChart" height="200"></canvas>
-<span id="totalseatspvtitis" class="card-link">Total Seats - --</span>
-<span id="fillrationpvtitis" class="card-link"><br>Fill Ratio - --%</span>
-</div></div></div>
-</div>
-
-<div class="row mt-3">
-<div class="col-md-6 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-thumbs-up"></i> ITIs with Fill Ratio Above 20%</div><div class="card-body">
-<canvas id="above20PercentPieChart" height="110"></canvas>
-<span id="above20StrengthFill" class="card-link">Total Seats - --</span>
-<span id="above20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
-<span id="above20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
-</div></div></div>
-<div class="col-md-6 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-thumbs-down"></i> ITIs with Fill Ratio Below 20%</div><div class="card-body">
-<canvas id="below20PercentPieChart" height="110"></canvas>
-<span id="below20StrengthFill" class="card-link">Total Seats - --</span>
-<span id="below20FillRatio" class="card-link"><br>Fill Ratio - --%</span>
-<span id="below20NoOfItis" class="card-link"><br>No Of ITIs : --</span>
-<div class="text-end mt-3"><button type="button" class="btn btn-sm btn-outline-primary" onclick="fnExcelReport('tabledata')"><i class="fas fa-file-excel"></i> Export to Excel</button></div>
-</div></div></div>
-</div>
-
 </c:if>
-
-<div class="row mt-3">
-<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-cog"></i> SERVICES</div><div class="card-body" id="services"></div></div></div>
-<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-flask"></i> LABS</div><div class="card-body" id="labcard"></div></div></div>
-<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-industry"></i> IN-PLANT</div><div class="card-body" id="inplantcard"></div></div></div>
-<div class="col-md-3 d-flex"><div class="card h-100 w-100"><div class="card-header"><i class="fas fa-briefcase"></i> PLACEMENTS</div><div class="card-body" id="plcmtscard"></div></div></div>
-</div>
 </div>
 
 <script>
@@ -134,6 +134,7 @@ cache: false,
 timeout: 600000,
 headers: jwtToken ? { 'Authorization': jwtToken } : undefined,
 success: done || function () {},
+complete: function () { $("#spinnerdiv").hide(); },
 error: function (xhr, st, err) { console.log('masterdata/' + url + ' not available:', err); }
 });
 }
@@ -149,6 +150,7 @@ type: 'pie',
 data: chartData,
 options: {
 responsive: true,
+maintainAspectRatio: false,
 plugins: {
 legend: { position: 'top' },
 tooltip: {
@@ -297,6 +299,9 @@ return '<a href="#" class="card-link">' + text + '</a><br>';
 }
 
 var r = String(roleId || '').trim();
+
+// Admin (roles 1 & 2) sees nothing - no stats, no menu cards.
+if (r === '1' || r === '2') return;
 
 if (r === '3') {
 $("#services").empty();
