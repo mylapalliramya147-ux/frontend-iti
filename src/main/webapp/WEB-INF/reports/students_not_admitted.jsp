@@ -48,19 +48,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-5"><label for="phase" class="form-label-official mb-md-0">Phase</label></div>
-                        <div class="col-md-7">
-                            <select name="phase" id="phase" class="form-select-official">
-                                <option value="">All Phases</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn-submit-official-navy"><i class="fas fa-search me-2"></i>FETCH REPORT</button>
                     </div>
@@ -105,24 +92,41 @@
         var PAGE_SIZE = 500;
         var totalCount = 0, currentPage = 0, allRows = [];
 
+        function loadYears() {
+            fetch('${backendApiUrl}/students-not-admitted/years', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+            .then(response => response.json())
+            .then(data => {
+                const years = data.data || [];
+                if (!years.length) return;
+                const sel = document.getElementById('year');
+                sel.innerHTML = '';
+                years.forEach(y => {
+                    const o = document.createElement('option');
+                    o.value = y;
+                    o.textContent = y;
+                    sel.appendChild(o);
+                });
+            })
+            .catch(() => { /* keep the static fallback options */ });
+        }
+        loadYears();
+
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
 
         function fetchReport(event, page) {
             if (event) event.preventDefault();
             const year = document.getElementById('year').value;
-            const phase = document.getElementById('phase').value;
             currentPage = page;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
             let url = '${backendApiUrl}/students-not-admitted?year=' + encodeURIComponent(year) + '&page=' + page + '&size=' + PAGE_SIZE;
-            if (phase) url += '&phase=' + encodeURIComponent(phase);
             fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
-                document.getElementById('reportTitle').innerText = 'Students Not Admitted (' + year + (phase ? ' - Phase ' + phase : '') + ')';
+                document.getElementById('reportTitle').innerText = 'Students Not Admitted (' + year + ')';
                 totalCount = data.count || 0;
                 allRows = data.data || [];
                 renderTable();
