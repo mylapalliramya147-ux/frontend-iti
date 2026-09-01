@@ -11,6 +11,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/reports")
 public class ReportsController {
 
+    // ========== STUDENTS NOT ADMITTED (Nodal + Admin) ==========
+
+    @GetMapping("/students_not_admitted")
+    public String studentsNotAdmitted() {
+        return "reports/students_not_admitted";
+    }
+
     // ========== DASHBOARD ==========
     @GetMapping("/")
     public String reportsDashboard() {

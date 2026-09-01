@@ -194,6 +194,14 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/students_not_admitted" class="report-card">
+                        <i class="fas fa-user-slash"></i>
+                        <h5>STUDENTS NOT ADMITTED</h5>
+                        <p>Registered students without admission</p>
+                        <span class="api-badge">${backendApiUrl}/students-not-admitted</span>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count" class="report-card">
                         <i class="fas fa-check-circle"></i>
                         <h5>Verification Report</h5>
@@ -214,6 +222,14 @@
             <!-- State Level Reports (Role 1) -->
             <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> State Level Reports (Role 1)</h3>
             <div class="row g-3 mb-4">
+                <div class="col-md-3 col-sm-6">
+                    <a href="${pageContext.request.contextPath}/reports/students_not_admitted" class="report-card">
+                        <i class="fas fa-user-slash"></i>
+                        <h5>STUDENTS NOT ADMITTED</h5>
+                        <p>Registered students without admission</p>
+                        <span class="api-badge">${backendApiUrl}/students-not-admitted</span>
+                    </a>
+                </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport" class="report-card">
                         <i class="fas fa-tachometer-alt"></i>
