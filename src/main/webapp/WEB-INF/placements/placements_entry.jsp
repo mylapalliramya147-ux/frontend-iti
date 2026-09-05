@@ -216,7 +216,19 @@ function findAdmnum(){
     return false;
 }
 
-function findByNames(){ $("#myModal1").show(); $("#findName").val(""); $("#admnumtablebody").empty(); }
+var findNameTimer = null;
+function findByNames(){
+    $("#myModal1").show();
+    $("#findName").val("");
+    $("#admnumtablebody").empty();
+    $("#findName").off("input").on("input", function(){
+        clearTimeout(findNameTimer);
+        var val = $(this).val().trim();
+        if(val.length < 2){ $("#admnumtablebody").empty(); return; }
+        findNameTimer = setTimeout(function(){ findByName(); }, 300);
+    });
+    $("#findName").focus();
+}
 function findByName(){
     var name = $("#findName").val().trim();
     if(!name){ alert("Enter candidate name"); return false; }
