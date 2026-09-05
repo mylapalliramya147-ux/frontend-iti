@@ -316,7 +316,7 @@ $("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
 $("#inplantcard").empty();
 $("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
 $("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#inplantcard").append('1. ' + link('In-Plant Report'));
+$("#inplantcard").append('1. ' + link('In-Plant Report', '${pageContext.request.contextPath}/implant/distreport'));
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success">Services</h6>');
