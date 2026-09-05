@@ -320,9 +320,9 @@ $("#inplantcard").append('1. ' + link('In-Plant Report'));
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success">Services</h6>');
-$("#plcmtscard").append('1. ' + link('Schedule Entry'));
+$("#plcmtscard").append('1. ' + link('Schedule Entry', '${pageContext.request.contextPath}/placements/scheduleentry'));
 $("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#plcmtscard").append('2. ' + link('Dist Report'));
+$("#plcmtscard").append('2. ' + link('Dist Report', '${pageContext.request.contextPath}/placements/distreport'));
 } else if (r === '4') {
 $("#services").empty();
 $("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
@@ -400,7 +400,7 @@ $("#plcmtscard").append('2. ' + link('Schedule Datewise Data', '${pageContext.re
 $("#plcmtscard").append('3. ' + link('State Report', '${pageContext.request.contextPath}/placements/statereport'));
 $("#plcmtscard").append('4. ' + link('Yearwise Report', '${pageContext.request.contextPath}/placements/yearwisereport'));
 $("#plcmtscard").append('5. ' + link('State Skill Development Plan Report', '${pageContext.request.contextPath}/placements/ssdpreport'));
-$("#plcmtscard").append('6. ' + link('Placement Data Details Report'));
+$("#plcmtscard").append('6. ' + link('Placement Data Details Report', '${pageContext.request.contextPath}/placements/datadetails'));
 } else if (r === '11') {
 $("#services").empty();
 $("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');
@@ -435,7 +435,7 @@ $("#plcmtscard").append('1. ' + link('Schedulewise Data', '${pageContext.request
 $("#plcmtscard").append('2. ' + link('State Report', '${pageContext.request.contextPath}/placements/statereport'));
 $("#plcmtscard").append('3. ' + link('Yearwise Report', '${pageContext.request.contextPath}/placements/yearwisereport'));
 $("#plcmtscard").append('4. ' + link('Schedule Datewise Data', '${pageContext.request.contextPath}/placements/scheduledatewise'));
-$("#plcmtscard").append('5. ' + link('Placement Data Details Report'));
+$("#plcmtscard").append('5. ' + link('Placement Data Details Report', '${pageContext.request.contextPath}/placements/datadetails'));
 } else {
 // Unknown role -> generic ITI-level menu (all stubs).
 $("#services").empty();
