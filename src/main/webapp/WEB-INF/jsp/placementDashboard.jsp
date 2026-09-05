@@ -354,9 +354,9 @@ $("#inplantcard").append('3. ' + link('In-Plant Report'));
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success">Services</h6>');
-$("#plcmtscard").append('1. ' + link('Placements Entry'));
+$("#plcmtscard").append('1. ' + link('Placements Entry', '${pageContext.request.contextPath}/placements/placemententry'));
 $("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#plcmtscard").append('2. ' + link('Placements ITI Report'));
+$("#plcmtscard").append('2. ' + link('Placements ITI Report', '${pageContext.request.contextPath}/placements/itireport'));
 } else if (r === '10') {
 $("#services").empty();
 $("#services").append('<h4 class="card-title text-danger">ITI Services</h4>');

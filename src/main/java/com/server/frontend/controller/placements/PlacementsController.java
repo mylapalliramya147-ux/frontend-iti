@@ -100,4 +100,32 @@ public class PlacementsController {
         Object roleId = request.getSession().getAttribute("roleId");
         return roleId != null && "3".equals(String.valueOf(roleId));
     }
+
+    // ========== PLACEMENTS ENTRY (ITI only) ==========
+    @GetMapping("/placemententry")
+    public String placementsEntry(HttpServletRequest request) {
+        if (!isItiRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "placements/placements_entry";
+    }
+
+    // ========== PLACEMENTS ITI REPORT (ITI only) ==========
+    @GetMapping("/itireport")
+    public String placementsItiReport(HttpServletRequest request) {
+        if (!isItiRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "placements/placements_iti_report";
+    }
+
+    /** ITI users have roleId == 4; requires a valid session. */
+    private boolean isItiRole(HttpServletRequest request) {
+        if (request.getSession(false) == null
+                || request.getSession().getAttribute("sessionUser") == null) {
+            return false;
+        }
+        Object roleId = request.getSession().getAttribute("roleId");
+        return roleId != null && "4".equals(String.valueOf(roleId));
+    }
 }
