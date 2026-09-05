@@ -50,7 +50,7 @@ var baseUrl  = '${backendBaseUrl}/';
 <div class="row"><div class="col-sm-4"></div><div class="col-sm-4"><label>Captcha</label><input type="text" id="txtInput" class="form-control" maxlength="4"/></div><div class="col-sm-4"><span id="error" style="color:red"></span></div></div>
 <div class="row"><div class="col-sm-4"></div><div class="col-sm-4"><input type="text" id="mainCaptcha" readonly="readonly" class="form-control w-100 mb-1 mt-1" style="letter-spacing:30px;font-weight:bolder;color:white;background-color:black;"/></div><div class="col-sm-2"><i class="fas fa-sync-alt float-left mt-1" style="cursor:pointer;font-size:24px;" id="refresh" onclick="generateCaptchaa();"></i></div></div>
 <div class="row"><div class="col-sm-4"></div><div class="col-sm-4"><button type="button" class="btn btn-success float-left" id="findAdmbtn" onclick="return findAdmnum()">Get Details</button></div><div class="col-sm-4"></div></div>
-<br><div align="center"><a href="javascript:findByNames();">You Can Find Admission Number By Name</a></div>
+<br><div align="center"><a href="javascript:void(0);" onclick="findByNames();" style="color:blue;text-decoration:underline;cursor:pointer;">You Can Find Admission Number By Name</a></div>
 </div>
 <br>
 <div class="container-fluid" style="border:2px solid black !important;background-color:white !important;font-weight:bolder;margin:0 auto;width:90%;display:none;" id="admissiondetails">
@@ -227,7 +227,10 @@ function findByName(){
         success: function(response){
             if(response && response.length > 0){
                 response.forEach(function(c){
-                    $("#admnumtablebody").append("<tr><td>"+c.name+"</td><td>"+c.fname+"</td><td><a href="javascript:void(0);" onclick="$('#adm_num').val('"+c.admNum+"');$('#myModal1').hide();findAdmnum();">"+c.admNum+"</a></td></tr>");
+                    var link = $('<a>').text(c.admNum).attr('href','#').css({'text-decoration':'underline','color':'blue','cursor':'pointer'});
+                    link.on('click', function(e){ e.preventDefault(); $('#adm_num').val(c.admNum); $('#myModal1').hide(); findAdmnum(); });
+                    var row = $('<tr>').append($('<td>').text(c.name)).append($('<td>').text(c.fatherName)).append($('<td>').append(link));
+                    $("#admnumtablebody").append(row);
                 });
             } else {
                 $("#admnumtablebody").append("<tr><td colspan='3' style='color:red;'>No records found</td></tr>");
