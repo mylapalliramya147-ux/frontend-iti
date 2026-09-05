@@ -188,13 +188,13 @@
 
 		<div class="row">
 			<div align="center">
-				<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">OVER VIEW</h3>
+				<h3 class="h3" style="color: blueviolet; font-size: 14px;text-decoration: underline;">OVER VIEW</h3>
 			</div>
 		</div>
 		
 		<div class="container">
 		<div class="row border shadow-lg m-1">
-			<div class="col-md-3 d-flex" style="color: blueviolet; font-size: 12px;text-decoration: underline;">Total No.of Records</div>
+			<div class="col-md-3 d-flex" style="color: blueviolet; font-size: 14px;text-decoration: underline;">Total No.of Records</div>
 			<div class="col-md-3 d-flex">Placements : &nbsp;&nbsp;<span id="allPlacement"></span></div>
 			<div class="col-md-3 d-flex">In-Plant Training : &nbsp;&nbsp;<span id="allImplants"></span></div>
 			<div class="col-md-3 d-flex">Labs : &nbsp;&nbsp;<span id="allLabs"></span></div>
@@ -207,41 +207,41 @@
 				<div class="card h-100 w-100" >
 					<div class="card-body"  > 
 						<div align="center">
-							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">PLACEMENT MODULE INFORMATION</h3>
+							<h3 class="h3" style="color: blueviolet; font-size: 14px;text-decoration: underline;">PLACEMENT MODULE INFORMATION</h3>
 						</div>
 						
 						<table>
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">JOB</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">JOB</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="jobTotalRecords" ></span></td>
 								<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="jobItisCount" ></span></td>
 							</tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">OTHER THAN JOB</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">OTHER THAN JOB</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="otherThanjobTotalRecords" ></span></td>
 								<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="ojItisCount" ></span></td>
 							</tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">APPRENTICESHIP</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">APPRENTICESHIP</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="apprenticeshipTotalRecords" ></span></td> 
 							 	<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="apprenticeshipItisCount" ></span></td>
 							 </tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">OTHER THAN APPRENTICESHIP</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">OTHER THAN APPRENTICESHIP</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="oATotalRecords" ></span></td> 
 							 	<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="oaItisCount"  ></span></td>
 							 </tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">HIGHER EDUCATION</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">HIGHER EDUCATION</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="higherEducationTotalRecords"  ></span></td>
 								<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="higherEducationItisCount"  ></span></td>
 							</tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">SELF EMPLOYMENT</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">SELF EMPLOYMENT</td></tr>
 							<tr>
 								<td style="font-size: 12px;">Total Records</td><td>: <span id="selfEmploymentTotalRecords"  ></span></td> 
 							 	<td style="font-size: 12px;padding-left: 10px;">No.of ITIs</td><td>: <span id="selfEmploymentItisCount"  ></span></td>
@@ -256,22 +256,22 @@
 				<div class="card h-100  w-100" >
 					<div class="card-body"  > 
 						<div align="center">
-							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">IN-PLANT TRAINING MODULE INFORMATION</h3>
+							<h3 class="h3" style="color: blueviolet; font-size: 14px;text-decoration: underline;">IN-PLANT TRAINING MODULE INFORMATION</h3>
 						</div>
 						<table  >
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">In-Plant</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">In-Plant</td></tr>
 							<tr><td style="font-size: 12px;">Total Records</td><td>: <span id="inplantTotal"></span></td></tr>
 							<tr><td style="font-size: 12px;">No.of ITIs</td><td>: <span id="inplantDistinctItis"></span></td></tr>
 							<tr><td style="font-size: 12px;">No.of Industries</td><td>: <span id="inplantDistinctSlnos"></span></td></tr>
 							<tr><td style="font-size: 12px;">Total No Of Students</td><td>: <span id="sumOfStudent"></span></td></tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">ITI-Industries Mappings</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">ITI-Industries Mappings</td></tr>
 							<tr><td style="font-size: 12px;">Total Mappings</td><td>: <span id="industriesTotal"></span></td></tr>
 							<tr><td style="font-size: 12px;">No.of ITIs</td><td>: <span id="industriesDistinctItis"></span></td></tr>
 							<tr><td style="font-size: 12px;">No.of Industries</td><td>: <span id="industriesDistinctIndustries"></span></td></tr>
 							<tr><td style="font-size: 12px;">No.of Trades</td><td>: <span id="industriesDistinctTrades"></span></td></tr>
 							
-							<tr><td colspan="2" style="color: blueviolet; font-size: 12px;">Industry Master Information</td></tr>
+							<tr><td colspan="2" style="color: blueviolet; font-size: 14px;text-decoration: underline;">Industry Master Information</td></tr>
 							<tr><td style="font-size: 12px;">Total Industries</td><td>: <span id="industryMasterTotal"></span></td></tr>
 							<tr><td style="font-size: 12px;">Major Type Industries</td><td>: <span id="industryMasterMajor"></span></td></tr>
 							<tr><td style="font-size: 12px;">Minor Type Industries</td><td>: <span id="industryMasterMinor"></span></td></tr>
@@ -286,7 +286,7 @@
 				<div class="card h-100  w-100">
 					<div class="card-body"  > 
 					<div align="center">
-							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">LABS MODULE INFORMATION</h3>
+							<h3 class="h3" style="color: blueviolet; font-size: 14px;text-decoration: underline;">LABS MODULE INFORMATION</h3>
 						</div>
 						
 						<table class="table table-borderless">
@@ -305,7 +305,7 @@
 				<div class="card h-100  w-100">
 					<div class="card-body"  > 
 						<div align="center">
-							<h3 class="h3" style="color: blueviolet; font-size: 12px;text-decoration: underline;">OFFICIAL's LOGIN</h3>
+							<h3 class="h3" style="color: blueviolet; font-size: 14px;text-decoration: underline;">OFFICIAL's LOGIN</h3>
                     <c:if test="${not empty param.error}">
                         <div class="alert alert-danger py-2 text-center" role="alert" style="font-size:14px;">
                             <c:choose>

@@ -24,7 +24,7 @@ a>input[type=button]{border:none;background-color:#e4eeb9;color:black;font-weigh
 .card{border:none;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);}
 .card-body{padding:14px 16px;}
 .card-title{font-size:16px;font-weight:700;margin-bottom:8px;}
-.card-link{font-size:13px;margin:0 4px;text-decoration:none;}
+.card-link{font-size:15px;margin:0 4px;text-decoration:underline;}
 #tabledata{margin-bottom:20px;}
 #tabledata th,#tabledata td{border:1px solid #dee2e6;padding:6px 10px;font-size:13px;text-align:center;}
 #tabledata th{background:#172233;color:#fff;}
@@ -294,8 +294,9 @@ if (typeof success === 'function') success({ govt: '' });
 else if (typeof error === 'function') error({ message: 'stub' });
 };
 
-function link(text) {
-return '<a href="#" class="card-link">' + text + '</a><br>';
+function link(text, href) {
+href = href || '#';
+return '<a href="' + href + '" class="card-link">' + text + '</a><br>';
 }
 
 var r = String(roleId || '').trim();
@@ -394,11 +395,11 @@ $("#inplantcard").append('15. ' + link('District Wise IN-PLANT Report'));
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#plcmtscard").append('1. ' + link('Schedulewise Data'));
-$("#plcmtscard").append('2. ' + link('Schedule Datewise Data'));
-$("#plcmtscard").append('3. ' + link('State Report'));
-$("#plcmtscard").append('4. ' + link('Yearwise Report'));
-$("#plcmtscard").append('5. ' + link('State Skill Development Plan Report'));
+$("#plcmtscard").append('1. ' + link('Schedulewise Data', '${pageContext.request.contextPath}/placements/schedulewise'));
+$("#plcmtscard").append('2. ' + link('Schedule Datewise Data', '${pageContext.request.contextPath}/placements/scheduledatewise'));
+$("#plcmtscard").append('3. ' + link('State Report', '${pageContext.request.contextPath}/placements/statereport'));
+$("#plcmtscard").append('4. ' + link('Yearwise Report', '${pageContext.request.contextPath}/placements/yearwisereport'));
+$("#plcmtscard").append('5. ' + link('State Skill Development Plan Report', '${pageContext.request.contextPath}/placements/ssdpreport'));
 $("#plcmtscard").append('6. ' + link('Placement Data Details Report'));
 } else if (r === '11') {
 $("#services").empty();
@@ -430,10 +431,10 @@ $("#inplantcard").append('11. ' + link('District Wise IN-PLANT Report'));
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#plcmtscard").append('1. ' + link('Schedulewise Data'));
-$("#plcmtscard").append('2. ' + link('State Report'));
-$("#plcmtscard").append('3. ' + link('Yearwise Report'));
-$("#plcmtscard").append('4. ' + link('Schedule Datewise Data'));
+$("#plcmtscard").append('1. ' + link('Schedulewise Data', '${pageContext.request.contextPath}/placements/schedulewise'));
+$("#plcmtscard").append('2. ' + link('State Report', '${pageContext.request.contextPath}/placements/statereport'));
+$("#plcmtscard").append('3. ' + link('Yearwise Report', '${pageContext.request.contextPath}/placements/yearwisereport'));
+$("#plcmtscard").append('4. ' + link('Schedule Datewise Data', '${pageContext.request.contextPath}/placements/scheduledatewise'));
 $("#plcmtscard").append('5. ' + link('Placement Data Details Report'));
 } else {
 // Unknown role -> generic ITI-level menu (all stubs).
