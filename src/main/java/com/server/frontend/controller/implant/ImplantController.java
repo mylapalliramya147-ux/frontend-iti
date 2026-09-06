@@ -40,6 +40,61 @@ public class ImplantController {
         return "implant/implant_report";
     }
 
+    // ========== ITI - INDUSTRY MAPPING ENTRY (ITI only) ==========
+    @GetMapping("/mapping")
+    public String implantMapping(HttpServletRequest request) {
+        if (!isItiRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/implant_mapping";
+    }
+
+    // ========== EDIT INDUSTRY MAPPING (ITI only) ==========
+    @GetMapping("/mapping/edit")
+    public String implantMappingEdit(HttpServletRequest request) {
+        if (!isItiRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/implant_mapping_edit";
+    }
+
+    // ========== INDUSTRY MASTER PREVIEW (Nodal only) ==========
+    @GetMapping("/industrymaster")
+    public String industryMasterPreview(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_master_preview";
+    }
+
+    // ========== EDIT INDUSTRY MASTER (Nodal only) ==========
+    @GetMapping("/industrymaster/edit")
+    public String industryMasterEdit(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_master_edit";
+    }
+
+    // ========== INDUSTRY MASTER ENTRY (Nodal only) ==========
+    @GetMapping("/industrymaster/entry")
+    public String industryMasterEntry(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_master_entry";
+    }
+
+    /** Nodal users have roleId == 10; requires a valid session. */
+    private boolean isNodalRole(HttpServletRequest request) {
+        if (request.getSession(false) == null
+                || request.getSession().getAttribute("sessionUser") == null) {
+            return false;
+        }
+        Object roleId = request.getSession().getAttribute("roleId");
+        return roleId != null && "10".equals(String.valueOf(roleId));
+    }
+
     /** District users have roleId == 3; requires a valid session. */
     private boolean isDistrictRole(HttpServletRequest request) {
         if (request.getSession(false) == null
