@@ -139,6 +139,15 @@ public class ImplantController {
         return "implant/industry_mapping_report";
     }
 
+    // ========== IN-PLANT TRAINEES REPORT (Nodal only) ==========
+    @GetMapping("/traineesreport")
+    public String inplantTraineesReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_trainees_report";
+    }
+
     /** Nodal users have roleId == 10; requires a valid session. */
     private boolean isNodalRole(HttpServletRequest request) {
         if (request.getSession(false) == null
