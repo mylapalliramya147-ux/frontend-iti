@@ -386,7 +386,7 @@ $("#inplantcard").append('6. ' + link('Industry Master Report', '${pageContext.r
 $("#inplantcard").append('7. ' + link('Industry - ITI Mapping Report', '${pageContext.request.contextPath}/implant/mappingreport'));
 $("#inplantcard").append('8. ' + link('Trainees Report', '${pageContext.request.contextPath}/implant/traineesreport'));
 $("#inplantcard").append('9. ' + link('Datewise Report', '${pageContext.request.contextPath}/implant/datewisereport'));
-$("#inplantcard").append('10. ' + link('One Year &  ITIWise Report'));
+$("#inplantcard").append('10. ' + link('One Year &  ITIWise Report', '${pageContext.request.contextPath}/implant/yearwisereport'));
 $("#inplantcard").append('11. ' + link('Two Years Inplant Training Report'));
 $("#inplantcard").append('12. ' + link('Industry Connected Trades Report'));
 $("#inplantcard").append('13. ' + link('Industry Not Connected Trades Report'));

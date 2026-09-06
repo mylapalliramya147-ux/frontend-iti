@@ -148,6 +148,15 @@ public class ImplantController {
         return "implant/inplant_trainees_report";
     }
 
+    // ========== ONE YEAR ITI WISE REPORT (Nodal only) ==========
+    @GetMapping("/yearwisereport")
+    public String inplantYearwiseReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_yearwise_report";
+    }
+
     // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
     @GetMapping("/datewisereport")
     public String inplantDatewiseReport(HttpServletRequest request) {
