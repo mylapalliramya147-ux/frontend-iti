@@ -148,14 +148,25 @@ public class ImplantController {
         return "implant/inplant_trainees_report";
     }
 
-    /** Nodal users have roleId == 10; requires a valid session. */
+    // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
+    @GetMapping("/datewisereport")
+    public String inplantDatewiseReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_datewise_report";
+    }
+
+    /** Nodal users have roleId == 10; requires a valid session with insCode set. */
     private boolean isNodalRole(HttpServletRequest request) {
         if (request.getSession(false) == null
                 || request.getSession().getAttribute("sessionUser") == null) {
             return false;
         }
         Object roleId = request.getSession().getAttribute("roleId");
-        return roleId != null && "10".equals(String.valueOf(roleId));
+        Object insCode = request.getSession().getAttribute("insCode");
+        return roleId != null && "10".equals(String.valueOf(roleId))
+                && insCode != null && !String.valueOf(insCode).isEmpty();
     }
 
     /** District users have roleId == 3; requires a valid session. */
