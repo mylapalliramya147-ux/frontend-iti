@@ -94,6 +94,42 @@ public class ImplantController {
         return "implant/industry_mapping_nodal";
     }
 
+    // ========== INDUSTRY PARTNER DETAILS (Nodal only) ==========
+    @GetMapping("/partners")
+    public String industryPartnerDetails(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_partner_details";
+    }
+
+    // ========== EDIT INDUSTRY PARTNER DETAILS (Nodal only) ==========
+    @GetMapping("/partners/edit")
+    public String industryPartnerDetailsEdit(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_partner_details_edit";
+    }
+
+    // ========== IN-PLANT NODAL REPORT (Nodal only) ==========
+    @GetMapping("/nodalreport")
+    public String inplantNodalReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_nodal_report";
+    }
+
+    // ========== INDUSTRY MASTER REPORT (Nodal only) ==========
+    @GetMapping("/industrymaster/report")
+    public String industryMasterReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_master_report";
+    }
+
     /** Nodal users have roleId == 10; requires a valid session. */
     private boolean isNodalRole(HttpServletRequest request) {
         if (request.getSession(false) == null
