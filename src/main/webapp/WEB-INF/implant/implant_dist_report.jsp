@@ -9,8 +9,8 @@
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">
 <script>
 var jwtToken = '';
 var insCode = '<c:out value="${sessionScope.insCode}" default=""/>';
@@ -96,9 +96,29 @@ function loadItis(){
     });
 }
 
+function loadIndustries(itiCode){
+    $("#industryId").empty();
+    $("#industryId").append('<option value="">-ALL-</option>');
+    if(!itiCode) return;
+    $.ajax({
+        type:'get', url: baseUrl + 'api/implant/industries?itiCode=' + encodeURIComponent(itiCode),
+        cache:false, timeout:600000,
+        success: function(response){
+            if(response && response.length > 0){
+                response.forEach(function(item){
+                    $("#industryId").append('<option value="'+item[0]+'">'+item[1]+'</option>');
+                });
+            }
+        }
+    });
+}
+
 function filterData(){
     var itiCode = $("#iticode").val();
     var industryId = $("#industryId").val();
+    if(event && event.target && event.target.id === 'iticode'){
+        loadIndustries(itiCode);
+    }
     $("#tablebody").empty();
     $.ajax({
         type:'get', url: baseUrl + 'api/implant/district/report?itiCode=' + encodeURIComponent(itiCode || '') + '&industryId=' + encodeURIComponent(industryId || ''),

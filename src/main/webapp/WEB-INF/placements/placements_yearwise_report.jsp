@@ -9,8 +9,8 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/siteScript.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">
 <!-- ITIAP uses server sessions, NOT the JWT the original page used -->
 <script>
 var jwtToken = '';
