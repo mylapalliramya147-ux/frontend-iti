@@ -7,16 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Industry ITI Mapping ITI</title>
+<title>Industry ITI Mapping</title>
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">
 <!-- ITIAP uses server sessions, NOT the JWT the original page used -->
 <script>
-var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
 var username = '<c:out value="${sessionScope.username}" default=""/>';
-var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
+var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
 var baseUrl  = '${backendBaseUrl}/';
 </script>
 <script>
@@ -24,19 +23,45 @@ $(document).ready(function(){
 
     document.getElementById("userinfo").innerHTML =
         "<i class='fas fa-user'></i> " + username +
-        " | <i class='fas fa-id-badge'></i> " + insCode +
-        " | <i class='fas fa-building'></i> " + insName;
+        " | <i class='fas fa-id-badge'></i> " + insCode;
 
+    loadDistricts();
     loadMasters();
-    loadMappings();
 
 });
-
-var industries = [], trades = [];
 
 function esc(v) {
     if (v === null || v === undefined) return '';
     return $('<div/>').text(String(v)).html();
+}
+
+function loadDistricts() {
+    $.ajax({
+        type: 'get', url: baseUrl + 'api/implant/mapping/districts',
+        cache: false, timeout: 600000,
+        success: function(rows){
+            (rows || []).forEach(function(d){
+                $("#dist").append('<option value="' + esc(d.dist_code) + '">' + esc(d.dist_name) + '</option>');
+            });
+        },
+        error: function(){ $("#servermsg").html("<span style='color:red;'>Error loading districts.</span>"); }
+    });
+}
+
+function getnItis(distCode){
+    $("#itiName").empty().append('<option value="">-SELECT-</option>');
+    if (!distCode) return false;
+    $.ajax({
+        type: 'get', url: baseUrl + 'api/implant/mapping/itis?distCode=' + encodeURIComponent(distCode),
+        cache: false, timeout: 600000,
+        success: function(rows){
+            (rows || []).forEach(function(iti){
+                $("#itiName").append('<option value="' + iti.iti_code + '">' + esc(iti.iti_name) + '</option>');
+            });
+        },
+        error: function(){ $("#servermsg").html("<span style='color:red;'>Error loading ITIs.</span>"); }
+    });
+    return false;
 }
 
 function loadMasters() {
@@ -44,64 +69,37 @@ function loadMasters() {
         type: 'get', url: baseUrl + 'api/implant/mapping/masters',
         cache: false, timeout: 600000,
         success: function(response){
-            industries = response.industries || [];
-            trades = response.trades || [];
-            industries.forEach(function(ind){
+            (response.industries || []).forEach(function(ind){
                 $("#industryName").append('<option value="' + ind.industry_id + '">' + esc(ind.industry_name) + '</option>');
             });
-            trades.forEach(function(trd){
+            (response.trades || []).forEach(function(trd){
                 $("#tradeName").append('<option value="' + trd.trade_code + '">' + esc(trd.trade_name) + '</option>');
             });
         },
         error: function(){ $("#servermsg").html("<span style='color:red;'>Error loading industry/trade lists.</span>"); }
     });
 }
-
-function loadMappings() {
-    $.ajax({
-        type: 'get', url: baseUrl + 'api/implant/mapping?itiCode=' + encodeURIComponent(insCode),
-        cache: false, timeout: 600000,
-        success: function(response){ renderMappings(response || []); }
-    });
-}
-function renderMappings(rows) {
-    $("#industrydata").empty();
-    if (!rows.length) {
-        $("#industrydata").append('<tr><td colspan="5" style="text-align:center;padding:15px;font-weight:bold;">No industries mapped yet.</td></tr>');
-        return;
-    }
-    rows.forEach(function(m){
-        $("#industrydata").append('<tr>'
-            + '<td>' + esc(m.industry_id) + '</td>'
-            + '<td>' + esc(m.industry_name) + '</td>'
-            + '<td>' + esc(m.industry_type) + '</td>'
-            + '<td>' + esc(m.trade_name) + '</td>'
-            + '<td style="white-space:nowrap;">'
-            + '<button class="btn btn-primary btn-sm me-1" style="display:inline-flex;align-items:center;" onclick="return editMapping(' + m.slno + ');"><i class="fas fa-pen"></i> Edit</button>'
-            + '<button class="btn btn-danger btn-sm" style="display:inline-flex;align-items:center;" onclick="return deleteMapping(' + m.slno + ');"><i class="fas fa-trash"></i> Delete</button>'
-            + '</td>'
-            + '</tr>');
-    });
-}
-
 function savedData(){
     $("#servermsg").html('');
+    var distCode = $("#dist").val();
+    var itiCode = $("#itiName").val();
     var industryId = $("#industryName").val();
     var tradeCode = $("#tradeName").val();
 
+    if (!distCode) { $("#servermsg").html("<span style='color:red;'>Please select District Name.</span>"); return false; }
+    if (!itiCode) { $("#servermsg").html("<span style='color:red;'>Please select ITI Name.</span>"); return false; }
     if (!industryId) { $("#servermsg").html("<span style='color:red;'>Please select Industry Name.</span>"); return false; }
     if (!tradeCode) { $("#servermsg").html("<span style='color:red;'>Please select Trade Name.</span>"); return false; }
 
     $.ajax({
         type: 'post',
-        url: baseUrl + 'api/implant/mapping?itiCode=' + encodeURIComponent(insCode),
+        url: baseUrl + 'api/implant/mapping?itiCode=' + encodeURIComponent(itiCode),
         contentType: 'application/json',
         data: JSON.stringify({ industryId: parseInt(industryId), tradeCode: parseInt(tradeCode), entryBy: insCode }),
         timeout: 600000,
         success: function(response){
-            $("#servermsg").html("<span style='color:green;'>" + esc(response.message || "Industry mapped successfully!") + "</span>");
-            $("#industryName").val(''); $("#tradeName").val('');
-            loadMappings();
+            $("#servermsg").html("<span style='color:green;'>" + esc(response.message || "Industry mapped to the ITI successfully!") + "</span>");
+            $("#itiName").val(''); $("#industryName").val(''); $("#tradeName").val('');
         },
         error: function(xhr){
             var msg = "Failed to save mapping";
@@ -110,26 +108,6 @@ function savedData(){
                 if (resp && resp.message) msg = resp.message;
             } catch(e) { /* keep default */ }
             $("#servermsg").html("<span style='color:red;'>Error: " + esc(msg) + "</span>");
-        }
-    });
-    return false;
-}
-
-function editMapping(slno){
-    window.location.href = '${pageContext.request.contextPath}/implant/mapping/edit?slno=' + slno;
-    return false;
-}
-
-function deleteMapping(slno){
-    if (!confirm("Delete this industry - trade mapping?")) return false;
-    $.ajax({
-        type: 'delete', url: baseUrl + 'api/implant/mapping/' + slno, timeout: 600000,
-        success: function(response){
-            $("#servermsg").html("<span style='color:green;'>Mapping deleted successfully.</span>");
-            loadMappings();
-        },
-        error: function(){
-            $("#servermsg").html("<span style='color:red;'>Error deleting mapping.</span>");
         }
     });
     return false;
@@ -161,6 +139,20 @@ function deleteMapping(slno){
     <div align="center" style="text-decoration: underline;color: fuchsia;">INDUSTRY - ITI MAPPING FORM</div>
     <div class="row">
         <div class="col-md-6">
+            <label for="dist">District Name</label>
+            <select class="form-control" id="dist" onchange="return getnItis(this.value);">
+                <option value="">-SELECT-</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="itiName">ITI Name</label>
+            <select class="form-control" id="itiName">
+                <option value="">-SELECT-</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-6">
             <label for="industryName">Industry Name</label>
             <select class="form-control" id="industryName">
                 <option value="">-SELECT-</option>
@@ -177,21 +169,6 @@ function deleteMapping(slno){
         <button class="btn btn-success m-1" onclick="return savedData();">SUBMIT</button>
     </div>
     <div align="center" id="servermsg"></div>
-</div>
-<div class="container border p-2 mt-2 shadow-lg" style="border-radius: 5px;">
-    <div align="center" style="text-decoration: underline;color: fuchsia;">Available Industries for your ITI</div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td style="background-color: black;color: white;">INDUSTRY ID</td>
-                <td style="background-color: black;color: white;">NAME</td>
-                <td style="background-color: black;color: white;">TYPE</td>
-                <td style="background-color: black;color: white;">TRADE</td>
-                <td style="background-color: black;color: white;">ACTIONS</td>
-            </tr>
-        </thead>
-        <tbody id="industrydata"></tbody>
-    </table>
 </div>
 </body>
 </html>

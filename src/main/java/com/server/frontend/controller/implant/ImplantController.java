@@ -85,6 +85,15 @@ public class ImplantController {
         return "implant/industry_master_entry";
     }
 
+    // ========== ITI - INDUSTRY MAPPING ENTRY (Nodal only) ==========
+    @GetMapping("/mapping-nodal")
+    public String industryMappingNodal(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_mapping_nodal";
+    }
+
     /** Nodal users have roleId == 10; requires a valid session. */
     private boolean isNodalRole(HttpServletRequest request) {
         if (request.getSession(false) == null

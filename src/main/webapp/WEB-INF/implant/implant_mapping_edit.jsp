@@ -46,11 +46,9 @@ function loadMastersAndMapping() {
         type: 'get', url: baseUrl + 'api/implant/mapping/masters',
         cache: false, timeout: 600000,
         success: function(masters){
-            $("#industryName").append('<option value="">-SELECT-</option>');
             (masters.industries || []).forEach(function(ind){
                 $("#industryName").append('<option value="' + ind.industry_id + '">' + esc(ind.industry_name) + '</option>');
             });
-            $("#tradeName").append('<option value="">-SELECT-</option>');
             (masters.trades || []).forEach(function(trd){
                 $("#tradeName").append('<option value="' + trd.trade_code + '">' + esc(trd.trade_name) + '</option>');
             });

@@ -378,7 +378,7 @@ $("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
 $("#inplantcard").append('<h6 class="card-title text-success">Services</h6>');
 $("#inplantcard").append('1. ' + link('Industry Master Entry', '${pageContext.request.contextPath}/implant/industrymaster/entry'));
 $("#inplantcard").append('2. ' + link('Industry Master preview', '${pageContext.request.contextPath}/implant/industrymaster'));
-$("#inplantcard").append('3. ' + link('ITI - Industry Mapping Entry'));
+$("#inplantcard").append('3. ' + link('ITI - Industry Mapping Entry', '${pageContext.request.contextPath}/implant/mapping-nodal'));
 $("#inplantcard").append('4. ' + link('Industry Partner Details'));
 $("#inplantcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
 $("#inplantcard").append('5. ' + link('In-Plant Report'));
