@@ -130,6 +130,15 @@ public class ImplantController {
         return "implant/industry_master_report";
     }
 
+    // ========== INDUSTRY - ITI MAPPING REPORT (Nodal only) ==========
+    @GetMapping("/mappingreport")
+    public String industryMappingReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/industry_mapping_report";
+    }
+
     /** Nodal users have roleId == 10; requires a valid session. */
     private boolean isNodalRole(HttpServletRequest request) {
         if (request.getSession(false) == null
