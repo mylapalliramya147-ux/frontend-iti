@@ -126,10 +126,10 @@
 <body class="nodal-body">
     
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" />
+    <%@ include file="../reports/header.jsp" />
     
     <c:set var="activeTab" value="iti_status" />
-    <%@ include file="iti_navbar.jsp" />
+    <%@ include file="../iti_navbar.jsp" />
     
     <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">

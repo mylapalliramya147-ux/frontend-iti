@@ -19,18 +19,18 @@ public class ItipageController {
     public String getItiList(Model model) {
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
         return "Institute/ItiList";
     }
- 
+  
 
     @GetMapping("/iti-details")
     public String itiDetails(Model model) {
 
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
 
         return "Institute/ItiDetails";
@@ -40,17 +40,17 @@ public class ItipageController {
 
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
 
         model.addAttribute(
                 "districtApiUrl",
-                backendApiConfig.getFullDistrictUrl()
+                backendApiConfig.getFullUrl("districts")
         );
 
         model.addAttribute(
                 "designationApiUrl",
-                backendApiConfig.getFullDesignationUrl()
+                backendApiConfig.getFullUrl("designations")
         );
 
         return "Institute/ItiCreate";
@@ -60,11 +60,11 @@ public class ItipageController {
     public String itiTradeSelection(Model model) {
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
         model.addAttribute(
                 "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl()
+                backendApiConfig.getBaseUrl("reports")
         );
         return "Institute/ItiTradeSelection";
     }

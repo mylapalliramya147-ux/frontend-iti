@@ -106,10 +106,10 @@
     </style>
 </head>
 <body class="nodal-body">
-    <%@ include file="header.jsp" %>
+    <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="open_seats" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
 
     <div class="nodal-page-title-dashboard">
         <h2>Open Seats Abstract — District Wise Summary</h2>

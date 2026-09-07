@@ -28,9 +28,9 @@
 <body class="nodal-body">
     
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" %>
+    <%@ include file="../reports/header.jsp" %>
     <c:set var="activeTab" value="verified_count" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="../district_navbar.jsp" %>
     
     <div class="nodal-page-title-dashboard">
         <h2>Verified Application Count Report</h2>

@@ -1,19 +1,23 @@
 package com.server.frontend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
-    public String home() {
-        return "reports/reports";
-    }
-
     @GetMapping("/authHome")
-    public String authHome() {
-        return "checkmeritschedule/ScheduleEntry";
+    public String authHome(HttpServletRequest request) {
+        if (request.getSession(false) == null || request.getSession().getAttribute("sessionUser") == null) {
+            return "redirect:/?error=session";
+        }
+        // role 4 = ITI user -> ITI landing page; other roles get the generic welcome page for now
+        Object roleId = request.getSession().getAttribute("roleId");
+        if (roleId != null && "4".equals(String.valueOf(roleId))) {
+            return "jsp/authHome_iti";
+        }
+        return "jsp/authHome";
     }
 
     @GetMapping("/MeritList")
@@ -64,5 +68,30 @@ public class HomeController {
     @GetMapping("/nodal-report/dashboard")
     public String nodalReportDashboard() {
         return "reports/state-dashboard";
+    }
+
+    @GetMapping("/placements")
+    public String placements(HttpServletRequest request) {
+        request.setAttribute("captchaText", CaptchaController.current(request));
+        return "jsp/placements";
+    }
+
+    /**
+     * Authenticated ITI placements dashboard (the page shown to ITI users after a
+     * successful placements login). Session is required; otherwise the request is
+     * bounced back to the placements login form.
+     */
+    @GetMapping("/placements/loginSuccess")
+    public String placementsLoginSuccess(HttpServletRequest request) {
+        if (request.getSession(false) == null
+                || request.getSession().getAttribute("sessionUser") == null) {
+            return "redirect:/placements?error=session";
+        }
+        return "jsp/placementDashboard";
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "jsp/index";
     }
 }

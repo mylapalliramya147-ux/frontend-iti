@@ -27,7 +27,7 @@
     </style>
 </head>
 <body class="nodal-body">
-    <%@ include file="header.jsp" %>
+    <%@ include file="../reports/header.jsp" %>
     <div class="nodal-page-title-dashboard">
         <h2 id="reportTitle">API Dashboard</h2>
     </div>
