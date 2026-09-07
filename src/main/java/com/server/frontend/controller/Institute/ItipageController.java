@@ -73,7 +73,7 @@ public class ItipageController {
     public String shiftUnitPermitted(Model model) {
         model.addAttribute(
                 "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl()
+                backendApiConfig.getBaseUrl("reports")
         );
         return "Institute/ShiftUnitPermitted";
     }
