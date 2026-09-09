@@ -21,7 +21,7 @@
 
     <meta charset="UTF-8">
 
-    <title>IN-PLANT Yearwise Report</title>
+    <title>12 & 24 Months ITIWise Report</title>
 
     <!-- Bootstrap -->
     <link
@@ -103,13 +103,18 @@
     </nav>
 
 <div class="container border p-2 mt-2 shadow-lg">
-    <div align="center" style="text-decoration: underline; color: fuchsia;">Inplant Report</div>
+    <div align="center">
+        <a
+            href="${pageContext.request.contextPath}/implant/twoyearwisereport"
+            style="text-decoration: underline; color: fuchsia;"
+        >Inplant Two Years Report</a>
+    </div>
     <div class="row">
         <div class="col-md-3">
-            <label for="year">Year :</label>
+            <label for="year">Current Year :</label>
             <select id="year" class="form-control">
                 <option value="" selected disabled>Select Year</option>
-                <option value="2026">2026</option>
+                <option value="2026" selected>2026</option>
                 <option value="2025">2025</option>
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
@@ -159,11 +164,11 @@
 function esc(v){return v==null?'':String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function getData(){
     var y=$('#year').val(), t=$('#itiType').val();
-    if(!y||!t){alert('Please select Year and ITI Type.');return false;}
+    if(!y||!t){alert('Please select Current Year and ITI Type.');return false;}
     $('#spinnerdiv').show();$('#reporttable,#emptydatamsg').hide();$('#tablebody').empty();
     $.ajax({
         type:'GET',
-        url:baseUrl+'api/implant/yearwise-report?year='+encodeURIComponent(y)+'&itiType='+encodeURIComponent(t),
+        url:baseUrl+'api/implant/twelve-24-months-itiwise-report?year='+encodeURIComponent(y)+'&itiType='+encodeURIComponent(t),
         success:function(d){
             $('#spinnerdiv').hide();
             if(!d||!d.length){$('#emptydatamsg').show();return;}
@@ -171,7 +176,7 @@ function getData(){
             d.forEach(function(r,i){
                 h+='<tr>'+
                     '<td>'+(i+1)+'</td>'+
-                    '<td>'+esc(r.districtName||r.district_name||'')+'</td>'+
+                    '<td>'+esc(r.districtName||r.district_name||r.dist_name||'')+'</td>'+
                     '<td>'+esc(r.itiName||r.iti_name||'')+'</td>'+
                     '<td>'+esc(r.itiCode||r.iti_code||'')+'</td>'+
                     '<td>'+(r.traineeAdmitted||r.trainee_admitted||0)+'</td>'+
@@ -191,7 +196,13 @@ function getData(){
     });
     return false;
 }
-function fnExcelReport(tid){var wb=XLSX.utils.table_to_book(document.getElementById(tid),{sheet:'Report'});XLSX.writeFile(wb,'Inplant_Yearwise_Report.xlsx');return false;}
+function fnExcelReport(tid){
+    var y=$('#year').val()||'ALL';
+    var t=$('#itiType').val()==='G'?'Govt':($('#itiType').val()==='P'?'Pvt':'ALL');
+    var wb=XLSX.utils.table_to_book(document.getElementById(tid),{sheet:'Report'});
+    XLSX.writeFile(wb,'Inplant_12_24_Months_ITIWise_Report_'+y+'_'+t+'.xlsx');
+    return false;
+}
 </script>
 </body>
 </html>

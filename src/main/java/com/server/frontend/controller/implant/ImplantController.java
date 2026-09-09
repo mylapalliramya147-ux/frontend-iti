@@ -157,6 +157,33 @@ public class ImplantController {
         return "implant/inplant_yearwise_report";
     }
 
+    // ========== TWO YEAR ITI WISE REPORT (Nodal only) ==========
+    @GetMapping("/twoyearwisereport")
+    public String inplantTwoYearwiseReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_two_year_report";
+    }
+
+    // ========== 12 & 24 MONTHS ITIWISE REPORT (Nodal only) ==========
+    @GetMapping("/twelve24monthsreport")
+    public String inplantTwelve24MonthsReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_twelve_24_months_report";
+    }
+
+    // ========== DISTRICT WISE IN-PLANT REPORT (Nodal only) ==========
+    @GetMapping("/inplantdistrictreport")
+    public String inplantDistrictReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_district_report";
+    }
+
     // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
     @GetMapping("/datewisereport")
     public String inplantDatewiseReport(HttpServletRequest request) {
@@ -164,6 +191,15 @@ public class ImplantController {
             return "redirect:/placements?error=session";
         }
         return "implant/inplant_datewise_report";
+    }
+
+    // ========== INDUSTRY NOT CONNECTED TRADES REPORT (Nodal only) ==========
+    @GetMapping("/industry-not-connected-trades")
+    public String industryNotConnectedTradesReport(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/inplant_industry_not_connected_trades";
     }
 
     /** Nodal users have roleId == 10; requires a valid session with insCode set. */
