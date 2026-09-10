@@ -387,11 +387,19 @@ $("#inplantcard").append('7. ' + link('Industry - ITI Mapping Report', '${pageCo
 $("#inplantcard").append('8. ' + link('Trainees Report', '${pageContext.request.contextPath}/implant/traineesreport'));
 $("#inplantcard").append('9. ' + link('Datewise Report', '${pageContext.request.contextPath}/implant/datewisereport'));
 $("#inplantcard").append('10. ' + link('One Year &  ITIWise Report', '${pageContext.request.contextPath}/implant/yearwisereport'));
+<<<<<<< HEAD
 $("#inplantcard").append('11. ' + link('Two Years Inplant Training Report'));
 $("#inplantcard").append('12. ' + link('Industry Connected Trades Report', '${pageContext.request.contextPath}/implant/industryconnectedtrades'));
 $("#inplantcard").append('13. ' + link('Industry Not Connected Trades Report'));
 $("#inplantcard").append('14. ' + link('12 & 24 Months ITIWise Report'));
 $("#inplantcard").append('15. ' + link('District Wise IN-PLANT Report'));
+=======
+$("#inplantcard").append('11. ' + link('Two Years Inplant Training Report', '${pageContext.request.contextPath}/implant/twoyearwisereport'));
+$("#inplantcard").append('12. ' + link('Industry Connected Trades Report'));
+$("#inplantcard").append('13. ' + link('Industry Not Connected Trades Report', '${pageContext.request.contextPath}/implant/industry-not-connected-trades'));
+$("#inplantcard").append('14. ' + link('12 & 24 Months ITIWise Report', '${pageContext.request.contextPath}/implant/twelve24monthsreport'));
+$("#inplantcard").append('15. ' + link('District Wise IN-PLANT Report', '${pageContext.request.contextPath}/implant/inplantdistrictreport'));
+>>>>>>> 3778af472e89f63968cd7e6fd62c65df7c94b50f
 $("#plcmtscard").empty();
 $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 $("#plcmtscard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
