@@ -157,13 +157,22 @@ public class ImplantController {
         return "implant/inplant_yearwise_report";
     }
 
-    // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
+            // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
     @GetMapping("/datewisereport")
     public String inplantDatewiseReport(HttpServletRequest request) {
         if (!isNodalRole(request)) {
             return "redirect:/placements?error=session";
         }
         return "implant/inplant_datewise_report";
+    }
+
+    // ========== INDUSTRY CONNECTED TRADES REPORT (Nodal only) ==========
+    @GetMapping("/industryconnectedtrades")
+    public String industryConnectedTrades(HttpServletRequest request) {
+        if (!isNodalRole(request)) {
+            return "redirect:/placements?error=session";
+        }
+        return "implant/IndustryConnectedTrades";
     }
 
     /** Nodal users have roleId == 10; requires a valid session with insCode set. */
