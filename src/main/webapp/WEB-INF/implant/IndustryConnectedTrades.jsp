@@ -80,22 +80,132 @@
 
     <style>
 
-        #reporttable th,
-        #reporttable td {
-            vertical-align: middle;
+        /* ==========================================================
+           Industry Connected Trades Report - page-specific styles.
+           Every selector is scoped under .industry-connected-trades-page
+           so no other page/module is affected.
+           ========================================================== */
+
+        body.industry-connected-trades-page {
+            background-color: #ffffff;
         }
 
-        #reporttable thead th,
-        #reporttable thead td {
+        /* Centered white report container */
+        .industry-connected-trades-page .report-container {
+            width: 92.5%;
+            max-width: 1500px;
+            margin: 20px auto 30px auto;
+            padding: 15px 12px 20px 12px;
+            background-color: #ffffff;
+            border: 1px solid #e3e6ea;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Report title */
+        .industry-connected-trades-page .report-title {
+            margin: 0 0 6px 0;
+            padding-bottom: 4px;
+            text-align: center;
+            text-decoration: underline;
+            color: fuchsia;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        /* Spinner */
+        .industry-connected-trades-page #spinnerdiv {
+            margin: 8px 0 10px 0;
+        }
+
+        /* Download Excel button row (top-right of report content) */
+        .industry-connected-trades-page .report-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin: 2px 0 12px 0;
+        }
+
+        .industry-connected-trades-page .download-excel-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #198754;
+            border: 1px solid #198754;
+            color: #ffffff;
+            border-radius: 6px;
+            font-size: 15px;
+            padding: 6px 16px;
+            cursor: pointer;
+        }
+
+        .industry-connected-trades-page .download-excel-btn:hover {
+            background-color: #157347;
+            border-color: #146c43;
+            color: #ffffff;
+        }
+
+        .industry-connected-trades-page .download-excel-btn:focus {
+            color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.25);
+        }
+
+        /* Report table */
+        .industry-connected-trades-page .report-table {
+            width: 100%;
+            table-layout: fixed;
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+        .industry-connected-trades-page .report-table th,
+        .industry-connected-trades-page .report-table td {
+            border: 1px solid #c9d6e8;
+            color: #212529;
+            vertical-align: top;
+            padding: 12px 14px;
+            line-height: 1.5;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        /* Light blue header, dark text, left-aligned and bottom-anchored:
+           single-line headers (District, Trade...) line up with the second
+           line of wrapped headers (ITI Code, Total Trainees), exactly as
+           in the reference */
+        .industry-connected-trades-page .report-table thead th {
+            background-color: #cfe0f7;
+            color: #1a1a1a;
+            font-weight: 700;
+            text-align: left;
+            vertical-align: bottom;
             position: sticky;
             top: 0;
-            background-color: black;
-            color: white;
             z-index: 2;
         }
 
-        #reporttable {
-            width: 100%;
+        /* Very light alternating gray rows - 1st/3rd/5th rows shaded,
+           exactly as in the reference */
+        .industry-connected-trades-page .report-table tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        /* Column widths matching the reference proportions
+           (S.No 4.5 | District 11 | ITI Code 5 | ITI Name 20.5 |
+            Trade 18 | Total Trainees 7 | Industry Name 34) */
+        .industry-connected-trades-page .col-sno      { width: 4.5%; }
+        .industry-connected-trades-page .col-district { width: 11%; }
+        .industry-connected-trades-page .col-iticode  { width: 5%; }
+        .industry-connected-trades-page .col-itiname  { width: 20.5%; }
+        .industry-connected-trades-page .col-trade    { width: 18%; }
+        .industry-connected-trades-page .col-trainees { width: 7%; }
+        .industry-connected-trades-page .col-industry { width: 34%; }
+
+        /* Small screens: keep the table usable without changing desktop */
+        @media (max-width: 767.98px) {
+            .industry-connected-trades-page .report-container {
+                margin: 12px;
+                padding: 12px;
+            }
         }
 
     </style>
@@ -103,7 +213,7 @@
 </head>
 
 
-<body>
+<body class="industry-connected-trades-page">
 
     <!-- Banner -->
     <img
@@ -153,119 +263,112 @@
 
     </nav>
 
-    <br>
+    <!-- Industry Connected Trades Report -->
+    <div class="industry-connected-trades-page">
+
+        <!-- Report Container -->
+        <div class="report-container">
+
+            <!-- Title -->
+            <div class="report-title">
+                Industry Connected Trades Report
+            </div>
 
 
-    <!-- Report Container -->
-    <div
-        class="container-fluid border p-2 mt-2 shadow-lg"
-        style="border-radius: 5px;"
-    >
-
-        <!-- Title -->
-        <div
-            align="center"
-            style="text-decoration: underline; color: fuchsia;"
-        >
-            INDUSTRY CONNECTED TRADES REPORT
-        </div>
-
-
-        <!-- Spinner -->
-        <div
-            class="text-center"
-            id="spinnerdiv"
-        >
-            <span>
-                Data is Loading...
-            </span>
-
+            <!-- Spinner -->
             <div
-                class="spinner-border"
-                role="status"
+                class="text-center"
+                id="spinnerdiv"
             >
-            </div>
+                <span>
+                    Data is Loading...
+                </span>
 
-        </div>
-
-
-        <!-- Controls -->
-        <div class="row mb-1">
-
-            <div class="col-10"></div>
-
-
-            <div class="col-2">
-                <button
-                    onclick="return fnExcelReport();"
-                    class="btn btn-info btn-sm mt-4"
+                <div
+                    class="spinner-border"
+                    role="status"
                 >
-                    DOWNLOAD EXCEL
+                </div>
+
+            </div>
+
+
+            <!-- Controls : Download Excel (top-right) -->
+            <div class="report-actions">
+
+                <button
+                    type="button"
+                    onclick="return fnExcelReport();"
+                    class="download-excel-btn"
+                >
+                    <i class="fas fa-file-excel"></i>
+                    Download Excel
                 </button>
+
+            </div>
+
+
+            <!-- Report Table -->
+            <div class="table-responsive-lg">
+
+                <table
+                    class="table report-table"
+                    id="reporttable"
+                >
+
+                    <colgroup>
+                        <col class="col-sno">
+                        <col class="col-district">
+                        <col class="col-iticode">
+                        <col class="col-itiname">
+                        <col class="col-trade">
+                        <col class="col-trainees">
+                        <col class="col-industry">
+                    </colgroup>
+
+                    <thead>
+
+                        <tr>
+
+                            <th scope="col" class="col-sno">
+                                S.No
+                            </th>
+
+                            <th scope="col" class="col-district">
+                                District
+                            </th>
+
+                            <th scope="col" class="col-iticode">
+                                ITI Code
+                            </th>
+
+                            <th scope="col" class="col-itiname">
+                                ITI Name
+                            </th>
+
+                            <th scope="col" class="col-trade">
+                                Trade
+                            </th>
+
+                            <th scope="col" class="col-trainees">
+                                Total Trainees
+                            </th>
+
+                            <th scope="col" class="col-industry">
+                                Industry Name
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablebody"></tbody>
+
+                </table>
+
             </div>
 
         </div>
-
-
-        <!-- Report Table -->
-        <table
-            class="table table-bordered"
-            id="reporttable"
-        >
-
-            <thead>
-
-                <tr>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        S.NO
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        DISTRICT
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        ITI CODE
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        ITI NAME
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        TRADE
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                                        >
-                        TOTAL TRAINEEES
-                    </td>
-
-                    <td
-                        style="background-color: black; color: white;"
-                    >
-                        INDUSTRY NAME
-                    </td>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="tablebody"></tbody>
-
-        </table>
 
     </div>
 

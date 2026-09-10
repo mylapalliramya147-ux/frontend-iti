@@ -157,9 +157,7 @@ public class ImplantController {
         return "implant/inplant_yearwise_report";
     }
 
-<<<<<<< HEAD
             // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
-=======
     // ========== TWO YEAR ITI WISE REPORT (Nodal only) ==========
     @GetMapping("/twoyearwisereport")
     public String inplantTwoYearwiseReport(HttpServletRequest request) {
@@ -188,7 +186,6 @@ public class ImplantController {
     }
 
     // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
->>>>>>> 3778af472e89f63968cd7e6fd62c65df7c94b50f
     @GetMapping("/datewisereport")
     public String inplantDatewiseReport(HttpServletRequest request) {
         if (!isNodalRole(request)) {
@@ -197,7 +194,6 @@ public class ImplantController {
         return "implant/inplant_datewise_report";
     }
 
-<<<<<<< HEAD
     // ========== INDUSTRY CONNECTED TRADES REPORT (Nodal only) ==========
     @GetMapping("/industryconnectedtrades")
     public String industryConnectedTrades(HttpServletRequest request) {
@@ -205,7 +201,7 @@ public class ImplantController {
             return "redirect:/placements?error=session";
         }
         return "implant/IndustryConnectedTrades";
-=======
+    }
     // ========== INDUSTRY NOT CONNECTED TRADES REPORT (Nodal only) ==========
     @GetMapping("/industry-not-connected-trades")
     public String industryNotConnectedTradesReport(HttpServletRequest request) {
@@ -213,7 +209,6 @@ public class ImplantController {
             return "redirect:/placements?error=session";
         }
         return "implant/inplant_industry_not_connected_trades";
->>>>>>> 3778af472e89f63968cd7e6fd62c65df7c94b50f
     }
 
     /** Nodal users have roleId == 10; requires a valid session with insCode set. */
@@ -246,5 +241,6 @@ public class ImplantController {
         }
         Object roleId = request.getSession().getAttribute("roleId");
         return roleId != null && "4".equals(String.valueOf(roleId));
+    
     }
 }
