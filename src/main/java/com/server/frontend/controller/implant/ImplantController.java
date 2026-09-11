@@ -157,10 +157,7 @@ public class ImplantController {
         return "implant/inplant_yearwise_report";
     }
 
-<<<<<<< HEAD
-=======
             // ========== IN-PLANT DATEWISE REPORT (Nodal only) ==========
->>>>>>> 1a9862fc7f0511fad5d048cb7b933869049d5dd3
     // ========== TWO YEAR ITI WISE REPORT (Nodal only) ==========
     @GetMapping("/twoyearwisereport")
     public String inplantTwoYearwiseReport(HttpServletRequest request) {
@@ -197,8 +194,6 @@ public class ImplantController {
         return "implant/inplant_datewise_report";
     }
 
-<<<<<<< HEAD
-=======
     // ========== INDUSTRY CONNECTED TRADES REPORT (Nodal only) ==========
     @GetMapping("/industryconnectedtrades")
     public String industryConnectedTrades(HttpServletRequest request) {
@@ -207,7 +202,6 @@ public class ImplantController {
         }
         return "implant/IndustryConnectedTrades";
     }
->>>>>>> 1a9862fc7f0511fad5d048cb7b933869049d5dd3
     // ========== INDUSTRY NOT CONNECTED TRADES REPORT (Nodal only) ==========
     @GetMapping("/industry-not-connected-trades")
     public String industryNotConnectedTradesReport(HttpServletRequest request) {
