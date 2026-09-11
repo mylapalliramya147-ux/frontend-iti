@@ -90,14 +90,27 @@ function renderTable(rows) {
 
     rows.forEach(function (row, index) {
 
+        /*
+         * Backend DTO returns the trade as "tradeName" (older builds
+         * used "trade") - read tradeName first with a safe fallback.
+         * Serial number comes from the API's "sno" field when present.
+         */
+        var trade = (row.tradeName !== undefined && row.tradeName !== null)
+                ? row.tradeName
+                : row.trade;
+
+        var sno = (row.sno !== undefined && row.sno !== null)
+                ? row.sno
+                : (index + 1);
+
         var html =
             '<tr>' +
 
-            '<td>' + (index + 1) + '</td>' +
+            '<td>' + esc(sno) + '</td>' +
             '<td>' + esc(row.district) + '</td>' +
             '<td>' + esc(row.itiCode) + '</td>' +
             '<td>' + esc(row.itiName) + '</td>' +
-            '<td>' + esc(row.trade) + '</td>' +
+            '<td>' + esc(trade) + '</td>' +
             '<td>' + esc(row.totalTrainees) + '</td>' +
             '<td>' + esc(row.industryName) + '</td>' +
 
@@ -113,12 +126,13 @@ function renderTable(rows) {
 /**
  * Download Excel report.
  *
- * Calls the backend endpoint GET /download-excel and lets the
- * browser handle the file returned by the server.
+ * Calls the backend endpoint
+ * GET /api/implant/industry-partner-details/download-excel
+ * and lets the browser handle the Excel file returned by the server.
  */
 function fnExcelReport() {
 
-    window.location.href = baseUrl + 'download-excel';
+    window.location.href = baseUrl + 'api/implant/industry-partner-details/download-excel';
 
     return false;
 
