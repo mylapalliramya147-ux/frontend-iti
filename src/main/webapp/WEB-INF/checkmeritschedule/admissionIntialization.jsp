@@ -29,8 +29,8 @@
 
 	<div align="center" id="contentDiv">
 <%-- 		<%@include file="/WEB-INF/userpages/Navbar.jsp"%> --%>
-		<%@include file="/WEB-INF/banner.jsp"%>
-	<%@include file="/WEB-INF/navbar.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+	<%@include file="/WEB-INF/checkmeritschedule/authNavbar.jsp"%>
 		<div
 			class="container mt-2 mb-4 border font-weight-bolder shadow-lg "
 			style="background-color: #e6ffff; border-radius: 20px;">

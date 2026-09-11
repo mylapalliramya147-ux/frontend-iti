@@ -19,40 +19,62 @@ public class ItipageController {
     public String getItiList(Model model) {
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
         return "Institute/ItiList";
     }
- 
+  
 
     @GetMapping("/iti-details")
     public String itiDetails(Model model) {
 
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullitiUrl()
+                backendApiConfig.getFullUrl("reports")
         );
 
         return "Institute/ItiDetails";
     }
     @GetMapping("/iti-create")
-public String itiCreate(Model model) {
+    public String itiCreate(Model model) {
 
-    model.addAttribute(
-            "itiApiUrl",
-            backendApiConfig.getFullitiUrl()
-    );
+        model.addAttribute(
+                "itiApiUrl",
+                backendApiConfig.getFullUrl("reports")
+        );
 
-    model.addAttribute(
-            "districtApiUrl",
-            backendApiConfig.getFullDistrictUrl()
-    );
+        model.addAttribute(
+                "districtApiUrl",
+                backendApiConfig.getFullUrl("districts")
+        );
 
-    model.addAttribute(
-            "designationApiUrl",
-            backendApiConfig.getFullDesignationUrl()
-    );
+        model.addAttribute(
+                "designationApiUrl",
+                backendApiConfig.getFullUrl("designations")
+        );
 
-    return "Institute/ItiCreate";
-}
+        return "Institute/ItiCreate";
+    }
+
+    @GetMapping("/iti-trade-selection")
+    public String itiTradeSelection(Model model) {
+        model.addAttribute(
+                "itiApiUrl",
+                backendApiConfig.getFullUrl("reports")
+        );
+        model.addAttribute(
+                "backendApiBaseUrl",
+                backendApiConfig.getBaseUrl("reports")
+        );
+        return "Institute/ItiTradeSelection";
+    }
+
+    @GetMapping("/shift-unit-permitted")
+    public String shiftUnitPermitted(Model model) {
+        model.addAttribute(
+                "backendApiBaseUrl",
+                backendApiConfig.getBaseUrl("reports")
+        );
+        return "Institute/ShiftUnitPermitted";
+    }
 }

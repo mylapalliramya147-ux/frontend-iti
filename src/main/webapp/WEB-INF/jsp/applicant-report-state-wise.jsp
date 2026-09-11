@@ -86,10 +86,10 @@
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />
-    <%@ include file="header.jsp" %>
+    <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="nodal_report" />
-    <%@ include file="nodal_navbar.jsp" %>
+    <%@ include file="../nodal_navbar.jsp" %>
 
     
     <div class="container-fluid px-4 py-4">

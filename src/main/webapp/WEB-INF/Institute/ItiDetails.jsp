@@ -89,7 +89,7 @@
 
     <!-- Header -->
     <header>
-        <%@ include file="../reports/bannernew.jsp" %>
+        <%@ include file="../bannernew.jsp" %>
     </header>
 
 
@@ -699,7 +699,7 @@
         </div>
         <!--Footer-->
         <footer>
-        <%@include file="../reports/footer.jsp" %>
+        <%@include file="../footer.jsp" %>
         </footer>
         <script>
 

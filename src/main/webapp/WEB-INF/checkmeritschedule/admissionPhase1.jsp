@@ -13,12 +13,12 @@
 </head>
 <body onload="getReady();">
 	<div id="404Msg" align="center">
-		<%@include file="/WEB-INF/banner.jsp"%>
-		<%@include file="/WEB-INF/navbaropen.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+		<%@include file="/WEB-INF/openNavbar.jsp"%>
 	</div>
 	<div id="navbar">
-		<%@include file="/WEB-INF/banner.jsp"%>
-		<%@include file="/WEB-INF/navbar.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+		<%@include file="/WEB-INF/checkmeritschedule/authNavbar.jsp"%>
 	</div>
 	<br>
 	<div align="center" id="pagename">

@@ -121,11 +121,11 @@
     
     <!-- Use Nodal Header and Navbar as requested -->
     <header class="fixed-top-header">
-        <%@ include file="bannernew.jsp" %>
+        <%@ include file="../bannernew.jsp" %>
     </header>
     
     <c:set var="activeTab" value="applicant_phase" />
-    <%@ include file="iti_navbar.jsp" %>
+    <%@ include file="../iti_navbar.jsp" %>
     
     <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">

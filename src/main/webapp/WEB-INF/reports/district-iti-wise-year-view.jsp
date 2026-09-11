@@ -31,7 +31,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="iti_wise_year" />
-    <%@ include file="district_navbar.jsp" %>
+    <%@ include file="../district_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>ITI-wise Admission Status Report</h2></div>
     <div class="container mt-4" id="selectionView">
         <div class="nodal-report-card shadow-lg" style="max-width: 550px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px;">
@@ -106,6 +106,21 @@
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('${backendApiUrl}/current-admission-phase')
+                .then(r => r.json())
+                .then(config => {
+                    const year = config.year || String(new Date().getFullYear());
+                    const yearSelect = document.getElementById('year');
+                    if (yearSelect) yearSelect.value = year;
+                    const form = document.getElementById('reportForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit'));
+                    }
+                })
+                .catch(err => console.error('Failed to load current phase:', err));
+        });
     </script>
 </body>
 </html>
