@@ -1,4 +1,4 @@
-@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -154,16 +154,16 @@
             width: 100%;
             table-layout: fixed;
             margin-bottom: 0;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .industry-connected-trades-page .report-table th,
         .industry-connected-trades-page .report-table td {
-            border: 1px solid #c9d6e8;
-            color: #212529;
-            vertical-align: top;
-            padding: 12px 14px;
-            line-height: 1.5;
+            border: 1px solid #b8c4d8;
+            color: #000000;
+            vertical-align: middle;
+            padding: 8px 10px;
+            line-height: 1.4;
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
