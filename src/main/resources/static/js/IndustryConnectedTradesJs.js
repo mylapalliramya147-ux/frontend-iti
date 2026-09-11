@@ -6,7 +6,7 @@
  * report pages (inplant_nodal_report, industry_master_report, etc.).
  *
  * Data API : GET /api/industry-connected-trades
- * Excel    : GET /download-excel
+ * Excel    : GET /api/industry-connected-trades/download-excel
  */
 
 /*
@@ -127,12 +127,12 @@ function renderTable(rows) {
  * Download Excel report.
  *
  * Calls the backend endpoint
- * GET /api/implant/industry-partner-details/download-excel
+ * GET /api/industry-connected-trades/download-excel
  * and lets the browser handle the Excel file returned by the server.
  */
 function fnExcelReport() {
 
-    window.location.href = baseUrl + 'api/implant/industry-partner-details/download-excel';
+    window.location.href = baseUrl + 'api/industry-connected-trades/download-excel';
 
     return false;
 
