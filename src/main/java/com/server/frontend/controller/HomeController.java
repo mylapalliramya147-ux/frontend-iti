@@ -12,10 +12,18 @@ public class HomeController {
         if (request.getSession(false) == null || request.getSession().getAttribute("sessionUser") == null) {
             return "redirect:/?error=session";
         }
-        // role 4 = ITI user -> ITI landing page; other roles get the generic welcome page for now
         Object roleId = request.getSession().getAttribute("roleId");
         if (roleId != null && "4".equals(String.valueOf(roleId))) {
             return "jsp/authHome_iti";
+        }
+        if (roleId != null && "2".equals(String.valueOf(roleId))) {
+            return "jsp/authHome_admin";
+        }
+        if (roleId != null && "3".equals(String.valueOf(roleId))) {
+            return "jsp/authHome_district";
+        }
+        if (roleId != null && "10".equals(String.valueOf(roleId))) {
+            return "jsp/authHome_nodal";
         }
         return "jsp/authHome";
     }
