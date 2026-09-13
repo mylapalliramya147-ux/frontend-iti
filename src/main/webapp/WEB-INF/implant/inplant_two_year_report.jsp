@@ -21,7 +21,7 @@
 
     <meta charset="UTF-8">
 
-    <title>IN-PLANT Yearwise Report</title>
+    <title>IN-PLANT Two Yearwise Report</title>
 
     <!-- Bootstrap -->
     <link
@@ -103,7 +103,7 @@
     </nav>
 
 <div class="container border p-2 mt-2 shadow-lg">
-    <div align="center" style="text-decoration: underline; color: fuchsia;">Inplant Report</div>
+    <div align="center" style="text-decoration: underline; color: fuchsia;">Inplant Two Year Report</div>
     <div class="row">
         <div class="col-md-3">
             <label for="year">Year :</label>
@@ -137,7 +137,7 @@
 </div>
 
 <div class="container-fluid border p-2 mt-2 shadow-lg">
-    <div align="center" style="text-decoration: underline;color: fuchsia;">IPT-INPLANT TRAINEE TRAINING REPORT</div>
+    <div align="center" style="text-decoration: underline;color: fuchsia;">IPT-INPLANT TRAINEE TRAINING REPORT (TWO YEAR)</div>
     <button onclick="fnExcelReport('reporttable');" class="btn btn-info btn-sm">DOWNLOAD EXCEL</button>
     <div align="center" id="spinnerdiv" style="display: none;">
         <span>Data is Loading...</span>
@@ -163,7 +163,7 @@ function getData(){
     $('#spinnerdiv').show();$('#reporttable,#emptydatamsg').hide();$('#tablebody').empty();
     $.ajax({
         type:'GET',
-        url:baseUrl+'api/implant/yearwise-report?year='+encodeURIComponent(y)+'&itiType='+encodeURIComponent(t),
+        url:baseUrl+'api/implant/two-year-report?year='+encodeURIComponent(y)+'&itiType='+encodeURIComponent(t),
         success:function(d){
             $('#spinnerdiv').hide();
             if(!d||!d.length){$('#emptydatamsg').show();return;}
@@ -191,7 +191,13 @@ function getData(){
     });
     return false;
 }
-function fnExcelReport(tid){var wb=XLSX.utils.table_to_book(document.getElementById(tid),{sheet:'Report'});XLSX.writeFile(wb,'Inplant_Yearwise_Report.xlsx');return false;}
+function fnExcelReport(tid){
+    var y=$('#year').val()||'ALL';
+    var t=$('#itiType').val()==='G'?'Govt':($('#itiType').val()==='P'?'Pvt':'ALL');
+    var wb=XLSX.utils.table_to_book(document.getElementById(tid),{sheet:'Report'});
+    XLSX.writeFile(wb,'Inplant_Two_Year_Report_'+y+'_'+t+'.xlsx');
+    return false;
+}
 </script>
 </body>
 </html>
