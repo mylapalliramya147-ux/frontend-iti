@@ -167,6 +167,7 @@
             <li><a href="${pageContext.request.contextPath}/reports/getDashboardreport_iti">API Dashboard</a></li>
             <li><a href="${pageContext.request.contextPath}/reports/Applicant_Report">Applicant Report</a></li>
             <li><a href="${pageContext.request.contextPath}/reports/api_report">Admission Report</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase">DSC List</a></li>
         </ul>
     </li>
 
@@ -174,7 +175,6 @@
         <ul>
             <li><a href="${pageContext.request.contextPath}/DgtPermittedShift">DGT Permitted Shifts Units Report</a></li>
             <li><a href="${pageContext.request.contextPath}/PrintAdmissionSlip">Print Admission Slip</a></li>
-            <li><a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase">DSC List</a></li>
             <li><a href="${pageContext.request.contextPath}/AdmissionPhase1">Schedule Entry</a></li>
         </ul>
     </li>
