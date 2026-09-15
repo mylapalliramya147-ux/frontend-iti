@@ -1,12 +1,11 @@
 package com.server.frontend.controller.placements;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "placements", description = "Placements UI pages")
 @Controller
@@ -16,8 +15,8 @@ public class PlacementsController {
     // ========== PLACEMENTS SCHEDULEWISE (Nodal/State) ==========
     @GetMapping("/schedulewise")
     public String placementsSchedulewise(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession scheduleSession = request.getSession(false);
+        if (scheduleSession == null || scheduleSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_schedulewise";
@@ -26,8 +25,8 @@ public class PlacementsController {
     // ========== PLACEMENTS SCHEDULE DATEWISE (Nodal/State) ==========
     @GetMapping("/scheduledatewise")
     public String placementsScheduleDatewise(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession datewiseSession = request.getSession(false);
+        if (datewiseSession == null || datewiseSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_schedule_datewise";
@@ -36,8 +35,8 @@ public class PlacementsController {
     // ========== PLACEMENTS STATE REPORT (Nodal/State) ==========
     @GetMapping("/statereport")
     public String placementsStateReport(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession stateSession = request.getSession(false);
+        if (stateSession == null || stateSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_state_report";
@@ -46,8 +45,8 @@ public class PlacementsController {
     // ========== PLACEMENTS YEARWISE REPORT (Nodal/State) ==========
     @GetMapping("/yearwisereport")
     public String placementsYearwiseReport(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession yearwiseSession = request.getSession(false);
+        if (yearwiseSession == null || yearwiseSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_yearwise_report";
@@ -56,8 +55,8 @@ public class PlacementsController {
     // ========== STATE SKILL DEVELOPMENT PLAN REPORT (Nodal/State) ==========
     @GetMapping("/ssdpreport")
     public String placementsSsdpReport(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession ssdpSession = request.getSession(false);
+        if (ssdpSession == null || ssdpSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_ssdp_report";
@@ -66,8 +65,8 @@ public class PlacementsController {
     // ========== PLACEMENT DATA DETAILS REPORT (Nodal/State) ==========
     @GetMapping("/datadetails")
     public String placementsDataDetails(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession detailsSession = request.getSession(false);
+        if (detailsSession == null || detailsSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "placements/placements_data_details";
@@ -93,11 +92,11 @@ public class PlacementsController {
 
     /** District users have roleId == 3; requires a valid session. */
     private boolean isDistrictRole(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession roleSession = request.getSession(false);
+        if (roleSession == null || roleSession.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleId = request.getSession().getAttribute("roleId");
+        Object roleId = roleSession.getAttribute("roleId");
         return roleId != null && "3".equals(String.valueOf(roleId));
     }
 
@@ -121,11 +120,11 @@ public class PlacementsController {
 
     /** ITI users have roleId == 4; requires a valid session. */
     private boolean isItiRole(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession itiSession = request.getSession(false);
+        if (itiSession == null || itiSession.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleId = request.getSession().getAttribute("roleId");
+        Object roleId = itiSession.getAttribute("roleId");
         return roleId != null && "4".equals(String.valueOf(roleId));
     }
 }

@@ -1,4 +1,3 @@
-
 package com.server.frontend.controller.Institute;
 
 import com.server.frontend.config.BackendApiConfig;
@@ -17,64 +16,34 @@ public class ItipageController {
     
     @GetMapping("/itiList")
     public String getItiList(Model model) {
-        model.addAttribute(
-                "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
-        );
+        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
         return "Institute/ItiList";
     }
-  
 
     @GetMapping("/iti-details")
     public String itiDetails(Model model) {
-
-        model.addAttribute(
-                "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
-        );
-
+        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
         return "Institute/ItiDetails";
     }
+
     @GetMapping("/iti-create")
     public String itiCreate(Model model) {
-
-        model.addAttribute(
-                "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
-        );
-
-        model.addAttribute(
-                "districtApiUrl",
-                backendApiConfig.getFullUrl("districts")
-        );
-
-        model.addAttribute(
-                "designationApiUrl",
-                backendApiConfig.getFullUrl("designations")
-        );
-
+        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
+        model.addAttribute("districtApiUrl", backendApiConfig.getFullUrl("districts"));
+        model.addAttribute("designationApiUrl", backendApiConfig.getFullUrl("designations"));
         return "Institute/ItiCreate";
     }
 
     @GetMapping("/iti-trade-selection")
     public String itiTradeSelection(Model model) {
-        model.addAttribute(
-                "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
-        );
-        model.addAttribute(
-                "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl("reports")
-        );
+        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
+        model.addAttribute("backendApiBaseUrl", backendApiConfig.getBaseUrl("reports"));
         return "Institute/ItiTradeSelection";
     }
 
     @GetMapping("/shift-unit-permitted")
     public String shiftUnitPermitted(Model model) {
-        model.addAttribute(
-                "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl("reports")
-        );
+        model.addAttribute("backendApiBaseUrl", backendApiConfig.getBaseUrl("reports"));
         return "Institute/ShiftUnitPermitted";
     }
 }

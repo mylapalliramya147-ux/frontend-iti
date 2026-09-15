@@ -1,6 +1,7 @@
 package com.server.frontend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -9,11 +10,12 @@ public class HomeController {
 
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
-        if (request.getSession(false) == null || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession authSession = request.getSession(false);
+        if (authSession == null || authSession.getAttribute("sessionUser") == null) {
             return "redirect:/?error=session";
         }
         // role 4 = ITI user -> ITI landing page; other roles get the generic welcome page for now
-        Object roleId = request.getSession().getAttribute("roleId");
+        Object roleId = authSession.getAttribute("roleId");
         if (roleId != null && "4".equals(String.valueOf(roleId))) {
             return "jsp/authHome_iti";
         }
@@ -83,8 +85,9 @@ public class HomeController {
      */
     @GetMapping("/placements/loginSuccess")
     public String placementsLoginSuccess(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession placementSession = request.getSession(false);
+        if (placementSession == null
+                || placementSession.getAttribute("sessionUser") == null) {
             return "redirect:/placements?error=session";
         }
         return "jsp/placementDashboard";
