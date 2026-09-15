@@ -8,7 +8,8 @@
     <title>DSC Full Report | District Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
@@ -31,6 +32,7 @@
         .meta-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
         .meta-value { font-size: 1.1rem; color: #0f172a; font-weight: 600; }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="nodal-body">
     <header class="fixed-top-header">

@@ -8,7 +8,8 @@
     <title>Applicant Report By Phase | ITI Reports</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         /* DASHBOARD UI OVERRIDES */
         .nodal-page-title-dashboard {
@@ -116,6 +117,7 @@
             color: #003366;
         }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="nodal-body">
     

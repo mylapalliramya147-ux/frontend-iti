@@ -7,6 +7,9 @@
     <title>ITI Admission API Docs</title>
     <link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/iti.png" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/expe1011.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .page-header {
             background-color: #000000;
@@ -33,6 +36,7 @@
         }
     </style>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
     <div class="page-header">

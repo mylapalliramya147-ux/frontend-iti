@@ -8,6 +8,9 @@
     <title>:: ITI ::</title>
     <link rel="shortcut icon" type="image/ico" href="iti.png" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         #menu-bar {
             width: 100%;
@@ -168,6 +171,7 @@
         .loader-spinner { display: none; text-align: center; padding: 40px; color: #003366; }
         .num { text-align: center; font-weight: 700 !important; }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
     <c:set var="hideNavbar" value="true" scope="request" />

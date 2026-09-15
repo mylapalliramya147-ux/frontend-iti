@@ -1,0 +1,223 @@
+/* ==========================================================================
+   iti-portal.css
+   --------------------------------------------------------------------------
+   Shared portal theme, extracted from WEB-INF/jsp/index.jsp so that the home
+   page and every page under /reports render from exactly the same CSS.
+
+   This file replaces the large <style> block that used to live inline in
+   index.jsp (and was copy-pasted into several report pages).
+
+   Two groups of rules:
+
+     1. Structural rules  ->  #menu-bar / .dropdown
+        Left UNSCOPED, because several report pages render the very same
+        <ul id="menu-bar"> markup and rely on these styles.
+
+     2. Page-level element rules  ->  scoped to `body.portal-page`
+        The report pages are Bootstrap based; an unscoped `a:link` or
+        `input[type=text]` rule would outrank Bootstrap's `a` and the report
+        pages' own `.form-control-*` / `.form-select-*` classes and silently
+        re-colour their links / re-style their inputs. Scoping keeps the home
+        page pixel-identical without leaking into the reports.
+
+   NOTE: the legacy `-webkit-gradient()/ -moz-/ -ms-linear-gradient` fallbacks
+   have been normalised to standard `linear-gradient()`, preserving the exact
+   same colours. A solid `background-color` is kept first so that engines
+   without gradient support still show a sensible colour.
+   ========================================================================== */
+
+/* ================= 1. MENU BAR (shared, unscoped) ================= */
+
+#menu-bar {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  height: 30px;
+  line-height: 100%;
+  border-radius: 0px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  box-shadow: 2px 2px 2px #666666;
+  -webkit-box-shadow: 2px 2px 2px #666666;
+  -moz-box-shadow: 2px 2px 2px #666666;
+  background: #e4eeb9;
+  position: relative;
+  z-index: 999;
+  display: inline-block;
+}
+
+#menu-bar li {
+  margin: 0px 0px 6px 0px;
+  padding: 0px 6px 0px 6px;
+  float: left;
+  position: relative;
+  list-style: none;
+}
+
+#menu-bar a {
+  font-weight: bold;
+  font-family: verdana;
+  font-size: 14px;
+  color: #000000;
+  background: #e4eeb9;
+  text-decoration: none;
+  display: block;
+  padding: 6px 20px 6px 20px;
+  margin: 0;
+  margin-bottom: 6px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+#menu-bar li ul li a {
+  margin: 0;
+}
+
+/* Hover / active top-level item: red-coral -> grey-mauve gradient, white text.
+   `background-color` stays lightblue as the no-gradient fallback. */
+#menu-bar .active a,
+#menu-bar li:hover > a {
+  background-color: lightblue;
+  background-image: linear-gradient(to bottom, #EB4954, #A19197);
+  color: white;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+#menu-bar ul li:hover a,
+#menu-bar li:hover li a {
+  background: lightgoldenrodyellow;
+  color: #000000;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+#menu-bar ul a:hover {
+  background: lightblue !important;
+  color: black !important;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+}
+
+#menu-bar li:hover > ul {
+  display: block;
+}
+
+#menu-bar ul {
+  background-color: #FFD21C;
+  background-image: linear-gradient(to bottom, #FFD21C, #CF7688);
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  border-radius: 0px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 3px #222222;
+  -moz-box-shadow: 2px 2px 3px #222222;
+  box-shadow: 2px 2px 3px #222222;
+}
+
+#menu-bar ul li {
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu-bar ul a {
+  padding: 10px 0px 10px 15px;
+  background: gold;
+  color: grey;
+  font-size: 13px;
+  font-style: normal;
+  font-family: verdana;
+  font-weight: normal;
+  text-shadow: 2px 2px 3px #FFFFFF;
+}
+
+#menu-bar ul li:first-child > a {
+  border-top-left-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+}
+
+#menu-bar ul li:last-child > a {
+  border-bottom-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+}
+
+#menu-bar:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
+html[xmlns] #menu-bar {
+  display: block;
+}
+
+* html #menu-bar {
+  height: 1%;
+}
+
+/* ================= 2. DROPDOWN (shared, unscoped) ================= */
+
+.dropdown { position: relative; display: inline-block; }
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  padding: 12px 16px;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+/* ===== 3. HOME-PAGE ELEMENT STYLES (scoped to body.portal-page only) ===== */
+
+body.portal-page a:link { color: lightblue; background-color: transparent; text-decoration: underline; }
+body.portal-page a:visited { color: blue; background-color: transparent; text-decoration: none; }
+body.portal-page a:hover { color: red; background-color: transparent; text-decoration: underline; }
+body.portal-page a:active { color: yellow; background-color: transparent; text-decoration: underline; }
+
+body.portal-page input[type=submit] {
+  background-color: #4CAF50; border: none; color: white; padding: 8px 30px;
+  text-align: center; text-decoration: none; display: inline-block; font-size: 16px;
+  margin: 4px 2px; transition-duration: 0.4s; cursor: pointer;
+}
+
+body.portal-page input[type=submit]:focus { background-color: orangered; }
+
+body.portal-page input[type=text],
+body.portal-page input[type=password] {
+  padding: 6px 8px; margin: 8px 0; border: 1px solid #555;
+}
+
+body.portal-page input[type=password]:focus,
+body.portal-page input[type=text]:focus { background-color: yellow; }
+
+body.portal-page #mysubmit {
+  font-weight: bolder; color: black; font-size: 15px; border-radius: 10%;
+}

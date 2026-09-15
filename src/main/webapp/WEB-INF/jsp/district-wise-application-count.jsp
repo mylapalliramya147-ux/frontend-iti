@@ -8,7 +8,9 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>DGT Permitted Shift Units | ITI IMS</title>
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
             <style>
                 :root {
                     --primary-green: #008000;
@@ -172,6 +174,7 @@
                     z-index: 1000;
                 }
             </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
         </head>
 
         <body class="bg-light">

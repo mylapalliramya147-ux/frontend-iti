@@ -8,7 +8,8 @@
     <title>Reports Dashboard | ITI Frontend</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .reports-dashboard { padding: 40px 20px; background: #f0f4f8; min-height: 80vh; }
         .report-section-title { color: #003366; font-weight: 800; border-left: 5px solid #003366; padding-left: 15px; margin-bottom: 25px; margin-top: 30px; font-size: 1.4rem; }
@@ -19,6 +20,7 @@
         .report-card p { font-size: 0.85rem; color: #718096; margin: 0; }
         .api-badge { display: inline-block; background: #e2e8f0; color: #4a5568; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-top: 5px; font-family: monospace; }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
     <div class="reports-dashboard">

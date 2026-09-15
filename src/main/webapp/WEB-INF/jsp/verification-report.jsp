@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .top-header-bar { background-color: var(--header-navy, #0b4d8c); color: white; padding: 10px; }
         .table tfoot td { font-weight: bold; background-color: #f8f9fa; }
@@ -49,6 +50,7 @@
             .doc-radios { font-weight: bold; color: #000; }
         }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
     

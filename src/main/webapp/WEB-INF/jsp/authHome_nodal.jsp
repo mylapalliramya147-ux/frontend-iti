@@ -41,6 +41,7 @@
             display: block;
             padding: 6px 20px;
             margin: 0;
+            border-radius: 10px;
             -webkit-border-radius: 10px;
             -moz-border-radius: 10px;
         }
@@ -59,6 +60,7 @@
         #menu-bar ul li:hover a, #menu-bar li:hover li a {
             background: lightgoldenrodyellow;
             color: #000000;
+            box-shadow: none;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
         }

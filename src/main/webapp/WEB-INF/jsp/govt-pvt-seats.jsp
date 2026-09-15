@@ -7,8 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>College Wise Open Seats Abstract | ITI Admissions</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=12">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         /* DASHBOARD UI OVERRIDES */
         .nodal-dashboard-navbar {
@@ -80,6 +82,7 @@
             font-size: 1rem;
         }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="nodal-body">
     <c:set var="hideNavbar" value="true" scope="request" />

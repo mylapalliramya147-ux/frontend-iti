@@ -7,11 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Reports - Test Page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .report-btn { margin: 5px; min-width: 280px; text-align: left; }
         .section-title { color: #003366; font-weight: 700; margin-top: 25px; margin-bottom: 10px; border-bottom: 2px solid #003366; padding-bottom: 5px; }
         .badge-role { font-size: 0.7rem; margin-left: 5px; }
     </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="bg-light">
     <div class="container mt-4">

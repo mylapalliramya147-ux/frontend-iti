@@ -9,9 +9,9 @@
             <title>Candidate Complete Details | ITI Admissions</title>
             <!-- CSS Links (Same as all report pages) -->
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-            <link rel="stylesheet"
-                href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
             <style>
                 /* DASHBOARD UI OVERRIDES */
                 .nodal-dashboard-navbar {
@@ -152,6 +152,7 @@
                     font-size: 0.95rem;
                 }
             </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
         </head>
 
         <body class="nodal-body">
