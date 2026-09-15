@@ -14,12 +14,8 @@ public class HomeController {
         if (authSession == null || authSession.getAttribute("sessionUser") == null) {
             return "redirect:/?error=session";
         }
-<<<<<<< HEAD
         // role 4 = ITI user -> ITI landing page; other roles get the generic welcome page for now
         Object roleId = authSession.getAttribute("roleId");
-=======
-        Object roleId = request.getSession().getAttribute("roleId");
->>>>>>> 3929f7a5326ea84f2d6c71c8b0a598516f3551fb
         if (roleId != null && "4".equals(String.valueOf(roleId))) {
             return "jsp/authHome_iti";
         }
