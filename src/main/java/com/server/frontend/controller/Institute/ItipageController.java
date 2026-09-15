@@ -19,7 +19,7 @@ public class ItipageController {
     public String getItiList(Model model) {
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
+                backendApiConfig.getFullUrl("iti")
         );
         return "Institute/ItiList";
     }
@@ -30,7 +30,7 @@ public class ItipageController {
 
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
+                backendApiConfig.getFullUrl("iti")
         );
 
         return "Institute/ItiDetails";
@@ -40,7 +40,7 @@ public class ItipageController {
 
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
+                backendApiConfig.getFullUrl("iti")
         );
 
         model.addAttribute(
@@ -53,6 +53,11 @@ public class ItipageController {
                 backendApiConfig.getFullUrl("designations")
         );
 
+        model.addAttribute(
+                "itiRegistrationApiUrl",
+                backendApiConfig.getFullUrl("iti-create")
+        );
+
         return "Institute/ItiCreate";
     }
 
@@ -60,11 +65,15 @@ public class ItipageController {
     public String itiTradeSelection(Model model) {
         model.addAttribute(
                 "itiApiUrl",
-                backendApiConfig.getFullUrl("reports")
+                backendApiConfig.getFullUrl("iti")
         );
         model.addAttribute(
                 "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl("reports")
+                backendApiConfig.getBaseUrl("iti")
+        );
+        model.addAttribute(
+                "itiTradesApiUrl",
+                backendApiConfig.getFullUrl("iti-trades")
         );
         return "Institute/ItiTradeSelection";
     }
@@ -72,8 +81,8 @@ public class ItipageController {
     @GetMapping("/shift-unit-permitted")
     public String shiftUnitPermitted(Model model) {
         model.addAttribute(
-                "backendApiBaseUrl",
-                backendApiConfig.getBaseUrl("reports")
+                "shiftUnitApiUrl",
+                backendApiConfig.getFullUrl("shift-unit")
         );
         return "Institute/ShiftUnitPermitted";
     }
