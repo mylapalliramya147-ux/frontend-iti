@@ -1,10 +1,11 @@
 package com.server.frontend.controller.reports;
 
+import java.util.Locale;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "reports", description = "Reports UI pages and documentation endpoints")
 @Controller
@@ -27,61 +28,61 @@ public class ReportsController {
     // ========== ITI LEVEL REPORTS (Role 4) ==========
 
     @GetMapping("/getDashboardreport_iti")
-    public String getDashboardreport_iti() {
+    public String getDashboardReportIti() {
         return "reports/getDashboardreport_iti";
     }
 
     @GetMapping("/Applicant_Report")
-    public String Applicant_Report() {
+    public String applicantReport() {
         return "reports/Applicant_Report";
     }
 
     @GetMapping("/api_report")
-    public String api_report() {
+    public String apiReport() {
         return "reports/api_report";
     }
 
     @GetMapping("/DSC_List_secondphase")
-    public String DSC_List_secondphase() {
+    public String dscListSecondphase() {
         return "reports/DSC_List_secondphase";
     }
 
     // ========== DISTRICT LEVEL REPORTS (Role 3) ==========
 
     @GetMapping("/statewidecastewiseabstractinter")
-    public String statewidecastewiseabstractinter() {
+    public String statewideCastewiseAbstractInter() {
         return "reports/statewidecastewiseabstractinter";
     }
 
     @GetMapping("/Applicant_mobile_addr")
-    public String Applicant_mobile_addr() {
+    public String applicantMobileAddr() {
         return "reports/Applicant_mobile_addr";
     }
 
     @GetMapping("/getDashboardreport_dist")
-    public String getDashboardreport_dist() {
+    public String getDashboardReportDist() {
         return "reports/getDashboardreport_dist";
     }
 
     @GetMapping("/District_Wise_Application_count")
-    public String District_Wise_Application_count() {
+    public String districtWiseApplicationCount() {
         return "reports/District_Wise_Application_count";
     }
 
     // ========== NODAL LEVEL REPORTS (Role 10) ==========
 
     @GetMapping("/Jdgetdasboardreport")
-    public String Jdgetdasboardreport() {
+    public String jdGetDashboardReport() {
         return "reports/Jdgetdasboardreport";
     }
 
     @GetMapping("/PhaseWiseAdmissionReport")
-    public String PhaseWiseAdmissionReport() {
+    public String phaseWiseAdmissionReport() {
         return "reports/PhaseWiseAdmissionReport";
     }
 
     @GetMapping("/AdmissionScheduleITI")
-    public String AdmissionScheduleITI() {
+    public String admissionScheduleIti() {
         return "reports/AdmissionScheduleITI";
     }
 
@@ -91,12 +92,12 @@ public class ReportsController {
     }
 
     @GetMapping("/Applicant_Report_StateWise")
-    public String Applicant_Report_StateWise() {
+    public String applicantReportStateWise() {
         return "reports/Applicant_Report_StateWise";
     }
 
     @GetMapping("/Dist_wise_open_seats")
-    public String Dist_wise_open_seats() {
+    public String distWiseOpenSeats() {
         return "reports/Dist_wise_open_seats";
     }
 
@@ -127,7 +128,7 @@ public class ReportsController {
         return "reports/itiprofile";
     }
 
-    @GetMapping("/trade_display1")
+    @GetMapping({"/trade_display1", "/trade-display1"})
     public String tradeDisplay1() {
         // trade_display1.jsp does not exist; the actual ITI Profile page is /reports/itiprofile
         return "redirect:/reports/itiprofile";
@@ -138,7 +139,7 @@ public class ReportsController {
         return "reports/itilist";
     }
 
-    @GetMapping("/trade_display2")
+    @GetMapping({"/trade_display2", "/trade-display2"})
     public String tradeDisplay2() {
         return "reports/trade_display2";
     }
@@ -154,27 +155,27 @@ public class ReportsController {
     }
 
     @GetMapping("/Govt_Pvt_admitted_seats_abstract")
-    public String Govt_Pvt_admitted_seats_abstract() {
+    public String govtPvtAdmittedSeatsAbstract() {
         return "reports/Govt_Pvt_admitted_seats_abstract";
     }
 
     @GetMapping("/RolesReport")
-    public String RolesReport() {
+    public String rolesReport() {
         return "reports/RolesReport";
     }
 
     @GetMapping("/Seats_Abstract_Strength_filled_Interface")
-    public String Seats_Abstract_Strength_filled_Interface() {
+    public String seatsAbstractStrengthFilledInterface() {
         return "reports/Seats_Abstract_Strength_filled_Interface";
     }
 
     @GetMapping("/tradewise_admission_report")
-    public String tradewise_admission_report() {
+    public String tradewiseAdmissionReport() {
         return "reports/tradewise_admission_report";
     }
 
     @GetMapping("/tradewise_vacant_position")
-    public String tradewise_vacant_position() {
+    public String tradewiseVacantPosition() {
         return "reports/tradewise_vacant_position";
     }
 

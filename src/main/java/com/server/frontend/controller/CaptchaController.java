@@ -2,16 +2,21 @@ package com.server.frontend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+
+import javax.imageio.ImageIO;
 
 /**
  * Serves the login captcha image and stores the expected text in the HTTP session.
@@ -25,7 +30,7 @@ public class CaptchaController {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     @GetMapping(value = "/captcha", produces = MediaType.IMAGE_PNG_VALUE)
-    public void captcha(HttpServletRequest request, HttpServletResponse response, OutputStream out) throws IOException {
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String text = randomText(4);
         request.getSession().setAttribute(SESSION_KEY, text);
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -55,12 +60,18 @@ public class CaptchaController {
         }
         g.dispose();
 
-        ImageIO.write(img, "png", out);
-        out.flush();
+        try (OutputStream out = response.getOutputStream()) {
+            ImageIO.write(img, "png", out);
+            out.flush();
+        }
     }
 
-            static boolean matches(HttpServletRequest request, String submitted) {
-        Object expected = request.getSession().getAttribute(SESSION_KEY);
+    static boolean matches(HttpServletRequest request, String submitted) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return false;
+        }
+        Object expected = session.getAttribute(SESSION_KEY);
         return expected != null && submitted != null
                 && expected.toString().equalsIgnoreCase(submitted.trim());
     }
@@ -76,12 +87,16 @@ public class CaptchaController {
     }
 
     @GetMapping(value = "/captcha/text", produces = MediaType.TEXT_PLAIN_VALUE)
-    public void captchaText(HttpServletRequest request, java.io.OutputStream out) throws IOException {
-        out.write(current(request).getBytes());
-        out.flush();
+    public void captchaText(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        byte[] body = current(request).getBytes(StandardCharsets.UTF_8);
+        response.setContentLength(body.length);
+        try (OutputStream out = response.getOutputStream()) {
+            out.write(body);
+            out.flush();
+        }
     }
 
-        private static String randomText(int len) {
+    private static String randomText(int len) {
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) sb.append(CHARS.charAt(RANDOM.nextInt(CHARS.length())));
         return sb.toString();

@@ -1,12 +1,11 @@
 package com.server.frontend.controller.implant;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "implant", description = "In-Plant Training UI pages")
 @Controller
@@ -213,33 +212,33 @@ public class ImplantController {
 
     /** Nodal users have roleId == 10; requires a valid session with insCode set. */
     private boolean isNodalRole(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession nodalSession = request.getSession(false);
+        if (nodalSession == null || nodalSession.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleId = request.getSession().getAttribute("roleId");
-        Object insCode = request.getSession().getAttribute("insCode");
+        Object roleId = nodalSession.getAttribute("roleId");
+        Object insCode = nodalSession.getAttribute("insCode");
         return roleId != null && "10".equals(String.valueOf(roleId))
                 && insCode != null && !String.valueOf(insCode).isEmpty();
     }
 
     /** District users have roleId == 3; requires a valid session. */
     private boolean isDistrictRole(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession distSession = request.getSession(false);
+        if (distSession == null || distSession.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleId = request.getSession().getAttribute("roleId");
+        Object roleId = distSession.getAttribute("roleId");
         return roleId != null && "3".equals(String.valueOf(roleId));
     }
 
     /** ITI users have roleId == 4; requires a valid session. */
     private boolean isItiRole(HttpServletRequest request) {
-        if (request.getSession(false) == null
-                || request.getSession().getAttribute("sessionUser") == null) {
+        HttpSession itiSession = request.getSession(false);
+        if (itiSession == null || itiSession.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleId = request.getSession().getAttribute("roleId");
+        Object roleId = itiSession.getAttribute("roleId");
         return roleId != null && "4".equals(String.valueOf(roleId));
     
     }
