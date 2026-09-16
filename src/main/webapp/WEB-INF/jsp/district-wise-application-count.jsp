@@ -301,7 +301,7 @@
 
                 function loadItis() {
                     showLoader(true);
-                    fetch('/api/iti-list', { credentials: 'include' })
+                    fetch('http://localhost:5050/api/iti-list', { credentials: 'include' })
                         .then(res => res.json())
                         .then(data => {
                             showLoader(false);
@@ -347,7 +347,7 @@
 
                 function fetchDetails(itiCode, tradeCode) {
                     showLoader(true);
-                    fetch('/api/district-log', {
+                    fetch('http://localhost:5050/api/district-log', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ district_id: 'dummy', iti_code: itiCode, trade_code: tradeCode }),
@@ -465,7 +465,7 @@
                     showLoader(true);
                     $('#btn_save').prop('disabled', true);
                     
-                    fetch('/api/save-dgt-shifts', {
+                    fetch('http://localhost:5050/api/save-dgt-shifts', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ iti_code: itiCode, trade_code: tradeCode, shifts: shifts }),

@@ -326,7 +326,7 @@
 
         async function loadDistrictStats() {
             try {
-                const response = await fetch('/api/district-wise-stats', { credentials: 'include',
+                const response = await fetch('http://localhost:5050/api/district-wise-stats', { credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include' 
@@ -384,7 +384,7 @@
             tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 fw-bold text-muted">Loading candidates...</td></tr>`;
 
             try {
-                const response = await fetch('/api/unverified-candidates', { credentials: 'include',
+                const response = await fetch('http://localhost:5050/api/unverified-candidates', { credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include' 

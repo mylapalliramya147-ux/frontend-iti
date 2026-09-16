@@ -57,6 +57,6 @@ public class ApiController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", false);
         response.put("error", "Endpoint not implemented in frontend");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(404).body(response);
     }
 }
