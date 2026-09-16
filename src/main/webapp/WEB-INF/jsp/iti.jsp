@@ -248,7 +248,7 @@
 
             const requestBody = { year: year };
 
-            fetch('http://localhost:5050/api/reports/iti-wise-status', {
+            fetch('${backendApiUrl}/iti-wise-status', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
