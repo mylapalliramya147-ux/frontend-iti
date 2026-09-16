@@ -77,7 +77,7 @@ function closeAirforcePopup() {
 <table width="100%" border="0" style="border-collapse:collapse;">
 <tr>
 <td width="30%">
-    <table border="0" style="float:right; margin-top: -20px; margin-left: 10px; max-width: 100%; padding-bottom: 100px; border: 3px solid red; background-color:#e4eeb9;">
+    <table border="0" style="float:right; margin-top: 15px; margin-left: 10px; max-width: 100%; padding-bottom: 100px; border: 3px solid red; background-color:#e4eeb9;">
         <tr><td>
             <ul>
                 <h2><span><font color="#660000"><b>Student Area</b></font></span></h2>
