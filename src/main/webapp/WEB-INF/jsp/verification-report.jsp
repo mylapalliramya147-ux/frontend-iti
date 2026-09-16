@@ -91,9 +91,6 @@
 
                 <!-- Unverified Candidates Button -->
                 <div class="text-center mt-4">
-                    <button id="loadUnverifiedBtn" class="btn btn-warning fw-bold px-4 py-2 shadow-sm text-dark">
-                        <i class="fas fa-list-ul me-2"></i> Unverified Candidates
-                    </button>
                 </div>
 
                 <!-- Unverified Candidates Table Container (Hidden initially) -->
@@ -326,12 +323,10 @@
 
         async function loadDistrictStats() {
             try {
-                const response = await fetch('${backendBaseUrl}/api/district-wise-stats', { credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include' 
-                });
-                const jsonResp = await response.json();
+                const year = new Date().getFullYear();
+                const response = await fetch('${backendApiUrl}/district-wise-application-count?year=' + year, { credentials: 'include' });
+                const data = await response.json();
+                const jsonResp = { success: true, data: data };
                 const tbody = document.getElementById('reportTableBody');
                 const tfoot = document.getElementById('reportTableFoot');
                 const reportTitle = document.getElementById('reportTitle');
@@ -341,7 +336,7 @@
                     if(jsonResp.data && jsonResp.data.length > 0) {
                         const data = jsonResp.data;
                         let distName = "ALL DISTRICTS";
-                        if(data.length === 1 && data[0].district_name && data[0].district_name !== 'N/A') { distName = data[0].district_name.toUpperCase(); }
+                        if(data.length === 1 && data[0].distName && data[0].distName !== 'N/A') { distName = data[0].distName.toUpperCase(); }
                         reportTitle.textContent = distName + " VERIFIED AND UNVERIFIED APPLICATIONS COUNT";
 
                         let totalApproved = 0, totalRejected = 0, totalUnverified = 0, grandTotal = 0;
@@ -351,7 +346,7 @@
                             tbody.innerHTML += `
                                 <tr>
                                     <td class="text-center fw-bold text-muted">\${index + 1}</td>
-                                    <td class="fw-bold">\${row.district_name || row.district_code}</td>
+                                    <td class="fw-bold">\${row.distName}</td>
                                     <td class="text-center text-success fw-bold">\${row.approved}</td>
                                     <td class="text-center text-danger fw-bold">\${row.rejected}</td>
                                     <td class="text-center text-warning fw-bold">\${row.unverified}</td>
@@ -372,179 +367,6 @@
             }
         }
 
-        // Load Unverified Candidates
-        document.getElementById('loadUnverifiedBtn').addEventListener('click', async function() {
-            const container = document.getElementById('unverifiedContainer');
-            const tbody = document.getElementById('unverifiedTableBody');
-            const btn = this;
-            
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Loading...`;
-            btn.disabled = true;
-            container.style.display = 'block';
-            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 fw-bold text-muted">Loading candidates...</td></tr>`;
-
-            try {
-                const response = await fetch('${backendBaseUrl}/api/unverified-candidates', { credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include' 
-                });
-
-                const jsonResp = await response.json();
-                tbody.innerHTML = '';
-
-                if (jsonResp.success) {
-                    window.unverifiedCandidates = jsonResp.data || [];
-                    
-                    if (window.unverifiedCandidates.length > 0) {
-                        window.unverifiedCandidates.forEach((cand, index) => {
-                            tbody.innerHTML += `
-                                <tr>
-                                    <td class="text-center fw-bold text-muted">\${index + 1}</td>
-                                    <td class="fw-bold">\${cand.regid || 'N/A'}</td>
-                                    <td>\${cand.name || 'N/A'}</td>
-                                    <td>\${cand.fname || 'N/A'}</td>
-                                    <td class="text-center">\${cand.dob ? new Date(cand.dob).toLocaleDateString('en-GB') : 'N/A'}</td>
-                                    <td class="text-center text-uppercase">\${cand.gender || 'N/A'}</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-success fw-bold px-3 shadow-sm verify-btn" data-index="\${index}" data-regid="\${cand.regid}">
-                                            <i class="fas fa-check-circle me-1"></i> Verify
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-
-                        document.querySelectorAll('.verify-btn').forEach(button => {
-                            button.addEventListener('click', function() {
-                                openVerificationForm(parseInt(this.getAttribute('data-index')));
-                            });
-                        });
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 fw-bold text-muted">No unverified candidates found.</td></tr>';
-                    }
-                } else {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 fw-bold text-danger">\${jsonResp.message || 'Error fetching candidates.'}</td></tr>`;
-                }
-            } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-danger fw-bold"><i class="fas fa-exclamation-triangle me-2"></i> Connection failed.</td></tr>`;
-            } finally {
-                btn.innerHTML = `<i class="fas fa-list-ul me-2"></i> Unverified Candidates`;
-                btn.disabled = false;
-            }
-        });
-
-        // Open Verification Form for Candidate
-        async function openVerificationForm(index) {
-            if (index < 0 || index >= window.unverifiedCandidates.length) {
-                alert("No more candidates to verify.");
-                return closeVerificationForm();
-            }
-
-            window.currentCandidateIndex = index;
-            const cand = window.unverifiedCandidates[index];
-            window.currentRegId = cand.regid;
-
-            // Switch UI
-            document.getElementById('overviewContainer').style.display = 'none';
-            document.getElementById('successViewContainer').style.display = 'none';
-            document.getElementById('verificationFormContainer').style.display = 'block';
-            document.getElementById('verificationMsg').style.display = 'none';
-            
-            // Set Header
-            document.getElementById('headerCandidateName').textContent = cand.name || 'Unknown';
-            document.getElementById('headerRegId').textContent = cand.regid;
-
-            // Clear values before fetching
-            document.querySelectorAll('.info-value input').forEach(inp => inp.value = 'Loading...');
-            document.getElementById('documentsListContainer').innerHTML = '<div class="text-center text-muted py-3">Loading documents...</div>';
-
-            try {
-                const response = await fetch(`/api/candidate/\${cand.regid}`, { credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include' 
-                });
-                
-                const data = await response.json();
-                
-                // Populate Personal Information
-                document.getElementById('pi_htno').value = data.ssc_regno || 'N/A';
-                document.getElementById('pi_name').value = data.name || 'N/A';
-                document.getElementById('pi_fname').value = data.fname || 'N/A';
-                document.getElementById('pi_mname').value = data.mname || 'N/A';
-                document.getElementById('pi_gender').value = data.gender || 'N/A';
-                document.getElementById('pi_dob').value = data.dob ? new Date(data.dob).toLocaleDateString('en-GB') : 'N/A';
-                document.getElementById('pi_aadhar').value = data.adarno || 'N/A';
-                document.getElementById('pi_caste').value = data.caste || 'N/A';
-                document.getElementById('pi_address').value = data.addr || 'N/A';
-
-                // Populate Academic Marks
-                document.getElementById('am_board').value = data.ssc_board || 'N/A';
-                document.getElementById('am_yop').value = data.ssc_year || 'N/A';
-                document.getElementById('am_category').value = data.caste || 'N/A';
-                document.getElementById('am_phc').value = data.phc ? 'Yes' : 'No';
-
-                // Photo Display
-                const photoEl = document.getElementById('candidatePhoto');
-                const placeholderText = document.getElementById('photoPlaceholderText');
-                if (data.photos && data.photos.pic) {
-                    photoEl.src = 'data:image/jpeg;base64,' + data.photos.pic;
-                    photoEl.style.display = 'block';
-                    placeholderText.style.display = 'none';
-                } else {
-                    photoEl.src = '';
-                    photoEl.style.display = 'none';
-                    placeholderText.style.display = 'block';
-                }
-
-                const marks = data.marks || {};
-                document.getElementById('mk_1st').value = marks.first_language || '0';
-                document.getElementById('mk_2nd').value = marks.second_language || '0';
-                document.getElementById('mk_3rd').value = marks.third_language || '0';
-                document.getElementById('mk_math').value = marks.mathematics || '0';
-                document.getElementById('mk_sci').value = marks.general_science || '0';
-                document.getElementById('mk_soc').value = marks.social_studies || '0';
-                document.getElementById('mk_total').value = marks.total || '0';
-
-                // Populate Documents
-                window.currentDocuments = data.documents || [];
-                let docHtml = '';
-                window.currentDocuments.forEach((doc) => {
-                    const savedVal = data[doc.col] || doc.default;
-                    const radioName = `doc_\${doc.col}`;
-                    
-                    docHtml += `
-                        <div class="doc-row">
-                            <div class="doc-num">\${doc.s_no}</div>
-                            <div class="doc-name">\${doc.name}</div>
-                            <div class="doc-radios">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="\${radioName}" id="\${radioName}_yes" value="Yes" \${savedVal === 'Yes' ? 'checked' : ''}>
-                                    <label class="form-check-label" for="\${radioName}_yes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="\${radioName}" id="\${radioName}_no" value="No" \${savedVal === 'No' ? 'checked' : ''}>
-                                    <label class="form-check-label" for="\${radioName}_no">No</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="\${radioName}" id="\${radioName}_na" value="Not Applicable" \${savedVal === 'Not Applicable' ? 'checked' : ''}>
-                                    <label class="form-check-label" for="\${radioName}_na">Not Applicable</label>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                document.getElementById('documentsListContainer').innerHTML = docHtml;
-
-            } catch (error) {
-                console.error("Error loading candidate profile:", error);
-                document.getElementById('documentsListContainer').innerHTML = '<div class="text-center text-danger py-3">Failed to load candidate details.</div>';
-            }
-        }
-
-        // Close Verification Form
         function closeVerificationForm() {
             document.getElementById('verificationFormContainer').style.display = 'none';
             document.getElementById('successViewContainer').style.display = 'none';
@@ -555,78 +377,7 @@
         document.getElementById('backToListBtn').addEventListener('click', closeVerificationForm);
 
         // Submit Verification
-        async function submitVerification(status) {
-            const msgEl = document.getElementById('verificationMsg');
-            msgEl.style.display = 'block';
-            msgEl.className = "mt-3 text-center fw-bold text-primary";
-            msgEl.textContent = "Processing...";
-
-            // Gather document states
-            let doc_states = {};
-            window.currentDocuments.forEach(doc => {
-                const radioName = `doc_\${doc.col}`;
-                const checked = document.querySelector(`input[name="\${radioName}"]:checked`);
-                doc_states[doc.col] = checked ? checked.value : doc.default;
-            });
-
-            const payload = {
-                app_status: status,
-                doc_states: doc_states
-            };
-
-            try {
-                const response = await fetch(`/api/candidate/\${window.currentRegId}`, { credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                    body: JSON.stringify(payload)
-                });
-                const respMatch = await response.json();
-
-                if(respMatch.success) {
-                    window.unverifiedCandidates.splice(window.currentCandidateIndex, 1);
-                    
-                    if (status === 'A') {
-                        // Reveal Success Screen
-                        document.getElementById('verificationFormContainer').style.display = 'none';
-                        document.getElementById('successViewContainer').style.display = 'block';
-                        document.getElementById('successRegId').textContent = window.currentRegId;
-                        
-                        // Set Approval Timestamp for Print Footer
-                        const now = new Date();
-                        document.getElementById('approvalTimestamp').textContent = now.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
-                    } else {
-                        // Rejections automatically trigger the next candidate
-                        msgEl.className = "mt-3 text-center fw-bold text-success";
-                        msgEl.textContent = `Candidate Rejected successfully! Loading next...`;
-                        setTimeout(() => {
-                            openVerificationForm(window.currentCandidateIndex); 
-                        }, 1200);
-                    }
-                } else {
-                    msgEl.className = "mt-3 text-center fw-bold text-danger";
-                    msgEl.textContent = `Error: \${respMatch.message || 'Failed to update'}`;
-                }
-
-            } catch (error) {
-                console.error(error);
-                msgEl.className = "mt-3 text-center fw-bold text-danger";
-                msgEl.textContent = "Network error. Failed to submit.";
-            }
-        }
-
-        document.getElementById('btnApprove').addEventListener('click', () => submitVerification('A'));
-        document.getElementById('btnReject').addEventListener('click', () => submitVerification('R'));
-        document.getElementById('btnVerifyNext').addEventListener('click', () => {
-            openVerificationForm(window.currentCandidateIndex + 1);
-        });
-
         // Success View Button Binding
-        document.getElementById('btnSuccessNext').addEventListener('click', () => {
-            // Because we spliced out the approved candidate, index points to the "new" next one
-            openVerificationForm(window.currentCandidateIndex);
-        });
-        
         document.getElementById('btnSuccessPrint').addEventListener('click', () => {
             window.print();
         });

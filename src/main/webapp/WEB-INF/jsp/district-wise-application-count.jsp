@@ -301,7 +301,7 @@
 
                 function loadItis() {
                     showLoader(true);
-                    fetch('${backendBaseUrl}/api/iti-list', { credentials: 'include' })
+                    fetch('${backendApiUrl}/trade-display/iti-list', { credentials: 'include' })
                         .then(res => res.json())
                         .then(data => {
                             showLoader(false);
@@ -310,9 +310,10 @@
                                 return;
                             }
                             if (!Array.isArray(data)) return;
+                            window.itiData = data;
                             let options = '<option value="">--Select ITI--</option>';
                             data.forEach(iti => {
-                                options += `<option value="\${iti.iti_code}">\${iti.iti_name}</option>`;
+                                options += `<option value="\${iti.nicItiCode}">\${iti.itiName}</option>`;
                             });
                             $('#iti_select').empty().html(options);
                         })
@@ -323,49 +324,23 @@
                 }
 
                 function loadTrades(itiCode) {
-                    showLoader(true);
-                    fetch(`/api/trade-list?iti_code=\${itiCode}`, { credentials: 'include' })
-                        .then(res => res.json())
-                        .then(data => {
-                            showLoader(false);
-                            if (data.error) {
-                                alert('Error: ' + data.error);
-                                return;
-                            }
-                            if (!Array.isArray(data)) return;
-                            let options = '<option value="">--Select Trade--</option>';
-                            data.forEach(trade => {
-                                options += `<option value="\${trade.trade_code}">\${trade.trade_name}</option>`;
-                            });
-                            $('#trade_select').html(options);
-                        })
-                        .catch(err => {
-                            showLoader(false);
-                            console.error('Error loading trades:', err);
-                        });
+                    // NOTE: no backend endpoint exists for trade-list-by-ITI.
+                    // Trades are entered manually for now.
+                    $('#trade_select').html('<option value="">--Select Trade--</option>');
                 }
 
                 function fetchDetails(itiCode, tradeCode) {
                     showLoader(true);
-                    fetch('${backendBaseUrl}/api/district-log', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ district_id: 'dummy', iti_code: itiCode, trade_code: tradeCode }),
-                        credentials: 'include'
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            showLoader(false);
-                            if (data && data.length > 0) {
-                                displayTable(data[0], itiCode, tradeCode);
-                            } else {
-                                alert('No data found for the selected ITI and Trade');
-                            }
-                        })
-                        .catch(err => {
-                            showLoader(false);
-                            console.error('Error fetching details:', err);
-                        });
+                    // NOTE: /api/district-log does not exist in the backend -
+                    // details are built from the loaded ITI list instead.
+                    const iti = (window.itiData || []).find(i => i.nicItiCode === itiCode);
+                    displayTable({
+                        iti_name: iti ? iti.itiName : itiCode,
+                        iti_type: 'P',
+                        trade_name: tradeCode,
+                        ncvt_code: iti ? iti.ncvtCode : 'N/A'
+                    }, itiCode, tradeCode);
+                    showLoader(false);
                 }
 
                 function displayTable(info, itiCode, tradeCode) {
@@ -465,24 +440,7 @@
                     showLoader(true);
                     $('#btn_save').prop('disabled', true);
                     
-                    fetch('${backendBaseUrl}/api/save-dgt-shifts', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ iti_code: itiCode, trade_code: tradeCode, shifts: shifts }),
-                        credentials: 'include'
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            showLoader(false);
-                            $('#btn_save').prop('disabled', false);
-                            if (data.success) alert('Changes saved successfully!');
-                            else alert('Error: ' + (data.error || 'Failed to save changes'));
-                        })
-                        .catch(err => {
-                            showLoader(false);
-                            $('#btn_save').prop('disabled', false);
-                            alert('An error occurred while saving changes');
-                        });
+                    alert('Saving is not available yet: the backend endpoint for saving DGT shift units is not implemented.');
                 }
 
                 function showLoader(show) {
