@@ -228,40 +228,7 @@
 
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-        <div class="container-fluid">
-
-            <a
-                class="navbar-brand"
-                href="${pageContext.request.contextPath}/placements/loginSuccess"
-            >
-                <i class="fas fa-home"></i>
-                Home
-            </a>
-
-
-            <div class="text-white fw-bold">
-                Welcome :
-                <span id="userinfo"></span>
-            </div>
-
-
-            <div>
-
-                <a
-                    href="${pageContext.request.contextPath}/logout"
-                    class="btn btn-danger"
-                >
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </a>
-
-            </div>
-
-        </div>
-
-    </nav>
+    <%@ include file="../portal_navbar.jsp" %>
 
     <!-- Industry Connected Trades Report -->
     <div class="industry-connected-trades-page">

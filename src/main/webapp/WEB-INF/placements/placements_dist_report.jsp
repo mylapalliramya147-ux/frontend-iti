@@ -133,29 +133,7 @@ function fnExcelReport() {
 
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container-fluid">
-
-    <!-- Home -->
-    <a class="navbar-brand" href="${pageContext.request.contextPath}/placements/loginSuccess">
-        <i class="fas fa-home"></i> Home
-    </a>
-
-    <!-- Welcome User Info -->
-    <div class="text-white fw-bold">
-        Welcome :
-        <span id="userinfo"></span>
-    </div>
-
-    <!-- Logout -->
-    <div>
-        <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-    </div>
-
-</div>
-</nav>
+<%@ include file="../portal_navbar.jsp" %>
 <br>
 <div align="center" >
             <h5 class="h5 text-primary" style="font-weight: bolder;">DISTRICT LEVEL PLACEMENT DETAILS</h5>

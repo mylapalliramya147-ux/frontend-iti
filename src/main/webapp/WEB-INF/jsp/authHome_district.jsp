@@ -35,34 +35,7 @@
 </head>
 <body>
     <center><img src="${pageContext.request.contextPath}/images/gen.jpg" width="100%" alt="Banner" /></center>
-    <ul id="menu-bar">
-        <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
-        <li><a href="#">ITI Services</a><ul></ul></li>
-        <li><a href="#">ITI Reports</a>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/reports/Applicant_mobile_addr">Applicant Report</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/getDashboardreport_dist">API Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter">Caste Wise Abstract</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count">Verification Report</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase">DSC List</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Admissions</a>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/reports/permitted_shift_unit_report">DGT Permitted Shifts Report</a></li>
-                
-                <li><a href="${pageContext.request.contextPath}/reports/DeleteAdmission_interface">Discharge Admission</a></li>
-            </ul>
-        </li>
-        <li><a href="#">SCVT Exams</a>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/ScvtExams_RDD_DCP">SCVT Exam Verification</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/scvt_certificate_interface">SCVT Certificate</a></li>
-            </ul>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-        <li class="welcome-tag">Welcome, ${fullName}<br>District</li>
-    </ul>
+    <%@ include file="../district_navbar.jsp" %>
     <div class="login-info">
         <p><font color="#400040" size="4"><strong>You login in to our application ${loginCount} times</strong></font></p>
         <c:forEach var="dt" items="${lastLogins}" varStatus="st">

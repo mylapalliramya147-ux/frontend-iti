@@ -44,28 +44,7 @@
             <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
         </center>
 
-        <ul id="menu-bar">
-            <li>
-                <a href="${pageContext.request.contextPath}/">Home</a>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)">ITI Profile</a>
-                <div class="dropdown-content">
-                    <a href="${pageContext.request.contextPath}/reports/itiprofile">ITI Profile</a>
-                    <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
-                </div>
-            </li>
-            <li>
-                <a>STRIVE</a>
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/aboutstrive.jsp">ABOUT STRIVE</a></li>
-                    <li><a href="${pageContext.request.contextPath}/disclosuremanagement.jsp">Disclosure Management</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/placements">PLACEMENTS / IN-PLANT TRAINING</a>
-            </li>
-        </ul>
+        <%@ include file="../index_navbar.jsp" %>
 
         <br><br>
 

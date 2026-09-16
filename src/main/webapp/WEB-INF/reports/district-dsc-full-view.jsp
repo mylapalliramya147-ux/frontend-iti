@@ -39,7 +39,6 @@
         <%@ include file="header.jsp" %>
     </header>
     <c:set var="activeTab" value="dsc_full" />
-    <%@ include file="../district_navbar.jsp" %>
     
     <div class="nodal-page-title-dashboard">
         <h2>District Selection Committee (DSC) Report</h2>

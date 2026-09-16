@@ -54,7 +54,6 @@
 </head>
 <body>
 <%@ include file="../reports/header.jsp" %>
-<%@ include file="../openNavbar.jsp" %>
     
     
 
