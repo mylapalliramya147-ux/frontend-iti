@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="bg-light">
-<%@ include file="../bannernew.jsp" %>
+<%@ include file="../reports/header.jsp" %>
 <%@ include file="../openNavbar.jsp" %>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">

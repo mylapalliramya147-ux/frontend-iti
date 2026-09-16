@@ -90,7 +90,6 @@
     <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="phase_wise" />
-    <%@ include file="../nodal_navbar.jsp" %>
 
     
     <!-- Dashboard Title -->

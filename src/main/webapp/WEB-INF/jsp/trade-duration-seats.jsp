@@ -142,7 +142,6 @@
     <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="trade_duration" />
-    <%@ include file="../nodal_navbar.jsp" %>
     
     <div class="report-container">
         <h2 class="custom-page-title">

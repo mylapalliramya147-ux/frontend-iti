@@ -123,7 +123,7 @@
     
     <!-- Use Nodal Header and Navbar as requested -->
     <header class="fixed-top-header">
-        <%@ include file="../bannernew.jsp" %>
+        <%@ include file="../reports/header.jsp" %>
     </header>
     
     <c:set var="activeTab" value="applicant_phase" />

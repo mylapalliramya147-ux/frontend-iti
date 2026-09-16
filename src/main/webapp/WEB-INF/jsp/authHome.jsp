@@ -12,7 +12,7 @@
     </style>
 </head>
 <body>
-<%@ include file="../bannernew.jsp" %>
+<%@ include file="../reports/header.jsp" %>
 <%@ include file="../openNavbar.jsp" %>
     <div class="welcome">
         <h1>Welcome! Your role ID is: <strong>${roleId}</strong></h1>

@@ -160,7 +160,6 @@
             <%@ include file="../reports/header.jsp" %>
 
                 <c:set var="activeTab" value="candidate_details" />
-                <%@ include file="../nodal_navbar.jsp" %>
 
                     <!-- Dashboard Title -->
                     <div class="nodal-page-title-dashboard">

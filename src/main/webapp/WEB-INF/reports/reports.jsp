@@ -23,8 +23,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
-<%@ include file="../bannernew.jsp" %>
-<%@ include file="../openNavbar.jsp" %>
+<%@ include file="header.jsp" %>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">

@@ -223,6 +223,17 @@ body.portal-page #mysubmit {
 }
 
 
+/* Dashboard "Welcome" tag (from authHome_*.jsp inline CSS) */
+#menu-bar .welcome-tag {
+    margin-left: auto;
+    padding-right: 15px;
+    color: blue;
+    font-size: 11px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+
 /* Active item inside index-style dropdown menus (role report navbars) */
 #menu-bar .dropdown-content a.active {
     background: lightblue !important;

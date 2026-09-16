@@ -36,7 +36,7 @@
 </head>
 <body class="nodal-body">
     <header class="fixed-top-header">
-        <%@ include file="../bannernew.jsp" %>
+        <%@ include file="header.jsp" %>
     </header>
     <c:set var="activeTab" value="dsc_full" />
     <%@ include file="../district_navbar.jsp" %>

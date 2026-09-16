@@ -8,129 +8,7 @@
     <link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/images/iti.png" />
     <link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/images/iti.png" />
     <style>
-        #menu-bar {
-            width: 100%;
-            margin: 0px;
-            padding: 0px;
-            height: 45px;
-            line-height: 100%;
-            border-radius: 0px;
-            -webkit-border-radius: 24px;
-            -moz-border-radius: 24px;
-            box-shadow: 2px 2px 2px #666666;
-            -webkit-box-shadow: 2px 2px 2px #666666;
-            -moz-box-shadow: 2px 2px 2px #666666;
-            background: #e4eeb9;
-            position: relative;
-            z-index: 999;
-        }
-        #menu-bar li {
-            margin: 0px;
-            padding: 0px 6px;
-            float: left;
-            position: relative;
-            list-style: none;
-        }
-        #menu-bar a {
-            font-weight: bold;
-            font-family: verdana;
-            font-size: 14px;
-            color: #000000;
-            background: #e4eeb9;
-            text-decoration: none;
-            display: block;
-            padding: 6px 20px;
-            margin: 0;
-            border-radius: 10px;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-        }
-        #menu-bar li ul li a { margin: 0; }
-        #menu-bar .active a, #menu-bar li:hover > a {
-            background: blue;
-            background: lightblue;
-            background: -ms-linear-gradient(top, #EB4954, #A19197);
-            background: -webkit-gradient(linear, left top, left bottom, from(#EB4954), to(#A19197));
-            background: -moz-linear-gradient(top, #EB4954, #A19197);
-            color: white;
-            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-        }
-        #menu-bar ul li:hover a, #menu-bar li:hover li a {
-            background: lightgoldenrodyellow;
-            color: #000000;
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-        }
-        #menu-bar ul a:hover {
-            background: lightblue !important;
-            color: black !important;
-            border-radius: 0;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-        }
-        #menu-bar li:hover > ul { display: block; }
-        #menu-bar ul {
-            background: linear-gradient(top, #FFD21C, #CF7688);
-            background: -ms-linear-gradient(top, #FFD21C, #CF7688);
-            background: -webkit-gradient(linear, left top, left bottom, from(#FFD21C), to(#CF7688));
-            background: -moz-linear-gradient(top, #FFD21C, #CF7688);
-            display: none;
-            margin: 0;
-            padding: 0;
-            width: 300px;
-            position: absolute;
-            top: 30px;
-            left: 0;
-            border-radius: 0px;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            -webkit-box-shadow: 2px 2px 3px #222222;
-            -moz-box-shadow: 2px 2px 3px #222222;
-            box-shadow: 2px 2px 3px #222222;
-        }
-        #menu-bar ul li { float: none; margin: 0; padding: 0; }
-        #menu-bar ul a {
-            padding: 10px 0px 10px 15px;
-            background: gold;
-            color: grey;
-            font-size: 13px;
-            font-style: normal;
-            font-family: verdana;
-            font-weight: normal;
-            text-shadow: 2px 2px 3px #FFFFFF;
-        }
-        #menu-bar ul li:first-child > a {
-            border-top-left-radius: 10px;
-            -webkit-border-top-left-radius: 10px;
-            -moz-border-radius-topleft: 10px;
-            border-top-right-radius: 10px;
-            -webkit-border-top-right-radius: 10px;
-            -moz-border-radius-topright: 10px;
-        }
-        #menu-bar ul li:last-child > a {
-            border-bottom-left-radius: 10px;
-            -webkit-border-bottom-left-radius: 10px;
-            -moz-border-radius-bottomleft: 10px;
-            border-bottom-right-radius: 10px;
-            -webkit-border-bottom-right-radius: 10px;
-            -moz-border-radius-bottomright: 10px;
-        }
-        #menu-bar:after {
-            content: ".";
-            display: block;
-            clear: both;
-            visibility: hidden;
-            line-height: 0;
-            height: 0;
-        }
-        #menu-bar { display: inline-block; }
-        html[xmlns] #menu-bar { display: block; }
-        * html #menu-bar { height: 1%; }
         body { margin: 0; font-family: Verdana, Arial, sans-serif; background: #fff; }
-        .welcome-tag { margin-left: auto; padding-right: 15px; color: blue; font-size: 10px; text-align: left; line-height: 1.5; }
         #footer {
             position: fixed;
             bottom: 0px;
@@ -148,20 +26,12 @@
         .login-info { text-align: center; padding: 40px 10px 60px; }
     </style>
     <style>
-        #menu-bar { width:100%; margin:0; padding:0; height:45px; background:#e4eeb9; position:relative; z-index:999; }
-        #menu-bar li { margin:0; padding:0 6px; float:left; position:relative; list-style:none; }
-        #menu-bar a { font-weight:bold; font-family:verdana; font-size:14px; color:#000; background:#e4eeb9; text-decoration:none; display:block; padding:6px 20px; }
-        #menu-bar .active a, #menu-bar li:hover > a { background:lightblue; color:white; }
-        #menu-bar ul { display:none; margin:0; padding:0; width:300px; position:absolute; top:30px; left:0; background:lightgoldenrodyellow; border-radius:10px; }
-        #menu-bar li:hover > ul { display:block; }
-        #menu-bar ul li { float:none; margin:0; padding:0; }
-        #menu-bar ul a { padding:10px 15px; background:gold; color:grey; font-size:13px; font-weight:normal; }
         body { margin:0; font-family:Verdana, Arial, sans-serif; background:#fff; }
-        .welcome-tag { margin-left:auto; padding-right:15px; color:blue; font-size:11px; line-height:1.5; }
         #footer { position:fixed; bottom:0; width:100%; padding:8px; text-align:center; background:#0E4878; font-size:12px; color:#fff; }
         #footer a { color:#fff; }
         .login-info { text-align:center; padding:40px 10px 60px; }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
     <center><img src="${pageContext.request.contextPath}/images/gen.jpg" width="100%" alt="Banner" /></center>

@@ -89,7 +89,6 @@
     <%@ include file="../reports/header.jsp" %>
     
     <c:set var="activeTab" value="open_seats" />
-    <%@ include file="../nodal_navbar.jsp" %>
     
     <!-- Dashboard Title -->
     <div class="nodal-page-title-dashboard">

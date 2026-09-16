@@ -21,10 +21,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="nodal-body">
-<%@ include file="../bannernew.jsp" %>
+<%@ include file="header.jsp" %>
     <c:set var="hideNavbar" value="true" scope="request" />
     <c:set var="activeTab" value="api_dashboard" />
-    <%@ include file="../nodal_navbar.jsp" %>
     <div class="nodal-page-title-dashboard"><h2>District Dashboard</h2></div>
 
     <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
