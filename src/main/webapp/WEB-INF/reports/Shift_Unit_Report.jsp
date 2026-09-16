@@ -137,7 +137,6 @@
         </div>
         <p class="text-muted">Permitted shift units - overall report by district</p>
 
-        <h3>1. Overall Report (by District)</h3>
         <div id="loader" class="loader"><span class="spinner"></span><p class="mt-2">Loading district data...</p></div>
         <table class="table report-table">
             <thead>
