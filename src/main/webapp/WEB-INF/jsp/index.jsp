@@ -73,11 +73,11 @@ function closeAirforcePopup() {
 </script>
 
 <!-- ================= LOGIN FORM ================= -->
-<form name="LoginForm" method="post" action="${pageContext.request.contextPath}/iti/login.do" onsubmit="submit1()">
+<form name="LoginForm" method="post" action="${pageContext.request.contextPath}/iti/login.do" onsubmit="submit1()" style="padding: 0 30px; box-sizing: border-box;">
 <table width="100%" border="0" style="border-collapse:collapse;">
 <tr>
 <td width="30%">
-    <table border="0" style="float:right; margin-top: -20px; padding-bottom: 100px; border: 3px solid red; background-color:#e4eeb9;">
+    <table border="0" style="float:right; margin-top: -20px; margin-left: 10px; max-width: 100%; padding-bottom: 100px; border: 3px solid red; background-color:#e4eeb9;">
         <tr><td>
             <ul>
                 <h2><span><font color="#660000"><b>Student Area</b></font></span></h2>
@@ -121,7 +121,7 @@ function closeAirforcePopup() {
 
 <td width="25%">
     <br/>
-    <table style="float:right; top: 0; border: 3px solid red; background-color:#e4eeb9;">
+    <table style="float:right; top: 0; max-width: 100%; border: 3px solid red; background-color:#e4eeb9;">
         <tr><td colspan="2" align="center"><h2><font color="#660000"><b>For Officials</b></h2></td></tr>
         <tr><td colspan="2" align="center"><h2><font color="#660000"><b><u>Login Here</u></b></h2></td></tr>
         <tr>
