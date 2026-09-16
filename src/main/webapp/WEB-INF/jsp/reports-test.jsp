@@ -19,6 +19,7 @@
 </head>
 <body class="bg-light">
 <%@ include file="../bannernew.jsp" %>
+<%@ include file="../openNavbar.jsp" %>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>All Reports (25 Reports from AboutITIProject.txt)</h2>

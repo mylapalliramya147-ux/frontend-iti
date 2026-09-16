@@ -24,6 +24,7 @@
 </head>
 <body>
 <%@ include file="../bannernew.jsp" %>
+<%@ include file="../openNavbar.jsp" %>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">
