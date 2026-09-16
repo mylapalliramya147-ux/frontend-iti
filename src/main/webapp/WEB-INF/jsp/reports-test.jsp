@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="bg-light">
+<%@ include file="../bannernew.jsp" %>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>All Reports (25 Reports from AboutITIProject.txt)</h2>

@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body class="nodal-body">
+<%@ include file="../bannernew.jsp" %>
     <c:set var="hideNavbar" value="true" scope="request" />
     <c:set var="activeTab" value="api_dashboard" />
     <%@ include file="../nodal_navbar.jsp" %>

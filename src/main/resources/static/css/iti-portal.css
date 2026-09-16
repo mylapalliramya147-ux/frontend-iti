@@ -221,3 +221,10 @@ body.portal-page input[type=text]:focus { background-color: yellow; }
 body.portal-page #mysubmit {
   font-weight: bolder; color: black; font-size: 15px; border-radius: 10%;
 }
+
+
+/* Active item inside index-style dropdown menus (role report navbars) */
+#menu-bar .dropdown-content a.active {
+    background: lightblue !important;
+    color: black !important;
+}
