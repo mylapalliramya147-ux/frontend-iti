@@ -5,9 +5,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>Shift & Unit Permitted Report</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
     <style>
         .district-row td { cursor: pointer; }
         .district-row:hover td { background-color: #e8f4f8; }
