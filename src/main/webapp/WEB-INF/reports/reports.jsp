@@ -13,6 +13,9 @@
     <style>
         .reports-dashboard { padding: 40px 20px; background: #f0f4f8; min-height: 80vh; }
         .report-section-title { color: #003366; font-weight: 800; border-left: 5px solid #003366; padding-left: 15px; margin-bottom: 25px; margin-top: 30px; font-size: 1.4rem; }
+        .role-tabbar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 22px 0 6px 0; }
+        .role-tabbar a { text-decoration: none; font-weight: 700; font-size: 0.95rem; color: #003366; background: #ffffff; border: 2px solid #003366; border-radius: 999px; padding: 8px 22px; transition: all 0.2s ease; }
+        .role-tabbar a:hover { background: #003366; color: #ffffff; }
         .report-card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8f0; height: 100%; transition: all 0.3s ease; text-decoration: none; color: inherit; display: block; }
         .report-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); color: inherit; }
         .report-card i { font-size: 2rem; color: #003366; margin-bottom: 10px; }
@@ -39,8 +42,17 @@
                 </div>
             </div>
 
+            <!-- Role tab bar: quick jumps to each section (no navbar on this page by design) -->
+            <nav class="role-tabbar no-print" aria-label="Report sections">
+                <a href="#role-iti">ITI</a>
+                <a href="#role-district">District</a>
+                <a href="#role-nodal">Nodal</a>
+                <a href="#role-state">State / Admin</a>
+                <a href="#role-public">Public</a>
+            </nav>
+
             <!-- ITI Level Reports (Role 4) -->
-            <h3 class="report-section-title"><i class="fas fa-university me-2"></i> ITI Level Reports (Role 4)</h3>
+            <h3 class="report-section-title" id="role-iti"><i class="fas fa-university me-2"></i> ITI Level Reports (Role 4)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/api-dashboard-iti" class="report-card">
@@ -77,7 +89,7 @@
             </div>
 
             <!-- District Level Reports (Role 3) -->
-            <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> District Level Reports (Role 3)</h3>
+            <h3 class="report-section-title" id="role-district"><i class="fas fa-map-marked-alt me-2"></i> District Level Reports (Role 3)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/caste-wise-admissions-abstract" class="report-card">
@@ -122,7 +134,7 @@
             </div>
 
             <!-- Nodal Level Reports (Role 10) -->
-            <h3 class="report-section-title"><i class="fas fa-layer-group me-2"></i> Nodal Level Reports (Role 10)</h3>
+            <h3 class="report-section-title" id="role-nodal"><i class="fas fa-layer-group me-2"></i> Nodal Level Reports (Role 10)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/api-dashboard-state" class="report-card">
@@ -223,7 +235,7 @@
             </div>
 
             <!-- State Level Reports (Role 1) -->
-            <h3 class="report-section-title"><i class="fas fa-map-marked-alt me-2"></i> State Level Reports (Role 1)</h3>
+            <h3 class="report-section-title" id="role-state"><i class="fas fa-map-marked-alt me-2"></i> State Level Reports (Role 1)</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/students-not-admitted" class="report-card">
@@ -364,7 +376,7 @@
             </div>
 
             <!-- Public Pages -->
-            <h3 class="report-section-title"><i class="fas fa-globe me-2"></i> Public Pages</h3>
+            <h3 class="report-section-title" id="role-public"><i class="fas fa-globe me-2"></i> Public Pages</h3>
             <div class="row g-3 mb-4">
                 <div class="col-md-3 col-sm-6">
                     <a href="${pageContext.request.contextPath}/reports/iti-profile" class="report-card">
