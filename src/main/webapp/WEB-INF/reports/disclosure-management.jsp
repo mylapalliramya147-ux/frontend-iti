@@ -115,6 +115,26 @@ p:before {
     cursor: pointer;
 }
 
+/* ================= DISCLOSURE TABLE SPACING ================= */
+
+table.disclosure-table {
+    width: 80%;
+    max-width: 950px;
+    font-size: 15px;
+}
+
+table.disclosure-table td,
+table.disclosure-table th {
+    padding: 12px 16px;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+table.disclosure-table td:first-child,
+table.disclosure-table td:nth-child(3) {
+    text-align: center;
+}
+
 </style>
 </head>
 
@@ -189,7 +209,7 @@ function closeAirforcePopup() {
         <br>
         <h2 align="center"><b><u>Skills Strengthening of Industrial Value Enhancement (STRIVE) Project  in State of Andhra Pradesh</u></b></h2>
 <br>
-        <table align="center" border="1px;solid black;" style="border-collapse: collapse; width: 50%;">
+        <table align="center" border="1px;solid black;" class="disclosure-table" style="border-collapse: collapse;">
             <tr style="background:#0057AF;color:white">
             <td align="center">SNO</td>
             <td align="center">Disclousures  Management</td>
