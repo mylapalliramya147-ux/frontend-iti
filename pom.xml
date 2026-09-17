@@ -6,7 +6,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <!-- 4.1.x is the current supported OSS line: 4.0.x is superseded by 4.1.x, and
+             the 3.5.x line reached end of OSS support on 2026-06-30 (commercial support
+             ends 2032-06-30). The test sources already use the Spring Boot 4 API
+             (org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc).
+             4.1.1 is the latest stable 4.1.x patch (4.2.0-M1 is only a milestone). -->
+        <version>4.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -20,6 +25,15 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Declared as project properties (and not only inside maven-compiler-plugin) so
+             IDE tooling derives the JavaSE-21 execution environment straight from the POM.
+             spring-boot-starter-parent only defines maven.compiler.release, and m2e/JDT
+             resolves the project compliance from maven.compiler.source/target; without these
+             the IDE keeps a stale compliance level and reports
+             "Project configuration is not up-to-date with pom.xml, requires an update". -->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
 
     <dependencies>
@@ -30,13 +44,17 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.6.0</version>
+            <!-- 3.1.x is the springdoc line built against Spring Boot 4.1 / Spring
+                 Framework 7 (3.0.x targeted Spring Boot 4.0, 2.8.x targeted 3.5.x).
+                 Keep this in lock-step with the spring-boot-starter-parent version
+                 above. -->
+            <version>3.1.1</version>
         </dependency>
 
         <dependency>
@@ -66,7 +84,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
+            <!-- version comes from the Spring Boot BOM (${lombok.version}) -->
             <optional>true</optional>
         </dependency>
 
@@ -79,6 +97,15 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <!-- Boot 4 moved the MockMvc slice-test support (AutoConfigureMockMvc /
+                 WebMvcTest) out of spring-boot-starter-test into this starter, which is
+                 where org.springframework.boot.webmvc.test.autoconfigure lives. -->
             <scope>test</scope>
         </dependency>
 
@@ -107,20 +134,26 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <!-- version is managed by spring-boot-starter-parent (kept out of the POM
+                     so it tracks the Spring Boot release instead of drifting behind it) -->
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <!-- No <release>/<source>/<target> here on purpose: the
+                         maven.compiler.* properties in <properties> above are the single
+                         source of truth, so javac and IDE tooling (m2e/JDT) can never drift
+                         apart from each other. -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.34</version>
+                            <!-- ${lombok.version} is defined by the Spring Boot BOM, so the
+                                 annotation processor can never drift from the lombok dependency -->
+                            <version>${lombok.version}</version>
                         </path>
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>3.3.4</version>
+                            <!-- kept in lock-step with the parent to avoid version drift -->
+                            <version>${project.parent.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,18 +22,23 @@ import javax.imageio.ImageIO;
 /**
  * Serves the login captcha image and stores the expected text in the HTTP session.
  * Replaces the legacy captcha.jsp. Supports ?ts= cache-busting refreshes.
+ *
+ * <p>All endpoints are served under the {@code /captcha} parent path: {@code GET /captcha}
+ * (PNG image) and {@code GET /captcha/text} (plain-text variant).
  */
 @Controller
+@RequestMapping("/captcha")
 public class CaptchaController {
 
     private static final String SESSION_KEY = "CAPTCHA_TEXT";
     private static final String CHARS = "0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    @GetMapping(value = "/captcha", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE)
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String text = randomText(4);
         request.getSession().setAttribute(SESSION_KEY, text);
+        response.setContentType(MediaType.IMAGE_PNG_VALUE);
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
         response.setDateHeader("Expires", 0);
 
@@ -86,9 +92,10 @@ public class CaptchaController {
         return String.valueOf(expected);
     }
 
-    @GetMapping(value = "/captcha/text", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(value = "/text", produces = MediaType.TEXT_PLAIN_VALUE)
     public void captchaText(HttpServletRequest request, HttpServletResponse response) throws IOException {
         byte[] body = current(request).getBytes(StandardCharsets.UTF_8);
+        response.setContentType(MediaType.TEXT_PLAIN_VALUE);
         response.setContentLength(body.length);
         try (OutputStream out = response.getOutputStream()) {
             out.write(body);
