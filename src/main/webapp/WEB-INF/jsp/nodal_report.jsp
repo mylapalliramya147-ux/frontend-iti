@@ -93,15 +93,6 @@
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/reports/district-iti-wise-year-view" class="report-card-link">
-                            <div class="report-card-official">
-                                <i class="fas fa-building"></i>
-                                <h5>ITI Wise Status</h5>
-                                <p>Consolidated ITI verification status</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
                         <a href="${pageContext.request.contextPath}/district-caste-wise" class="report-card-link">
                             <div class="report-card-official">
                                 <i class="fas fa-id-card"></i>

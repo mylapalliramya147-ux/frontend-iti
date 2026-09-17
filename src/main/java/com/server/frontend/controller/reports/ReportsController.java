@@ -118,11 +118,6 @@ public class ReportsController {
 
     // ========== STATE LEVEL REPORTS (Role 1) ==========
 
-    @GetMapping("/district-iti-wise-year-view")
-    public String districtItiWiseYear() {
-        return "reports/district-iti-wise-year-view";
-    }
-
     @GetMapping("/iti-profile")
     public String itiProfile() {
         return "reports/iti-profile";
