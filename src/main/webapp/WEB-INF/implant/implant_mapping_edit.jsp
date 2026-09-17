@@ -102,22 +102,7 @@ function updateIndustry(){
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container-fluid">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}/placements/loginSuccess">
-        <i class="fas fa-home"></i> Home
-    </a>
-    <div class="text-white fw-bold">
-        Welcome :
-        <span id="userinfo"></span>
-    </div>
-    <div>
-        <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-    </div>
-</div>
-</nav>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div class="container border p-2 mt-2 shadow-lg" style="border-radius: 5px;">
     <div align="center" style="text-decoration: underline;color: fuchsia;">EDIT INDUSTRY DETAILS FORM</div>

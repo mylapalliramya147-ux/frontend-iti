@@ -50,7 +50,7 @@ function exportToExcel() {
 <body onload="generateCaptcha(),getReady();">
 	<div id="404Msg" align="center">
 				<img src="./images/gen.jpg" class="img-fluid" />
-				<%@include file="/WEB-INF/openNavbar.jsp"%>
+				<%@include file="../navbars/openNavbar.jsp"%>
 	</div>
 	<div id="navbar">
 <%-- 		<%@include file="/WEB-INF/userpages/Navbar.jsp"%> --%>
