@@ -1,0 +1,41 @@
+<%-- ===================================================================
+     Shared navbar for the portal modules (placements / implant /
+     placement dashboard).
+     Included by (33 files):
+       - placements/placements_*.jsp   (10 files: entry, data_details,
+                                        dist/iti/state/yearwise/ssdp reports,
+                                        schedulewise, schedule_entry,
+                                        schedule_datewise)
+       - implant/*.jsp                 (22 files: implant_* and inplant_*
+                                        entry/edit/report pages)
+       - jsp/placementDashboard.jsp    (placement dashboard home)
+
+     Every page in those modules used to inline its own copy of this
+     markup.
+     Include it with:  <%@ include file="../navbars/portal_navbar.jsp" %>
+     - #userinfo is populated by each page's own script.
+     - Logout points at the real /logout mapping in LoginController.
+     =================================================================== --%>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <!-- Home -->
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/placements/loginSuccess">
+            <i class="fas fa-home"></i> Home
+        </a>
+
+        <!-- Welcome User Info -->
+        <div class="text-white fw-bold">
+            Welcome :
+            <span id="userinfo"></span>
+        </div>
+
+        <!-- Logout -->
+        <div>
+            <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+
+    </div>
+</nav>

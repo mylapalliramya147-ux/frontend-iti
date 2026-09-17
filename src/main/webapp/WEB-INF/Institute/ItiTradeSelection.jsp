@@ -120,7 +120,7 @@
                             <th>Trade Code</th>
                             <th>Trade</th>
                             <th>Strength</th>
-                            <th>Units</th>
+                            <th>Duration (Months)</th>
                             <th>Available</th>
                         </tr>
                     </thead>
@@ -179,6 +179,7 @@
 
             const itiApiUrl = "${itiApiUrl}";
             const backendBaseUrl = "${backendApiBaseUrl}";
+            const itiTradesApiUrl = "${itiTradesApiUrl}";
 
             let allItis = [];
             let currentTrades = [];
@@ -245,7 +246,9 @@
                 showLoading(true);
                 hideMessages();
 
-                const url = backendBaseUrl + '/api/ititrades/' + encodeURIComponent(itiCode);
+                // Backend exposes a single trade master list (/api/trades);
+                // there is no per-ITI trades endpoint, so load the master list.
+                const url = itiTradesApiUrl;
 
                 fetch(url)
                     .then(response => {
@@ -287,16 +290,16 @@
                 trades.forEach((trade, index) => {
                     const tr = document.createElement("tr");
 
-                    const isAvailable = trade.availableforyear === "1" || trade.availableforyear === 1;
+                    const isAvailable = !(trade.tradeFreeze === 1 || trade.tradeFreeze === "1");
 
                    tr.innerHTML = `
     <td class="radio-cell">
         <input type="radio" name="tradeRadio" value="\${index}" class="trade-radio">
     </td>
-    <td>\${escapeHtml(trade.tradecode)}</td>
-    <td><strong>\${escapeHtml(trade.tradeshort)}</strong></td>
-    <td>\${escapeHtml(String(trade.strength))}</td>
-    <td>\${escapeHtml(String(trade.no_of_units))}</td>
+    <td>\${escapeHtml(String(trade.tradeCode ?? ''))}</td>
+    <td><strong>\${escapeHtml(trade.tradeName || trade.tradeShort || '')}</strong></td>
+    <td>\${escapeHtml(trade.unitStrength != null ? String(trade.unitStrength) : '-')}</td>
+    <td>\${escapeHtml(trade.durationYrs != null ? String(trade.durationYrs) : '-')}</td>
     <td>\${isAvailable
         ? '<span class="text-success fw-bold">Yes</span>'
         : '<span class="text-danger">No</span>'}</td>
@@ -337,8 +340,8 @@ tradeTableBody.appendChild(tr);
 
     const itiName = iti ? iti.itiName : '';
 
-    const tradeCode = String(trade.tradecode);
-    const tradeShort = trade.tradeshort || '';
+    const tradeCode = String(trade.tradeCode);
+    const tradeShort = trade.tradeShort || '';
 
    const url =
     '${pageContext.request.contextPath}/shift-unit-permitted' +

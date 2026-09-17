@@ -12,9 +12,9 @@ public class ReportsController {
 
     // ========== STUDENTS NOT ADMITTED (Nodal + Admin) ==========
 
-    @GetMapping("/students_not_admitted")
+    @GetMapping("/students-not-admitted")
     public String studentsNotAdmitted() {
-        return "reports/students_not_admitted";
+        return "reports/students-not-admitted";
     }
 
     // ========== DASHBOARD ==========
@@ -25,174 +25,169 @@ public class ReportsController {
 
     // ========== ITI LEVEL REPORTS (Role 4) ==========
 
-    @GetMapping("/getDashboardreport_iti")
+    @GetMapping("/api-dashboard-iti")
     public String getDashboardReportIti() {
-        return "reports/getDashboardreport_iti";
+        return "reports/api-dashboard-iti";
     }
 
-    @GetMapping("/Applicant_Report")
+    @GetMapping("/applicant-report")
     public String applicantReport() {
-        return "reports/Applicant_Report";
+        return "reports/applicant-report";
     }
 
-    @GetMapping("/api_report")
+    @GetMapping("/admission-report")
     public String apiReport() {
-        return "reports/api_report";
+        return "reports/admission-report";
     }
 
-    @GetMapping("/DSC_List_secondphase")
+    @GetMapping("/dsc-list")
     public String dscListSecondphase() {
-        return "reports/DSC_List_secondphase";
+        return "reports/dsc-list";
     }
 
     // ========== DISTRICT LEVEL REPORTS (Role 3) ==========
 
-    @GetMapping("/statewidecastewiseabstractinter")
+    @GetMapping("/caste-wise-admissions-abstract")
     public String statewideCastewiseAbstractInter() {
-        return "reports/statewidecastewiseabstractinter";
+        return "reports/caste-wise-admissions-abstract";
     }
 
-    @GetMapping("/Applicant_mobile_addr")
+    @GetMapping("/applicant-address-with-mobile")
     public String applicantMobileAddr() {
-        return "reports/Applicant_mobile_addr";
+        return "reports/applicant-address-with-mobile";
     }
 
-    @GetMapping("/getDashboardreport_dist")
+    @GetMapping("/api-dashboard-district")
     public String getDashboardReportDist() {
-        return "reports/getDashboardreport_dist";
+        return "reports/api-dashboard-district";
     }
 
-    @GetMapping("/District_Wise_Application_count")
+    @GetMapping("/verification-report")
     public String districtWiseApplicationCount() {
-        return "reports/District_Wise_Application_count";
+        return "reports/verification-report";
     }
 
     // ========== NODAL LEVEL REPORTS (Role 10) ==========
 
-    @GetMapping("/Jdgetdasboardreport")
+    @GetMapping("/api-dashboard-state")
     public String jdGetDashboardReport() {
-        return "reports/Jdgetdasboardreport";
+        return "reports/api-dashboard-state";
     }
 
-    @GetMapping("/PhaseWiseAdmissionReport")
+    @GetMapping("/phase-wise-admissions-details")
     public String phaseWiseAdmissionReport() {
-        return "reports/PhaseWiseAdmissionReport";
+        return "reports/phase-wise-admissions-details";
     }
 
-    @GetMapping("/AdmissionScheduleITI")
+    @GetMapping("/today-schedule-itis")
     public String admissionScheduleIti() {
-        return "reports/AdmissionScheduleITI";
+        return "reports/today-schedule-itis";
     }
 
-    @GetMapping("/admissiongenderwise")
+    @GetMapping("/trade-wise-report")
     public String admissionGenderWise() {
-        return "reports/admissiongenderwise";
+        return "reports/trade-wise-report";
     }
 
-    @GetMapping("/Applicant_Report_StateWise")
+    @GetMapping("/applicant-report-dist-wise")
     public String applicantReportStateWise() {
-        return "reports/Applicant_Report_StateWise";
+        return "reports/applicant-report-dist-wise";
     }
 
-    @GetMapping("/Dist_wise_open_seats")
+    @GetMapping("/dist-iti-trade-wise-seats-abstract")
     public String distWiseOpenSeats() {
-        return "reports/Dist_wise_open_seats";
+        return "reports/dist-iti-trade-wise-seats-abstract";
     }
 
-    @GetMapping("/trade_seats_abstract_duration_wise")
+    @GetMapping("/duration-wise-trade-seats-abstract")
     public String tradeSeatsAbstractDurationWise() {
-        return "reports/trade_seats_abstract_duration_wise";
+        return "reports/duration-wise-trade-seats-abstract";
     }
 
-    @GetMapping("/govt_pvt_dist_seats_abstract")
+    @GetMapping("/govt-or-pvt-dist-wise-seats-abstract")
     public String govtPvtDistSeatsAbstract() {
-        return "reports/govt_pvt_dist_seats_abstract";
+        return "reports/govt-or-pvt-dist-wise-seats-abstract";
     }
 
-    @GetMapping("/std_reg_details_report")
+    @GetMapping("/student-reg-details")
     public String stdRegDetailsReport() {
-        return "reports/std_reg_details_report";
+        return "reports/student-reg-details";
     }
 
     // ========== STATE LEVEL REPORTS (Role 1) ==========
 
-    @GetMapping("/district-iti-wise-year-view")
-    public String districtItiWiseYear() {
-        return "reports/district-iti-wise-year-view";
-    }
-
-    @GetMapping("/itiprofile")
+    @GetMapping("/iti-profile")
     public String itiProfile() {
-        return "reports/itiprofile";
+        return "reports/iti-profile";
     }
 
-    @GetMapping({"/trade_display1", "/trade-display1"})
+    @GetMapping("/trade-display1")
     public String tradeDisplay1() {
-        // trade_display1.jsp does not exist; the actual ITI Profile page is /reports/itiprofile
-        return "redirect:/reports/itiprofile";
+        // No JSP exists for this legacy route; the actual ITI Profile page is /reports/iti-profile
+        return "redirect:/reports/iti-profile";
     }
 
-    @GetMapping("/itilist")
+    @GetMapping("/iti-list")
     public String itiList() {
-        return "reports/itilist";
+        return "reports/iti-list";
     }
 
-    @GetMapping({"/trade_display2", "/trade-display2"})
+    @GetMapping("/trade-display2")
     public String tradeDisplay2() {
-        return "reports/trade_display2";
+        return "reports/trade-display2";
     }
 
-    @GetMapping("/district_schedule")
+    @GetMapping("/district-schedule")
     public String districtSchedule() {
-        return "reports/district_schedule";
+        return "reports/district-schedule";
     }
 
-    @GetMapping("/Shift_Unit_Report")
+    @GetMapping("/shift-unit-report")
     public String shiftUnitReport() {
-        return "reports/Shift_Unit_Report";
+        return "reports/shift-unit-report";
     }
 
-    @GetMapping("/Govt_Pvt_admitted_seats_abstract")
+    @GetMapping("/admitted-seats-abstract")
     public String govtPvtAdmittedSeatsAbstract() {
-        return "reports/Govt_Pvt_admitted_seats_abstract";
+        return "reports/admitted-seats-abstract";
     }
 
-    @GetMapping("/RolesReport")
+    @GetMapping("/all-resource-role")
     public String rolesReport() {
-        return "reports/RolesReport";
+        return "reports/all-resource-role";
     }
 
-    @GetMapping("/Seats_Abstract_Strength_filled_Interface")
+    @GetMapping("/distwise-admitted-seats-abstract")
     public String seatsAbstractStrengthFilledInterface() {
-        return "reports/Seats_Abstract_Strength_filled_Interface";
+        return "reports/distwise-admitted-seats-abstract";
     }
 
-    @GetMapping("/tradewise_admission_report")
+    @GetMapping("/trade-dist-wise-admission-report")
     public String tradewiseAdmissionReport() {
-        return "reports/tradewise_admission_report";
+        return "reports/trade-dist-wise-admission-report";
     }
 
-    @GetMapping("/tradewise_vacant_position")
+    @GetMapping("/tradewise-vacant-position")
     public String tradewiseVacantPosition() {
-        return "reports/tradewise_vacant_position";
+        return "reports/tradewise-vacant-position";
     }
 
     // ========== PUBLIC PAGES ==========
 
-    @GetMapping("/aboutstrive")
+    @GetMapping("/about-strive")
     public String aboutStrive() {
-        return "reports/aboutstrive";
+        return "reports/about-strive";
     }
 
-    @GetMapping("/disclosuremanagement")
+    @GetMapping("/disclosure-management")
     public String disclosureManagement() {
-        return "reports/disclosuremanagement";
+        return "reports/disclosure-management";
     }
 
     // ========== UTILITY ==========
 
-    @GetMapping("/swagger")
+    @GetMapping("/api-documentation")
     public String apiDocs() {
-        return "reports/swagger";
+        return "reports/api-documentation";
     }
 }

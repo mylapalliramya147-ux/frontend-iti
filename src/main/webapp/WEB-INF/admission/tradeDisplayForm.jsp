@@ -52,7 +52,7 @@ $(document).ready(function(){
 </head>
 <body>
 	<%@include file="/WEB-INF/bannernew.jsp"%>
-	<%@include file="/WEB-INF/openNavbar.jsp"%>
+	<%@include file="../navbars/openNavbar.jsp"%>
 
 
 	<div class="container border p-2 mt-2 rounded-3 w-50"  style="background-color: #e6ffff;">

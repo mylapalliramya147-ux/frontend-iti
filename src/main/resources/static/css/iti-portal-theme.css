@@ -1,0 +1,281 @@
+/* ==========================================================================
+   iti-portal-theme.css
+   --------------------------------------------------------------------------
+   Recolours the report pages from the legacy navy/blue theme to the
+   index.jsp palette:
+
+       pale yellow-green bar   #e4eeb9   (index.jsp #menu-bar background)
+       bar text                #000000
+       hover / active          linear-gradient(#EB4954 -> #A19197), white text
+       dropdown panel          gold #FFD700, grey text
+       dropdown hover          lightblue #ADD8E6, black text
+       action buttons          green #4CAF50, focus orangered
+       page-title / table head same pale yellow-green, black text
+
+   Loaded AFTER style.css and iti-portal.css on every report page.
+
+   `!important` is used on colour properties on purpose: the blue values are
+   also hard-coded in (a) each report page's inline <style> block and (b) the
+   shared partials (bannernew.jsp, *_navbar.jsp) which are rendered *inside*
+   <body>, so an un-flagged rule would lose on source order.
+
+   Structure and layout are untouched - only colours.
+   ========================================================================== */
+
+:root {
+    /* index.jsp palette */
+    --iti-bar: #e4eeb9;
+    --iti-bar-border: #b9c46d;
+    --iti-text: #000000;
+    --iti-red: #EB4954;
+    --iti-mauve: #A19197;
+    --iti-gold: #FFD700;
+    --iti-hover: #ADD8E6;
+    --iti-green: #4CAF50;
+    --iti-green-dark: #3d8b40;
+    --iti-focus: #FF4500;
+    --iti-panel: #f9f9f9;
+
+    /* remap the style.css chrome variables */
+    --header-navy: #000000;
+    --header-green: #4CAF50;
+    --bar-dark-teal: #e4eeb9;
+    --bar-light-blue: #e4eeb9;
+    --navbar-dark-blue: #e4eeb9;
+    --marquee-teal: #e4eeb9;
+    --secondary-teal: #e4eeb9;
+    --primary-blue: #4CAF50;
+    --nodal-navy: #000000;
+    --nodal-accent: #4CAF50;
+    --nodal-subnav-bg: #e4eeb9;
+    --nodal-active-bg: #4CAF50;
+    --nodal-bg-gradient: linear-gradient(180deg, #e4eeb9 0%, #ffffff 100%);
+}
+
+/* ---- 1. Top header bars (bannernew.jsp) -------------------------------- */
+body .top-header-bar {
+    background: #e4eeb9 !important;
+    color: #000000 !important;
+    border-bottom: 1px solid #b9c46d;
+}
+
+body .announcement-bar {
+    background-color: #e4eeb9 !important;
+    color: #333333 !important;
+    border-bottom: 1px solid #b9c46d;
+}
+
+body .sub-header-bar {
+    background-color: #e4eeb9 !important;
+    color: #000000 !important;
+}
+
+body .header-text-main { color: #000000 !important; }
+body .header-text-sub { color: #4CAF50 !important; }
+
+/* ---- 2. Main navbar (openNavbar.jsp / style.css) ----------------------- */
+body .custom-navbar,
+body .authenticated-navbar {
+    background-color: #e4eeb9 !important;
+    border-top: 2px solid #ffffff !important;
+    border-bottom: 2px solid #b9c46d !important;
+}
+
+body .nav-menu > li { border-right: 1px solid #c8d18a !important; }
+
+body .nav-menu > li > a,
+body .authenticated-navbar .nav-link {
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+body .nav-menu > li:hover,
+body .authenticated-navbar .nav-link:hover {
+    background: linear-gradient(to bottom, #EB4954, #A19197) !important;
+    color: #ffffff !important;
+}
+
+body .custom-navbar .navbar-toggler { background-color: #e4eeb9 !important; }
+
+/* dropdowns -> gold, echoing index.jsp's #menu-bar ul */
+body .dropdown-menu {
+    background-color: #FFD700 !important;
+    border: 1px solid #b9c46d !important;
+}
+
+body .dropdown-menu .dropdown-item,
+body .authenticated-navbar .dropdown-item { color: #555555 !important; }
+
+body .dropdown-menu .dropdown-item:hover,
+body .authenticated-navbar .dropdown-item:hover {
+    background-color: #ADD8E6 !important;
+    color: #000000 !important;
+    padding-left: 25px;
+}
+
+/* news marquee strip */
+body .news-marquee,
+body .marquee-content { background-color: #e4eeb9 !important; }
+
+body .news-marquee span,
+body .marquee-content span { color: #000000 !important; }
+
+/* ---- 3. Role navbars (iti/district/state/nodal partials) --------------- */
+body .district-dashboard-navbar,
+body .state-dashboard-navbar,
+body .iti-dashboard-navbar,
+body .nodal-dashboard-navbar {
+    background: #e4eeb9 !important;
+    border-bottom: 1px solid #b9c46d !important;
+}
+
+body .district-dashboard-link,
+body .state-dashboard-link,
+body .iti-dashboard-link,
+body .nodal-dashboard-link { color: #333333 !important; }
+
+/* style.css sets gold (#ffd700) on hover / #ffca28 on .ms-auto, which is
+   unreadable on the pale #e4eeb9 bar - force dark instead. */
+body .nodal-dashboard-link:hover,
+body .nodal-dashboard-link.ms-auto { color: #000000 !important; }
+
+body .district-dashboard-link.active,
+body .state-dashboard-link.active,
+body .iti-dashboard-link.active,
+body .nodal-dashboard-link.active {
+    background: #4CAF50 !important;
+    color: #ffffff !important;
+}
+
+body .nodal-subnav { background: #e4eeb9 !important; }
+
+/* ---- 4. Page titles ---------------------------------------------------- */
+body .nodal-page-title-dashboard,
+body .nodal-page-title,
+body .custom-page-title,
+body .main-title,
+body .report-header,
+body .section-header,
+body .section-title,
+body .report-group-title,
+body .category-header,
+body .detail-section-header,
+body .blue-title-bar {
+    background: #e4eeb9 !important;
+    color: #000000 !important;
+    border-bottom: 1px solid #b9c46d !important;
+}
+
+body .nodal-page-title-dashboard h1,
+body .nodal-page-title-dashboard h2,
+body .nodal-page-title h1,
+body .nodal-page-title h2,
+body .custom-page-title h1,
+body .main-title h1 { color: #000000 !important; }
+
+/* ---- 5. Card / panel headers ------------------------------------------- */
+body .nodal-card-header-dashboard,
+body .nodal-card-header {
+    background: linear-gradient(135deg, #EB4954 0%, #A19197 100%) !important;
+    color: #ffffff !important;
+    border-color: #A19197 !important;
+}
+
+body .nodal-card-header-dashboard i { background: rgba(255, 255, 255, 0.25) !important; }
+
+body .nodal-report-card {
+    border-color: #e4eeb9 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ---- 6. Tables --------------------------------------------------------- */
+body .report-table th,
+body .report-table thead th,
+body .nodal-table th,
+body .nodal-table thead th {
+    background: #e4eeb9 !important;
+    color: #000000 !important;
+    border-color: #b9c46d !important;
+}
+
+body .report-table td,
+body .nodal-table td { border-color: #eef2df !important; }
+
+body .total-row,
+body .total-row td,
+body .nodal-total-row,
+body .nodal-total-row td {
+    background: #e4eeb9 !important;
+    color: #000000 !important;
+    border-color: #b9c46d !important;
+}
+
+/* ---- 7. Forms ---------------------------------------------------------- */
+body .form-label-official,
+body .selection-form label { color: #000000 !important; }
+
+body .form-select-official:focus,
+body .form-control-official:focus {
+    border-color: #4CAF50 !important;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25) !important;
+}
+
+body .form-select-official,
+body .form-control-official { color: #2d3748; }
+
+/* ---- 8. Action buttons -> index.jsp green ----------------------------- */
+body .btn-submit-official-navy,
+body .nodal-btn-primary,
+body .page-btn.active {
+    background-color: #4CAF50 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border: none;
+}
+
+body .btn-submit-official-navy:hover,
+body .nodal-btn-primary:hover {
+    background-color: #3d8b40 !important;
+    color: #ffffff !important;
+}
+
+body .btn-submit-official-navy:focus,
+body .nodal-btn-primary:focus {
+    background-color: #FF4500 !important;
+    color: #ffffff !important;
+}
+
+body .page-btn {
+    background-color: #e4eeb9 !important;
+    color: #000000 !important;
+}
+
+body .nodal-download-btn-light { background-color: #e4eeb9 !important; color: #000000 !important; }
+body .nodal-download-btn-black { background-color: #4CAF50 !important; color: #ffffff !important; }
+
+/* ---- 9. Accents, icons, misc ------------------------------------------ */
+body .report-section-title {
+    color: #000000 !important;
+    border-left: 5px solid #4CAF50 !important;
+}
+
+body .report-card i,
+body .report-card-official i { color: #4CAF50 !important; }
+
+body .report-card {
+    border-color: #e4eeb9 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
+}
+
+body .report-card:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important; }
+
+body .api-badge { background: #f3f6de !important; color: #555555 !important; }
+
+body .loader-spinner { color: #000000 !important; }
+body .stat-fill { background-color: #4CAF50 !important; }
+body .district-link { color: #000000 !important; }
+body .reports-dashboard { background: #f7f9ee !important; }
+body .nodal-dist-name { color: #000000 !important; }
+body .nodal-report-title { color: #000000 !important; }
+body .nodal-bold-aesthetic-text,
+body .nodal-bold-aesthetic-number { color: #000000 !important; }

@@ -902,7 +902,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const payload = collectFormData();
         console.log("POST payload:", payload);
 
-        fetch("http://localhost:8080/ItiapInstitute/api/itis", {
+        const itiRegistrationApiUrl = "${itiRegistrationApiUrl}";
+
+        fetch(itiRegistrationApiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)

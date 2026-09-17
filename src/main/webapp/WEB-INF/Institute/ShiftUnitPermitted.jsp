@@ -92,7 +92,7 @@
 <body>
     <!-- Global Header -->
     <header>
-        <%@ include file="../reports/bannernew.jsp" %>
+        <%@ include file="../bannernew.jsp" %>
     </header>
 
     <div class="container-fluid px-5 mt-4 mb-5" style="min-height: 50vh;">
@@ -223,13 +223,12 @@
 
     <!-- Global Footer -->
     <footer>
-        <%@ include file="../reports/footer.jsp" %>
+        <%@ include file="../footer.jsp" %>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const backendApiBaseUrl = "${backendApiBaseUrl}";
-            const apiUrl = backendApiBaseUrl + '/api/shift-unit-permitted';
+            const apiUrl = "${shiftUnitApiUrl}";
 
             // URL parameters
             const urlParams = new URLSearchParams(window.location.search);
