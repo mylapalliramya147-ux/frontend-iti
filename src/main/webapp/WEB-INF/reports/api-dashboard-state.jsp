@@ -156,7 +156,7 @@
         }
 
         function viewDistrictDetails(distCode, year) {
-            window.open('${pageContext.request.contextPath}/reports/getDashboardreport_dist?distCode=' + distCode + '&year=' + year, '_blank');
+            window.open('${pageContext.request.contextPath}/reports/api-dashboard-district?distCode=' + distCode + '&year=' + year, '_blank');
         }
     </script>
 </body>

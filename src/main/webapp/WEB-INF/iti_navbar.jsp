@@ -10,10 +10,10 @@
 
             <li><a href="#">ITI Reports</a>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/reports/getDashboardreport_iti">API Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/reports/Applicant_Report">Applicant Report</a></li>
-            <li><a href="${pageContext.request.contextPath}/reports/api_report">Admission Report</a></li>
-            <li><a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase">DSC List</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/api-dashboard-iti">API Dashboard (ITI)</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/applicant-report">Applicant Report</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/admission-report">Admission Report</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/dsc-list">DSC List</a></li>
         </ul>
     </li>
 

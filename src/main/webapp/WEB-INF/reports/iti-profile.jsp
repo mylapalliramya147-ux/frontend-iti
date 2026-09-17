@@ -166,7 +166,7 @@ function closeAirforcePopup() {
 
         <p>&nbsp;</p>
 
-        <form name="form1" method="GET" action="${pageContext.request.contextPath}/reports/trade_display2">
+        <form name="form1" method="GET" action="${pageContext.request.contextPath}/reports/trade-display2">
             <p align="center"  class="style4"> 
                 <font color="blue" size="4">
 

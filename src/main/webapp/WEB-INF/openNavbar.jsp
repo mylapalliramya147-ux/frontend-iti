@@ -7,15 +7,15 @@
     <li class="dropdown">
         <a href="javascript:void(0)">ITI Profile</a>
         <div class="dropdown-content">
-            <a href="${pageContext.request.contextPath}/reports/itiprofile">ITI Profile</a>
-            <a href="${pageContext.request.contextPath}/reports/itilist">ITI LIST</a>
+            <a href="${pageContext.request.contextPath}/reports/iti-profile">ITI Profile</a>
+            <a href="${pageContext.request.contextPath}/reports/iti-list">ITI LIST</a>
         </div>
     </li>
     <li>
         <a>STRIVE</a>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/reports/aboutstrive">ABOUT STRIVE</a></li>
-            <li><a href="${pageContext.request.contextPath}/reports/disclosuremanagement">Disclosure Management</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/about-strive">ABOUT STRIVE</a></li>
+            <li><a href="${pageContext.request.contextPath}/reports/disclosure-management">Disclosure Management</a></li>
         </ul>
     </li>
     <li>

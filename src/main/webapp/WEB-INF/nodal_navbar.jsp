@@ -11,18 +11,18 @@
         </li>
         <li><a href="#">ITI Reports</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/reports/Jdgetdasboardreport">API Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/PhaseWiseAdmissionReport">Phase Wise Admissions</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/AdmissionScheduleITI">Today Schedule ITIs</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/admissiongenderwise">Trade Wise Reports</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/Applicant_Report_StateWise">Applicant Report District Wise</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/Dist_wise_open_seats">DIST/ITI/Trade Wise Seats Abstract</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/trade_seats_abstract_duration_wise">Duration Wise Trade Seats Abstract </a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/govt_pvt_dist_seats_abstract">Govt or Pvt Dist Wise Seats Abstract</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/std_reg_details_report">Student Reg Deatails</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/students_not_admitted">Students Not Admitted</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count">Verification Report</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter">Caste Wise Admissions Abstract</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/api-dashboard-state">API Dashboard (State)</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/phase-wise-admissions-details">Phase Wise Admissions Details</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/today-schedule-itis">Today Schedule ITIs</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/trade-wise-report">Trade Wise Report</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/applicant-report-dist-wise">Applicant Report Dist Wise</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/dist-iti-trade-wise-seats-abstract">DIST/ITI/Trade Wise Seats Abstract</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/duration-wise-trade-seats-abstract">Duration Wise Trade Seats Abstract</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/govt-or-pvt-dist-wise-seats-abstract">Govt or Pvt Dist Wise Seats Abstract</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/student-reg-details">Student Reg Details</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/students-not-admitted">Students Not Admitted</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/verification-report">Verification Report</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/caste-wise-admissions-abstract">Caste Wise Admissions Abstract</a></li>
             </ul>
         </li>
         <li><a href="#">Admissions</a>

@@ -6,11 +6,11 @@
         <li><a href="#">ITI Services</a><ul></ul></li>
         <li><a href="#">ITI Reports</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/reports/Applicant_mobile_addr">Applicant Report</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/getDashboardreport_dist">API Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/statewidecastewiseabstractinter">Caste Wise Abstract</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/District_Wise_Application_count">Verification Report</a></li>
-                <li><a href="${pageContext.request.contextPath}/reports/DSC_List_secondphase">DSC List</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/applicant-address-with-mobile">Applicant Address With Mobile</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/api-dashboard-district">API Dashboard (District)</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/caste-wise-admissions-abstract">Caste Wise Admissions Abstract</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/verification-report">Verification Report</a></li>
+                <li><a href="${pageContext.request.contextPath}/reports/dsc-list">DSC List</a></li>
             </ul>
         </li>
         <li><a href="#">Admissions</a>
