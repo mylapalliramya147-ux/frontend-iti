@@ -25,8 +25,29 @@
     </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
-<body>
-<%@ include file="header.jsp" %>
+<body class="portal-page">
+
+    <!-- ================= BANNER IMAGE (same as index.jsp) ================= -->
+    <center>
+        <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
+    </center>
+    <br>
+
+    <!-- ================= MENU BAR (same navbar as index.jsp) ================= -->
+    <%@ include file="../navbars/index_navbar.jsp" %>
+
+    <br><br>
+
+    <!-- ================= MARQUEE (same as index.jsp) ================= -->
+    <marquee onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="100">
+    <b>
+    <font color="blue" size="5">
+    <a href="#" target="_blank"> ITI Admissions 2026 Phase -3 registrations, applications and verifications available in all GovtPvts ITIs on 15-08-2026 and 19-08-2026. </a>
+    </font>
+    </b>
+    </marquee>
+
+    <br>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">
