@@ -29,11 +29,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
+    <c:set var="hideNavbar" value="true" scope="request" />
 
-    <!-- ================= BANNER (same pattern as the authHome dashboards) ================= -->
-    <center><img src="${pageContext.request.contextPath}/images/gen.jpg" width="100%" alt="Banner" /></center>
-
-    <!-- ================= ROLE NAVBAR (same dispatch as the authHome dashboards) ================= -->
+    <!-- ================= BANNER + ROLE NAVBAR (via header.jsp, same as the authHome dashboards) ================= -->
     <%@ include file="header.jsp" %>
     <div class="reports-dashboard">
         <div class="container">
