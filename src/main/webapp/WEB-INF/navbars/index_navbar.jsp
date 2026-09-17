@@ -2,8 +2,10 @@
 <%-- ===================================================================
      Shared PUBLIC navbar (the short, index-style #menu-bar).
 
-     Included by (6 files):
+     Included by (7 files):
        - jsp/index.jsp                 (portal home page)
+       - reports/reports.jsp           (reports dashboard - same navbar as
+                                        the index page by design)
        - reports/about-strive.jsp, reports/disclosure-management.jsp,
          reports/iti-list.jsp, reports/iti-profile.jsp,
          reports/trade-display2.jsp    (public informational pages that

@@ -29,10 +29,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
-    <c:set var="hideNavbar" value="true" scope="request" />
+    <!-- ================= BANNER (same as index.jsp) ================= -->
+    <center>
+        <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
+    </center>
+    <br>
 
-    <!-- ================= BANNER + ROLE NAVBAR (via header.jsp, same as the authHome dashboards) ================= -->
-    <%@ include file="header.jsp" %>
+    <!-- ================= MENU BAR (same navbar as index.jsp) ================= -->
+    <%@ include file="../navbars/index_navbar.jsp" %>
+
+    <br><br>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">
