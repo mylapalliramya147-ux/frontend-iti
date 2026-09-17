@@ -29,12 +29,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
-    <!-- ================= BANNER (same as index.jsp) ================= -->
-    <center>
-        <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
-    </center>
-    <br>
-
     <!-- ================= MENU BAR (same navbar as index.jsp) ================= -->
     <%@ include file="../navbars/index_navbar.jsp" %>
 
