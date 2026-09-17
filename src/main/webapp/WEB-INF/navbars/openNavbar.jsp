@@ -3,9 +3,9 @@
      PUBLIC (anonymous) navbar - index-style #menu-bar, pure-CSS
      dropdowns. Shown to visitors with no session roleId.
 
-     Included by (14 files):
-       - reports/header.jsp            (anonymous branch, served inside
-                                        every role-aware reports/* page)
+     Included by (13 files) - all OUTSIDE the reports module, which is
+     why reports/header.jsp must NOT include this file (it would couple
+     reports to another module's navigation):
        - admission/printVeriedApplication.jsp, tradeDisplay.jsp,
          tradeDisplayForm.jsp, trade_display1.jsp,
          updateScheduleEntry.jsp, deleteScheduleEntry.jsp,

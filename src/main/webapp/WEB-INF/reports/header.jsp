@@ -20,10 +20,12 @@
                 </c:otherwise>
             </c:choose>
         </c:when>
-        <%-- anonymous: public navigation + marquee --%>
+        <%-- anonymous: banner + welcome marquee only (NO navbar yet).
+            openNavbar.jsp belongs to the admission / checkmeritschedule
+            modules and must keep its own design - reports must not depend
+            on it. A reports-specific navbar will be designed separately. --%>
         <c:otherwise>
             <c:if test="${empty hideNavbar or hideNavbar.toString() == 'false' or hideNavbar.toString() == '0'}">
-                <%@ include file="../navbars/openNavbar.jsp" %>
                 <marquee onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="100">
                     <b>
                         <font color="blue" size="4">
