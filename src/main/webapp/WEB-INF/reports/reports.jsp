@@ -29,10 +29,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
 <body>
-    <!-- ================= MENU BAR (same navbar as index.jsp) ================= -->
-    <%@ include file="../navbars/index_navbar.jsp" %>
-
-    <br><br>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">
