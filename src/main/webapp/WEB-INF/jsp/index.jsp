@@ -20,9 +20,6 @@
 </center>
 <br>
 
-<!-- ================= MENU BAR ================= -->
-<%@ include file="../navbars/index_navbar.jsp" %>
-
 <br><br>
 
 <!-- ================= MARQUEE ================= -->
