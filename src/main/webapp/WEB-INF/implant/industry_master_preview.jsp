@@ -94,7 +94,7 @@ function deleteIndustry(industryId, rowIndex){
 
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
 
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div class="container border p-2 mt-2 shadow-lg" style="border-radius: 5px;">
     <div align="center" style="text-decoration: underline;color: fuchsia;">AVAILABLE INDUSTRY MASTER DATA</div>

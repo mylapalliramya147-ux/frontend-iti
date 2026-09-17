@@ -6,24 +6,24 @@
         <c:when test="${not empty sessionScope.roleId}">
             <c:choose>
                 <c:when test="${sessionScope.roleId eq 4 or sessionScope.roleId eq '4'}">
-                    <%@ include file="../iti_navbar.jsp" %>
+                    <%@ include file="../navbars/iti_navbar.jsp" %>
                 </c:when>
                 <c:when test="${sessionScope.roleId eq 3 or sessionScope.roleId eq '3'}">
-                    <%@ include file="../district_navbar.jsp" %>
+                    <%@ include file="../navbars/district_navbar.jsp" %>
                 </c:when>
                 <c:when test="${sessionScope.roleId eq 10 or sessionScope.roleId eq '10'}">
-                    <%@ include file="../nodal_navbar.jsp" %>
+                    <%@ include file="../navbars/nodal_navbar.jsp" %>
                 </c:when>
                 <%-- roleId 2 = Admin/State, and any other role falls back here --%>
                 <c:otherwise>
-                    <%@ include file="../state_navbar.jsp" %>
+                    <%@ include file="../navbars/state_navbar.jsp" %>
                 </c:otherwise>
             </c:choose>
         </c:when>
         <%-- anonymous: public navigation + marquee --%>
         <c:otherwise>
             <c:if test="${empty hideNavbar or hideNavbar.toString() == 'false' or hideNavbar.toString() == '0'}">
-                <%@ include file="../openNavbar.jsp" %>
+                <%@ include file="../navbars/openNavbar.jsp" %>
                 <marquee onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="100">
                     <b>
                         <font color="blue" size="4">

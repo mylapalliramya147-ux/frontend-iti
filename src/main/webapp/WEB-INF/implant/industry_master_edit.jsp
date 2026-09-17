@@ -86,7 +86,7 @@ function saveIndustry(){
 </head>
 <body>
 
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div class="container border p-2 mt-2 shadow-lg" style="border-radius: 5px;">
     <div align="center" style="text-decoration: underline;color: fuchsia;">EDIT INDUSTRY ENTRY FORM</div>

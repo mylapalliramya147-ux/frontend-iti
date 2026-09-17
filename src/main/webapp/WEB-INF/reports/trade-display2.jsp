@@ -44,7 +44,7 @@
             <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
         </center>
 
-        <%@ include file="../index_navbar.jsp" %>
+        <%@ include file="../navbars/index_navbar.jsp" %>
 
         <br><br>
 

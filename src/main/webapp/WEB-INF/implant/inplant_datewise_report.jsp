@@ -112,7 +112,7 @@
 
 
     <!-- Navigation Bar -->
-    <%@ include file="../portal_navbar.jsp" %>
+    <%@ include file="../navbars/portal_navbar.jsp" %>
 
 
     <br>

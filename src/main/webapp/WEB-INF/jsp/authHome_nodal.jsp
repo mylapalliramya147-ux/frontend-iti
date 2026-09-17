@@ -35,7 +35,7 @@
 </head>
 <body>
     <center><img src="${pageContext.request.contextPath}/images/gen.jpg" width="100%" alt="Banner" /></center>
-    <%@ include file="../nodal_navbar.jsp" %>
+    <%@ include file="../navbars/nodal_navbar.jsp" %>
     <div class="login-info">
         <p><font color="#400040" size="4"><strong>You login in to our application ${loginCount} times</strong></font></p>
         <c:forEach var="dt" items="${lastLogins}" varStatus="st">

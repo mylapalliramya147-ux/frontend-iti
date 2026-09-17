@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/bannernew.jsp"%>
-	<%@include file="/WEB-INF/openNavbar.jsp"%>
+	<%@include file="../navbars/openNavbar.jsp"%>
 
 <br>
 	<%@include file="/WEB-INF/footer1.jsp"%>

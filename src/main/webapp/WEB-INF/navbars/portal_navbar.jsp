@@ -1,7 +1,7 @@
 <%-- ===================================================================
      Shared navbar for the portal modules (placements / implant / placement dashboard).
      Every page in those modules used to inline its own copy of this markup.
-     Include it with:  <%@ include file="../portal_navbar.jsp" %>
+     Include it with:  <%@ include file="../navbars/portal_navbar.jsp" %>
      - #userinfo is populated by each page's own script.
      - Logout points at the real /logout mapping in LoginController.
      =================================================================== --%>

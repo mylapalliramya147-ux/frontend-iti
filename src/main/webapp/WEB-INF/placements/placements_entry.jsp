@@ -36,7 +36,7 @@ var baseUrl  = '${backendBaseUrl}/';
 </head>
 <body>
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border:1px solid black;width:100%;border-radius:2px;">
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div align="center" style="text-decoration:underline;color:fuchsia;">PLACEMENT ENTRY FORM</div>
 <div class="container border p-2 mt-2 shadow-lg w-50" style="background-color:white !important;font-weight:bolder;margin:0 auto;width:90%;" id="formdiv">

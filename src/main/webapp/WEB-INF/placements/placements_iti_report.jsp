@@ -86,7 +86,7 @@ function fnExcelReport(){
 
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
 
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div align="center" style="color: blue;"><h5>Placement Details - ITI Level</h5></div>
 

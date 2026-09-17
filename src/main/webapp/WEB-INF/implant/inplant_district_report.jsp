@@ -81,7 +81,7 @@
     >
 
     <!-- Navbar -->
-    <%@ include file="../portal_navbar.jsp" %>
+    <%@ include file="../navbars/portal_navbar.jsp" %>
 
 <div class="container border p-2 mt-2 shadow-lg">
     <div align="center">

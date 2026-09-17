@@ -125,7 +125,7 @@ p:before {
 
 <!-- ================= MENU BAR ================= -->
 
-<%@ include file="../index_navbar.jsp" %>
+<%@ include file="../navbars/index_navbar.jsp" %>
 
 <br><br>
 

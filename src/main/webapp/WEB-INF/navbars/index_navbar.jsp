@@ -6,7 +6,7 @@
      (ITI List, ITI Profile, About STRIVE, Disclosure Management,
      Trade Display) which each used to inline their own copy.
 
-     Include it with:  <%@ include file="../index_navbar.jsp" %>
+     Include it with:  <%@ include file="../navbars/index_navbar.jsp" %>
 
      This is the PUBLIC (anonymous) navigation. The role-based dashboard
      navigation lives in district_navbar.jsp / iti_navbar.jsp /

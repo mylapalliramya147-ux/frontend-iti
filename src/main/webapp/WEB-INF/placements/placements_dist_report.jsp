@@ -133,7 +133,7 @@ function fnExcelReport() {
 
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
 
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div align="center" >
             <h5 class="h5 text-primary" style="font-weight: bolder;">DISTRICT LEVEL PLACEMENT DETAILS</h5>

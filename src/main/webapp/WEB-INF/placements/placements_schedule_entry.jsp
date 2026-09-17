@@ -142,7 +142,7 @@ function closeError() {
 
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
 
-<%@ include file="../portal_navbar.jsp" %>
+<%@ include file="../navbars/portal_navbar.jsp" %>
 <br>
 <div align="center" class="text-info font-weight-bolder"> PLACEMENT SCHEDULE ENTRY FORM </div>
 
