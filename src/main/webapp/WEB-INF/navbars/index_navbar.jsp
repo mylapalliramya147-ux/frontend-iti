@@ -2,9 +2,12 @@
 <%-- ===================================================================
      Shared PUBLIC navbar (the short, index-style #menu-bar).
 
-     Used by the home page and by the public informational pages
-     (ITI List, ITI Profile, About STRIVE, Disclosure Management,
-     Trade Display) which each used to inline their own copy.
+     Included by (6 files):
+       - jsp/index.jsp                 (portal home page)
+       - reports/about-strive.jsp, reports/disclosure-management.jsp,
+         reports/iti-list.jsp, reports/iti-profile.jsp,
+         reports/trade-display2.jsp    (public informational pages that
+                                        each used to inline their own copy)
 
      Include it with:  <%@ include file="../navbars/index_navbar.jsp" %>
 

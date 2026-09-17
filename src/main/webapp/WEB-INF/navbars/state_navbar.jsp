@@ -1,6 +1,19 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- Dashboard navbar copied verbatim from the matching authHome_*.jsp (index-style #menu-bar) --%>
+<%-- ===================================================================
+     STATE / ADMIN dashboard navbar (roleId 2, and the fallback for any
+     other logged-in roleId, index-style #menu-bar).
+
+     Included by (2 files):
+       - reports/header.jsp            (roleId 2 + <c:otherwise> fallback
+                                        branch, served inside every
+                                        role-aware reports/* page)
+       - jsp/authHome_admin.jsp        (State/Admin dashboard home)
+
+     NOTE: the "c" taglib above is declared but currently unused in this
+     file - the same markup was copied verbatim from the matching
+     authHome_*.jsp. Keep or drop as you prefer; it is harmless.
+     =================================================================== --%>
 <ul id="menu-bar">
         <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
         <li><a href="#">ITI Services</a>

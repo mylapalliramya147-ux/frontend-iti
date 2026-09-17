@@ -1,5 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%-- Index-style #menu-bar: public navigation + informational dropdowns (pure-CSS) --%>
+<%-- ===================================================================
+     PUBLIC (anonymous) navbar - index-style #menu-bar, pure-CSS
+     dropdowns. Shown to visitors with no session roleId.
+
+     Included by (14 files):
+       - reports/header.jsp            (anonymous branch, served inside
+                                        every role-aware reports/* page)
+       - admission/printVeriedApplication.jsp, tradeDisplay.jsp,
+         tradeDisplayForm.jsp, trade_display1.jsp,
+         updateScheduleEntry.jsp, deleteScheduleEntry.jsp,
+         distVerification.jsp, MeritListPhaseOne.jsp,
+         admissionIntialization.jsp
+       - checkmeritschedule/admissionPhase1.jsp,
+         updateScheduleEntry.jsp, deleteScheduleEntry.jsp,
+         MeritListPhaseOne.jsp, admissionIntialization.jsp
+
+     NOTE: the "c" taglib is intentionally NOT declared here (unlike the
+     role navbars) because this file contains no JSTL tags - plain HTML
+     links only. If you add <c:...> tags later, declare the taglib first.
+     =================================================================== --%>
 <ul id="menu-bar" class="no-print">
     <li>
         <a href="${pageContext.request.contextPath}/">Home</a>

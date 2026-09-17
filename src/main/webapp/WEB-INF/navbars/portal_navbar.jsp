@@ -1,6 +1,17 @@
 <%-- ===================================================================
-     Shared navbar for the portal modules (placements / implant / placement dashboard).
-     Every page in those modules used to inline its own copy of this markup.
+     Shared navbar for the portal modules (placements / implant /
+     placement dashboard).
+     Included by (33 files):
+       - placements/placements_*.jsp   (10 files: entry, data_details,
+                                        dist/iti/state/yearwise/ssdp reports,
+                                        schedulewise, schedule_entry,
+                                        schedule_datewise)
+       - implant/*.jsp                 (22 files: implant_* and inplant_*
+                                        entry/edit/report pages)
+       - jsp/placementDashboard.jsp    (placement dashboard home)
+
+     Every page in those modules used to inline its own copy of this
+     markup.
      Include it with:  <%@ include file="../navbars/portal_navbar.jsp" %>
      - #userinfo is populated by each page's own script.
      - Logout points at the real /logout mapping in LoginController.
