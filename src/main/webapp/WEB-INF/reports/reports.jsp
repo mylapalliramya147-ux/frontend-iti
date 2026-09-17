@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <style>
         .reports-dashboard { padding: 40px 20px; background: #f0f4f8; min-height: 80vh; }
+        /* Fixed NIC footer, same look as the authHome dashboards */
+        #footer { position: fixed; bottom: 0; width: 100%; height: 25px; padding-top: 8px; text-align: center; background: #0E4878; border-top: 1px #000 solid; font-size: 12px; color: #fff; }
+        #footer a { color: #fff; }
         .report-section-title { color: #003366; font-weight: 800; border-left: 5px solid #003366; padding-left: 15px; margin-bottom: 25px; margin-top: 30px; font-size: 1.4rem; }
         .role-tabbar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 22px 0 6px 0; }
         .role-tabbar a { text-decoration: none; font-weight: 700; font-size: 0.95rem; color: #003366; background: #ffffff; border: 2px solid #003366; border-radius: 999px; padding: 8px 22px; transition: all 0.2s ease; }
@@ -25,29 +28,13 @@
     </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal-theme.css?v=2">
 </head>
-<body class="portal-page">
+<body>
 
-    <!-- ================= BANNER IMAGE (same as index.jsp) ================= -->
-    <center>
-        <img src="${pageContext.request.contextPath}/images/gen.jpg" id="banner-id" width="100%" alt="ITI Banner" />
-    </center>
-    <br>
+    <!-- ================= BANNER (same pattern as the authHome dashboards) ================= -->
+    <center><img src="${pageContext.request.contextPath}/images/gen.jpg" width="100%" alt="Banner" /></center>
 
-    <!-- ================= MENU BAR (same navbar as index.jsp) ================= -->
-    <%@ include file="../navbars/index_navbar.jsp" %>
-
-    <br><br>
-
-    <!-- ================= MARQUEE (same as index.jsp) ================= -->
-    <marquee onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="100">
-    <b>
-    <font color="blue" size="5">
-    <a href="#" target="_blank"> ITI Admissions 2026 Phase -3 registrations, applications and verifications available in all GovtPvts ITIs on 15-08-2026 and 19-08-2026. </a>
-    </font>
-    </b>
-    </marquee>
-
-    <br>
+    <!-- ================= ROLE NAVBAR (same dispatch as the authHome dashboards) ================= -->
+    <%@ include file="header.jsp" %>
     <div class="reports-dashboard">
         <div class="container">
             <div class="text-center mb-5">
@@ -63,7 +50,7 @@
                 </div>
             </div>
 
-            <!-- Role tab bar: quick jumps to each section (no navbar on this page by design) -->
+            <!-- Role tab bar: in-page quick jumps (kept alongside the role navbar) -->
             <nav class="role-tabbar no-print" aria-label="Report sections">
                 <a href="#role-iti">ITI</a>
                 <a href="#role-district">District</a>
@@ -430,6 +417,9 @@
             </div>
         </div>
     </div>
+
+    <!-- ================= FOOTER (same as the authHome dashboards) ================= -->
+    <div id="footer">2013 @ All Rights Reserved - <a href="http://www.ap.nic.in">National Informatics Center</a></div>
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
