@@ -1,4 +1,5 @@
 
+const API_BASE_URL = window.API_BASE_URL;
 let jwtToken = null;
 let insCode = null;
 let admissionPhaseData = null;
@@ -50,7 +51,7 @@ function getReady(){
 function getAllTrades(){
 	$.ajax({
 		type:'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/ititrademaster',
+		url: API_BASE_URL + '/itiapi/masterdata/ititrademaster',
 		cache: false,
 		timeout: 600000,
 		success:function(resp){
@@ -67,7 +68,7 @@ function getAllTrades(){
 function getAdmissionPhaseData(){
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData',
+		url: API_BASE_URL + '/itiapi/masterdata/getAdmissionPhaseData',
 		cache: false,
 		timeout: 600000,
 		success: function(resp){
@@ -89,7 +90,7 @@ function getDistItis(a,b){
 		//alert("1111111")
 		$.ajax({
 			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItisDistwise?distCode='+a,
+			url: API_BASE_URL + '/itiapi/masterdata/getAllItisDistwise?distCode='+a,
 			cache: false,
 			timeout: 600000,
 			success: function(resp){
@@ -111,7 +112,7 @@ function getDistItis(a,b){
 	}else{
 		$.ajax({
 			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItisDistwise?distCode='+a,
+			url: API_BASE_URL + '/itiapi/masterdata/getAllItisDistwise?distCode='+a,
 			cache: false,
 			timeout: 600000,
 			success: function(resp){
@@ -170,7 +171,7 @@ function getItitradeData(itiCode){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/getItitradeData',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/getItitradeData',
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		headers:{
@@ -322,7 +323,7 @@ function saveNewTrade(trade,strength,selectedValue){
 	//alert(jwtToken);
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/saveNewItiTrade',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/saveNewItiTrade',
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		headers:{
@@ -395,7 +396,7 @@ function editTrade(itiCode,tradeCode){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/getByItiCodeAndTradeCode',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/getByItiCodeAndTradeCode',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {
@@ -474,7 +475,7 @@ function editTradeData(editTradeIticode,editTradecode,editStrength,selectedValue
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/editItiTrade',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/editItiTrade',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {
@@ -543,7 +544,7 @@ function reservationEntry(itiCode,tradeCode){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/getSeatmatrix',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/getSeatmatrix',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {
@@ -672,7 +673,7 @@ function insertNewSeatmatrix(itiCode, tradeCode,categoryList,strengthList){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/insertNewSeatmatrix',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/insertNewSeatmatrix',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {
@@ -749,7 +750,7 @@ function saveSeatmatrix(itiCode, tradeCode,totseatmatrixcount,categoryList,stren
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/saveSeatMatrix',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/saveSeatMatrix',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {
@@ -790,7 +791,7 @@ function approveAll(){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/approveTradeAll',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/approveTradeAll',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers:{
@@ -825,7 +826,7 @@ function freezeAll() {
 	
 	$.ajax({
 		type:'post',
-		url: 'http://10.72.4.135:8888/itiapi/itiseatmatrix/freezeTradeAll',
+		url: API_BASE_URL + '/itiapi/itiseatmatrix/freezeTradeAll',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		headers: {

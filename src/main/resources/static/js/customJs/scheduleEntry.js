@@ -1,4 +1,5 @@
 let jwtToken = null;
+const API_BASE_URL = window.API_BASE_URL;
 let insCode = null;
 let response = null;
 
@@ -29,7 +30,7 @@ function getReady(){
 function getCurrentPhaseValues(){
 	$.ajax({
 		type:'get',
-		url : 'http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData',
+		url : API_BASE_URL + '/itiapi/masterdata/getAdmissionPhaseData',
 		cache : false,
 		timeout : 600000,
 		success: function(resp){
@@ -50,7 +51,7 @@ function getScheduleEntryByDist(){
 	//alert("before calling"+jwtToken);
 	$.ajax({
 		type: 'POST',
-		url:'http://10.72.4.135:8888/itiapi/admissions/getScheduleEntryByDistCode',
+		url:API_BASE_URL + '/itiapi/admissions/getScheduleEntryByDistCode',
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		headers:{
@@ -198,7 +199,7 @@ function sendDataDB(){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/admissions/saveScheduleEntry',
+		url: API_BASE_URL + '/itiapi/admissions/saveScheduleEntry',
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		headers:{

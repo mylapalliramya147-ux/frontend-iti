@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
  <script type="text/javascript" src="./js/customJs/startAdmissionConvinorLevelJs.js"></script>
 </head>
 <body> 

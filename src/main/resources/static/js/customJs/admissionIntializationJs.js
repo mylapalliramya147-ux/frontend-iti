@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 let availableAdmissionPhaseData = null;
 let jwtToken = null;
 function checkToken(){
@@ -260,7 +261,7 @@ function sendDataTOApi(){
 	$.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/admissions/saveAdmissionPhase",
+        url: API_BASE_URL + "/itiapi/admissions/saveAdmissionPhase",
         data: JSON.stringify(data),
     	headers:{
        		'Authorization': jwtToken
@@ -290,7 +291,7 @@ function getAdmissionPhaseData(){
 	$.ajax({
         type: "get",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData",
+        url: API_BASE_URL + "/itiapi/masterdata/getAdmissionPhaseData",
         cache: false,
         timeout: 600000,
         success: function (data) {
@@ -607,7 +608,7 @@ function updateData(){
 	$.ajax({
 		type: 'POST',
 		contentType: "application/json",
-		url: 'http://10.72.4.135:8888/itiapi/admissions/updateAdmissionPhase',
+		url: API_BASE_URL + '/itiapi/admissions/updateAdmissionPhase',
 		data: JSON.stringify(data),
 		headers:{
        		'Authorization': jwtToken

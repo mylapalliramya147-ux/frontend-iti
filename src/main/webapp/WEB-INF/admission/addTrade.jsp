@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="./css/style.css">
 <title>Add Trade</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <script type="text/javascript" src="./js/jquery364.min.js"></script>
 <script type="text/javascript" src="./js/customJs/addTradeJs.js"></script>

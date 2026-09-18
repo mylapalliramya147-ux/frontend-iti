@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 
 function getReady(){
 	
@@ -41,7 +42,7 @@ function getScheduleTimingsByDist(insCode){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/admissions/getScheduleTimingsByDist?distCode='+insCode,
+		url: API_BASE_URL + '/itiapi/admissions/getScheduleTimingsByDist?distCode='+insCode,
 		headers:{
 			'Authorization': jwtToken
 		},
@@ -103,8 +104,8 @@ function checkAdmissions(rank,insCode){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getSeatMatrixPhaseOneByRank',
-		//url: 'http://10.72.4.135:8888/itiapi/admissions/checkRankIsAdmitted',
+		url: API_BASE_URL + '/itiapi/masterdata/getSeatMatrixPhaseOneByRank',
+		//url: API_BASE_URL + '/itiapi/admissions/checkRankIsAdmitted',
 		data: JSON.stringify(rbody),
 		contentType: 'application/json',
 //		headers: {

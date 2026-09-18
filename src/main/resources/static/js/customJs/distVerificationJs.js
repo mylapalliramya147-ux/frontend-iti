@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 let jwtToken = null;
 let insCode = null;
 
@@ -51,7 +52,7 @@ function getDistVerificationList(insCode){
 	
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getDistVerificationList?dist_code='+insCode,
+		url: API_BASE_URL + '/itiapi/masterdata/getDistVerificationList?dist_code='+insCode,
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -115,7 +116,7 @@ function getDistVerificationList(insCode){
 function getCandidateAppliedDetails(a){
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/std/getCandidateAppliedDetails?regid='+a,
+		url: API_BASE_URL + '/itiapi/std/getCandidateAppliedDetails?regid='+a,
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -159,7 +160,7 @@ function editApplication(ssc_regno,regid,dob){
 	//check the registration
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
+		url: API_BASE_URL + '/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -268,7 +269,7 @@ function getAdmissionPhaseData(){
 	$.ajax({
         type: "get",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData",
+        url: API_BASE_URL + "/itiapi/masterdata/getAdmissionPhaseData",
         cache: false,
         timeout: 600000,
         success: function (data) {
@@ -487,7 +488,7 @@ function rejectData(){
 			headers:{
 	       		'Authorization': jwtToken
 	       	},
-			url: "http://10.72.4.135:8888/itiapi/admissions/verificationRejection",
+			url: API_BASE_URL + "/itiapi/admissions/verificationRejection",
 			cache: false,
 			timeout: 600000,
 			success:function(resp){
@@ -1064,7 +1065,7 @@ function approveData(){
 	if(ssc_eq == 'Y'){
 		$.ajax({
 			type: 'post',
-			url: 'http://10.72.4.135:8888/itiapi/admissions/verificationApproval',
+			url: API_BASE_URL + '/itiapi/admissions/verificationApproval',
 			contentType: 'application/json',
 			cache: false,
 			timeout: 600000,

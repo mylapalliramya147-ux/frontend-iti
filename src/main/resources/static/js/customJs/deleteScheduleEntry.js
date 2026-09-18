@@ -1,4 +1,5 @@
 let jwtToken = null;
+const API_BASE_URL = window.API_BASE_URL;
 let insCode = null;
 let itis = null;
 
@@ -31,7 +32,7 @@ function getReady(){
 function getAdmissionPhaseData(){
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData',
+		url: API_BASE_URL + '/itiapi/masterdata/getAdmissionPhaseData',
 		cache: false,
 		timeout: 600000,
 		success: function(resp){
@@ -69,7 +70,7 @@ function getDistItis(a){
 	
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItisInDistandGovt?distCode='+a+'&govt='+dist,
+		url: API_BASE_URL + '/itiapi/masterdata/getAllItisInDistandGovt?distCode='+a+'&govt='+dist,
 		cache: false,
 		timeout: 600000,
 		success: function(resp){
@@ -102,7 +103,7 @@ function getColleges(a){
 	
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItisGovtorPvt?itiType='+a,
+		url: API_BASE_URL + '/itiapi/masterdata/getAllItisGovtorPvt?itiType='+a,
 		cache: false,
 		timeout: 600000,
 		success: function(resp){
@@ -138,7 +139,7 @@ function getScheduleEntryByDistAndIti(){
 	
 	$.ajax({
 		type: 'POST',
-		url:'http://10.72.4.135:8888/itiapi/admissions/getScheduleEntryByDistCodeAndItiCode',
+		url:API_BASE_URL + '/itiapi/admissions/getScheduleEntryByDistCodeAndItiCode',
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		headers:{
@@ -233,7 +234,7 @@ function deleteScheduleEntry(a){
 		
 		$.ajax({
 			type: 'POST',
-			url:'http://10.72.4.135:8888/itiapi/admissions/deleteScheduleEntryById',
+			url:API_BASE_URL + '/itiapi/admissions/deleteScheduleEntryById',
 			contentType: "application/json",
 			data: JSON.stringify(data),
 			headers:{

@@ -10,6 +10,7 @@
 
 <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="./js/jquery364.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 
 <link rel="stylesheet" href="./css/style.css">

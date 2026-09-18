@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 let allSSCBoards = null;
 let dists = null;
 
@@ -39,7 +40,7 @@ function printData(){
 			allSSCBoards = boards;
 			$.ajax({
 				type : 'post',
-				url: 'http://10.72.4.135:5051/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+dob, // Local backend
+				url: API_BASE_URL + '/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+dob, // Local backend
 				cache : false,
 				timeout : 6000000,
 				success : function(resp) {

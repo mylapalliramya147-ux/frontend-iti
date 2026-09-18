@@ -10,7 +10,7 @@
 
 <c:set
     var="backendBaseUrl"
-    value="${not empty backendUrl ? backendUrl : 'http://localhost:5050'}"
+    value="${backendBaseUrl}"
     scope="page"
 />
 

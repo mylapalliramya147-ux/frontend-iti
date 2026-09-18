@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
  
             let allData = null;
             let plcmtDetailsByAdmnum = null;
@@ -61,7 +62,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "http://10.72.4.135:8888/itiapi/util/getCandAdmInfoByLikeName?name="+findName,
+                    url: API_BASE_URL + "/itiapi/util/getCandAdmInfoByLikeName?name="+findName,
                     //url: "http://10.96.64.62:8080/itiapi/util/getCandAdmInfoByLikeName?name="+findName,
                     //url: "https://itiadmissions.ap.gov.in/itiapi/util/getCandAdmInfoByLikeName?name="+findName,
                    	headers:{
@@ -146,7 +147,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "http://10.72.4.135:8888/itiapi/util/getByAdmNum?admNum="+admNum,
+                    url: API_BASE_URL + "/itiapi/util/getByAdmNum?admNum="+admNum,
                     //url: "https://itiadmissions.ap.gov.in/itiapi/util/getByAdmNum?admNum="+admNum,
                     headers:{
                    		'Authorization': jwtToken
@@ -256,7 +257,7 @@ function getMastersDataData() {
     $.ajax({
         type: "get",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/masterdata/getMastersData",
+        url: API_BASE_URL + "/itiapi/masterdata/getMastersData",
        // url: "https://itiadmissions.ap.gov.in/itiapi/masterdata/getMastersData",
         headers:{
         	'Authorization': jwtToken
@@ -345,7 +346,7 @@ function divs() {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
+        url: API_BASE_URL + "/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
         //url: "https://itiadmissions.ap.gov.in/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
         headers:{
         	'Authorization': jwtToken
@@ -487,7 +488,7 @@ function divs() {
         contentType: "application/json",
        // url: "http://10.96.64.62:8080/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
         //url: "https://itiadmissions.ap.gov.in/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
-        url: "http://10.72.4.135:8888/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
+        url: API_BASE_URL + "/itiapi/plcmt/getAllByPlcmtType?scheduleType="+type+"&ins_code="+ins_code,
         headers:{
         	'Authorization': jwtToken
         },
@@ -1263,7 +1264,7 @@ function getPlacementDetails() {
         contentType: "application/json",
        // url: "http://10.96.64.62:8080/itiapi/plcmt/getCandPlcmtDetails?admNum="+adm_numm,
        // url: "https://itiadmissions.ap.gov.in/itiapi/plcmt/getCandPlcmtDetails?admNum="+adm_numm,
-        url: "http://10.72.4.135:8888/itiapi/plcmt/getCandPlcmtDetails?admNum="+adm_numm,
+        url: API_BASE_URL + "/itiapi/plcmt/getCandPlcmtDetails?admNum="+adm_numm,
         headers:{
         	'Authorization': jwtToken
         },
@@ -1534,7 +1535,7 @@ function savePlacement() {
         contentType: "application/json",
         //url: "http://10.96.64.62:8080/itiapi/plcmt/savePlcmtDetails",
         //url: "https://itiadmissions.ap.gov.in/itiapi/plcmt/savePlcmtDetails",
-        url: "http://10.72.4.135:8888/itiapi/plcmt/savePlcmtDetails",
+        url: API_BASE_URL + "/itiapi/plcmt/savePlcmtDetails",
         headers:{
         	'Authorization': jwtToken
         },

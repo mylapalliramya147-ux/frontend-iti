@@ -11,9 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/md5/2.18.0/md5.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script>
-	let baseUrl = "http://localhost:5050/api/placements";
-	let implantUrl = "http://localhost:5050/api/implant";
-	let labsUrl = "http://localhost:5050/api/labs";
+	let baseUrl = "${backendBaseUrl}/api/placements";
+	let implantUrl = "${backendBaseUrl}/api/implant";
+	let labsUrl = "${backendBaseUrl}/api/labs";
 
 		$(document).ready(function() {
 		overviewdetails();

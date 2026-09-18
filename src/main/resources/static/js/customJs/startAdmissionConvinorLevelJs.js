@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 
 	let jwtToken = null;
 	let insCode =  null;
@@ -29,7 +30,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getAdmissionTimings?insCode='+insCode+'&roleId='+roleId,
+			url: API_BASE_URL + '/itiapi/masterdata/getAdmissionTimings?insCode='+insCode+'&roleId='+roleId,
 			cache: false,
 			success: function(resp){
 				//alert("resp=>"+JSON.stringify(resp));
@@ -100,7 +101,7 @@ function validate(){
 	
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/itiAdmissionEntry',
+		url: API_BASE_URL + '/itiapi/masterdata/itiAdmissionEntry',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		cache: false,

@@ -2,7 +2,7 @@
  * 
  */
 // API_BASE_URL is injected by the JSP before this script loads via window.API_BASE_URL
-const API_BASE_URL = window.API_BASE_URL || "http://localhost:5050";
+const API_BASE_URL = window.API_BASE_URL;
 
 
 function checkValue(errorId) {

@@ -1,6 +1,6 @@
 package com.server.frontend.controller.Institute;
 
-import com.server.frontend.config.BackendApiConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,42 +8,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ItipageController {
 
-    private final BackendApiConfig backendApiConfig;
+    @Value("${backend.api.base-url}")
+    private String backendBaseUrl;
 
-    public ItipageController(BackendApiConfig backendApiConfig) {
-        this.backendApiConfig = backendApiConfig;
-    }
-    
+    private static final String REPORTS_PATH = "/api/reports";
+    private static final String DISTRICTS_PATH = "/api/districts";
+    private static final String DESIGNATIONS_PATH = "/api/designations";
+
     @GetMapping("/itiList")
     public String getItiList(Model model) {
-        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
+        model.addAttribute("itiApiUrl", backendBaseUrl + REPORTS_PATH);
         return "Institute/ItiList";
     }
 
     @GetMapping("/iti-details")
     public String itiDetails(Model model) {
-        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
+        model.addAttribute("itiApiUrl", backendBaseUrl + REPORTS_PATH);
         return "Institute/ItiDetails";
     }
 
     @GetMapping("/iti-create")
     public String itiCreate(Model model) {
-        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
-        model.addAttribute("districtApiUrl", backendApiConfig.getFullUrl("districts"));
-        model.addAttribute("designationApiUrl", backendApiConfig.getFullUrl("designations"));
+        model.addAttribute("itiApiUrl", backendBaseUrl + REPORTS_PATH);
+        model.addAttribute("districtApiUrl", backendBaseUrl + DISTRICTS_PATH);
+        model.addAttribute("designationApiUrl", backendBaseUrl + DESIGNATIONS_PATH);
         return "Institute/ItiCreate";
     }
 
     @GetMapping("/iti-trade-selection")
     public String itiTradeSelection(Model model) {
-        model.addAttribute("itiApiUrl", backendApiConfig.getFullUrl("reports"));
-        model.addAttribute("backendApiBaseUrl", backendApiConfig.getBaseUrl("reports"));
+        model.addAttribute("itiApiUrl", backendBaseUrl + REPORTS_PATH);
+        model.addAttribute("backendApiBaseUrl", backendBaseUrl);
         return "Institute/ItiTradeSelection";
     }
 
     @GetMapping("/shift-unit-permitted")
     public String shiftUnitPermitted(Model model) {
-        model.addAttribute("backendApiBaseUrl", backendApiConfig.getBaseUrl("reports"));
+        model.addAttribute("backendApiBaseUrl", backendBaseUrl);
         return "Institute/ShiftUnitPermitted";
     }
 }

@@ -1,6 +1,7 @@
  /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 
 
 
@@ -90,7 +91,7 @@ function validate(){
 		  generateCaptcha();
     	  $("#txtInput").val('');
 		  $.ajax({
-              url: 'http://10.72.4.135:8888/itiapi/admissions/meritListPhaseOne?distCode='+insCode+'&action='+meritListType,
+              url: API_BASE_URL + '/itiapi/admissions/meritListPhaseOne?distCode='+insCode+'&action='+meritListType,
               type: 'POST',
               headers:{
              		'Authorization': jwtToken

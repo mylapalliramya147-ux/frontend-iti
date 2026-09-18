@@ -1,4 +1,5 @@
 let jwtToken = null;
+const API_BASE_URL = window.API_BASE_URL;
 let insCode = null;
 let itis = null;
 
@@ -26,7 +27,7 @@ function getReady(){
 	}
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItis',
+		url: API_BASE_URL + '/itiapi/masterdata/getAllItis',
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -81,7 +82,7 @@ function getScheduleEntryByDistAndIti(){
 	//alert("before calling"+jwtToken);
 	$.ajax({
 		type: 'POST',
-		url:'http://10.72.4.135:8888/itiapi/admissions/getScheduleEntryByDistCodeAndItiCode',
+		url:API_BASE_URL + '/itiapi/admissions/getScheduleEntryByDistCodeAndItiCode',
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		headers:{
