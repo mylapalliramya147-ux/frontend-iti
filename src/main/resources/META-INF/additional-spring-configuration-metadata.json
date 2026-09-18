@@ -3,62 +3,98 @@
     {
       "name": "backend.api.iti.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'iti' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute where applicable) of the backend service for the 'iti' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.iti.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'iti' API group. Appended to 'backend.api.iti.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'iti' API group. Appended to 'backend.api.iti.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.reports.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'reports' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port) of the backend service for the 'reports' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.reports.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'reports' API group. Appended to 'backend.api.reports.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'reports' API group. Appended to 'backend.api.reports.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.iti-application.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'iti-application' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'iti-application' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.iti-application.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'iti-application' API group. Appended to 'backend.api.iti-application.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'iti-application' API group. Appended to 'backend.api.iti-application.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.districts.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'districts' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'districts' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.districts.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'districts' API group. Appended to 'backend.api.districts.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'districts' API group. Appended to 'backend.api.districts.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.designations.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'designations' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'designations' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.designations.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'designations' API group. Appended to 'backend.api.designations.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'designations' API group. Appended to 'backend.api.designations.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.shift-unit.base-url",
       "type": "java.lang.String",
-      "description": "Base URL (scheme://host:port) of the backend service for the 'shift-unit' API group. Read by BackendApiConfig#getBaseUrl(String)."
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'shift-unit' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     },
     {
       "name": "backend.api.shift-unit.path",
       "type": "java.lang.String",
-      "description": "Context path of the 'shift-unit' API group (default '/api/shift-unit-permitted'). Appended to 'backend.api.shift-unit.base-url' by BackendApiConfig#getFullUrl(String)."
+      "description": "Context path of the 'shift-unit' API group (default '/api/shift-unit-permitted'). Appended to 'backend.api.shift-unit.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
+    },
+    {
+      "name": "backend.api.iti-create.base-url",
+      "type": "java.lang.String",
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'iti-create' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
+    },
+    {
+      "name": "backend.api.iti-create.path",
+      "type": "java.lang.String",
+      "description": "Context path of the 'iti-create' API group. Appended to 'backend.api.iti-create.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
+    },
+    {
+      "name": "backend.api.iti-trades.base-url",
+      "type": "java.lang.String",
+      "description": "Base URL (scheme://host:port, plus context path /ItiapInstitute) of the backend service for the 'iti-trades' API group. Read by BackendApiConfig#getBaseUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
+    },
+    {
+      "name": "backend.api.iti-trades.path",
+      "type": "java.lang.String",
+      "description": "Context path of the 'iti-trades' API group. Appended to 'backend.api.iti-trades.base-url' by BackendApiConfig#getFullUrl(String).",
+      "sourceType": "com.server.frontend.config.BackendApiProperties"
     }
   ]
 }

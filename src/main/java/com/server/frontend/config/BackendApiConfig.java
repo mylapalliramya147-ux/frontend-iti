@@ -1,23 +1,30 @@
 package com.server.frontend.config;
 
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * Read-only facade over {@link BackendApiProperties} so existing callers
+ * ({@code getBaseUrl(group)}, {@code getPath(group)}, {@code getFullUrl(group)})
+ * keep working unchanged, while property resolution is now type-safe
+ * (no more "unknown property" warnings in the IDE).
+ */
 @Component
 public class BackendApiConfig {
 
-    private final Environment environment;
+    private final BackendApiProperties properties;
 
-    public BackendApiConfig(Environment environment) {
-        this.environment = environment;
+    public BackendApiConfig(BackendApiProperties properties) {
+        this.properties = properties;
     }
 
     public String getBaseUrl(String group) {
-        return environment.getProperty("backend.api." + group + ".base-url");
+        BackendApiProperties.ApiGroup apiGroup = properties.getApi().get(group);
+        return apiGroup != null ? apiGroup.getBaseUrl() : null;
     }
 
     public String getPath(String group) {
-        return environment.getProperty("backend.api." + group + ".path");
+        BackendApiProperties.ApiGroup apiGroup = properties.getApi().get(group);
+        return apiGroup != null ? apiGroup.getPath() : null;
     }
 
     public String getFullUrl(String group) {

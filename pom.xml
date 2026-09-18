@@ -25,6 +25,15 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Pin Lombok ahead of the Spring Boot BOM (which manages 1.18.46):
+             RedHat java extension 1.57.x (Sept 2026) ships a newer ECJ/JDT where
+             ConstructorDeclaration.constructorCall field changed, and Lombok <= 1.18.46
+             crashes inside the IDE with:
+             "NoSuchFieldError: ...ConstructorDeclaration ... constructorCall".
+             1.18.48 (2026-09-01) is the current latest on Maven Central and supports
+             the newer JDT/ECJ. Overriding <lombok.version> fixes both the dependency
+             below and the annotationProcessorPaths entry (both use ${lombok.version}). -->
+        <lombok.version>1.18.48</lombok.version>
         <!-- Declared as project properties (and not only inside maven-compiler-plugin) so
              IDE tooling derives the JavaSE-21 execution environment straight from the POM.
              spring-boot-starter-parent only defines maven.compiler.release, and m2e/JDT
