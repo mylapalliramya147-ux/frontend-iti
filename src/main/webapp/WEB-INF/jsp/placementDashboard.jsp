@@ -335,9 +335,9 @@ $("#services").append('4. ' + link('SELF REPORTING ON INFRA Both Pvt & Govt ITIs
 $("#labcard").empty();
 $("#labcard").append('<h4 class="card-title text-danger">LABS</h4>');
 $("#labcard").append('<h6 class="card-title text-success">Services</h6>');
-$("#labcard").append('1. ' + link('Lab Entry'));
+$("#labcard").append('1. ' + link('Lab Entry', '${pageContext.request.contextPath}/labs/entry'));
 $("#labcard").append('<h6 class="card-title text-success mt-2">Reports</h6>');
-$("#labcard").append('2. ' + link('Lab Report'));
+$("#labcard").append('2. ' + link('Lab Report', '${pageContext.request.contextPath}/labs/report'));
 $("#inplantcard").empty();
 $("#inplantcard").append('<h4 class="card-title text-danger">IN-PLANT</h4>');
 $("#inplantcard").append('<h6 class="card-title text-success">Services</h6>');
