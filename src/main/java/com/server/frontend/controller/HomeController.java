@@ -66,6 +66,16 @@ public class HomeController {
         return "checkmeritschedule/admissionIntialization";
     }
 
+    @GetMapping("/district-dsc-full")
+    public String districtDscFull() {
+        return "reports/district-dsc-full-view";
+    }
+
+    @GetMapping("/applicant-report-by-phase")
+    public String applicantReportByPhase() {
+        return "reports/district-applicant-report-view";
+    }
+
     @GetMapping("/nodal-report/dashboard")
     public String nodalReportDashboard() {
         return "reports/state-dashboard";
