@@ -29,25 +29,24 @@ public class DevPageController {
     private static Map<String, String> buildRoutes() {
         Map<String, String> m = new LinkedHashMap<>();
         m.put("jsp/index", "/");
-        m.put("jsp/authHome", "/authHome");
-        m.put("jsp/authHome_admin", "/authHome/admin");
-        m.put("jsp/authHome_district", "/authHome/district");
-        m.put("jsp/authHome_iti", "/authHome/iti");
-        m.put("jsp/authHome_nodal", "/authHome/nodal");
-        m.put("jsp/placementDashboard", "/placementDashboard");
         m.put("jsp/placements", "/placements");
+        m.put("checkmeritschedule/MeritList", "/MeritList");
+        m.put("checkmeritschedule/MeritResults", "/MeritResults");
+        m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");
+        m.put("checkmeritschedule/admissionPhase1", "/AdmissionPhase1");
+        m.put("checkmeritschedule/DscList", "/DgtPermittedShift");
+        m.put("checkmeritschedule/distVerification", "/VerificationReport");
+        m.put("checkmeritschedule/admissionIntialization", "/PrintAdmissionSlip");
+        m.put("checkmeritschedule/ScheduleEntry", "/ScheduleEntry");
+        m.put("reports/district-dsc-full-view", "/district-dsc-full");
+        m.put("reports/district-applicant-report-view", "/applicant-report-by-phase");
+        m.put("reports/state-dashboard", "/nodal-report/dashboard");
+        m.put("Institute/ItiList", "/itiList");
+        m.put("Institute/ItiDetails", "/iti-details");
+        m.put("Institute/ItiCreate", "/iti-create");
+        m.put("Institute/ItiTradeSelection", "/iti-trade-selection");
+        m.put("Institute/ShiftUnitPermitted", "/shift-unit-permitted");
         m.put("reports/reports", "/reports/");
-        m.put("reports/district-dsc-full-view", "/authHome/district-dsc-full");
-        m.put("reports/district-applicant-report-view", "/authHome/applicant-report-by-phase");
-        m.put("reports/state-dashboard", "/authHome/nodal-report/dashboard");
-        m.put("checkmeritschedule/MeritList", "/authHome/MeritList");
-        m.put("checkmeritschedule/MeritResults", "/authHome/MeritResults");
-        m.put("checkmeritschedule/AdmissionPhase", "/authHome/AdmissionPhase");
-        m.put("checkmeritschedule/admissionPhase1", "/authHome/AdmissionPhase1");
-        m.put("checkmeritschedule/DscList", "/authHome/DgtPermittedShift");
-        m.put("checkmeritschedule/distVerification", "/authHome/VerificationReport");
-        m.put("checkmeritschedule/admissionIntialization", "/authHome/PrintAdmissionSlip");
-        m.put("checkmeritschedule/ScheduleEntry", "/ScheduleEntry/ScheduleEntry");
         String rep = "reports/";
         String[] reportViews = {"students-not-admitted", "api-dashboard-iti", "applicant-report",
                 "admission-report", "dsc-list", "caste-wise-admissions-abstract",
