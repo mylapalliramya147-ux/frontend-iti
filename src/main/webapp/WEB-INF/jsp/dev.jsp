@@ -9,6 +9,7 @@
 <title>DEV - All Pages | ITI Admission</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <style>
+  html { scroll-behavior: smooth; }
   body { background:#f4f6f9; }
   .dev-sidebar { position: sticky; top: 12px; }
   .dev-sidebar .nav-link { border-radius: 6px; color:#333; display:flex; justify-content:space-between; }
@@ -48,7 +49,7 @@
 
     <div class="col-md-10" id="devPageList">
       <c:forEach var="entry" items="${pages}">
-        <div class="module-section mb-4" data-module="${entry.key}">
+        <div class="module-section mb-4" id="mod-${entry.key}" data-module="${entry.key}">
           <h5 class="text-uppercase text-secondary border-bottom pb-1"><c:out value="${entry.key}"/></h5>
           <div class="row">
             <c:forEach var="page" items="${entry.value}">
