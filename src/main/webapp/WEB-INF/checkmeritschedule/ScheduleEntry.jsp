@@ -225,8 +225,8 @@
     </div>
 
     <script>
-        const API_BASE = "http://localhost:8080/itiapchecklistmeritlist/admission-timings";
-        const NODE_API_BASE = 'http://localhost:8080/itiapchecklistmeritlist';
+        const API_BASE = "${backendBaseUrl}/admission-timings";
+        const NODE_API_BASE = '${backendBaseUrl}';
         let currentInitData = null;
 
         // Fetch Caste List

@@ -588,7 +588,7 @@
             return false;
         };
 
-        const NODE_API_BASE = 'http://localhost:8080/itiapchecklistmeritlist'; // Adjust as needed for production
+        const NODE_API_BASE = '${backendBaseUrl}';
         let currentStudent = null;
         let seatMatrixData = [];
 

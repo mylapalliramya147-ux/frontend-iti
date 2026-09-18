@@ -222,7 +222,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const NODE_API_BASE = 'http://10.72.4.135:5051';
+        const NODE_API_BASE = '${backendBaseUrl}';
 
         document.getElementById('printSlipForm').addEventListener('submit', async function(e) {
             e.preventDefault();

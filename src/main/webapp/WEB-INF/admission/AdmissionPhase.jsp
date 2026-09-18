@@ -588,7 +588,7 @@
             return false;
         };
 
-        const NODE_API_BASE = 'http://10.72.4.135:5051';
+        const NODE_API_BASE = '${backendBaseUrl}';
         let currentStudent = null;
         let seatMatrixData = [];
 
