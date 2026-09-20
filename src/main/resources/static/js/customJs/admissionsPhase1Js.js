@@ -102,271 +102,273 @@ function checkAdmissions(rank,insCode){
 	rbody['distCode'] = insCode;
 	rbody['phase'] = '1';
 	
-	$.ajax({
-		type: 'post',
-				// No backend endpoint for getSeatMatrixPhaseOneByRank — stubbed
-		url: API_BASE_URL + '/api/checklist/seat-matrix-phase-one',
-		//url: API_BASE_URL + '/itiapi/admissions/checkRankIsAdmitted',
-		data: JSON.stringify(rbody),
-		contentType: 'application/json',
-//		headers: {
-//			'Authorization': jwtToken
+	// TODO(backend): getSeatMatrixPhaseOneByRank has no backend endpoint.
+	// ChecklistController (/api/checklist) serves checklist CRUD, not seat
+	// matrix data. Re-enable once implemented.
+//	$.ajax({
+//		type: 'post',
+//		url: API_BASE_URL + '/api/checklist/seat-matrix-phase-one',
+//		//url: API_BASE_URL + '/itiapi/admissions/checkRankIsAdmitted',
+//		data: JSON.stringify(rbody),
+//		contentType: 'application/json',
+////		headers: {
+////			'Authorization': jwtToken
+////		},
+//		cache: false,
+//		success: function(resp){
+//			//alert("success=>"+JSON.stringify(resp));
+//			$("#tableAdm").empty();
+//			$("#checkRankDiv").hide();
+//			$("#admissionDiv").show();
+//			
+//			$("#checkRankResp").append('');
+//			$("#rank").val('');
+//			$("#schedule").val('');
+//			
+//			var imgElement = document.createElement("img");
+//			imgElement.src = 'data:image/png;base64,'+resp.imageCandPhotosEntity.image;
+//			imgElement.width = 180;
+//			imgElement.height = 130;
+//			document.getElementById('imageContainer').appendChild(imgElement);
+//			
+//			var phc = resp.studentApplication.phc == true? 'Yes':'No';
+//			var exservice = resp.studentApplication.exservice == true? 'Yes':'No';
+//			
+//			$("#detailsOne").append('<table>'
+//					+'<tr><td>Name </td><td style="font-weight: bold;">: '+resp.studentApplication.name+'</td></tr>'
+//					+'<tr><td>Community </td><td style="font-weight: bold;">: '+resp.studentApplication.caste+'</td></tr>'
+//					+'<tr><td>Gender </td><td style="font-weight: bold;">: '+resp.studentApplication.gender.toUpperCase()+'</td></tr>'
+//					+'<tr><td>Rank </td><td style="font-weight: bold;">: '+resp.ranksEntity.rank+'</td></tr>'
+//					+'<tr><td>Physically Challenged </td><td style="font-weight: bold;">: '+phc+'</td></tr>'
+//					+'</table>');
+//			
+//			$("#detailsTwo").append('<table>'
+//					+'<tr><td>Father Name </td><td style="font-weight: bold;">: '+resp.studentApplication.fname+'</td></tr>'
+//					+'<tr><td>Academic Year </td><td style="font-weight: bold;">: '+resp.studentApplication.sscYear+'</td></tr>'
+//					+'<tr><td>DOB </td><td style="font-weight: bold;">: '+resp.studentApplication.dob+'</td></tr>'
+//					+'<tr><td>Reg No </td><td style="font-weight: bold;">: '+resp.studentApplication.regid+'</td></tr>'
+//					+'<tr><td>Exservice </td><td style="font-weight: bold;">: '+exservice+'</td></tr>'
+//					+'</table>');
+//			
+//			if(resp.studentApplication.gender == 'male'){
+//				//alert("male");
+//				
+//				if(resp.studentApplication.caste == 'OC'){
+//					//alert("OC");
+//					
+//					$("#tableAdm").append('<thead>'
+//							+'<tr>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td>' 
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td> ' 
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>  '
+//							+'</tr>  '
+//							+'<tr>  '
+//						//	+'<td style="background-color: black;color: white;" colspan="4"> </td> ' 
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td>  '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>  '
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td>  '
+//							+'</tr> '
+//							+'</thead>');
+//					
+//					for(var i=0;i<resp.seatmatrix.length;i++){
+//						var bean = resp.seatmatrix[i];
+//						$("#tableAdm").append('<tbody>'
+//								+'<tr>'
+//								+'<td>'+bean.iti_name+'</td>'
+//								+'<td>'+bean.trade_name+'</td>'
+//								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
+//								+'<td>'+bean.strength+'</td>'
+//								
+//								+'<td>'+bean.genTotalStrength+'</td>'
+//								+'<td>'+bean.genTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genTotalStrengthVacant+'</td>'
+//								
+//								+'</tr>'
+//								+'</tbody>');
+//					}
+//				}else{
+//					//alert("male and not oc");
+//					
+//					$("#tableAdm").append('<thead>'
+//							+'<tr>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
+//							+'</tr>'
+//							+'<tr> '
+//							//+'<td style="background-color: black;color: white;" colspan="4"> </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							+'</tr> '
+//							+'</thead>');
+//					
+//					for(var i=0;i<resp.seatmatrix.length;i++){
+//						var bean = resp.seatmatrix[i];
+//						$("#tableAdm").append('<tbody>'
+//								+'<tr>'
+//								+'<td>'+bean.iti_name+'</td>'
+//								+'<td>'+bean.trade_name+'</td>'
+//								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
+//								+'<td>'+bean.strength+'</td>'
+//								
+//								+'<td>'+bean.genTotalStrength+'</td>'
+//								+'<td>'+bean.genTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genTotalStrengthVacant+'</td>'
+//								
+//								+'<td>'+bean.categoryTotalStrength+'</td>'
+//								+'<td>'+bean.categoryTotalStrengthFill+'</td>'
+//								+'<td>'+bean.categoryTotalStrengthVacant+'</td>'
+//								
+//								+'</tr>'
+//								+'</tbody>');
+//					}
+//					
+//				}
+//				
+//				
+//			}//gender male ends
+//			
+//			if(resp.studentApplication.gender == 'female'){
+//				//alert("gender female");
+//				
+//				if(resp.studentApplication.caste == 'OC-W'){
+//					//alert("gender female and OC-W");
+//					
+//					$("#tableAdm").append('<thead>'
+//							+'<tr>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
+//							+'</tr>'
+//							+'<tr> '
+//							//+'<td style="background-color: black;color: white;" colspan="4"> </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							+'</tr> '
+//							+'</thead>');
+//					
+//					for(var i=0;i<resp.seatmatrix.length;i++){
+//						var bean = resp.seatmatrix[i];
+//						$("#tableAdm").append('<tbody>'
+//								+'<tr>'
+//								+'<td>'+bean.iti_name+'</td>'
+//								+'<td>'+bean.trade_name+'</td>'
+//								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
+//								+'<td>'+bean.strength+'</td>'
+//								
+//								+'<td>'+bean.genTotalStrength+'</td>'
+//								+'<td>'+bean.genTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genTotalStrengthVacant+'</td>'
+//								
+//								+'<td>'+bean.genWTotalStrength+'</td>'
+//								+'<td>'+bean.genWTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genWTotalStrengthVacant+'</td>'
+//								
+//								+'</tr>'
+//								+'</tbody>');
+//					}
+//					
+//				}else{
+//					//alert("in else");
+//					var castee = resp.studentApplication.caste.slice(0, 4);
+//					$("#tableAdm").append('<thead>'
+//							+'<tr>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
+//							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
+//							
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL - W</td>'
+//							
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+castee+'</td>'
+//							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
+//							+'</tr>'
+//							
+//							+'<tr> '
+////							+'<td style="background-color: black;color: white;" colspan="4" > </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							
+//							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
+//							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
+//							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
+//							+'</tr> '
+//							+'</thead>');
+//					
+//					for(var i=0;i<resp.seatmatrix.length;i++){
+//						var bean = resp.seatmatrix[i];
+//						$("#tableAdm").append('<tbody>'
+//								+'<tr>'
+//								+'<td>'+bean.iti_name+'</td>'
+//								+'<td>'+bean.trade_name+'</td>'
+//								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
+//								+'<td>'+bean.strength+'</td>'
+//								
+//								+'<td>'+bean.genTotalStrength+'</td>'
+//								+'<td>'+bean.genTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genTotalStrengthVacant+'</td>'
+//								
+//								+'<td>'+bean.genWTotalStrength+'</td>'
+//								+'<td>'+bean.genWTotalStrengthFill+'</td>'
+//								+'<td>'+bean.genWTotalStrengthVacant+'</td>'
+//								
+//								+'<td>'+bean.categoryTotalStrength+'</td>'
+//								+'<td>'+bean.categoryTotalStrengthFill+'</td>'
+//								+'<td>'+bean.categoryTotalStrengthVacant+'</td>'
+//								
+//								+'<td>'+bean.categoryWTotalStrength+'</td>'
+//								+'<td>'+bean.categoryWTotalStrengthFill+'</td>'
+//								+'<td>'+bean.categoryWTotalStrengthVacant+'</td>'
+//								
+//								+'</tr>'
+//								+'</tbody>');
+//					}
+//					 
+//					
+//				}
+//			}
+//			
+//			 
+//			
+//			 
+//			
 //		},
-		cache: false,
-		success: function(resp){
-			//alert("success=>"+JSON.stringify(resp));
-			$("#tableAdm").empty();
-			$("#checkRankDiv").hide();
-			$("#admissionDiv").show();
-			
-			$("#checkRankResp").append('');
-			$("#rank").val('');
-			$("#schedule").val('');
-			
-			var imgElement = document.createElement("img");
-			imgElement.src = 'data:image/png;base64,'+resp.imageCandPhotosEntity.image;
-			imgElement.width = 180;
-			imgElement.height = 130;
-			document.getElementById('imageContainer').appendChild(imgElement);
-			
-			var phc = resp.studentApplication.phc == true? 'Yes':'No';
-			var exservice = resp.studentApplication.exservice == true? 'Yes':'No';
-			
-			$("#detailsOne").append('<table>'
-					+'<tr><td>Name </td><td style="font-weight: bold;">: '+resp.studentApplication.name+'</td></tr>'
-					+'<tr><td>Community </td><td style="font-weight: bold;">: '+resp.studentApplication.caste+'</td></tr>'
-					+'<tr><td>Gender </td><td style="font-weight: bold;">: '+resp.studentApplication.gender.toUpperCase()+'</td></tr>'
-					+'<tr><td>Rank </td><td style="font-weight: bold;">: '+resp.ranksEntity.rank+'</td></tr>'
-					+'<tr><td>Physically Challenged </td><td style="font-weight: bold;">: '+phc+'</td></tr>'
-					+'</table>');
-			
-			$("#detailsTwo").append('<table>'
-					+'<tr><td>Father Name </td><td style="font-weight: bold;">: '+resp.studentApplication.fname+'</td></tr>'
-					+'<tr><td>Academic Year </td><td style="font-weight: bold;">: '+resp.studentApplication.sscYear+'</td></tr>'
-					+'<tr><td>DOB </td><td style="font-weight: bold;">: '+resp.studentApplication.dob+'</td></tr>'
-					+'<tr><td>Reg No </td><td style="font-weight: bold;">: '+resp.studentApplication.regid+'</td></tr>'
-					+'<tr><td>Exservice </td><td style="font-weight: bold;">: '+exservice+'</td></tr>'
-					+'</table>');
-			
-			if(resp.studentApplication.gender == 'male'){
-				//alert("male");
-				
-				if(resp.studentApplication.caste == 'OC'){
-					//alert("OC");
-					
-					$("#tableAdm").append('<thead>'
-							+'<tr>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td>' 
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td> ' 
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>  '
-							+'</tr>  '
-							+'<tr>  '
-						//	+'<td style="background-color: black;color: white;" colspan="4"> </td> ' 
-							+'<td style="background-color: black;color: white;" align="center"> Total </td>  '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>  '
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td>  '
-							+'</tr> '
-							+'</thead>');
-					
-					for(var i=0;i<resp.seatmatrix.length;i++){
-						var bean = resp.seatmatrix[i];
-						$("#tableAdm").append('<tbody>'
-								+'<tr>'
-								+'<td>'+bean.iti_name+'</td>'
-								+'<td>'+bean.trade_name+'</td>'
-								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
-								+'<td>'+bean.strength+'</td>'
-								
-								+'<td>'+bean.genTotalStrength+'</td>'
-								+'<td>'+bean.genTotalStrengthFill+'</td>'
-								+'<td>'+bean.genTotalStrengthVacant+'</td>'
-								
-								+'</tr>'
-								+'</tbody>');
-					}
-				}else{
-					//alert("male and not oc");
-					
-					$("#tableAdm").append('<thead>'
-							+'<tr>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
-							+'</tr>'
-							+'<tr> '
-							//+'<td style="background-color: black;color: white;" colspan="4"> </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							+'</tr> '
-							+'</thead>');
-					
-					for(var i=0;i<resp.seatmatrix.length;i++){
-						var bean = resp.seatmatrix[i];
-						$("#tableAdm").append('<tbody>'
-								+'<tr>'
-								+'<td>'+bean.iti_name+'</td>'
-								+'<td>'+bean.trade_name+'</td>'
-								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
-								+'<td>'+bean.strength+'</td>'
-								
-								+'<td>'+bean.genTotalStrength+'</td>'
-								+'<td>'+bean.genTotalStrengthFill+'</td>'
-								+'<td>'+bean.genTotalStrengthVacant+'</td>'
-								
-								+'<td>'+bean.categoryTotalStrength+'</td>'
-								+'<td>'+bean.categoryTotalStrengthFill+'</td>'
-								+'<td>'+bean.categoryTotalStrengthVacant+'</td>'
-								
-								+'</tr>'
-								+'</tbody>');
-					}
-					
-				}
-				
-				
-			}//gender male ends
-			
-			if(resp.studentApplication.gender == 'female'){
-				//alert("gender female");
-				
-				if(resp.studentApplication.caste == 'OC-W'){
-					//alert("gender female and OC-W");
-					
-					$("#tableAdm").append('<thead>'
-							+'<tr>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
-							+'</tr>'
-							+'<tr> '
-							//+'<td style="background-color: black;color: white;" colspan="4"> </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							
-							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							+'</tr> '
-							+'</thead>');
-					
-					for(var i=0;i<resp.seatmatrix.length;i++){
-						var bean = resp.seatmatrix[i];
-						$("#tableAdm").append('<tbody>'
-								+'<tr>'
-								+'<td>'+bean.iti_name+'</td>'
-								+'<td>'+bean.trade_name+'</td>'
-								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
-								+'<td>'+bean.strength+'</td>'
-								
-								+'<td>'+bean.genTotalStrength+'</td>'
-								+'<td>'+bean.genTotalStrengthFill+'</td>'
-								+'<td>'+bean.genTotalStrengthVacant+'</td>'
-								
-								+'<td>'+bean.genWTotalStrength+'</td>'
-								+'<td>'+bean.genWTotalStrengthFill+'</td>'
-								+'<td>'+bean.genWTotalStrengthVacant+'</td>'
-								
-								+'</tr>'
-								+'</tbody>');
-					}
-					
-				}else{
-					//alert("in else");
-					var castee = resp.studentApplication.caste.slice(0, 4);
-					$("#tableAdm").append('<thead>'
-							+'<tr>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">ITI NAME</td>'
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TRADE NAME</td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2"></td> '
-							+'<td style="background-color: black;color: white;" align="center" rowspan="2">TOTAL STRENGTH</td>'
-							
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">GENERAL - W</td>'
-							
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+castee+'</td>'
-							+'<td style="background-color: black;color: white;" colspan="3" align="center">'+resp.studentApplication.caste+'</td>'
-							+'</tr>'
-							
-							+'<tr> '
-//							+'<td style="background-color: black;color: white;" colspan="4" > </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Total </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							
-							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							
-							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							
-							+'<td style="background-color: black;color: white;" align="center"> Total </td> '
-							+'<td style="background-color: black;color: white;" align="center"> Fill </td>'
-							+'<td style="background-color: black;color: white;" align="center"> Vacant </td> '
-							+'</tr> '
-							+'</thead>');
-					
-					for(var i=0;i<resp.seatmatrix.length;i++){
-						var bean = resp.seatmatrix[i];
-						$("#tableAdm").append('<tbody>'
-								+'<tr>'
-								+'<td>'+bean.iti_name+'</td>'
-								+'<td>'+bean.trade_name+'</td>'
-								+'<td><input type="radio" name="selectedRecord" id="selectedRecord'+i+'" value="'+bean.itiCode+','+bean.tradeCode+','+resp.ranksEntity.regid+'" /></td>'
-								+'<td>'+bean.strength+'</td>'
-								
-								+'<td>'+bean.genTotalStrength+'</td>'
-								+'<td>'+bean.genTotalStrengthFill+'</td>'
-								+'<td>'+bean.genTotalStrengthVacant+'</td>'
-								
-								+'<td>'+bean.genWTotalStrength+'</td>'
-								+'<td>'+bean.genWTotalStrengthFill+'</td>'
-								+'<td>'+bean.genWTotalStrengthVacant+'</td>'
-								
-								+'<td>'+bean.categoryTotalStrength+'</td>'
-								+'<td>'+bean.categoryTotalStrengthFill+'</td>'
-								+'<td>'+bean.categoryTotalStrengthVacant+'</td>'
-								
-								+'<td>'+bean.categoryWTotalStrength+'</td>'
-								+'<td>'+bean.categoryWTotalStrengthFill+'</td>'
-								+'<td>'+bean.categoryWTotalStrengthVacant+'</td>'
-								
-								+'</tr>'
-								+'</tbody>');
-					}
-					 
-					
-				}
-			}
-			
-			 
-			
-			 
-			
-		},
-		error: function(resp){
-			alert("erro=>"+JSON.stringify(resp));
-			$("#checkRankResp").append('<span style="color: red;">'+resp.responseText+'</span>');
-			$("#rank").val('');
-			$("#schedule").val('');
-			
-		}
-		
-	});
+//		error: function(resp){
+//			alert("erro=>"+JSON.stringify(resp));
+//			$("#checkRankResp").append('<span style="color: red;">'+resp.responseText+'</span>');
+//			$("#rank").val('');
+//			$("#schedule").val('');
+//			
+//		}
+//		
+//	});
 	
 	
 }

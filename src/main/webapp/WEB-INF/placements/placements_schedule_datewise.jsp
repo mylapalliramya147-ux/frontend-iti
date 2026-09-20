@@ -19,7 +19,7 @@ var roleId   = '<c:out value="${sessionScope.roleId}" default=""/>';
 var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
 var username = '<c:out value="${sessionScope.username}" default=""/>';
 var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
-var baseUrl  = '${backendBaseUrl}/';   /* e.g. http://localhost:5050/ */
+var baseUrl  = '${backendBaseUrl}/';   /* e.g. <backend-api-base-url>/ */
 </script>
 <style>
 #scrollbar {

@@ -99,28 +99,32 @@ function validate(){
 	rbody['roleId'] = roleId;
 	rbody['insCode'] = insCode;
 	
-	$.ajax({
-		type: 'post',
-				// No backend endpoint for itiAdmissionEntry — stubbed
-		url: API_BASE_URL + '/api/admission-timings/save',
-		contentType: 'application/json',
-		data: JSON.stringify(rbody),
-		cache: false,
-		timeout: 600000,
-		success:function(response){
-			//alert("resp=>"+JSON.stringify(response));
-			
-			$("#admDate").val(response.admDate);
-			$("#meritTo").val(response.meritTo);
-			$("#meritFrom").val(response.meritFrom);
-			
-			document.forms[0].submit();
-		},
-		error:function(error){
-			//alert("error=>"+JSON.stringify(error));
-			$("#admTimingError").append('<h6 style="color: red;">'+error.responseText+'<h6>');
-		}
-	});
+	// TODO(backend): itiAdmissionEntry has no backend endpoint.
+	// POST /admission-timings exists but expects an AdmissionTiming body
+	// (itiCode/phase/admDate/meritFrom/meritTo), not the
+	// {castePerform,qualPerform,admTime,roleId,insCode} payload sent here.
+	// Re-enable once implemented.
+//	$.ajax({
+//		type: 'post',
+//		url: API_BASE_URL + '/api/admission-timings/save',
+//		contentType: 'application/json',
+//		data: JSON.stringify(rbody),
+//		cache: false,
+//		timeout: 600000,
+//		success:function(response){
+//			//alert("resp=>"+JSON.stringify(response));
+//			
+//			$("#admDate").val(response.admDate);
+//			$("#meritTo").val(response.meritTo);
+//			$("#meritFrom").val(response.meritFrom);
+//			
+//			document.forms[0].submit();
+//		},
+//		error:function(error){
+//			//alert("error=>"+JSON.stringify(error));
+//			$("#admTimingError").append('<h6 style="color: red;">'+error.responseText+'<h6>');
+//		}
+//	});
 	
 	return false;
 }

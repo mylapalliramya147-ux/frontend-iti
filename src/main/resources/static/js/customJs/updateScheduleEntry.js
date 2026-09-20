@@ -80,53 +80,56 @@ function getScheduleEntryByDistAndIti(){
 	data['distCode'] = insCode;
 	data['itiCode'] = insCode;
 	//alert("before calling"+jwtToken);
-	$.ajax({
-		type: 'POST',
-				// No backend endpoint for getScheduleEntryByDistCodeAndItiCode — stubbed
-		url: API_BASE_URL + '/api/checklist/schedule-entry',
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		headers:{
-			'Authorization': jwtToken
-		},
-		cache: false,
-		timeout: 600000,
-		success:function(resp){
-			
-			 // Clear all input fields
-		    $("#addrs_state_p").val("all");
-		    $("#addrs_district_p").val("all");
-		    $("#addrs_mandal_p").val("all");
-		    $("#txtInput").val("");
-		    $("#mainCaptcha").val("");
-		    
-			alert("success=>getScheduleEntryByDistAndIti=>"+JSON.stringify(resp));
-			response = resp;
-			//alert("lenth=>"+parseInt(resp.length-1));
-			
-		
-				var count =0;
-				for(var i=0; i<resp.length;i++){
-					//alert(i);
-		       		  count = count + 1;
-		       		  var bean = resp[i];
-		       		 
-		       		  $("#entryList").append('<tr>'
-		       				  +'<td>'+count+'</td>'
-		       				  +'<td>'+bean.distCode+'</td>'
-		       				  +'<td>'+bean.itiCode+'</td>'
-		       				  +'<td>'+bean.meritFrom+'</td>'
-		       				  +'<td>'+bean.meritTo+'</td>'
-		       				  +'<td>'+bean.callDate+'</td>'
-		       				  +'<td>'+bean.callTime+'</td>'
-		       				  +'</tr>');
-		       	  }
-			
-		},
-		error:function(resp){
-			alert("error=>getScheduleEntryByDistCode=>"+JSON.stringify(resp));
-		}
-	});
+	// TODO(backend): getScheduleEntryByDistCodeAndItiCode has no backend
+	// endpoint. Schedule entries live on AdmissionTimingController
+	// (/admission-timings): GET|PUT|DELETE /{itiCode}/{phase} - query by
+	// distCode+itiCode is not supported. Re-enable once implemented.
+//	$.ajax({
+//		type: 'POST',
+//		url: API_BASE_URL + '/api/checklist/schedule-entry',
+//		contentType: "application/json",
+//		data: JSON.stringify(data),
+//		headers:{
+//			'Authorization': jwtToken
+//		},
+//		cache: false,
+//		timeout: 600000,
+//		success:function(resp){
+//			
+//			 // Clear all input fields
+//		    $("#addrs_state_p").val("all");
+//		    $("#addrs_district_p").val("all");
+//		    $("#addrs_mandal_p").val("all");
+//		    $("#txtInput").val("");
+//		    $("#mainCaptcha").val("");
+//		    
+//			alert("success=>getScheduleEntryByDistAndIti=>"+JSON.stringify(resp));
+//			response = resp;
+//			//alert("lenth=>"+parseInt(resp.length-1));
+//			
+//		
+//				var count =0;
+//				for(var i=0; i<resp.length;i++){
+//					//alert(i);
+//		       		  count = count + 1;
+//		       		  var bean = resp[i];
+//		       		 
+//		       		  $("#entryList").append('<tr>'
+//		       				  +'<td>'+count+'</td>'
+//		       				  +'<td>'+bean.distCode+'</td>'
+//		       				  +'<td>'+bean.itiCode+'</td>'
+//		       				  +'<td>'+bean.meritFrom+'</td>'
+//		       				  +'<td>'+bean.meritTo+'</td>'
+//		       				  +'<td>'+bean.callDate+'</td>'
+//		       				  +'<td>'+bean.callTime+'</td>'
+//		       				  +'</tr>');
+//		       	  }
+//			
+//		},
+//		error:function(resp){
+//			alert("error=>getScheduleEntryByDistCode=>"+JSON.stringify(resp));
+//		}
+//	});
 }
 
 
