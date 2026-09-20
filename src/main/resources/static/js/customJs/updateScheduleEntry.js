@@ -27,7 +27,7 @@ function getReady(){
 	}
 	$.ajax({
 		type: 'get',
-		url: API_BASE_URL + '/itiapi/masterdata/getAllItis',
+				url: API_BASE_URL + '/api/itis',
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -82,7 +82,8 @@ function getScheduleEntryByDistAndIti(){
 	//alert("before calling"+jwtToken);
 	$.ajax({
 		type: 'POST',
-		url:API_BASE_URL + '/itiapi/admissions/getScheduleEntryByDistCodeAndItiCode',
+				// No backend endpoint for getScheduleEntryByDistCodeAndItiCode — stubbed
+		url: API_BASE_URL + '/api/checklist/schedule-entry',
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		headers:{

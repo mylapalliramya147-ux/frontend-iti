@@ -42,7 +42,7 @@ function getScheduleTimingsByDist(insCode){
 	
 	$.ajax({
 		type: 'post',
-		url: API_BASE_URL + '/itiapi/admissions/getScheduleTimingsByDist?distCode='+insCode,
+				url: API_BASE_URL + '/admission-timings',  // No direct backend endpoint — stubbed
 		headers:{
 			'Authorization': jwtToken
 		},
@@ -104,7 +104,8 @@ function checkAdmissions(rank,insCode){
 	
 	$.ajax({
 		type: 'post',
-		url: API_BASE_URL + '/itiapi/masterdata/getSeatMatrixPhaseOneByRank',
+				// No backend endpoint for getSeatMatrixPhaseOneByRank — stubbed
+		url: API_BASE_URL + '/api/checklist/seat-matrix-phase-one',
 		//url: API_BASE_URL + '/itiapi/admissions/checkRankIsAdmitted',
 		data: JSON.stringify(rbody),
 		contentType: 'application/json',

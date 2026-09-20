@@ -30,7 +30,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'get',
-			url: API_BASE_URL + '/itiapi/masterdata/getAdmissionTimings?insCode='+insCode+'&roleId='+roleId,
+						url: API_BASE_URL + '/admission-timings',
 			cache: false,
 			success: function(resp){
 				//alert("resp=>"+JSON.stringify(resp));
@@ -101,7 +101,8 @@ function validate(){
 	
 	$.ajax({
 		type: 'post',
-		url: API_BASE_URL + '/itiapi/masterdata/itiAdmissionEntry',
+				// No backend endpoint for itiAdmissionEntry — stubbed
+		url: API_BASE_URL + '/api/admission-timings/save',
 		contentType: 'application/json',
 		data: JSON.stringify(rbody),
 		cache: false,

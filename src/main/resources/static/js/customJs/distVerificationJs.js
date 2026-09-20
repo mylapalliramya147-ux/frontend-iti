@@ -52,7 +52,8 @@ function getDistVerificationList(insCode){
 	
 	$.ajax({
 		type: 'get',
-		url: API_BASE_URL + '/itiapi/masterdata/getDistVerificationList?dist_code='+insCode,
+				// No backend endpoint for getDistVerificationList — this call will fail; the table stays empty
+		url: API_BASE_URL + '/masterdata/getDistVerificationList?dist_code='+insCode,
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -116,7 +117,7 @@ function getDistVerificationList(insCode){
 function getCandidateAppliedDetails(a){
 	$.ajax({
 		type: 'post',
-		url: API_BASE_URL + '/itiapi/std/getCandidateAppliedDetails?regid='+a,
+				url: API_BASE_URL + '/api/student/' + a,  // Backend: StudentApplicationController @GetMapping("/{regid}")
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -157,10 +158,12 @@ function editApplication(ssc_regno,regid,dob){
 	 
 	 
 	
-	//check the registration
+		// Check the registration — no backend endpoint exists for checkRegOrNot
+	// This call will fail; callers should handle gracefully
 	$.ajax({
 		type: 'post',
-		url: API_BASE_URL + '/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
+		//url: API_BASE_URL + '/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
+		url: API_BASE_URL + '/api/student/' + regid,  // Best available: fetch student by regid
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -269,7 +272,8 @@ function getAdmissionPhaseData(){
 	$.ajax({
         type: "get",
         contentType: "application/json",
-        url: API_BASE_URL + "/itiapi/masterdata/getAdmissionPhaseData",
+        // No direct backend equivalent — Reports controller has /api/reports/current-admission-phase
+        url: API_BASE_URL + "/api/reports/current-admission-phase",
         cache: false,
         timeout: 600000,
         success: function (data) {
@@ -488,7 +492,8 @@ function rejectData(){
 			headers:{
 	       		'Authorization': jwtToken
 	       	},
-			url: API_BASE_URL + "/itiapi/admissions/verificationRejection",
+					// No backend endpoint for verificationRejection — stubbed
+		url: API_BASE_URL + "/api/checklist/verification-rejection",
 			cache: false,
 			timeout: 600000,
 			success:function(resp){
@@ -1065,7 +1070,8 @@ function approveData(){
 	if(ssc_eq == 'Y'){
 		$.ajax({
 			type: 'post',
-			url: API_BASE_URL + '/itiapi/admissions/verificationApproval',
+					// No backend endpoint for verificationApproval — stubbed
+		url: API_BASE_URL + "/api/checklist/verification-approval",
 			contentType: 'application/json',
 			cache: false,
 			timeout: 600000,
