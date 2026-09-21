@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 
 	let jwtToken = null;
 	let insCode =  null;
@@ -29,7 +30,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getAdmissionTimings?insCode='+insCode+'&roleId='+roleId,
+						url: API_BASE_URL + '/admission-timings',
 			cache: false,
 			success: function(resp){
 				//alert("resp=>"+JSON.stringify(resp));
@@ -98,27 +99,32 @@ function validate(){
 	rbody['roleId'] = roleId;
 	rbody['insCode'] = insCode;
 	
-	$.ajax({
-		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/itiAdmissionEntry',
-		contentType: 'application/json',
-		data: JSON.stringify(rbody),
-		cache: false,
-		timeout: 600000,
-		success:function(response){
-			//alert("resp=>"+JSON.stringify(response));
-			
-			$("#admDate").val(response.admDate);
-			$("#meritTo").val(response.meritTo);
-			$("#meritFrom").val(response.meritFrom);
-			
-			document.forms[0].submit();
-		},
-		error:function(error){
-			//alert("error=>"+JSON.stringify(error));
-			$("#admTimingError").append('<h6 style="color: red;">'+error.responseText+'<h6>');
-		}
-	});
+	// TODO(backend): itiAdmissionEntry has no backend endpoint.
+	// POST /admission-timings exists but expects an AdmissionTiming body
+	// (itiCode/phase/admDate/meritFrom/meritTo), not the
+	// {castePerform,qualPerform,admTime,roleId,insCode} payload sent here.
+	// Re-enable once implemented.
+//	$.ajax({
+//		type: 'post',
+//		url: API_BASE_URL + '/api/admission-timings/save',
+//		contentType: 'application/json',
+//		data: JSON.stringify(rbody),
+//		cache: false,
+//		timeout: 600000,
+//		success:function(response){
+//			//alert("resp=>"+JSON.stringify(response));
+//			
+//			$("#admDate").val(response.admDate);
+//			$("#meritTo").val(response.meritTo);
+//			$("#meritFrom").val(response.meritFrom);
+//			
+//			document.forms[0].submit();
+//		},
+//		error:function(error){
+//			//alert("error=>"+JSON.stringify(error));
+//			$("#admTimingError").append('<h6 style="color: red;">'+error.responseText+'<h6>');
+//		}
+//	});
 	
 	return false;
 }

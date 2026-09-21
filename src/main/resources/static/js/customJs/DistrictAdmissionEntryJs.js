@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 
 let jwtToken = null;
 	let insCode =  null;

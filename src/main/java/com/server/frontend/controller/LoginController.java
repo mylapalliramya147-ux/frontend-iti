@@ -5,6 +5,7 @@ import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,8 @@ import org.springframework.web.client.RestTemplate;
 public class LoginController {
 
     private final RestTemplate rest = new RestTemplate();
-    private static final String AUTH_URL = "http://localhost:5050/api/auth/login";
+    @Value("${backend.api.base-url}/api/auth/login")
+    private String AUTH_URL;
 
     @PostMapping("/iti/login.do")
     public String login(@RequestParam("uname") String uname,

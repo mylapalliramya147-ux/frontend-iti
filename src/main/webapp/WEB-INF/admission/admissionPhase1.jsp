@@ -8,6 +8,7 @@
 
 <title>Admissions Phase - 1</title>
 
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script src="./js/customJs/admissionsPhase1Js.js"></script>
 
 </head>

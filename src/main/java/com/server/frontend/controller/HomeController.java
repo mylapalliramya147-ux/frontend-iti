@@ -8,6 +8,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    // ========== PUBLIC STUDENT PAGES (no session required) ==========
+
+    @GetMapping("/student-registration")
+    public String studentRegistration() {
+        return "student/StudentRegistration";
+    }
+
+    @GetMapping("/student-apply")
+    public String studentApply() {
+        return "student/StudentApply";
+    }
+
+    @GetMapping("/student-edit-details")
+    public String studentEditDetails() {
+        return "student/StudentEditDetails";
+    }
+
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
         HttpSession authSession = request.getSession(false);
@@ -64,11 +81,6 @@ public class HomeController {
     @GetMapping("/PrintAdmissionSlip")
     public String printAdmissionSlip() {
         return "checkmeritschedule/admissionIntialization";
-    }
-
-    @GetMapping("/district-dsc-full")
-    public String districtDscFull() {
-        return "reports/district-dsc-full-view";
     }
 
     @GetMapping("/applicant-report-by-phase")

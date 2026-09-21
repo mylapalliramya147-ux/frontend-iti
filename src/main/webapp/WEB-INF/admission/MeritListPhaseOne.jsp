@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="./css/style.css">
 <title>Merit List</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <script type="text/javascript" src="./js/customJs/MeritListPhaseOneJs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>

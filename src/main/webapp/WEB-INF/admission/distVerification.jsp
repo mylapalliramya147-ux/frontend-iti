@@ -23,6 +23,7 @@
 <title>Dist Verification</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/customJs/distVerificationJs.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 </head>
 <body onload="getReady();">

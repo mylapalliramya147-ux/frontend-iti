@@ -8,6 +8,7 @@
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script src="${pageContext.request.contextPath}/js/siteScript.js"></script>
 <script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">
@@ -17,7 +18,7 @@ var roleId   = '<c:out value="${sessionScope.roleId}" default=""/>';
 var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
 var username = '<c:out value="${sessionScope.username}" default=""/>';
 var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
-var baseUrl  = '${backendBaseUrl}/';   /* e.g. http://localhost:5050/ */
+var baseUrl  = '${backendBaseUrl}/';   /* e.g. <backend-api-base-url>/ */
 </script>
 <script>
 $(document).ready(function(){

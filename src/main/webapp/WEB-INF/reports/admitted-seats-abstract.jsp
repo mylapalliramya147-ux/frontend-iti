@@ -87,7 +87,7 @@
             const govt = document.getElementById('govt').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/govt-pvt-seats?year=' + encodeURIComponent(year) + '&govt=' + encodeURIComponent(govt), { method: 'GET' })
+            fetch('${backendApiUrl}/iti-admissions?year=' + encodeURIComponent(year) + '&govt=' + encodeURIComponent(govt) + '&size=10000', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';

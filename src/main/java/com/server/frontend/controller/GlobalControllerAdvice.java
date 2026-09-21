@@ -1,25 +1,24 @@
 package com.server.frontend.controller;
 
-import com.server.frontend.config.BackendApiConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    private final BackendApiConfig backendApiConfig;
+    @Value("${backend.api.base-url}")
+    private String backendBaseUrl;
 
-    public GlobalControllerAdvice(BackendApiConfig backendApiConfig) {
-        this.backendApiConfig = backendApiConfig;
-    }
+    private static final String REPORTS_PATH = "/api/reports";
 
     @ModelAttribute("backendApiUrl")
     public String getBackendApiUrl() {
-        return backendApiConfig.getFullUrl("reports");
+        return backendBaseUrl + REPORTS_PATH;
     }
 
     @ModelAttribute("backendBaseUrl")
     public String getBackendBaseUrl() {
-        return backendApiConfig.getBaseUrl("reports");
+        return backendBaseUrl;
     }
 }

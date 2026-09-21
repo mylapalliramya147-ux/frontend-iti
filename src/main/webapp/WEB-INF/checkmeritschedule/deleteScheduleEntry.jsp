@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="./css/style.css">
 <title>Update Schedule Entry</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <script type="text/javascript"
 	src="./js/customJs/deleteScheduleEntry.js"></script>

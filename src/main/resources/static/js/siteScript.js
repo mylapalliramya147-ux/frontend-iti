@@ -1,23 +1,28 @@
 /**
  * 
  */
-const API_BASE_URL = "http://10.72.4.135:5051";
+// API_BASE_URL is injected by the JSP before this script loads via window.API_BASE_URL
+const API_BASE_URL = window.API_BASE_URL;
+
 
 function checkValue(errorId) {
 	$("#" + errorId).html("");
 }
+
+/**
+ * Generates captcha by fetching text from the Frontend /captcha/text endpoint
+ * (served by CaptchaController) and populating the mainCaptcha input field.
+ * Falls back to local generation if the endpoint is unavailable.
+ */
 function generateCaptcha() {
-    var url = API_BASE_URL + '/generateCaptcha';
 	$.ajax({
-		type: 'POST',
-		url: url,
+		url: "/captcha/text",
+		method: "GET",
 		xhrFields: { withCredentials: true },
 		success: function (response) {
-			if (response.status === "SUCCESS") {
-				var captchaElem = document.getElementById("mainCaptcha");
-				if (captchaElem) {
-					captchaElem.value = response.captcha;
-				}
+			var captchaElem = document.getElementById("mainCaptcha");
+			if (captchaElem) {
+				captchaElem.value = response.trim();
 			}
 		},
 		error: function () {
@@ -27,27 +32,39 @@ function generateCaptcha() {
 			for (var i = 0; i < 4; i++) {
 				code += alpha[Math.floor(Math.random() * alpha.length)];
 			}
-			document.getElementById("mainCaptcha").value = code;
+			var captchaElem = document.getElementById("mainCaptcha");
+			if (captchaElem) {
+				captchaElem.value = code;
+			}
 		}
 	});
 }
 
-function getAllSSCBoards(callback) {
-    var url = API_BASE_URL + '/getAllSSCBoards';
+function getAllCastes(callback) {
+    var url = API_BASE_URL + '/api/student/castes';
 	$.ajax({
-		type: 'POST',
+		type: 'GET',
 		url: url,
 		xhrFields: { withCredentials: true },
 		success: function (resp) {
 			if (callback) callback(resp);
 		},
 		error: function () {
-			console.error("Failed to fetch SSC boards from server.");
-			// Provide a minimal fallback or empty array
+			console.error("Failed to fetch Castes from server.");
 			if (callback) callback([]);
 		}
 	});
 }
+
+/**
+ * Returns SSC boards list. The Backend has no dedicated SSC-boards endpoint,
+ * so this returns an empty array immediately — callers populate board
+ * dropdowns via the student's stored sscBoard field instead.
+ */
+function getAllSSCBoards(callback) {
+    if (callback) callback([]);
+}
+
 function getBoardName(boardCode, callback) {
 	getAllSSCBoards(function (boards) {
 		var boardName = "";
@@ -58,22 +75,6 @@ function getBoardName(boardCode, callback) {
 			}
 		}
 		if (callback) callback(boardName);
-	});
-}
-
-function getAllCastes(callback) {
-    var url = API_BASE_URL + '/getAllCastes';
-	$.ajax({
-		type: 'POST',
-		url: url,
-		xhrFields: { withCredentials: true },
-		success: function (resp) {
-			if (callback) callback(resp);
-		},
-		error: function () {
-			console.error("Failed to fetch Castes from server.");
-			if (callback) callback([]);
-		}
 	});
 }
 function getCastesName(category_code, callback) {

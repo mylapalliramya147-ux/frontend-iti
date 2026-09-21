@@ -147,7 +147,7 @@
     </footer>
 
     <script>
-        const NODE_API_BASE = "http://" + window.location.hostname + ":8080/itiapchecklistmeritlist";
+        const NODE_API_BASE = "${backendBaseUrl}";
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List

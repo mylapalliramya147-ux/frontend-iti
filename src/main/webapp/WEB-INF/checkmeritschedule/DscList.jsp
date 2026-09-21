@@ -179,7 +179,7 @@
 
     <script>
         // Ensure we point to the Node backend correctly
-        const NODE_API_BASE = "http://" + window.location.hostname + ":5051";
+        const NODE_API_BASE = "${backendBaseUrl}";
 
         document.addEventListener('DOMContentLoaded', async () => {
             // 1. Setup District Display

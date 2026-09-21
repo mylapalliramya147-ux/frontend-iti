@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 let allSSCBoards = null;
 let dists = null;
 
@@ -39,7 +40,14 @@ function printData(){
 			allSSCBoards = boards;
 			$.ajax({
 				type : 'post',
-				url: 'http://10.72.4.135:5051/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+dob, // Local backend
+				// TODO(backend): no endpoint exists for checkRegOrNot. The Backend only
+				// exposes GET /api/student/{regid} (StudentApplicationController), which
+				// returns the raw application instead of the {studentApplication,
+				// imageCandPhotosEntity} wrapper this page expects. The page is also
+				// unrouted: distVerification.jsp posts to ./printVeriedApplication but no
+				// controller maps that path (only /dev/view/admission/printVeriedApplication
+				// reaches it). Wire a controller + endpoint before re-enabling.
+				url: API_BASE_URL + '/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+dob, // Local backend
 				cache : false,
 				timeout : 6000000,
 				success : function(resp) {

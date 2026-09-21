@@ -1,6 +1,7 @@
 /**
  * 
  */
+const API_BASE_URL = window.API_BASE_URL;
 let jwtToken = null;
 let insCode = null;
 
@@ -51,7 +52,7 @@ function getDistVerificationList(insCode){
 	
 	$.ajax({
 		type: 'get',
-		url: 'http://10.72.4.135:8888/itiapi/masterdata/getDistVerificationList?dist_code='+insCode,
+		url: API_BASE_URL + '/masterdata/getDistVerificationList?dist_code='+insCode,
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -115,7 +116,7 @@ function getDistVerificationList(insCode){
 function getCandidateAppliedDetails(a){
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/std/getCandidateAppliedDetails?regid='+a,
+				url: API_BASE_URL + '/api/student/' + a,  // Backend: StudentApplicationController @GetMapping("/{regid}")
 		contentType: 'application/json',
 		cache: false,
 		timeout: 600000,
@@ -156,10 +157,12 @@ function editApplication(ssc_regno,regid,dob){
 	 
 	 
 	
-	//check the registration
+		// Check the registration — no backend endpoint exists for checkRegOrNot
+	// This call will fail; callers should handle gracefully
 	$.ajax({
 		type: 'post',
-		url: 'http://10.72.4.135:8888/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
+		//url: API_BASE_URL + '/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
+		url: API_BASE_URL + '/api/student/' + regid,  // Best available: fetch student by regid
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -268,7 +271,8 @@ function getAdmissionPhaseData(){
 	$.ajax({
         type: "get",
         contentType: "application/json",
-        url: "http://10.72.4.135:8888/itiapi/masterdata/getAdmissionPhaseData",
+        // No direct backend equivalent — Reports controller has /api/reports/current-admission-phase
+        url: API_BASE_URL + "/api/reports/current-admission-phase",
         cache: false,
         timeout: 600000,
         success: function (data) {
@@ -480,41 +484,46 @@ function rejectData(){
 		data['rejectedReason'] =  rejectReason;
 		data['action'] = 'reject';
 		
-		$.ajax({
-			type: 'post',
-			contentType: 'application/json',
-			data: JSON.stringify(data),
-			headers:{
-	       		'Authorization': jwtToken
-	       	},
-			url: "http://10.72.4.135:8888/itiapi/admissions/verificationRejection",
-			cache: false,
-			timeout: 600000,
-			success:function(resp){
-				//alert("success=>"+resp);
-				
-				 document.getElementById("verificationSuccessMsg").innerHTML=resp;
-				 $("#verificationSuccessMsg").css({'color': 'green'});
-				 $("#404Msg").hide(); 
-					$("#navbar").show(); 
-					$("#formTwo").hide(); 
-					$("#admYearPhaseDiv").hide(); 
-					$("#contentDiv").show(); 
-					$("#approveButton").show(); 
-					
-					getSSCBoards = getAllSSCBoards();
-					getCastes = getAllCastes();
-					getDistVerificationList(insCode);
-					
-					valuesAsNull();
-			},
-			error:function(resp){
-				//alert("error=>"+JSON.stringify(resp));
-				$("#serverResponse").html(resp.responseText);
-				$("#serverResponse").css({'color': 'red'});
-				return false;
-			}
-		});
+		// TODO(backend): verification REJECTION has no backend endpoint.
+		// ChecklistController (/api/checklist) exposes only GET /{regid},
+		// /district/{dist_code}, /phase/{phase}, /iti/{iti_code}, /status/{app_status},
+		// POST (create) and PUT /{regid} (update Checklist body) - none of which
+		// accept a verification-rejection payload. Re-enable once implemented.
+//		$.ajax({
+//			type: 'post',
+//			contentType: 'application/json',
+//			data: JSON.stringify(data),
+//			headers:{
+//	       		'Authorization': jwtToken
+//	       	},
+//		url: API_BASE_URL + "/api/checklist/verification-rejection",
+//			cache: false,
+//			timeout: 600000,
+//			success:function(resp){
+//				//alert("success=>"+resp);
+//				
+//				 document.getElementById("verificationSuccessMsg").innerHTML=resp;
+//				 $("#verificationSuccessMsg").css({'color': 'green'});
+//				 $("#404Msg").hide(); 
+//					$("#navbar").show(); 
+//					$("#formTwo").hide(); 
+//					$("#admYearPhaseDiv").hide(); 
+//					$("#contentDiv").show(); 
+//					$("#approveButton").show(); 
+//					
+//					getSSCBoards = getAllSSCBoards();
+//					getCastes = getAllCastes();
+//					getDistVerificationList(insCode);
+//					
+//					valuesAsNull();
+//			},
+//			error:function(resp){
+//				//alert("error=>"+JSON.stringify(resp));
+//				$("#serverResponse").html(resp.responseText);
+//				$("#serverResponse").css({'color': 'red'});
+//				return false;
+//			}
+//		});
 	}
 	
 	
@@ -1062,39 +1071,42 @@ function approveData(){
 	//alert(JSON.stringify(data));
 	
 	if(ssc_eq == 'Y'){
-		$.ajax({
-			type: 'post',
-			url: 'http://10.72.4.135:8888/itiapi/admissions/verificationApproval',
-			contentType: 'application/json',
-			cache: false,
-			timeout: 600000,
-			data: JSON.stringify(data),
-			headers: {
-				'Authorization': jwtToken
-			},
-			success:function(resp){
-				//alert("verificationApproval=>success=>resp=>"+JSON.stringify(resp));
-				
-				 document.getElementById("verificationSuccessMsg").innerHTML=resp;
-				 $("#verificationSuccessMsg").css({'color': 'green'});
-				 
-				 $("#contentDiv").hide();
-				 $("#admYearPhaseDiv").hide();
-				 $("#formTwo").hide();
-				// getDistVerificationList(insCode);
-				 $("#rejectButton").hide();
-				 $("#ssc_eqError").empty();
-				 
-				 $("#printOptions").show(); 
-				 $("#printOptionsRegid").innerHTML=ssc_regno; 
-				 
-				 
-			},
-			failue:function(resp){
-				alert("failure=>resp=>"+JSON.stringify(resp));
-			}
-			
-		});
+		// TODO(backend): verification APPROVAL has no backend endpoint.
+		// ChecklistController has no approval operation (see note above the
+		// rejection call). Re-enable once implemented.
+//		$.ajax({
+//			type: 'post',
+//		url: API_BASE_URL + "/api/checklist/verification-approval",
+//			contentType: 'application/json',
+//			cache: false,
+//			timeout: 600000,
+//			data: JSON.stringify(data),
+//			headers: {
+//				'Authorization': jwtToken
+//			},
+//			success:function(resp){
+//				//alert("verificationApproval=>success=>resp=>"+JSON.stringify(resp));
+//				
+//				 document.getElementById("verificationSuccessMsg").innerHTML=resp;
+//				 $("#verificationSuccessMsg").css({'color': 'green'});
+//				 
+//				 $("#contentDiv").hide();
+//				 $("#admYearPhaseDiv").hide();
+//				 $("#formTwo").hide();
+//				// getDistVerificationList(insCode);
+//				 $("#rejectButton").hide();
+//				 $("#ssc_eqError").empty();
+//				 
+//				 $("#printOptions").show(); 
+//				 $("#printOptionsRegid").innerHTML=ssc_regno; 
+//				 
+//				 
+//			},
+//			failue:function(resp){
+//				alert("failure=>resp=>"+JSON.stringify(resp));
+//			}
+//			
+//		});
 	}else{
 		 $("#ssc_eqError").html('Document SSC/Equivalent Marks should be checked Yes or No for Approve of this candidate.');
 		 $("#ssc_eqError").css({"color": "red"});

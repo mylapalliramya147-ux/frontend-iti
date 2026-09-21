@@ -17,6 +17,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="./css/style.css">
 <script type="text/javascript" src="./js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <script type="text/javascript" src="./js/customJs/printVeriedApplication.js"></script>
 

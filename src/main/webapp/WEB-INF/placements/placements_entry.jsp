@@ -8,6 +8,7 @@
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script src="${pageContext.request.contextPath}/js/siteScript.js"></script>
 <script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">

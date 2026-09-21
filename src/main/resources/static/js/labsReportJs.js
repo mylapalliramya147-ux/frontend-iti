@@ -17,7 +17,7 @@ function photoSrc(b64){
     return 'data:image/jpeg;base64,' + b64;
 }
 
-// GET http://localhost:5050/itilogin/labs-report?itiCode=...
+// GET ${backendBaseUrl}/itilogin/labs-report?itiCode=...
 function loadReport(){
     $.ajax({
         type:'get',

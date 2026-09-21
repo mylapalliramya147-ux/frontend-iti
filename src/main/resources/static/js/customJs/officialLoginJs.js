@@ -1,6 +1,7 @@
 /**
  * Official Login JS
  * Handles captcha generation and login authentication for ITI Admissions.
+const API_BASE_URL = window.API_BASE_URL;
  * Uses same-origin endpoints (Spring Boot) to avoid CORS issues.
  */
 

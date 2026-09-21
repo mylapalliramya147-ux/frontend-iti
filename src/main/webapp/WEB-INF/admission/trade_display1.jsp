@@ -10,6 +10,7 @@
 
 <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="./js/jquery364.min.js"></script>
+                    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <!-- Add this script tag to include the XLSX library from a CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
@@ -41,22 +42,21 @@
 				$("#distss").append('<option value="'+bean.dist_code+'">'+bean.dist_name+'</option>');
 			}
 		
+//		$.ajax({
+//			type: 'get',
+//			url: '${backendBaseUrl}/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
+//			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
+//			cache: false,
+//			timeout: 6000000,
+//			success:function(resp){
+//				//alert("resp=>"+JSON.stringify(resp));
+//				data = resp;
+//				 
+//			}
+//		});
 		$.ajax({
 			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
-			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
-			cache: false,
-			timeout: 6000000,
-			success:function(resp){
-				//alert("resp=>"+JSON.stringify(resp));
-				data = resp;
-				 
-			}
-		});
-		$.ajax({
-			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getAllItis',
-			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getAllItis',
+			url: '${backendBaseUrl}/api/itis',
 			cache: false,
 			timeout: 6000000,
 			success:function(resp){
@@ -64,17 +64,17 @@
 				itis = resp;
 			}
 		});
-		$.ajax({
-			type: 'get',
-			url: 'http://10.72.4.135:8888/itiapi/masterdata/getSeatMatrixItiwise',
-			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getSeatMatrixItiwise',
-			cache: false,
-			timeout: 6000000,
-			success:function(resp){
-				//alert("resp=>"+JSON.stringify(resp));
-				seatmatrix = resp;
-			}
-		});
+//		$.ajax({
+//			type: 'get',
+//			url: '${backendBaseUrl}/itiapi/masterdata/getSeatMatrixItiwise',
+//			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getSeatMatrixItiwise',
+//			cache: false,
+//			timeout: 6000000,
+//			success:function(resp){
+//				//alert("resp=>"+JSON.stringify(resp));
+//				seatmatrix = resp;
+//			}
+//		});
 		
 	});
 	

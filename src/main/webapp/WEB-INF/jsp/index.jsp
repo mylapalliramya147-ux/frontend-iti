@@ -60,10 +60,10 @@ function closeAirforcePopup() {
         <tr><td>
             <ul>
                 <h2><span><font color="#660000"><b>Student Area</b></font></span></h2>
-                <span><font color="#660000"><b>1:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/open_application_entry.jsp"><font color="blue">Student Registration (Registration Only)</font></a></b></span><br><br>
-                <span><font color="#660000"><b>2:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/open_editview_form_phase2.jsp"><font color="blue">Application to apply for ITI</font></a></b></span><br><br>
+                <span><font color="#660000"><b>1:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-registration"><font color="blue">Student Registration (Registration Only)</font></a></b></span><br><br>
+                <span><font color="#660000"><b>2:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-apply"><font color="blue">Application to apply for ITI</font></a></b></span><br><br>
                 <h2>If Student is not Registered both Steps 1 and 2 are Mandatory for Applying to ITI</h2>
-                <span><font color="#660000"><b>3:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/open_edit_form.jsp"><font color="blue">Edit Registration</font></a></b></span><br><br>
+                <span><font color="#660000"><b>3:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-edit-details"><font color="blue">Edit Registration</font></a></b></span><br><br>
                 <span><font color="#660000"><b>4:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/forgotregid.jsp"><font color="blue">Forgot Registration ID</font></a></b></span>
             </ul>
         </td></tr>
@@ -156,20 +156,6 @@ function closeAirforcePopup() {
 <script>
 function submit1() {
     // Send the password as-is; the backend handles authentication.
-}
-
-var myIndex = 0;
-carousel();
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    myIndex++;
-    if (myIndex > x.length) { myIndex = 1; }
-    x[myIndex - 1].style.display = "block";
-    setTimeout(carousel, 2000);
 }
 
 function blinker() {
