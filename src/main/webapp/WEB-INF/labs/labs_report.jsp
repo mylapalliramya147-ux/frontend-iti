@@ -11,10 +11,17 @@
 <script src="${pageContext.request.contextPath}/js/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.all.min.css">
 <script>
+// Server-rendered values (source of truth). Fallbacks let the page also work
+// when opened directly with ?itiCode=XXXX for testing.
 var insCode  = '<c:out value="${sessionScope.insCode}" default=""/>';
 var username = '<c:out value="${sessionScope.username}" default=""/>';
 var insName  = '<c:out value="${sessionScope.itiName}" default=""/>';
 var baseUrl  = '${backendBaseUrl}/';
+(function(){
+    function qp(n){ var m = new RegExp('[?&]' + n + '=([^&]*)').exec(location.search); return m ? decodeURIComponent(m[1]) : ''; }
+    if(!insCode){ insCode = qp('itiCode') || ''; }
+    if(!/\/$/.test(baseUrl || '')){ baseUrl = (baseUrl || '') + '/'; }
+})();
 </script>
 <style>
 #reporttable th{ position: sticky; top: 0px; background-color: black; color: white; }
@@ -30,6 +37,7 @@ var baseUrl  = '${backendBaseUrl}/';
 <button class="btn btn-info btn-sm" onclick="return downloadExcel(false);">DOWNLOAD EXCEL WITHOUT ITEM PHOTO</button>
 <button class="btn btn-info btn-sm" onclick="return downloadExcel(true);">DOWNLOAD EXCEL WITH ITEM PHOTO</button>
 <div id="emptydatamsg" class="text-center fw-bold mt-3" style="display:none;">No records found.</div>
+<div id="reportmeta" class="text-muted small mt-2" style="display:none;"></div>
 <table class="table table-bordered mt-2" id="reporttable" style="display:none;">
 <thead id="reportthead"></thead>
 <tbody id="reportbody"></tbody>
