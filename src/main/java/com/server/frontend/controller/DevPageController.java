@@ -23,8 +23,8 @@ public class DevPageController {
             "admission", "checkmeritschedule", "implant", "Institute", "jsp",
             "labs", "navbars", "placements", "reports");
 
-    /** Folders whose pages are complete (partials/includes with no route of their own). */
-    private static final List<String> FOLDERS_DONE = List.of("jsp", "navbars", "reports");
+    /** Folders whose JSPs are done but are partials/includes (navbars, header, role-variant homes). */
+    private static final List<String> FOLDERS_PARTIAL = List.of("jsp", "navbars", "reports");
 
     /** view name -> real controller URL; others fall back to /dev/view. */
     private static final Map<String, String> REAL_ROUTES = buildRoutes();
@@ -127,7 +127,7 @@ public class DevPageController {
         model.addAttribute("pages", pages);
         model.addAttribute("realRoutes", REAL_ROUTES);
         Map<String, Boolean> doneMap = new LinkedHashMap<>();
-        for (String folder : FOLDERS) doneMap.put(folder, FOLDERS_DONE.contains(folder));
+        for (String folder : FOLDERS) doneMap.put(folder, FOLDERS_PARTIAL.contains(folder));
         model.addAttribute("doneFolders", doneMap);
         return "jsp/dev";
     }
