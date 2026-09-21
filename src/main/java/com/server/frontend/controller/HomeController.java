@@ -15,6 +15,11 @@ public class HomeController {
         return "student/StudentRegistration";
     }
 
+    @GetMapping("/student-apply")
+    public String studentApply() {
+        return "student/StudentApply";
+    }
+
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
         HttpSession authSession = request.getSession(false);
