@@ -6,20 +6,28 @@ import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Type-safe binding for all {@code backend.api.<group>.base-url} /
- * {@code backend.api.<group>.path} properties.
+ * Type-safe binding for all {@code backend.api-groups.<group>.base-url} /
+ * {@code backend.api-groups.<group>.path} properties.
  *
- * <p>Using a {@code Map<String, ApiGroup>} under prefix {@code backend}
+ * <p>Using a {@code Map<String, ApiGroup>} under prefix {@code backend.api-groups}
  * lets Spring Boot (and the vscode-spring-boot language server via the
  * annotation processor) see these properties statically, so
  * {@code application.properties} no longer reports
- * "'backend.api.iti.base-url' is an unknown property".
+ * "'backend.api-groups.iti.base-url' is an unknown property".
+ *
+ * <p>NOTE: the prefix used to be plain {@code backend}, which made every
+ * {@code backend.api.*} key a map entry of type {@link ApiGroup}. That collided
+ * with the single {@code backend.api.base-url} property the Frontend now uses
+ * for all modules, causing a fatal
+ * {@code ConverterNotFoundException: ... String to ApiGroup} at startup.
+ * The map therefore lives under {@code backend.api-groups} and
+ * {@code backend.api.base-url} stays a plain property.
  *
  * <p>Hyphenated group names (e.g. {@code iti-application}, {@code shift-unit})
  * work as plain map keys. Relaxed binding maps {@code base-url} to
  * {@code baseUrl} automatically.
  */
-@ConfigurationProperties(prefix = "backend")
+@ConfigurationProperties(prefix = "backend.api-groups")
 public class BackendApiProperties {
 
     /**

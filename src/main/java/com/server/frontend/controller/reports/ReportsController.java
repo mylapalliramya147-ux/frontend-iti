@@ -132,11 +132,6 @@ public class ReportsController {
         return "reports/iti-list";
     }
 
-    @GetMapping("/trade-display2")
-    public String tradeDisplay2() {
-        return "reports/trade-display2";
-    }
-
     @GetMapping("/district-schedule")
     public String districtSchedule() {
         return "reports/district-schedule";

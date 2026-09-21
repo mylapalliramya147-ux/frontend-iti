@@ -38,7 +38,6 @@ public class DevPageController {
         m.put("checkmeritschedule/distVerification", "/VerificationReport");
         m.put("checkmeritschedule/admissionIntialization", "/PrintAdmissionSlip");
         m.put("checkmeritschedule/ScheduleEntry", "/ScheduleEntry");
-        m.put("reports/district-dsc-full-view", "/district-dsc-full");
         m.put("reports/district-applicant-report-view", "/applicant-report-by-phase");
         m.put("reports/state-dashboard", "/nodal-report/dashboard");
         m.put("Institute/ItiList", "/itiList");
@@ -54,7 +53,7 @@ public class DevPageController {
                 "api-dashboard-state", "phase-wise-admissions-details", "today-schedule-itis",
                 "trade-wise-report", "applicant-report-dist-wise", "dist-iti-trade-wise-seats-abstract",
                 "duration-wise-trade-seats-abstract", "govt-or-pvt-dist-wise-seats-abstract",
-                "student-reg-details", "iti-profile", "iti-list", "trade-display2",
+                "student-reg-details", "iti-profile", "iti-list",
                 "district-schedule", "shift-unit-report", "admitted-seats-abstract",
                 "all-resource-role", "distwise-admitted-seats-abstract",
                 "trade-dist-wise-admission-report", "tradewise-vacant-position", "about-strive",

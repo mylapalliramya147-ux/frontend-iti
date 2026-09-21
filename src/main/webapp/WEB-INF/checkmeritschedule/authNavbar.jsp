@@ -47,7 +47,6 @@
                             <i class="fas fa-chart-bar me-1"></i> ITI Reports
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="itiReportsDropdown">
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/district-dsc-full" onclick="validateReportAccess(event, '3', '${pageContext.request.contextPath}/district-dsc-full')">District Reports</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/applicant-report-by-phase" onclick="validateReportAccess(event, '4', '${pageContext.request.contextPath}/applicant-report-by-phase')">ITI Reports</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/nodal-report/dashboard" onclick="validateReportAccess(event, '10', '${pageContext.request.contextPath}/nodal-report/dashboard')">Nodal Reports</a></li>
                         </ul>
