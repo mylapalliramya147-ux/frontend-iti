@@ -63,7 +63,7 @@ function closeAirforcePopup() {
                 <span><font color="#660000"><b>1:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-registration"><font color="blue">Student Registration (Registration Only)</font></a></b></span><br><br>
                 <span><font color="#660000"><b>2:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-apply"><font color="blue">Application to apply for ITI</font></a></b></span><br><br>
                 <h2>If Student is not Registered both Steps 1 and 2 are Mandatory for Applying to ITI</h2>
-                <span><font color="#660000"><b>3:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/open_edit_form.jsp"><font color="blue">Edit Registration</font></a></b></span><br><br>
+                <span><font color="#660000"><b>3:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-edit-details"><font color="blue">Edit Registration</font></a></b></span><br><br>
                 <span><font color="#660000"><b>4:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/forgotregid.jsp"><font color="blue">Forgot Registration ID</font></a></b></span>
             </ul>
         </td></tr>

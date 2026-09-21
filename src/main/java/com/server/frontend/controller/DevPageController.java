@@ -38,6 +38,7 @@ public class DevPageController {
         m.put("jsp/placementDashboard", "/placements/loginSuccess");
         m.put("student/StudentRegistration", "/student-registration");
         m.put("student/StudentApply", "/student-apply");
+        m.put("student/StudentEditDetails", "/student-edit-details");
         m.put("checkmeritschedule/MeritList", "/MeritList");
         m.put("checkmeritschedule/MeritResults", "/MeritResults");
         m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");

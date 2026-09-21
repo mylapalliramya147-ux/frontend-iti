@@ -20,6 +20,11 @@ public class HomeController {
         return "student/StudentApply";
     }
 
+    @GetMapping("/student-edit-details")
+    public String studentEditDetails() {
+        return "student/StudentEditDetails";
+    }
+
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
         HttpSession authSession = request.getSession(false);
