@@ -21,7 +21,7 @@ public class DevPageController {
     /** JSP folders surfaced on /dev (whitelist also blocks path traversal). */
     private static final List<String> FOLDERS = List.of(
             "admission", "checkmeritschedule", "implant", "Institute", "jsp",
-            "labs", "navbars", "placements", "reports");
+            "labs", "navbars", "placements", "reports", "student");
 
     /** Folders whose JSPs are done but are partials/includes (navbars, header). */
     private static final List<String> FOLDERS_PARTIAL = List.of("navbars", "reports");
@@ -36,6 +36,7 @@ public class DevPageController {
         m.put("jsp/authHome", "/authHome");
         m.put("jsp/placements", "/placements");
         m.put("jsp/placementDashboard", "/placements/loginSuccess");
+        m.put("student/StudentRegistration", "/student-registration");
         m.put("checkmeritschedule/MeritList", "/MeritList");
         m.put("checkmeritschedule/MeritResults", "/MeritResults");
         m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");
