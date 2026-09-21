@@ -23,8 +23,8 @@ public class DevPageController {
             "admission", "checkmeritschedule", "implant", "Institute", "jsp",
             "labs", "navbars", "placements", "reports");
 
-    /** Folders whose JSPs are done but are partials/includes (navbars, header, role-variant homes). */
-    private static final List<String> FOLDERS_PARTIAL = List.of("jsp", "navbars", "reports");
+    /** Folders whose JSPs are done but are partials/includes (navbars, header). */
+    private static final List<String> FOLDERS_PARTIAL = List.of("navbars", "reports");
 
     /** view name -> real controller URL; others fall back to /dev/view. */
     private static final Map<String, String> REAL_ROUTES = buildRoutes();
