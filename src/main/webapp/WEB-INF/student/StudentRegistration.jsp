@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>open_application_entry.jsp</title>
+        <title>:: ITI :: Student Registration</title>
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>:: ITI  ::</title>

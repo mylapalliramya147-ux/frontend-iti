@@ -39,6 +39,7 @@ public class DevPageController {
         m.put("student/StudentRegistration", "/student-registration");
         m.put("student/StudentApply", "/student-apply");
         m.put("student/StudentEditDetails", "/student-edit-details");
+        m.put("student/ForgotRegId", "/forgot-regid");
         m.put("checkmeritschedule/MeritList", "/MeritList");
         m.put("checkmeritschedule/MeritResults", "/MeritResults");
         m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>open_edit_form</title>
+        <title>:: ITI :: Edit Registration</title>
         
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">

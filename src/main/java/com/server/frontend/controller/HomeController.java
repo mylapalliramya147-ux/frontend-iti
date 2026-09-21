@@ -25,6 +25,11 @@ public class HomeController {
         return "student/StudentEditDetails";
     }
 
+    @GetMapping("/forgot-regid")
+    public String forgotRegId() {
+        return "student/ForgotRegId";
+    }
+
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
         HttpSession authSession = request.getSession(false);
