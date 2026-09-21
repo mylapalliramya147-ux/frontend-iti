@@ -202,7 +202,7 @@ function editApplication(ssc_regno,regid,dob){
 			$("#caste").append('<option value="">-select-</option>');
 			for(var i=0; i < getCastes.length; i++){
 				var bean = getCastes[i];
-				$("#caste").append('<option value="'+bean.category_code+'">'+bean.category_name+'</option>');
+				$("#caste").append('<option value="'+bean.casteCode+'">'+bean.casteName+'</option>');
 			}
 			$('#caste').val(resp.studentApplication.caste); 
 			document.getElementById('fname').value = resp.studentApplication.fname;

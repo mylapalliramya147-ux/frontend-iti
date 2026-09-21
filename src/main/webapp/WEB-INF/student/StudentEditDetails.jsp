@@ -281,23 +281,20 @@
             </script>
             <script type="text/javascript">
                 function loadCastes() {
+                    // Master list comes from public.caste_master (caste_code / caste_name).
+                    // The codes (BC-A, SC-I, ...) are exactly what student_application.caste stores.
                     $.get('${backendBaseUrl}/api/student/castes', function (list) {
                         $.each(list, function (i, c) {
-                            $('#casteSelect').append('<option value="' + c.casteCategory + '" data-id="' + c.casteId + '">' + c.casteCategory + '</option>');
+                            $('#casteSelect').append('<option value="' + c.casteCode + '">' + c.casteName + '</option>');
                         });
                     });
                 }
 
                 function loadSubCastes() {
-                    var opt = $('#casteSelect option:selected');
-                    var casteId = opt.data('id');
+                    // Sub-caste master lives in the external hrms schema, which is not
+                    // provisioned in every environment, so the list cannot be loaded yet.
+                    // A previously saved sub-caste is still shown by the prefill above.
                     $('#subCasteSelect').html('<option value="">--Select Sub Caste--</option>');
-                    if (!casteId) return;
-                    $.get('${backendBaseUrl}/api/student/subcastes/' + casteId, function (list) {
-                        $.each(list, function (i, sc) {
-                            $('#subCasteSelect').append('<option value="' + sc.subCaste + '">' + sc.subCaste + '</option>');
-                        });
-                    });
                 }
 
                 function validateEdit() {
