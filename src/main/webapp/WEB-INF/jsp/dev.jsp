@@ -21,6 +21,7 @@
   .page-link-item:hover { border-color:#0d6efd; background:#f8f9ff; }
   .badge-route { font-size:.68rem; }
   .badge-real { background:#198754; }
+  .badge-done { background:#6c757d; }
   .badge-wip { background:#ffc107; color:#212529; }
   .dev-header { background:linear-gradient(90deg,#212529,#343a40); color:#fff; border-radius:10px; }
 </style>
@@ -31,7 +32,7 @@
   <div class="dev-header p-3 mb-4 d-flex justify-content-between align-items-center">
     <div>
       <h3 class="mb-1">&#128736; DEV - Page Index</h3>
-      <small class="text-white-50">Temporary development tool - every JSP in WEB-INF. Green = real route, Yellow = WIP (opened via /dev/view passthrough).</small>
+      <small class="text-white-50">Temporary development tool - every JSP in WEB-INF. Green = real route, Grey = done (complete page/include without its own route), Yellow = WIP (opened via /dev/view passthrough).</small>
     </div>
     <input id="devSearch" type="search" class="form-control w-25" placeholder="Search pages..." autofocus>
   </div>
@@ -58,8 +59,8 @@
                 <a class="page-link-item"
                    href="${pageContext.request.contextPath}${realRoutes[viewName] != null ? realRoutes[viewName] : '/dev/view/'.concat(entry.key).concat('/').concat(page)}">
                   <span><c:out value="${page}"/></span>
-                  <span class="badge badge-route ${realRoutes[viewName] != null ? 'badge-real' : 'badge-wip'}">
-                    ${realRoutes[viewName] != null ? 'route' : 'wip'}
+                  <span class="badge badge-route ${realRoutes[viewName] != null ? 'badge-real' : (doneFolders[entry.key] ? 'badge-done' : 'badge-wip')}">
+                    ${realRoutes[viewName] != null ? 'route' : (doneFolders[entry.key] ? 'done' : 'wip')}
                   </span>
                 </a>
               </div>
