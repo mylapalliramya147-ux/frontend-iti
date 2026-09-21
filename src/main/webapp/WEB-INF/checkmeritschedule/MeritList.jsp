@@ -147,7 +147,7 @@
     </footer>
 
     <script>
-        const NODE_API_BASE = "${backendBaseUrl}";
+        const NODE_API_BASE = "http://localhost:5050";
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List
