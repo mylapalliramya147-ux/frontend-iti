@@ -107,5 +107,6 @@
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

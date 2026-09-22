@@ -25,6 +25,7 @@
 <script type="text/javascript" src="./js/customJs/distVerificationJs.js"></script>
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body onload="getReady();">
 	<div id="404Msg" align="center">

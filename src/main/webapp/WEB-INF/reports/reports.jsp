@@ -417,5 +417,6 @@
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

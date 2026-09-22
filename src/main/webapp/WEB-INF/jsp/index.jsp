@@ -177,5 +177,6 @@ $(document).ready(function () {
 });
 </script>
 
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

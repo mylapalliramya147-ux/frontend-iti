@@ -51,5 +51,6 @@
             <iframe src="${pageContext.request.contextPath}/swagger" width="100%" height="100%" frameborder="0"></iframe>
         </div>
     </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -104,6 +104,7 @@
             color: #0b4d8c;
         }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body class="bg-light">
 
@@ -391,5 +392,6 @@
         // Start
         window.onload = fetchCastes;
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

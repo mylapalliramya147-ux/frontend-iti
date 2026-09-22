@@ -194,5 +194,6 @@ function closeAirforcePopup() {
     
     </div>-->
 
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

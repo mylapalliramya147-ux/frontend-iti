@@ -68,6 +68,9 @@
 
     </script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 
 <body>
@@ -174,5 +177,6 @@ function getData(){
 }
 function fnExcelReport(tid){var wb=XLSX.utils.table_to_book(document.getElementById(tid),{sheet:'Report'});XLSX.writeFile(wb,'Inplant_Yearwise_Report.xlsx');return false;}
 </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

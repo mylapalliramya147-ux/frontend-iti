@@ -142,5 +142,6 @@
             if (itiType) document.getElementById('itiType').value = itiType;
         });
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

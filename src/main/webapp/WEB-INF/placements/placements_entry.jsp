@@ -34,6 +34,9 @@ var baseUrl  = '${backendBaseUrl}/';
 .close1:hover,.close1:focus,.alert-close:hover,.alert-close:focus,.alertError-close:hover,.alertError-close:focus{color:#000;text-decoration:none;cursor:pointer;}
 #alertError{font-weight:bolder;color:red;font-size:larger;}
 </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border:1px solid black;width:100%;border-radius:2px;">
@@ -415,5 +418,6 @@ $(document).on("click", ".successclose", function(){ $("#myModalSuccess").hide()
 $(document).on("click", ".savesuccessclose", function(){ $("#savingPlcmtModel").hide(); });
 $(document).on("click", ".notfoundclose", function(){ $("#admnotfound").hide(); });
 </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

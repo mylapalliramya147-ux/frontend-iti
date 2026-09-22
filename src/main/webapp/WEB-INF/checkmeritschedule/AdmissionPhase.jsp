@@ -285,6 +285,8 @@
 
         #printSection { display: none; }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -1012,5 +1014,6 @@
             document.getElementById('admissionSection').style.display = 'none';
         }
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

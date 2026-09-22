@@ -159,5 +159,6 @@
             window.open('${pageContext.request.contextPath}/reports/api-dashboard-district?distCode=' + distCode + '&year=' + year, '_blank');
         }
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

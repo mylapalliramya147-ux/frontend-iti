@@ -11,6 +11,9 @@
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script src="./js/customJs/admissionsPhase1Js.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body onload="getReady();">
 	<div id="404Msg" align="center">

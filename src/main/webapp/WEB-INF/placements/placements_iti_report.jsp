@@ -82,6 +82,9 @@ function fnExcelReport(){
 <style>
 #reporttable th{ position: sticky; top: 0px; background-color: black; color: white; }
 </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -126,5 +129,6 @@ function fnExcelReport(){
                     <tbody id="reportbody"></tbody>
             </table>
         </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -138,6 +138,9 @@ function closeError() {
 .modal-contenterroralert { background-color: #e4eeb9; border: 2px solid black; margin: auto; padding: 20px; width: 80%; }
 #alertError { font-weight: bolder; color: red; font-size: larger; }
 </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -220,5 +223,6 @@ function closeError() {
 
     </tbody>
 </table>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -187,5 +187,6 @@
             document.body.removeChild(link);
         }
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

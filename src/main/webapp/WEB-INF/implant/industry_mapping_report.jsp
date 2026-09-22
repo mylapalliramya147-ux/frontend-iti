@@ -105,6 +105,9 @@ function fnExcelReport() {
     return false;
 }
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border: 1px solid black;width: 100%;border-radius: 2px;">
@@ -137,5 +140,6 @@ function fnExcelReport() {
         <tbody id="tabledata"></tbody>
     </table>
 </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

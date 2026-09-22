@@ -154,5 +154,6 @@
 
         document.addEventListener('DOMContentLoaded', loadReport);
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

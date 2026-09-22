@@ -151,5 +151,6 @@
                 .catch(err => console.error('Failed to load current phase:', err));
         });
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

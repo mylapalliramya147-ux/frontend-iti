@@ -27,6 +27,9 @@ var baseUrl  = '${backendBaseUrl}/';
 #reporttable th{ position: sticky; top: 0px; background-color: black; color: white; }
 .item-photo{ max-width: 90px; max-height: 70px; }
 </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 <img alt="banner" src="${pageContext.request.contextPath}/images/gen.jpg" style="border:1px solid black;width:100%;border-radius:2px;">
@@ -44,5 +47,6 @@ var baseUrl  = '${backendBaseUrl}/';
 </table>
 </div>
 <script src="${pageContext.request.contextPath}/js/labsReportJs.js"></script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

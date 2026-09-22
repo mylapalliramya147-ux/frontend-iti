@@ -19,6 +19,7 @@
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/customJs/admissionIntializationJs.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body onload="return checkToken();">
 

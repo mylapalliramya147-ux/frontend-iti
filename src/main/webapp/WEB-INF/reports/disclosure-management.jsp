@@ -203,6 +203,7 @@ function closeAirforcePopup() {
 
 </script>
 
+<%@ include file="../footer.jsp" %>
 </body>
 
         <br>
@@ -388,5 +389,6 @@ function closeAirforcePopup() {
             
         </table>
             </div>
+<%@ include file="../footer.jsp" %>
     </body>
 </html>

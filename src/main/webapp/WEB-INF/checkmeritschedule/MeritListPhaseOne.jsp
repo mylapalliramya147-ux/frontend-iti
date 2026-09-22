@@ -47,6 +47,7 @@ function exportToExcel() {
 
 
     
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body onload="generateCaptcha(),getReady();">
 	<div id="404Msg" align="center">

@@ -37,6 +37,9 @@ $(document).ready(function(){
 
 });
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -120,5 +123,6 @@ function downloadExcel(tableId) {
     XLSX.writeFile(wb, tableId + '.xlsx');
 }
 </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
