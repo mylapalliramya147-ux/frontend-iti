@@ -321,9 +321,9 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('root').style.display = 'none';
 
-            const allPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=' + encodeURIComponent(phase)).then(r => r.json());
-            const govtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=G&phase=' + encodeURIComponent(phase)).then(r => r.json());
-            const pvtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=P&phase=' + encodeURIComponent(phase)).then(r => r.json());
+            const allPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
+            const govtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=G&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
+            const pvtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=P&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
 
             Promise.all([allPromise, govtPromise, pvtPromise])
                 .then(([allRes, govtRes, pvtRes]) => {

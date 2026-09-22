@@ -1106,7 +1106,11 @@ function approveData(){
 //				alert("failure=>resp=>"+JSON.stringify(resp));
 //			}
 //			
-//		});
+//		,
+        error: function(xhr, status, error) {
+            console.error('Request failed:', status, error);
+        }
+    });
 	}else{
 		 $("#ssc_eqError").html('Document SSC/Equivalent Marks should be checked Yes or No for Approve of this candidate.');
 		 $("#ssc_eqError").css({"color": "red"});
