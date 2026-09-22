@@ -291,11 +291,24 @@
                 }
 
                 function loadSubCastes() {
-                    // Sub-caste master lives in the external hrms schema, which is not
-                    // provisioned in every environment, so the list cannot be loaded yet.
-                    // A previously saved sub-caste is still shown by the prefill above.
-                    $('#subCasteSelect').html('<option value="">--Select Sub Caste--</option>');
+                    var code = document.getElementById("casteSelect").value;
+                    var sel = document.getElementById("subCasteSelect");
+                    sel.innerHTML = '<option value="">--Select Sub Caste--</option>';
+                    if (!code) { return; }
+                    // Sub-caste master is the local reference (ids preserved from real
+                    // applications; names land as the true master becomes available)
+                    $.get('${backendBaseUrl}/api/student/subcastes/' + encodeURIComponent(code))
+                        .done(function (list) {
+                            (list || []).forEach(function (r) {
+                                var label = (r.subCasteName && r.subCasteName !== '') ? r.subCasteName : ('Sub-caste ' + r.subCasteId);
+                                var opt = document.createElement('option');
+                                opt.value = r.subCasteId; opt.textContent = label + ' (' + r.subCasteId + ')';
+                                sel.appendChild(opt);
+                            });
+                        });
                 }
+
+                $(document).on('change', '#casteSelect', loadSubCastes);
 
                 function validateEdit() {
                     var req = [["name","Name"],["fname","Father's Name"],["gender","Gender"],["appdob","Date of Birth"],["phno","Mobile Number"],["addr","Address"],["local","Local/Non-Local"],["casteSelect","Caste"]];
