@@ -139,8 +139,11 @@ public class DevPageController {
     /** Passthrough so WIP pages with no route can still be opened while developing. */
     @GetMapping("/dev/view/{folder}/{name}")
     public String devView(@PathVariable String folder, @PathVariable String name) {
-        if (!FOLDERS.contains(folder) || !name.matches("[A-Za-z0-9_-]+")) {
+        if (!FOLDERS.contains(folder) || !name.matches("[A-Za-z0-9_\\.-]+")) {
             return "redirect:/dev";
+        }
+        if (name.endsWith(".jsp")) {
+            name = name.substring(0, name.length() - 4);
         }
         return folder + "/" + name;
     }
