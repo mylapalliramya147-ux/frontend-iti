@@ -81,18 +81,32 @@
                     </tr></thead>
                     <tbody id="tableBody"></tbody>
                 </table>
+                <div id="paginationBar"></div>
             </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
-            <div class="fw-bold text-muted" id="countInfo"></div>
-            <div id="pagination" class="d-flex flex-wrap"></div>
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
-        var PAGE_SIZE = 500;
-        var totalCount = 0, currentPage = 0, allRows = [];
+        let pageSize = 100;
+        let currentPage = 0;
+        let currentYear = '';
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            const start = page * pageSize + 1;
+            const end = Math.min((page + 1) * pageSize, totalCount);
+            let html = `<div style="margin:10px 0; font-family:Arial; font-size:13px;">`;
+            html += `<span>Showing ${start}–${end} of ${totalCount} records</span>&nbsp;&nbsp;`;
+            html += `<button onclick="goToPage(0)" ${page===0?'disabled':''}>« First</button> `;
+            html += `<button onclick="goToPage(${page-1})" ${page===0?'disabled':''}>‹ Prev</button> `;
+            html += `<span style="margin:0 8px;">Page ${page+1} of ${totalPages}</span>`;
+            html += `<button onclick="goToPage(${page+1})" ${page===totalPages-1?'disabled':''}>Next ›</button> `;
+            html += `<button onclick="goToPage(${totalPages-1})" ${page===totalPages-1?'disabled':''}>Last »</button>`;
+            html += `</div>`;
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; document.getElementById('reportForm').dispatchEvent(new Event('submit')); }
 
         function loadYears() {
             fetch('${backendApiUrl}/students-not-admitted/years', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
@@ -115,24 +129,44 @@
 
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
 
-        function fetchReport(event, page) {
+        function fetchReport(event) {
             if (event) event.preventDefault();
             const year = document.getElementById('year').value;
-            currentPage = page;
+            currentYear = year;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            let url = '${backendApiUrl}/students-not-admitted?year=' + encodeURIComponent(year) + '&page=' + page + '&size=' + PAGE_SIZE;
+            let url = '${backendApiUrl}/students-not-admitted?year=' + encodeURIComponent(year) + '&page=' + currentPage + '&size=' + pageSize;
             fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('reportView').style.display = 'block';
                 document.getElementById('reportTitle').innerText = 'Students Not Admitted (' + year + ')';
-                totalCount = data.count || 0;
-                allRows = data.data || [];
-                renderTable();
-                renderPagination();
+                
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = '';
+                const rows = data.data || [];
+                if (rows.length > 0) {
+                    rows.forEach((row, i) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td class="num">' + (currentPage * pageSize + i + 1) + '</td>'
+                            + '<td>' + (row.regid || '-') + '</td>'
+                            + '<td style="text-align:left;">' + (row.name || '-') + '</td>'
+                            + '<td style="text-align:left;">' + (row.fname || '-') + '</td>'
+                            + '<td>' + (row.gender || '-') + '</td>'
+                            + '<td>' + (row.caste || '-') + '</td>'
+                            + '<td>' + (row.dob || '-') + '</td>'
+                            + '<td>' + (row.phno || '-') + '</td>'
+                            + '<td class="num">' + (row.phase || '-') + '</td>'
+                            + '<td>' + (row.appStatus || '-') + '</td>';
+                        tbody.appendChild(tr);
+                    });
+                    renderPagination(data.page, data.totalPages, data.totalCount, pageSize);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
+                    document.getElementById('paginationBar').innerHTML = '';
+                }
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';
@@ -140,50 +174,6 @@
                 alert('Error loading data: ' + error.message);
                 console.error('Error:', error);
             });
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-            const start = currentPage * PAGE_SIZE;
-            if (allRows.length > 0) {
-                allRows.forEach((row, i) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = '<td class="num">' + (start + i + 1) + '</td>'
-                        + '<td>' + (row.regid || '-') + '</td>'
-                        + '<td style="text-align:left;">' + (row.name || '-') + '</td>'
-                        + '<td style="text-align:left;">' + (row.fname || '-') + '</td>'
-                        + '<td>' + (row.gender || '-') + '</td>'
-                        + '<td>' + (row.caste || '-') + '</td>'
-                        + '<td>' + (row.dob || '-') + '</td>'
-                        + '<td>' + (row.phno || '-') + '</td>'
-                        + '<td class="num">' + (row.phase || '-') + '</td>'
-                        + '<td>' + (row.appStatus || '-') + '</td>';
-                    tbody.appendChild(tr);
-                });
-            } else {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>';
-            }
-            document.getElementById('countInfo').innerText = 'Total: ' + totalCount + ' student(s) | Showing ' + (allRows.length ? (start + 1) : 0) + ' - ' + (start + allRows.length);
-        }
-
-        function renderPagination() {
-            const pages = Math.ceil(totalCount / PAGE_SIZE);
-            const pg = document.getElementById('pagination');
-            pg.innerHTML = '';
-            if (pages <= 1) return;
-            const mkBtn = (label, page, disabled, active) => {
-                const b = document.createElement('button');
-                b.className = 'page-btn' + (active ? ' active' : '');
-                b.innerHTML = label;
-                b.disabled = disabled;
-                b.onclick = () => fetchReport(null, page);
-                return b;
-            };
-            pg.appendChild(mkBtn('&laquo;', Math.max(0, currentPage - 1), currentPage === 0, false));
-            const from = Math.max(0, currentPage - 2), to = Math.min(pages - 1, currentPage + 2);
-            for (let p = from; p <= to; p++) pg.appendChild(mkBtn(p + 1, p, false, p === currentPage));
-            pg.appendChild(mkBtn('&raquo;', Math.min(pages - 1, currentPage + 1), currentPage >= pages - 1, false));
         }
 
         function fnExcelReport() {

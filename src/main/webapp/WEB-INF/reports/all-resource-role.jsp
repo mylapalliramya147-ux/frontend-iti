@@ -57,17 +57,37 @@
                     <thead><tr><th>Role Name</th><th style="text-align: left;">User Name</th><th>District</th><th style="text-align: left;">ITI Name</th><th>Mobile</th><th>Email</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                 </table>
+                <div id="paginationBar"></div>
             </div>
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
+        let currentPage = 0;
+        let pageSize = 100;
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            const start = page * pageSize + 1;
+            const end = Math.min((page + 1) * pageSize, totalCount);
+            let html = `<div style="margin:10px 0; font-family:Arial; font-size:13px;">`;
+            html += `<span>Showing ${start}–${end} of ${totalCount} records</span>&nbsp;&nbsp;`;
+            html += `<button onclick="goToPage(0)" ${page===0?'disabled':''}>« First</button> `;
+            html += `<button onclick="goToPage(${page-1})" ${page===0?'disabled':''}>‹ Prev</button> `;
+            html += `<span style="margin:0 8px;">Page ${page+1} of ${totalPages}</span>`;
+            html += `<button onclick="goToPage(${page+1})" ${page===totalPages-1?'disabled':''}>Next ›</button> `;
+            html += `<button onclick="goToPage(${totalPages-1})" ${page===totalPages-1?'disabled':''}>Last »</button>`;
+            html += `</div>`;
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; fetchReport(); }
+
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function fetchReport() {
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            fetch('${backendApiUrl}/all-resource-roles?page=0&size=10000', { method: 'GET' })
+            fetch('${backendApiUrl}/all-resource-roles?page=' + currentPage + '&size=' + pageSize, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
@@ -81,7 +101,8 @@
                         tr.innerHTML = '<td>' + (row.roleName || '-') + '</td><td style="text-align: left;">' + (row.userName || '-') + '</td><td>' + (row.distName || '-') + '</td><td style="text-align: left;">' + (row.itiName || '-') + '</td><td>' + (row.mobile || '-') + '</td><td>' + (row.email || '-') + '</td>';
                         tbody.appendChild(tr);
                     });
-                } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+                    renderPagination(data.page, data.totalPages, data.totalCount, pageSize);
+                } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; document.getElementById('paginationBar').innerHTML = ''; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }

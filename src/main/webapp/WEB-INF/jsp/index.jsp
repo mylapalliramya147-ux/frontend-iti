@@ -150,7 +150,6 @@ function closeAirforcePopup() {
 </form>
 
 <!-- ================= SCRIPTS ================= -->
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/md5.js"></script>
 
 <script>

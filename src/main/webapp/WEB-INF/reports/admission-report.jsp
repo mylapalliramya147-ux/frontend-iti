@@ -66,6 +66,7 @@
                     </thead>
                     <tbody id="tableBody"></tbody>
                 </table>
+                <div id="paginationBar"></div>
             </div>
         </div>
     </div>
@@ -75,12 +76,30 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         let dataTable;
+        let currentPage = 0;
+        let pageSize = 100;
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            const start = page * pageSize + 1;
+            const end = Math.min((page + 1) * pageSize, totalCount);
+            let html = `<div style="margin:10px 0; font-family:Arial; font-size:13px;">`;
+            html += `<span>Showing ${start}–${end} of ${totalCount} records</span>&nbsp;&nbsp;`;
+            html += `<button onclick="goToPage(0)" ${page===0?'disabled':''}>« First</button> `;
+            html += `<button onclick="goToPage(${page-1})" ${page===0?'disabled':''}>‹ Prev</button> `;
+            html += `<span style="margin:0 8px;">Page ${page+1} of ${totalPages}</span>`;
+            html += `<button onclick="goToPage(${page+1})" ${page===totalPages-1?'disabled':''}>Next ›</button> `;
+            html += `<button onclick="goToPage(${totalPages-1})" ${page===totalPages-1?'disabled':''}>Last »</button>`;
+            html += `</div>`;
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; loadReport(); }
 
         function loadReport() {
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
 
-            fetch('${backendApiUrl}/admission-report-iti?page=0&size=500', {
+            fetch('${backendApiUrl}/admission-report-iti?page=' + currentPage + '&size=' + pageSize, {
                 method: 'GET'
             })
             .then(response => response.json())
@@ -100,7 +119,7 @@
                 data.forEach((row, index) => {
                     const tr = document.createElement('tr');
                     tr.innerHTML =
-                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + (currentPage * pageSize + index + 1) + '</td>' +
                         '<td>' + (row.admissionNo || '-') + '</td>' +
                         '<td>' + (row.sscHallTicket || '-') + '</td>' +
                         '<td style="text-align: left;">' + (row.name || '-') + '</td>' +
@@ -120,11 +139,10 @@
                 if (dataTable) {
                     dataTable.destroy();
                 }
-                dataTable = $('#admissionTable').DataTable({
-                    dom: 'T<"clear">lfrtip',
-                    pageLength: 50,
-                    order: [[0, 'asc']]
-                });
+                // No datatables pagination needed anymore since we use server side pagination
+                // But keep datatable for sorting/formatting if needed without its own pagination
+                
+                renderPagination(response.page, response.totalPages, response.totalCount, pageSize);
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';

@@ -74,12 +74,32 @@
                     <thead><tr><th>District</th><th style="text-align: left;">ITI Name</th><th>Trade</th><th class="num">Merit From</th><th class="num">Merit To</th><th>Date</th><th>Time</th><th>Phase</th></tr></thead>
                     <tbody id="tableBody"></tbody>
                 </table>
+                <div id="paginationBar"></div>
             </div>
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
+        let currentPage = 0;
+        let pageSize = 100;
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            const start = page * pageSize + 1;
+            const end = Math.min((page + 1) * pageSize, totalCount);
+            let html = `<div style="margin:10px 0; font-family:Arial; font-size:13px;">`;
+            html += `<span>Showing ${start}–${end} of ${totalCount} records</span>&nbsp;&nbsp;`;
+            html += `<button onclick="goToPage(0)" ${page===0?'disabled':''}>« First</button> `;
+            html += `<button onclick="goToPage(${page-1})" ${page===0?'disabled':''}>‹ Prev</button> `;
+            html += `<span style="margin:0 8px;">Page ${page+1} of ${totalPages}</span>`;
+            html += `<button onclick="goToPage(${page+1})" ${page===totalPages-1?'disabled':''}>Next ›</button> `;
+            html += `<button onclick="goToPage(${totalPages-1})" ${page===totalPages-1?'disabled':''}>Last »</button>`;
+            html += `</div>`;
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; document.getElementById('reportForm').dispatchEvent(new Event('submit')); }
+
         function showSelection() { document.getElementById('reportView').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; }
         function loadDistricts() {
             const year = document.getElementById('year').value;
@@ -100,12 +120,12 @@
         }
         window.addEventListener('load', loadDistricts);
         function fetchReport(event) {
-            event.preventDefault();
+            if (event) event.preventDefault();
             const year = document.getElementById('year').value;
             const distCode = document.getElementById('distCode').value;
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            let params = 'year=' + encodeURIComponent(year) + '&page=0&size=10000';
+            let params = 'year=' + encodeURIComponent(year) + '&page=' + currentPage + '&size=' + pageSize;
             if (distCode) params += '&distCode=' + encodeURIComponent(distCode);
             fetch('${backendApiUrl}/district-schedule?' + params, { method: 'GET' })
             .then(response => response.json())
@@ -122,7 +142,8 @@
                         tr.innerHTML = '<td>' + (row.distName || '-') + '</td><td style="text-align: left;">' + (row.itiName || '-') + '</td><td style="text-align: left;">' + (row.tradeName || '-') + '</td><td class="num">' + (row.meritFrom || '-') + '</td><td class="num">' + (row.meritTo || '-') + '</td><td>' + (row.calDate || '-') + '</td><td>' + (row.calTime || '-') + '</td><td>' + (row.phase || '-') + '</td>';
                         tbody.appendChild(tr);
                     });
-                } else { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; }
+                    renderPagination(data.page, data.totalPages, data.totalCount, pageSize);
+                } else { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px; font-weight: bold;">No records found.</td></tr>'; document.getElementById('paginationBar').innerHTML = ''; }
             })
             .catch(error => { document.getElementById('loader').style.display = 'none'; document.getElementById('selectionView').style.display = 'block'; alert('Error loading data: ' + error.message); console.error('Error:', error); });
         }

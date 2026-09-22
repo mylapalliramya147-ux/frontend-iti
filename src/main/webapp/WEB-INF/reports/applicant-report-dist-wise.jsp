@@ -236,6 +236,7 @@
                 <tfoot id="footPvt"></tfoot>
             </table>
         </div>
+        <div id="paginationBar"></div>
     </div>
 
     <br><br><br><br>
@@ -274,7 +275,7 @@
             return sa;
         }
 
-        function renderTable(tbodyId, footId, data, totalLabel) {
+        function renderTable(tbodyId, footId, data, totalLabel, offset = 0) {
             const tbody = document.getElementById(tbodyId);
             const foot = document.getElementById(footId);
             tbody.innerHTML = '';
@@ -288,7 +289,7 @@
             let total = 0;
             data.forEach((row, index) => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = '<td>' + (index + 1) + '</td><td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.count || 0) + '</td>';
+                tr.innerHTML = '<td>' + (offset + index + 1) + '</td><td style="text-align: left;">' + (row.distName || '-') + '</td><td class="num">' + (row.count || 0) + '</td>';
                 tbody.appendChild(tr);
                 total += row.count || 0;
             });
@@ -317,22 +318,50 @@
                 });
         });
 
+        let currentPage = 0;
+        let pageSize = 100;
+        let currentYear = '';
+        let currentPhase = '';
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            const start = page * pageSize + 1;
+            const end = Math.min((page + 1) * pageSize, totalCount);
+            let html = `<div style="margin:10px 0; font-family:Arial; font-size:13px;">`;
+            html += `<span>Showing ${start}–${end} of ${totalCount} records</span>&nbsp;&nbsp;`;
+            html += `<button onclick="goToPage(0)" ${page===0?'disabled':''}>« First</button> `;
+            html += `<button onclick="goToPage(${page-1})" ${page===0?'disabled':''}>‹ Prev</button> `;
+            html += `<span style="margin:0 8px;">Page ${page+1} of ${totalPages}</span>`;
+            html += `<button onclick="goToPage(${page+1})" ${page===totalPages-1?'disabled':''}>Next ›</button> `;
+            html += `<button onclick="goToPage(${totalPages-1})" ${page===totalPages-1?'disabled':''}>Last »</button>`;
+            html += `</div>`;
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; loadReport(currentYear, currentPhase); }
+
         function loadReport(year, phase) {
+            currentYear = year;
+            currentPhase = phase;
             document.getElementById('loader').style.display = 'block';
             document.getElementById('root').style.display = 'none';
 
-            const allPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
-            const govtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=G&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
-            const pvtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=P&phase=' + encodeURIComponent(phase)).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
+            const urlParams = '&page=' + currentPage + '&size=' + pageSize;
+            const allPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=All&phase=' + encodeURIComponent(phase) + urlParams).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
+            const govtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=G&phase=' + encodeURIComponent(phase) + urlParams).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
+            const pvtPromise = fetch('${backendApiUrl}/applicant-count-district-wise?year=' + encodeURIComponent(year) + '&distCode=All&govt=P&phase=' + encodeURIComponent(phase) + urlParams).then(r => r.json()).catch(err => console.error('Failed to load data:', err));
 
             Promise.all([allPromise, govtPromise, pvtPromise])
                 .then(([allRes, govtRes, pvtRes]) => {
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('root').style.display = 'block';
 
-                    renderTable('tbodyAll', 'footAll', allRes.data || [], 'Total');
-                    renderTable('tbodyGovt', 'footGovt', govtRes.data || [], 'Total');
-                    renderTable('tbodyPvt', 'footPvt', pvtRes.data || [], 'Total');
+                    renderTable('tbodyAll', 'footAll', allRes.data || [], 'Total', currentPage * pageSize);
+                    renderTable('tbodyGovt', 'footGovt', govtRes.data || [], 'Total', currentPage * pageSize);
+                    renderTable('tbodyPvt', 'footPvt', pvtRes.data || [], 'Total', currentPage * pageSize);
+                    
+                    if(allRes && allRes.data) {
+                        renderPagination(allRes.page, allRes.totalPages, allRes.totalCount, pageSize);
+                    }
                 })
                 .catch(error => {
                     document.getElementById('loader').style.display = 'none';

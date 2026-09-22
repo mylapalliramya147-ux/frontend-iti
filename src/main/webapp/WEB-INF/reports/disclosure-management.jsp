@@ -60,7 +60,6 @@ p:before {
 <title>:: ITI  ::</title>
 <link rel="shortcut icon" type="image/ico" href="iti.png" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/expe1011.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 
 </head>
 
