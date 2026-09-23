@@ -59,7 +59,7 @@
     <p>&nbsp;</p>
 
     <!-- Filter Form -->
-    <form name="form1" id="form1" method="GET" action="${pageContext.request.contextPath}/reports/iti-profile" onsubmit="event.preventDefault(); submitForm();">
+    <form name="form1" id="form1" method="POST" action="${pageContext.request.contextPath}/reports/trade-display2">
         <p align="center" class="style4"> 
             <font color="blue" size="4">
                 List of ITI's with Trades & Strengths Interface
