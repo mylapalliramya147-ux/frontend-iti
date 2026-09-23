@@ -119,6 +119,22 @@ public class HomeController {
         return "jsp/placementDashboard";
     }
 
+    @GetMapping({
+        "/services/password-change",
+        "/services/dget-iti-code",
+        "/services/register-new-user",
+        "/admissions/status-master",
+        "/scvt/exam-initialization",
+        "/admissions/discharge",
+        "/scvt/exam-verification",
+        "/scvt/certificate",
+        "/services/registration",
+        "/reports/DeleteAdmission_interface"
+    })
+    public String legacyModuleNotice() {
+        return "jsp/under_construction";
+    }
+
     @GetMapping("/")
     public String home() {
         return "jsp/index";

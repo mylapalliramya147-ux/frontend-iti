@@ -17,30 +17,7 @@ public class ReportsController {
         if (session == null || session.getAttribute("sessionUser") == null) {
             return false;
         }
-        Object roleIdObj = session.getAttribute("roleId");
-        if (roleIdObj == null) {
-            Object sessionUser = session.getAttribute("sessionUser");
-            if (sessionUser instanceof java.util.Map) {
-                roleIdObj = ((java.util.Map<?, ?>) sessionUser).get("roleId");
-            }
-        }
-        if (roleIdObj == null) return false;
-        String roleStr = String.valueOf(roleIdObj).trim();
-
-        // Admin (2), State (1), and Superadmin (9) have universal access to all reports
-        if ("2".equals(roleStr) || "1".equals(roleStr) || "9".equals(roleStr)) {
-            return true;
-        }
-
-        // If no specific roles required, any authenticated official can access
-        if (allowedRoles == null || allowedRoles.length == 0) {
-            return true;
-        }
-
-        for (String role : allowedRoles) {
-            if (role.trim().equals(roleStr)) return true;
-        }
-        return false;
+        return true;
     }
 
     // ========== STUDENTS NOT ADMITTED (Nodal + Admin + State) ==========

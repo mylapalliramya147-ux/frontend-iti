@@ -16,8 +16,8 @@
         <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
         <li><a href="#">ITI Services</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/Password_change.jsp">Change User Password</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/Registration.jsp">Add ITI Master</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/password-change">Change User Password</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/registration">Add ITI Master</a></li>
             </ul>
         </li>
         <li><a href="#">ITI Reports</a>
