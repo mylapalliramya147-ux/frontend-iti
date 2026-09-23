@@ -29,7 +29,7 @@ public class ReportsController {
     }
 
     // ========== DASHBOARD ==========
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String reportsDashboard() {
         return "reports/reports";
     }
@@ -218,6 +218,11 @@ public class ReportsController {
     @GetMapping("/disclosure-management")
     public String disclosureManagement() {
         return "reports/disclosure-management";
+    }
+
+    @GetMapping({"/disclaimer", "/disclaimer.jsp"})
+    public String disclaimer() {
+        return "reports/disclaimer";
     }
 
     // ========== UTILITY ==========
