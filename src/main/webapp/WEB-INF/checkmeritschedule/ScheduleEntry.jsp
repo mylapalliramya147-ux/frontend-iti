@@ -226,8 +226,8 @@
     </div>
 
     <script>
-        const API_BASE = "${backendBaseUrl}/admission-timings";
-        const NODE_API_BASE = '${backendBaseUrl}';
+        const API_BASE = "http://localhost:5050/admission-timings";
+        const NODE_API_BASE = 'http://localhost:5050';
         let currentInitData = null;
 
         // Fetch Caste List
