@@ -53,6 +53,26 @@ public class HomeController {
         return "jsp/authHome";
     }
 
+    @GetMapping("/authHome/admin")
+    public String authHomeAdmin() {
+        return "jsp/authHome_admin";
+    }
+
+    @GetMapping("/authHome/district")
+    public String authHomeDistrict() {
+        return "jsp/authHome_district";
+    }
+
+    @GetMapping("/authHome/iti")
+    public String authHomeIti() {
+        return "jsp/authHome_iti";
+    }
+
+    @GetMapping("/authHome/nodal")
+    public String authHomeNodal() {
+        return "jsp/authHome_nodal";
+    }
+
     @GetMapping("/MeritList")
     public String meritList() {
         return "checkmeritschedule/MeritList";
@@ -120,6 +140,7 @@ public class HomeController {
     }
 
     @GetMapping({
+        "/under-construction",
         "/services/password-change",
         "/services/dget-iti-code",
         "/services/register-new-user",

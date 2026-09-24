@@ -23,8 +23,15 @@ public class DevPageController {
             "admission", "checkmeritschedule", "implant", "Institute", "jsp",
             "labs", "navbars", "placements", "reports", "student");
 
-    /** Folders whose JSPs are done but are partials/includes (navbars, header). */
-    private static final List<String> FOLDERS_PARTIAL = List.of("navbars", "reports");
+    /** Folders whose JSPs are done but are partials/includes (navbars). */
+    private static final List<String> FOLDERS_PARTIAL = List.of("navbars");
+
+    /** Specific partial/snippet views that are includes, not standalone pages. */
+    private static final java.util.Set<String> PARTIAL_VIEWS = java.util.Set.of(
+            "jsp/_api_base_url",
+            "checkmeritschedule/authNavbar",
+            "reports/header"
+    );
 
     /** view name -> real controller URL; others fall back to /dev/view. */
     private static final Map<String, String> REAL_ROUTES = buildRoutes();
@@ -34,8 +41,13 @@ public class DevPageController {
         m.put("jsp/index", "/");
         m.put("jsp/dev", "/dev");
         m.put("jsp/authHome", "/authHome");
+        m.put("jsp/authHome_admin", "/authHome/admin");
+        m.put("jsp/authHome_district", "/authHome/district");
+        m.put("jsp/authHome_iti", "/authHome/iti");
+        m.put("jsp/authHome_nodal", "/authHome/nodal");
         m.put("jsp/placements", "/placements");
         m.put("jsp/placementDashboard", "/placements/loginSuccess");
+        m.put("jsp/under_construction", "/under-construction");
         m.put("student/StudentRegistration", "/student-registration");
         m.put("student/StudentApply", "/student-apply");
         m.put("student/StudentEditDetails", "/student-edit-details");
@@ -101,7 +113,7 @@ public class DevPageController {
                 "district-schedule", "shift-unit-report", "admitted-seats-abstract",
                 "all-resource-role", "distwise-admitted-seats-abstract",
                 "trade-dist-wise-admission-report", "tradewise-vacant-position", "about-strive",
-                "disclosure-management", "api-documentation"};
+                "disclosure-management", "api-documentation", "trade-display2", "disclaimer"};
         for (String v : reportViews) m.put(rep + v, "/reports/" + v);
         return java.util.Collections.unmodifiableMap(m);
     }
@@ -130,6 +142,23 @@ public class DevPageController {
         }
         model.addAttribute("pages", pages);
         model.addAttribute("realRoutes", REAL_ROUTES);
+
+        Map<String, String> pageStatuses = new LinkedHashMap<>();
+        for (Map.Entry<String, List<String>> entry : pages.entrySet()) {
+            String folder = entry.getKey();
+            for (String page : entry.getValue()) {
+                String viewName = folder + "/" + page;
+                if (REAL_ROUTES.containsKey(viewName)) {
+                    pageStatuses.put(viewName, "done");
+                } else if (FOLDERS_PARTIAL.contains(folder) || PARTIAL_VIEWS.contains(viewName)) {
+                    pageStatuses.put(viewName, "partial");
+                } else {
+                    pageStatuses.put(viewName, "wip");
+                }
+            }
+        }
+        model.addAttribute("pageStatuses", pageStatuses);
+
         Map<String, Boolean> doneMap = new LinkedHashMap<>();
         for (String folder : FOLDERS) doneMap.put(folder, FOLDERS_PARTIAL.contains(folder));
         model.addAttribute("doneFolders", doneMap);
