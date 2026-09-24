@@ -24,10 +24,26 @@
 <%@ include file="header.jsp" %>
     <c:set var="hideNavbar" value="true" scope="request" />
     <c:set var="activeTab" value="api_dashboard" />
-    <div class="nodal-page-title-dashboard"><h2>District Dashboard</h2></div>
+    <div class="nodal-page-title-dashboard"><h2 id="reportTitle">District Dashboard</h2></div>
 
-    <div class="text-right px-4 mb-3" id="downloadSection" style="display: none;">
-        <input type="button" value="Excel Download" class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="tableToExcel('tot', 'District Dashboard')">
+    <div class="container px-4 mb-3 d-flex justify-content-between align-items-center" id="downloadSection" style="display: none;">
+        <div class="d-flex align-items-center gap-2">
+            <label for="yearSelect" class="fw-bold text-secondary mb-0">Admission Year:</label>
+            <select id="yearSelect" class="form-select form-select-sm" style="width: 120px;" onchange="changeYear(this.value)">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+            </select>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold btn-sm" onclick="tableToExcel('tot', 'District Dashboard')">
+                <i class="fas fa-file-excel me-2 text-success"></i>Excel Download
+            </button>
+            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill btn-sm" onclick="window.print()" style="background-color: #337ab7;">
+                <i class="fas fa-print me-2"></i>PRINT REPORT
+            </button>
+        </div>
     </div>
 
     <div class="loader-spinner" id="loader"><i class="fas fa-spinner fa-spin fa-3x"></i><p class="mt-3 fw-bold">Loading district dashboard...</p></div>
@@ -61,6 +77,9 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script>
+        let currentYear = '';
+        let currentDistCode = '';
+
         function tableToExcel(tableID, name = '') {
             var table = document.getElementById(tableID);
             var html = table.outerHTML;
@@ -68,32 +87,45 @@
             var url = URL.createObjectURL(blob);
             var a = document.createElement("a");
             a.href = url;
-            a.download = name + '.xls';
+            a.download = (name || 'report') + '.xls';
             a.click();
             URL.revokeObjectURL(url);
         }
 
+        function changeYear(y) {
+            currentYear = y;
+            loadReport(y, currentDistCode);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            let distCode = urlParams.get('distCode') || '${param.distCode}';
-            if (!distCode) {
-                distCode = 'All';
-            }
+            let distCode = urlParams.get('distCode') || '${param.distCode}' || '${sessionScope.insCode}' || 'All';
+            currentDistCode = distCode;
+
             fetch('${backendApiUrl}/current-admission-phase')
                 .then(r => r.json())
                 .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
+                    const year = urlParams.get('year') || '${param.year}' || config.year || String(new Date().getFullYear());
+                    currentYear = year;
+                    const sel = document.getElementById('yearSelect');
+                    if (sel) sel.value = year;
                     loadReport(year, distCode);
                 })
                 .catch(err => {
                     console.error('Failed to load current phase:', err);
-                    loadReport(String(new Date().getFullYear()), distCode);
+                    const year = urlParams.get('year') || '${param.year}' || String(new Date().getFullYear());
+                    currentYear = year;
+                    const sel = document.getElementById('yearSelect');
+                    if (sel) sel.value = year;
+                    loadReport(year, distCode);
                 });
         });
 
         function loadReport(year, distCode) {
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
+            const titleDist = (distCode && distCode !== 'All') ? ' - District ' + distCode : '';
+            document.getElementById('reportTitle').innerText = 'District Dashboard' + titleDist + ' (' + year + ')';
 
             fetch('${backendApiUrl}/api-dashboard?year=' + encodeURIComponent(year) + '&distCode=' + encodeURIComponent(distCode), { method: 'GET' })
             .then(response => response.json())

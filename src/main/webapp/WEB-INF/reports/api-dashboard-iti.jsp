@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=${System.currentTimeMillis()}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.dataTables.min.css">
     <style>
         .nodal-page-title-dashboard { text-align: center; padding: 30px 0; color: #003366; font-weight: 800; background: #f8fbff; border-bottom: 1px solid #e1ecf8; margin-bottom: 40px; }
         .nodal-page-title-dashboard h2 { margin: 0; font-size: 1.6rem; letter-spacing: 0.5px; }
@@ -29,7 +29,7 @@
     <c:set var="hideNavbar" value="true" scope="request" />
     <%@ include file="header.jsp" %>
     <c:set var="activeTab" value="iti_status" />
-    <div class="nodal-page-title-dashboard"><h2>Industrial Training Institute — ITI-Wise Status Report</h2></div>
+    <div class="nodal-page-title-dashboard"><h2 id="reportTitle">Industrial Training Institute — ITI-Wise Status Report</h2></div>
 
     <div class="loader-spinner" id="loader">
         <i class="fas fa-spinner fa-spin fa-3x"></i>
@@ -37,10 +37,24 @@
     </div>
 
     <div class="container-fluid px-4 py-4" id="reportView" style="display: none;">
-        <div class="no-print d-flex justify-content-center gap-3 mb-5">
-            <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;">
-                <i class="fas fa-print me-2"></i>PRINT REPORT
-            </button>
+        <div class="no-print d-flex justify-content-between align-items-center mb-4 px-2">
+            <div class="d-flex align-items-center gap-2">
+                <label for="yearSelect" class="fw-bold text-secondary mb-0">Admission Year:</label>
+                <select id="yearSelect" class="form-select form-select-sm" style="width: 120px;" onchange="changeYear(this.value)">
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold btn-sm" onclick="tableToExcel('statusTable', 'ITI Wise Status Report')">
+                    <i class="fas fa-file-excel me-2 text-success"></i>Excel Download
+                </button>
+                <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill btn-sm" onclick="window.print()" style="background-color: #337ab7;">
+                    <i class="fas fa-print me-2"></i>PRINT REPORT
+                </button>
+            </div>
         </div>
         <div class="shadow" style="background-color: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0;">
             <div style="overflow-y: auto; max-height: 600px;">
@@ -71,15 +85,34 @@
 
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.dataTables.min.js"></script>
     <script>
         let dataTable;
+        let currentYear = '';
 
-        function loadReport(year, phase) {
+        function tableToExcel(tableID, name = '') {
+            var table = document.getElementById(tableID);
+            var html = table.outerHTML;
+            var blob = new Blob(['\ufeff', html], { type: "application/vnd.ms-excel" });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = (name || 'report') + '.xls';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function changeYear(y) {
+            currentYear = y;
+            loadReport(y);
+        }
+
+        function loadReport(year) {
             document.getElementById('loader').style.display = 'block';
             document.getElementById('reportView').style.display = 'none';
+            document.getElementById('reportTitle').innerText = 'Industrial Training Institute — ITI-Wise Status Report (' + year + ')';
 
-            fetch('${backendApiUrl}/iti-wise-status?distCode=All&itiCode=All&page=0&size=10000&year=' + year + '', {
+            fetch('${backendApiUrl}/iti-wise-status?distCode=All&itiCode=All&page=0&size=10000&year=' + year, {
                 method: 'GET'
             })
             .then(response => response.json())
@@ -127,7 +160,6 @@
                     dataTable.destroy();
                 }
                 dataTable = $('#statusTable').DataTable({
-                    dom: 'T<"clear">lfrtip',
                     pageLength: 50,
                     order: [[0, 'asc']]
                 });
@@ -140,21 +172,26 @@
             });
         }
 
-        
         document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
             fetch('${backendApiUrl}/current-admission-phase')
                 .then(r => r.json())
                 .then(config => {
-                    const year = config.year || String(new Date().getFullYear());
-                    const phase = config.phase || '';
-                    loadReport(year, phase);
+                    const year = urlParams.get('year') || '${param.year}' || config.year || String(new Date().getFullYear());
+                    currentYear = year;
+                    const sel = document.getElementById('yearSelect');
+                    if (sel) sel.value = year;
+                    loadReport(year);
                 })
                 .catch(err => {
                     console.error('Failed to load current phase:', err);
-                    loadReport(String(new Date().getFullYear()), '');
+                    const year = urlParams.get('year') || '${param.year}' || String(new Date().getFullYear());
+                    currentYear = year;
+                    const sel = document.getElementById('yearSelect');
+                    if (sel) sel.value = year;
+                    loadReport(year);
                 });
         });
-
     </script>
 <%@ include file="../footer.jsp" %>
 </body>

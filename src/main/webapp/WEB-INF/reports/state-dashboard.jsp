@@ -71,6 +71,9 @@
             <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="showSelection()">
                 <i class="fas fa-arrow-left me-2"></i> BACK TO SELECTION
             </button>
+            <button class="btn btn-outline-secondary shadow-sm px-4 rounded-pill fw-bold" onclick="tableToExcel('reportTable', 'State Dashboard Strength Fill')">
+                <i class="fas fa-file-excel me-2 text-success"></i>EXCEL DOWNLOAD
+            </button>
             <button class="btn text-white fw-bold shadow-sm px-4 rounded-pill" onclick="window.print()" style="background-color: #337ab7;">
                 <i class="fas fa-print me-2"></i>PRINT REPORT
             </button>
@@ -107,6 +110,18 @@
 
 
 
+        function tableToExcel(tableID, name = '') {
+            var table = document.getElementById(tableID);
+            var html = table.outerHTML;
+            var blob = new Blob(['\ufeff', html], { type: "application/vnd.ms-excel" });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = (name || 'report') + '.xls';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
         function showSelection() {
             document.getElementById('reportView').style.display = 'none';
             document.getElementById('selectionView').style.display = 'block';
@@ -119,7 +134,7 @@
             document.getElementById('selectionView').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
-            fetch('${backendApiUrl}/state-dashboard?year=' + encodeURIComponent(year), {
+            fetch('${backendApiUrl}/strength-filled-seats?year=' + encodeURIComponent(year) + '&distCode=All', {
                 method: 'GET', headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
