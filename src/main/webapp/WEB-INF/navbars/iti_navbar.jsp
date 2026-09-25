@@ -30,9 +30,8 @@
 
             <li><a href="#">Admissions</a>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/DgtPermittedShift">DGT Permitted Shifts Units Report</a></li>
-            <li><a href="${pageContext.request.contextPath}/PrintAdmissionSlip">Print Admission Slip</a></li>
-            <li><a href="${pageContext.request.contextPath}/AdmissionPhase1">Schedule Entry</a></li>
+            <li><a href="${pageContext.request.contextPath}/MeritList">MeritList with GPA</a></li>
+            <li><a href="${pageContext.request.contextPath}/#">Schedule Entry</a></li>
         </ul>
     </li>
 

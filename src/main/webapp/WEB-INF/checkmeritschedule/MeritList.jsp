@@ -7,32 +7,37 @@
     <title>Merit List Management - AP ITI</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/all.min.css">
     <style>
         .form-container {
             max-width: 580px;
             margin: 30px auto;
         }
+        /* Index-style "Generate Merit List" panel. Palette matches
+           jsp/index.jsp via style.css + iti-portal.css (menu bar / footer,
+           shared partials) and the pale-cyan box used by this module's own
+           classic pages (admissionPhase1.jsp / MeritListPhaseOne.jsp). */
         .outer-border {
-            border: 3px solid #004a99 !important;
+            border: 1px solid black !important;
             padding: 15px;
-            border-radius: 12px;
-            background: #fff;
+            border-radius: 20px;
+            background: #e6ffff;
         }
         .inner-box {
-            background-color: #f8fbff; /* Very light blue */
-            border: 1px solid #004a99 !important;
+            background-color: #e6ffff;
+            border: 1px solid black !important;
             padding: 25px 30px;
-            border-radius: 8px;
+            border-radius: 20px;
         }
         .form-label-custom {
             font-weight: 700;
-            color: #003366;
+            color: #660000; /* index.jsp maroon headings */
             font-size: 0.9rem;
             text-transform: uppercase;
+            font-family: verdana, Arial, sans-serif;
         }
         .custom-select-box {
-            border: 1.5px solid #004a99;
+            border: 1.5px solid #b9c46d;
             font-weight: 500;
             color: #222;
             border-radius: 6px;
@@ -40,49 +45,52 @@
             background-color: #fff;
             font-size: 0.95rem;
         }
-        /* Buttons */
+        /* Buttons - index.jsp palette: green submit, yellow-green reset */
         .btn-submit-custom {
-            background: #28a745; /* Success Green */
+            background: #4CAF50;
             border: none;
             color: #fff;
             font-weight: bold;
             padding: 10px 40px;
             border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(40,167,69,0.2);
             transition: 0.3s;
         }
         .btn-submit-custom:hover {
-            background: #218838;
+            background: #3d8b40;
             transform: translateY(-2px);
         }
         .btn-reset-custom {
-            background: #dc3545; /* Danger Red */
-            border: none;
-            color: #fff;
+            background: #e4eeb9;
+            border: 1.5px solid #b9c46d;
+            color: #000;
             font-weight: bold;
             padding: 10px 40px;
             border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(220,53,69,0.2);
             transition: 0.3s;
         }
         .btn-reset-custom:hover {
-            background: #c82333;
+            background: #b9c46d;
             transform: translateY(-2px);
         }
         .page-title {
-            color: #004a99;
+            color: #000000;
+            background: #e4eeb9;
+            border: 1px solid #b9c46d;
+            border-radius: 20px;
+            padding: 10px;
             font-weight: 800;
             font-size: 1.6rem;
             text-align: center;
             margin-bottom: 15px;
+            font-family: verdana, Arial, sans-serif;
         }
     </style>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>
-<body class="bg-light">
+<body>
     <!-- Header Content -->
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
 
     <div class="container form-container">
         <div class="outer-border shadow-lg">
@@ -142,13 +150,18 @@
         </div>
     </div>
 
-    <!-- Global Footer -->
+        <!-- Global Footer -->
     <footer>
         <jsp:include page="/WEB-INF/footer.jsp" />
     </footer>
-
+    <%-- Backend API base URL from application.properties (backend.api.base-url)
+         via GlobalControllerAdvice#backendBaseUrl. Dynamic <jsp:include> is a
+         separate translation unit, so its EL (${backendBaseUrl}) resolves here
+         even though this page uses isELIgnored="true". A static <%@ include %>
+         would inherit that flag and print the literal token. --%>
+    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
     <script>
-        const NODE_API_BASE = "http://localhost:5050";
+        const NODE_API_BASE = window.API_BASE_URL;
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List
