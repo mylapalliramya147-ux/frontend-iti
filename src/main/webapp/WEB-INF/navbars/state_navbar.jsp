@@ -18,9 +18,9 @@
         <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
         <li><a href="#">ITI Services</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/Password_change.jsp">Change User Password</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/Dget_Iti_Code_Interface.jsp">DGET ITI CODE</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/Register_new_user.jsp">New User Creation</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/password-change">Change User Password</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/dget-iti-code">DGET ITI CODE</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/register-new-user">New User Creation</a></li>
             </ul>
         </li>
         <li><a href="#">ITI Reports</a>
@@ -46,12 +46,12 @@
         </li>
         <li><a href="#">Admissions</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/StatusMaster.jsp">Freeze / UnFreeze</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/status-master">Freeze / UnFreeze</a></li>
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/SCVTExamInitialization.jsp">SCVT Exam Initialization</a></li>
+                <li><a href="${pageContext.request.contextPath}/scvt/exam-initialization">SCVT Exam Initialization</a></li>
             </ul>
         </li>
         <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>

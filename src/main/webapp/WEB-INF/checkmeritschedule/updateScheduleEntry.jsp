@@ -26,7 +26,8 @@
 				<%@include file="../navbars/openNavbar.jsp"%>
 	</div>
 	<div id="navbar">
-		<%@include file="/WEB-INF/userpages/Navbar.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+		<%@include file="/WEB-INF/checkmeritschedule/authNavbar.jsp"%>
 	</div>
 
 	<br>
