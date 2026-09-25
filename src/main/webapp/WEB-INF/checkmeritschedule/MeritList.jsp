@@ -47,7 +47,7 @@
         }
         /* Buttons - index.jsp palette: green submit, yellow-green reset */
         .btn-submit-custom {
-            background: #4CAF50;
+            background: #1aab1f;
             border: none;
             color: #fff;
             font-weight: bold;
@@ -60,7 +60,7 @@
             transform: translateY(-2px);
         }
         .btn-reset-custom {
-            background: #e4eeb9;
+            background: #c41818;
             border: 1.5px solid #b9c46d;
             color: #000;
             font-weight: bold;
@@ -69,7 +69,7 @@
             transition: 0.3s;
         }
         .btn-reset-custom:hover {
-            background: #b9c46d;
+            background: #cb342c;
             transform: translateY(-2px);
         }
         .page-title {

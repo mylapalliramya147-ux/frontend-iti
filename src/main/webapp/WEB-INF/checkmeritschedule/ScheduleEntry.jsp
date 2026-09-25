@@ -5,28 +5,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Schedule Entry - AP ITI</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/all.min.css">
     <style>
+        /* ---- Index / portal palette (mirrors index.jsp) ---- */
         .page-header-custom {
-            background-color: #0b4d8c;
-            color: white;
+            background-color: #e4eeb9;
+            color: #000000;
             padding: 20px 0;
             margin-bottom: 30px;
-            border-bottom: 4px solid #083a6b;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom: 4px solid #b9c46d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .form-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border: 1px solid #b9c46d;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
             overflow: hidden;
             margin-bottom: 30px;
+            background: #fff;
         }
         .card-header-primary {
-            background-color: #0b4d8c;
-            color: white;
+            background-color: #e4eeb9;
+            color: #000000;
             font-weight: 700;
             padding: 15px 25px;
             text-transform: uppercase;
@@ -34,6 +36,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            border: none;
+        }
+        /* Step-2 header keeps the action green from the index palette */
+        .card-header-primary.bg-success {
+            background-color: #4CAF50 !important;
+            color: #ffffff !important;
         }
         .card-body-custom {
             padding: 30px;
@@ -41,7 +49,7 @@
         }
         .form-label-custom {
             font-weight: 600;
-            color: #0b4d8c;
+            color: #660000;
             margin-bottom: 8px;
             font-size: 0.95rem;
         }
@@ -53,11 +61,11 @@
             transition: all 0.3s;
         }
         .form-control-custom:focus {
-            border-color: #0b4d8c;
-            box-shadow: 0 0 0 4px rgba(11,77,140,0.1);
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 4px rgba(76,175,80,0.15);
         }
         .btn-success-custom {
-            background-color: #28a745;
+            background-color: #1aab1f;
             border: none;
             color: white;
             font-weight: 700;
@@ -66,20 +74,20 @@
             transition: all 0.3s;
         }
         .btn-success-custom:hover {
-            background-color: #218838;
+            background-color: #3d8b40;
             transform: translateY(-1px);
         }
         .btn-danger-custom {
-            background-color: #dc3545;
+            background-color: #c41818;
             border: none;
-            color: white;
+            color: #000000;
             font-weight: 700;
             padding: 10px 30px;
             border-radius: 50px;
             transition: all 0.3s;
         }
         .btn-danger-custom:hover {
-            background-color: #c82333;
+            background-color: #cb342c;
             transform: translateY(-1px);
         }
         .info-text-custom {
@@ -96,17 +104,21 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .read-only-box {
-            background-color: #f8fbff;
-            border: 1px solid #e1ecf8;
+            background-color: #e6ffff;
+            border: 1px solid #b9c46d;
             padding: 12px 15px;
             border-radius: 8px;
             font-weight: 600;
-            color: #0b4d8c;
+            color: #660000;
+        }
+        /* Align the Bootstrap success borders/overrides with the index palette */
+        .form-card.border-success {
+            border-color: #4CAF50 !important;
         }
     </style>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>
-<body class="bg-light">
+<body>
 
     <jsp:include page="/WEB-INF/bannernew.jsp" />
     <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
@@ -145,10 +157,10 @@
                             </div>
                             <div class="col-12 text-center mt-4 border-top pt-4">
                                 <button class="btn btn-success-custom me-2" onclick="initializeSchedule()">
-                                    <i class="fas fa-check-circle me-1"></i> Submit Initialization
+                                    <i class="fas fa-check-circle me-1"></i> SUBMIT
                                 </button>
                                 <button class="btn btn-danger-custom" onclick="resetInitForm()">
-                                    <i class="fas fa-undo me-1"></i> Reset Form
+                                    <i class="fas fa-undo me-1"></i> Reset 
                                 </button>
                             </div>
                         </div>
@@ -225,9 +237,13 @@
         </div>
     </div>
 
+        <%-- API base URL sourced from application.properties (backend.api.base-url) via
+         _api_base_url.jsp. <jsp:include> is a separate translation unit, so
+         ${backendBaseUrl} resolves here even though this page is EL-ignored --%>
+    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp" />
     <script>
-        const API_BASE = "http://localhost:5050/admission-timings";
-        const NODE_API_BASE = 'http://localhost:5050';
+        const API_BASE = window.API_BASE_URL + '/admission-timings';
+        const NODE_API_BASE = window.API_BASE_URL;
         let currentInitData = null;
 
         // Fetch Caste List
