@@ -21,10 +21,10 @@
             border: 1px solid black !important;
             padding: 15px;
             border-radius: 20px;
-            background: #e6ffff;
+            background: #e4eeb9;
         }
         .inner-box {
-            background-color: #e6ffff;
+            background-color: #fff;
             border: 1px solid black !important;
             padding: 25px 30px;
             border-radius: 20px;
@@ -45,6 +45,27 @@
             background-color: #fff;
             font-size: 0.95rem;
         }
+
+        /* ---- Native <select> dropdowns (Category / Qualification / Status) ----
+           Replace the blue OS highlight that appears on hovered <option> items,
+           and the blue Bootstrap focus ring, with the index palette. */
+        .custom-select-box option:hover,
+        .form-select option:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+        }
+        .custom-select-box:focus,
+        .form-select:focus {
+            border-color: #4CAF50 !important;
+            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25) !important;
+        }
+        /* Navbar dropdown items: replace legacy blue hover (#2f6fa5) with the
+           index palette so MeritList matches ScheduleEntry. */
+        body .dropdown-menu .dropdown-item:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+            padding-left: 25px;
+        }
         /* Buttons - index.jsp palette: green submit, yellow-green reset */
         .btn-submit-custom {
             background: #1aab1f;
@@ -62,7 +83,7 @@
         .btn-reset-custom {
             background: #c41818;
             border: 1.5px solid #b9c46d;
-            color: #000;
+            color: #fff;
             font-weight: bold;
             padding: 10px 40px;
             border-radius: 50px;
@@ -75,7 +96,6 @@
         .page-title {
             color: #000000;
             background: #e4eeb9;
-            border: 1px solid #b9c46d;
             border-radius: 20px;
             padding: 10px;
             font-weight: 800;

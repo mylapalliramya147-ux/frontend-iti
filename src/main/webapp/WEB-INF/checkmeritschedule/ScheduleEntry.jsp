@@ -40,7 +40,7 @@
         }
         /* Step-2 header keeps the action green from the index palette */
         .card-header-primary.bg-success {
-            background-color: #4CAF50 !important;
+            background-color: #b9c46d !important;
             color: #ffffff !important;
         }
         .card-body-custom {
@@ -61,7 +61,7 @@
             transition: all 0.3s;
         }
         .form-control-custom:focus {
-            border-color: #4CAF50;
+            border-color: #b9c46d;
             box-shadow: 0 0 0 4px rgba(76,175,80,0.15);
         }
         .btn-success-custom {
@@ -111,9 +111,59 @@
             font-weight: 600;
             color: #660000;
         }
-        /* Align the Bootstrap success borders/overrides with the index palette */
+                /* Align the Bootstrap success borders/overrides with the index palette */
         .form-card.border-success {
+            border-color: #b9c46d !important;
+        }
+
+        /* ---- Authenticated navbar -> index gold palette ----------------------
+            Mirrors index.jsp / iti-portal.css #menu-bar palette:
+           bar #e4eeb9, text #000, hover red->mauve gradient w/ white text,
+                      dropdown panel border #b9c46d (no blue), item hover #b9c46d / black.         */
+        body .custom-navbar,
+        body .authenticated-navbar {
+            background-color: #e4eeb9 !important;
+            border-top: 2px solid #ffffff !important;
+            border-bottom: 2px solid #b9c46d !important;
+        }
+        body .custom-navbar .navbar-toggler {
+            background-color: #e4eeb9 !important;
+        }
+        body .nav-menu > li > a,
+        body .authenticated-navbar .nav-link {
+            color: #000000 !important;
+            font-weight: 600;
+        }
+        body .nav-menu > li:hover,
+        body .authenticated-navbar .nav-link:hover {
+            background: linear-gradient(to bottom, #EB4954, #A19197) !important;
+            color: #ffffff !important;
+        }
+                        /* dropdown: page-accent #b9c46d for panel border + item hover (no blue), black text */
+        body .dropdown-menu {
+            background-color: #fff !important;
+            border: 1px solid #b9c46d !important;
+        }
+        body .dropdown-menu .dropdown-item {
+            color: #555555 !important;
+        }
+        body .dropdown-menu .dropdown-item:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+        }
+
+        /* ---- Native <select> dropdowns (Category / Qualification) ----
+           Replace the blue OS highlight that appears on hovered <option>
+           items, and the blue Bootstrap focus ring, with the index palette. */
+        .form-control-custom option:hover,
+        .form-select option:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+        }
+        .form-control-custom:focus,
+        .form-select:focus {
             border-color: #4CAF50 !important;
+            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25) !important;
         }
     </style>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
