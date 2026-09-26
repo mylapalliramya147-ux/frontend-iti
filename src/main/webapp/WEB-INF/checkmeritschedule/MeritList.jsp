@@ -104,6 +104,12 @@
             margin-bottom: 15px;
             font-family: verdana, Arial, sans-serif;
         }
+
+        /* Footer colour - pale yellow-green (#e4eeb9) */
+        .lower-footer {
+            background-color: #e4eeb9 !important;
+            color: #000000 !important;
+        }
     </style>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>

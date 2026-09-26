@@ -103,6 +103,12 @@
             font-weight: 600;
             color: #0b4d8c;
         }
+
+        /* Footer colour - pale yellow-green (#e4eeb9) */
+        .lower-footer {
+            background-color: #E4EEB9 !important;
+            color: #000000 !important;
+        }
     </style>
 </head>
 <body class="bg-light">

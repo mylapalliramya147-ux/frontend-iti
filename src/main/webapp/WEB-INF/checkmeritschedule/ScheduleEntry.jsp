@@ -165,6 +165,12 @@
             border-color: #4CAF50 !important;
             box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25) !important;
         }
+
+        /* Footer colour - pale yellow-green (#e4eeb9) */
+        .lower-footer {
+            background-color: #e4eeb9 !important;
+            color: #000000 !important;
+        }
     </style>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>
