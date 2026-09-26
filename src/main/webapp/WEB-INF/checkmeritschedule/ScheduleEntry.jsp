@@ -54,7 +54,7 @@
             font-size: 0.95rem;
         }
         .form-control-custom {
-            border: 1.5px solid #dee2e6;
+            border: 1.5px solid #fff;
             border-radius: 8px;
             padding: 10px 15px;
             font-weight: 500;
@@ -104,7 +104,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .read-only-box {
-            background-color: #e6ffff;
+            background-color: #fff;
             border: 1px solid #b9c46d;
             padding: 12px 15px;
             border-radius: 8px;
