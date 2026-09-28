@@ -17,7 +17,23 @@ public class ReportsController {
         if (session == null || session.getAttribute("sessionUser") == null) {
             return false;
         }
-        return true;
+        if (allowedRoles == null || allowedRoles.length == 0) {
+            return true; // any authenticated user (old PageAuthentication-equivalent open reports)
+        }
+        Object role = session.getAttribute("roleId");
+        if (role == null) {
+            role = session.getAttribute("role_id");
+        }
+        if (role == null) {
+            return true; // session exists but role not stored yet — don't lock out
+        }
+        String r = String.valueOf(role).trim();
+        for (String allowed : allowedRoles) {
+            if (r.equals(String.valueOf(allowed).trim())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // ========== STUDENTS NOT ADMITTED (Nodal + Admin + State) ==========
