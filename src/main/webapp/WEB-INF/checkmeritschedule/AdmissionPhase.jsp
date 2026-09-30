@@ -590,7 +590,32 @@
             return false;
         };
 
+    <%
+    // The backend runs as a separate application and never sees this login session, so the caller's
+    // scope has to travel as headers — the same convention MeritList.jsp uses. login_users.ins_code
+    // holds either an ITI code (role 4) or a district code (role 3), so the role decides which
+    // scoping header it is sent as.
+    Object sessionRoleId = session.getAttribute("roleId");
+    Object sessionInsCode = session.getAttribute("insCode");
+    String jsRoleId = sessionRoleId == null ? "" : String.valueOf(sessionRoleId).replace("'", "\\'");
+    String jsInsCode = sessionInsCode == null ? "" : String.valueOf(sessionInsCode).replace("'", "\\'");
+    %>
         const NODE_API_BASE = '${backendBaseUrl}';
+        const SESSION_ROLE_ID = '<%= jsRoleId %>';
+        const SESSION_INS_CODE = '<%= jsInsCode %>';
+
+        // Scopes every backend call to the logged-in ITI or district. Without these the backend
+        // rejects the request instead of guessing which institution is admitting.
+        function apiHeaders(extra) {
+            const scope = SESSION_ROLE_ID === '3'
+                ? { 'X-Dist-Code': SESSION_INS_CODE }
+                : { 'X-Iti-Code': SESSION_INS_CODE };
+            return Object.assign({
+                'X-Role-Id': SESSION_ROLE_ID,
+                'X-Ins-Code': SESSION_INS_CODE
+            }, scope, extra || {});
+        }
+
         let currentStudent = null;
         let seatMatrixData = [];
 
@@ -606,7 +631,10 @@
 
         async function initPage() {
             try {
-                const statusResp = await fetch(`\${NODE_API_BASE}/admission-timings`, { credentials: 'include', 
+                // /admission-timings is the "create a schedule row" route, so the body-less POST this
+                // page used to send there answered 400. /api/status is the phase endpoint, and it now
+                // resolves the year from admissions.admission_phase instead of the stale iti_params.
+                const statusResp = await fetch(`\${NODE_API_BASE}/api/status`, { method: 'POST', headers: apiHeaders(), credentials: 'include', 
                     method: 'POST',
                     credentials: 'include' 
                 });
@@ -695,7 +723,7 @@
 
         async function fetchITIBoards() {
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/api/admission/iti-boards`, { credentials: 'include', credentials: 'include' });
+                const resp = await fetch(`\${NODE_API_BASE}/api/admission/iti-boards`, { headers: apiHeaders(), credentials: 'include' });
                 const res = await resp.json();
                 if (res.success) {
                     const select = document.getElementById('admissionBoard');
@@ -727,9 +755,11 @@
             }
 
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/admission-timings`, { credentials: 'include',
+                // The counselling-session list lives at /admission-timings/view; the bare POST on
+                // /admission-timings creates a schedule row and answered 400 for this payload.
+                const resp = await fetch(`\${NODE_API_BASE}/admission-timings/view`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: apiHeaders({ 'Content-Type': 'application/json' }),
                     credentials: 'include',
                     body: JSON.stringify(payload)
                 });
@@ -737,7 +767,7 @@
                 if (result.success && result.data) {
                     renderTimings(result.data);
                 } else {
-                    showFilterError(result.message || "No records found.");
+                    showFilterError(result.error || result.message || "No records found.");
                 }
             } catch (err) {
                 showFilterError("Failed to fetch timings.");
@@ -755,10 +785,10 @@
                 data.forEach(item => {
                     const row = `<tr>
                         <td>\${item.date}</td>
-                        <td><span class="fw-bold text-primary">\${item.merit_range}</span></td>
+                        <td><span class="fw-bold text-primary">\${item.meritRange}</span></td>
                         <td>\${item.caste}</td>
                         <td>\${item.qualification}</td>
-                        <td><i class="far fa-clock me-1 text-secondary"></i> \${item.cal_time}</td>
+                        <td><i class="far fa-clock me-1 text-secondary"></i> \${item.calTime}</td>
                     </tr>`;
                     tbody.insertAdjacentHTML('beforeend', row);
                 });
@@ -776,9 +806,9 @@
             e.preventDefault();
             const rank = document.getElementById('rankInput').value;
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/admission-timings`, {
+                const resp = await fetch(`\${NODE_API_BASE}/api/admission/rank-lookup`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: apiHeaders({ 'Content-Type': 'application/json' }),
                     credentials: 'include',
                     body: JSON.stringify({ rank })
                 });
@@ -851,10 +881,10 @@
 
         async function fetchSeatMatrix() {
             try {
-                const resp = await fetch(`\${NODE_API_BASE}/api/admission/iti-seat-matrix`, { credentials: 'include',
+                const resp = await fetch(`\${NODE_API_BASE}/api/admission/iti-seat-matrix`, {
                     method: 'POST',
+                    headers: apiHeaders({ 'Content-Type': 'application/json' }),
                     credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({})
                 });
                 const res = await resp.json();
@@ -938,9 +968,9 @@
 
                 console.log("Processing admission with payload:", payload);
 
-                const resp = await fetch(`\${NODE_API_BASE}/api/admission/take-admission`, { credentials: 'include',
+                const resp = await fetch(`\${NODE_API_BASE}/api/admission/take-admission`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: apiHeaders({ 'Content-Type': 'application/json' }),
                     credentials: 'include',
                     body: JSON.stringify(payload)
                 });
