@@ -17,6 +17,12 @@
 <title>Admission Initialization</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
+<%-- Session role for admissionIntializationJs.js#checkToken. LoginController puts roleId in
+     the HTTP session (same source MeritList.jsp and ScheduleEntry.jsp read); EL resolves to an
+     empty string when there is no session, and the JS then hides the form as before. --%>
+<script type="text/javascript">
+    const SESSION_ROLE_ID = '${sessionScope.roleId}';
+</script>
 <script type="text/javascript" src="./js/customJs/admissionIntializationJs.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">

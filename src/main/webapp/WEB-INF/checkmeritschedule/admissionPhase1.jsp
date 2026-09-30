@@ -9,6 +9,12 @@
 <title>Admissions Phase - 1</title>
 
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
+<%-- Session scope for admissionsPhase1Js.js#getReady (LoginController stores both);
+     EL resolves to '' when there is no session and the JS keeps the form closed. --%>
+<script type="text/javascript">
+    const SESSION_ROLE_ID = '${sessionScope.roleId}';
+    const SESSION_INS_CODE = '${sessionScope.insCode}';
+</script>
 <script src="./js/customJs/admissionsPhase1Js.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">

@@ -4,13 +4,12 @@
 const API_BASE_URL = window.API_BASE_URL;
 
 function getReady(){
-	
-	//alert("getReady");
-	jwtToken = localStorage.getItem('jwtToken');
-	insCode =  localStorage.getItem('insCode');
-	//alert("jwtToken=>"+jwtToken);
-	
-	if(jwtToken == null || jwtToken == ""){
+	// Session gate: LoginController puts roleId/insCode in the HTTP session and
+	// admissionPhase1.jsp publishes them as SESSION_ROLE_ID / SESSION_INS_CODE.
+	// The old gate read localStorage keys that nothing in this application ever
+	// sets, so every visitor got the "not authorized" banner (same defect that
+	// left admissionIntialization.jsp dead - WRONG_IMPLEMENTATIONS.md Issue 2).
+	if(typeof SESSION_ROLE_ID === 'undefined' || SESSION_ROLE_ID === null || SESSION_ROLE_ID === ''){
 		$("#navbar").hide(); 
 		$("#404Msg").append('<h3 class="h3 text-danger">YOU DONT HAVE AUTHORIZE TO THIS PAGE</h3>');
 		
@@ -18,9 +17,7 @@ function getReady(){
 		$("#checkRankDiv").hide();
 		$("#admissionDiv").hide();
 	}else{
-		//alert("else"+jwtToken);
-		jwtToken = "Bearer "+jwtToken;
-		//alert("assign=>"+jwtToken);
+		insCode = SESSION_INS_CODE;
 		$("#404Msg").hide(); 
 		$("#navbar").show(); 
 		
@@ -43,9 +40,6 @@ function getScheduleTimingsByDist(insCode){
 	$.ajax({
 		type: 'post',
 				url: API_BASE_URL + '/admission-timings',  // No direct backend endpoint — stubbed
-		headers:{
-			'Authorization': jwtToken
-		},
 		cache: false,
 		timeout: 600000,
 		success:function(resp){
@@ -108,7 +102,6 @@ function checkAdmissions(rank,insCode){
 //	$.ajax({
 //		type: 'post',
 //		url: API_BASE_URL + '/api/checklist/seat-matrix-phase-one',
-//		//url: API_BASE_URL + '/itiapi/admissions/checkRankIsAdmitted',
 //		data: JSON.stringify(rbody),
 //		contentType: 'application/json',
 ////		headers: {
