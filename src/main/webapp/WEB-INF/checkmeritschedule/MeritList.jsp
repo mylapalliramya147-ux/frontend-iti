@@ -186,8 +186,30 @@
          even though this page uses isELIgnored="true". A static <%@ include %>
          would inherit that flag and print the literal token. --%>
     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
+    <%-- Session institution scope. login_users keeps a single ins_code column holding a district
+         code for district logins (roleId 3) and an ITI code for ITI logins (roleId 4), so the role
+         and that one code are sent together and the backend decides which to use. This page is
+         isELIgnored="true", so EL cannot read the session here; a scriptlet is used instead, the
+         same way request.getContextPath() is used above. --%>
+    <%
+        Object sessionRoleId = session.getAttribute("roleId");
+        Object sessionInsCode = session.getAttribute("insCode");
+        String jsRoleId = sessionRoleId == null ? "" : String.valueOf(sessionRoleId).replace("'", "\\'");
+        String jsInsCode = sessionInsCode == null ? "" : String.valueOf(sessionInsCode).replace("'", "\\'");
+    %>
     <script>
         const NODE_API_BASE = window.API_BASE_URL;
+        const SESSION_ROLE_ID = '<%= jsRoleId %>';
+        const SESSION_INS_CODE = '<%= jsInsCode %>';
+
+        // Merit generation is scoped by these two headers. Without them the backend cannot tell
+        // which district/ITI the list belongs to and rejects the request instead of guessing.
+        function meritScopeHeaders(extra) {
+            return Object.assign({
+                'X-Role-Id': SESSION_ROLE_ID,
+                'X-Ins-Code': SESSION_INS_CODE
+            }, extra || {});
+        }
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List
@@ -226,11 +248,11 @@
             
             try {
                 // Pointing to existing merit generation endpoint
-                const response = await fetch(NODE_API_BASE + '/api/meritlist/generate', { credentials: 'include',
+                const response = await fetch(NODE_API_BASE + '/api/meritlist/generate', {
+                    credentials: 'include',
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                    headers: meritScopeHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
                 });
                 const result = await response.json();
                 if (result.success) {

@@ -195,6 +195,7 @@
                         prefill(s);
                         document.getElementById("gateDiv").style.display = "none";
                         document.getElementById("applyDiv").style.display = "";
+                        initSelectionStep();
                         window.scrollTo(0, 0);
                     }).fail(function () {
                         alert("No registration found for Registration Id " + regid + ". Please register first (Step 1).");
@@ -361,6 +362,187 @@
                 }
             </script>
 
+            <script type="text/javascript">
+                // ================= Step 3: ITI selection =================
+                // Writes student_trade_sel through /admission/student-trade-selection.
+                // Ported from web/open_Application_Interface.jsp (locDeptTable) and its
+                // getColleges()/abc() partials; the district list comes from dist_mst instead of
+                // the 13 districts the legacy page hard-coded.
+                var MAX_CHOICES = 60;
+                var DISTRICT_OPTIONS = null;
+
+                function loadDistrictOptions(after) {
+                    if (DISTRICT_OPTIONS) { after(); return; }
+                    $.get('${backendBaseUrl}/api/districts', function (list) {
+                        DISTRICT_OPTIONS = list || [];
+                        after();
+                    }).fail(function () {
+                        alert("Could not load the district list. Please retry.");
+                    });
+                }
+
+                // Reveals Step 3 and re-renders anything already saved for this candidate.
+                function initSelectionStep() {
+                    document.getElementById("selectDiv").style.display = "";
+                    loadDistrictOptions(function () {
+                        if (document.getElementById("locDeptBody").rows.length === 0) { addSelectRow(); }
+                        loadSavedSelections();
+                    });
+                }
+
+                function addSelectRow(distCode, itiCode) {
+                    var body = document.getElementById("locDeptBody");
+                    if (body.rows.length >= MAX_CHOICES) {
+                        alert("A maximum of " + MAX_CHOICES + " ITIs can be selected.");
+                        return;
+                    }
+                    var row = body.insertRow(-1);
+                    var cSno = row.insertCell(0);
+                    var cDist = row.insertCell(1);
+                    var cIti = row.insertCell(2);
+                    var cDel = row.insertCell(3);
+
+                    var districtSelect = document.createElement("select");
+                    districtSelect.className = "selDistrict";
+                    districtSelect.style.width = "180px";
+                    districtSelect.innerHTML = '<option value="">--Select District--</option>';
+                    DISTRICT_OPTIONS.forEach(function (d) {
+                        var o = document.createElement("option");
+                        o.value = d.code;
+                        o.textContent = d.name;
+                        districtSelect.appendChild(o);
+                    });
+                    districtSelect.onchange = function () { loadItisForRow(this); };
+                    cDist.appendChild(districtSelect);
+
+                    var itiSelect = document.createElement("select");
+                    itiSelect.className = "selIti";
+                    itiSelect.style.width = "320px";
+                    itiSelect.innerHTML = '<option value="">--Select ITI--</option>';
+                    itiSelect.onchange = function () { showTrades(this.value); };
+                    cIti.appendChild(itiSelect);
+
+                    var remove = document.createElement("input");
+                    remove.type = "button";
+                    remove.value = "Delete";
+                    remove.onclick = function () {
+                        body.deleteRow(row.rowIndex);
+                        renumberRows();
+                    };
+                    cDel.appendChild(remove);
+
+                    if (distCode) { districtSelect.value = distCode; }
+                    renumberRows();
+                    if (distCode) { loadItisForRow(districtSelect, itiCode); }
+                }
+
+                function renumberRows() {
+                    var rows = document.getElementById("locDeptBody").rows;
+                    for (var i = 0; i < rows.length; i++) { rows[i].cells[0].innerHTML = (i + 1); }
+                }
+
+                // Reuses GET /admission/eligible-itis/{distCode}. That lookup returns one row per
+                // trade, so the ITI list is de-duplicated on iti_code before it is shown.
+                function loadItisForRow(districtSelect, preselectIti) {
+                    var itiSelect = districtSelect.closest("tr").querySelector(".selIti");
+                    var distCode = districtSelect.value;
+                    itiSelect.innerHTML = '<option value="">--Select ITI--</option>';
+                    if (!distCode) { return; }
+                    $.get('${backendBaseUrl}/admission/eligible-itis/' + encodeURIComponent(distCode),
+                        function (list) {
+                            var seen = {};
+                            (list || []).forEach(function (i) {
+                                if (seen[i.itiCode]) { return; }
+                                seen[i.itiCode] = true;
+                                var o = document.createElement("option");
+                                o.value = i.itiCode;
+                                o.textContent = i.itiName + ' (' + i.itiCode + ')';
+                                itiSelect.appendChild(o);
+                            });
+                            if (preselectIti) { itiSelect.value = preselectIti; }
+                        });
+                }
+                // Same information the legacy getTrade_info.jsp showed for the chosen ITI.
+                function showTrades(itiCode) {
+                    var box = document.getElementById("itiInfo");
+                    if (!itiCode) { box.innerHTML = ""; return; }
+                    $.get('${backendBaseUrl}/admission/iti/' + encodeURIComponent(itiCode) + '/trades',
+                        function (list) {
+                            if (!list || list.length === 0) { box.innerHTML = ""; return; }
+                            var html = '<b>Trades and seats available</b>'
+                                + '<table border="1" align="center" style="margin:4px auto;">'
+                                + '<tr><th>Trade Name</th><th>Number of Seats</th></tr>';
+                            list.forEach(function (t) {
+                                html += '<tr><td>' + (t.tradeName || t.tradeShort) + '</td><td>'
+                                    + (t.strength == null ? 0 : t.strength) + '</td></tr>';
+                            });
+                            box.innerHTML = html + '</table>';
+                        });
+                }
+
+                function collectChoices() {
+                    var rows = document.getElementById("locDeptBody").rows;
+                    var choices = [];
+                    for (var i = 0; i < rows.length; i++) {
+                        var distCode = rows[i].querySelector(".selDistrict").value;
+                        var itiCode = rows[i].querySelector(".selIti").value;
+                        if (!itiCode) { continue; }
+                        choices.push({ distCode: distCode, itiCode: itiCode });
+                    }
+                    return choices;
+                }
+
+                function saveSelections() {
+                    if (!CURRENT_REGID) { alert("Load your application first."); return false; }
+                    var choices = collectChoices();
+                    if (choices.length === 0) { alert("Please select at least one ITI."); return false; }
+                    $.ajax({
+                        url: '${backendBaseUrl}/admission/student-trade-selection/' + CURRENT_REGID,
+                        type: 'POST', contentType: 'application/json',
+                        data: JSON.stringify({ regid: CURRENT_REGID, choices: choices }),
+                        success: function (r) {
+                            showSelectMessage(true, 'Saved ' + r.saved + ' ITI selection(s) for year '
+                                + r.year + ' (phase ' + r.phase + ').');
+                            loadSavedSelections();
+                        },
+                        error: function (xhr) {
+                            var msg = "Could not save your ITI selections.";
+                            if (xhr.responseJSON && xhr.responseJSON.error) { msg = xhr.responseJSON.error; }
+                            showSelectMessage(false, msg);
+                        }
+                    });
+                    return false;
+                }
+
+                function loadSavedSelections() {
+                    if (!CURRENT_REGID) { return; }
+                    $.get('${backendBaseUrl}/admission/student-trade-selection/' + CURRENT_REGID,
+                        function (list) {
+                            var box = document.getElementById("savedSelections");
+                            if (!list || list.length === 0) {
+                                box.innerHTML = '<p align="center">No ITI selection saved yet.</p>';
+                                return;
+                            }
+                            var html = '<b>Saved ITI selections (' + list.length + ')</b>'
+                                + '<table border="1" align="center" style="margin:6px auto;">'
+                                + '<tr><th>S.No</th><th>District</th><th>ITI</th></tr>';
+                            list.forEach(function (r, idx) {
+                                html += '<tr><td align="center">' + (idx + 1) + '</td><td>'
+                                    + (r.distName || r.distCode) + '</td><td>'
+                                    + (r.itiName || r.itiCode) + ' (' + r.itiCode + ')</td></tr>';
+                            });
+                            box.innerHTML = html + '</table>';
+                        });
+                }
+
+                function showSelectMessage(ok, msg) {
+                    document.getElementById("selectResult").innerHTML =
+                        '<div style="border:2px solid ' + (ok ? '#28a745' : '#dc3545')
+                        + ';background-color:' + (ok ? '#d4edda' : '#f8d7da')
+                        + ';padding:10px;width:70%;margin:10px auto;">' + msg + '</div>';
+                }
+            </script>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
@@ -462,6 +644,36 @@
                 </tr>
             </table>
         </form>
+</div>
+
+<!-- ============ STEP 3: ITI SELECTION (writes student_trade_sel) ============ -->
+<div id="selectDiv" style="display:none;">
+    <h2 style="background-color: lightgreen" align="center" class="style4">Selection of ITIs (Step 3)</h2>
+
+    <p align="center" style="width:70%;margin:auto;">
+        Select the ITIs you want to be considered for, in order of preference (maximum 60).
+        <b>Save the list</b> &mdash; a merit list is prepared only for candidates who have selected at least one ITI.
+    </p>
+
+    <div id="selectResult"></div>
+
+    <table width="70%" align="center" bgcolor="#cbd6b2" style="border:2px solid black;">
+        <tr bgcolor="#3399ff">
+            <th style="width:60px;">S.No</th>
+            <th style="width:200px;">District</th>
+            <th>ITI</th>
+            <th style="width:90px;">Remove</th>
+        </tr>
+        <tbody id="locDeptBody"></tbody>
+    </table>
+
+    <div align="center" style="margin:10px;">
+        <input type="button" value="Add ITI" onclick="addSelectRow();">
+        <input type="button" value="Save ITI Selections" onclick="saveSelections();">
+    </div>
+
+    <div id="itiInfo" align="center"></div>
+    <div id="savedSelections" style="width:70%;margin:10px auto;"></div>
 </div>
 <style>
     #footer{

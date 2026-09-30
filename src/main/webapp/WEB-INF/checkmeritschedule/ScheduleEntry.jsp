@@ -297,9 +297,30 @@
          _api_base_url.jsp. <jsp:include> is a separate translation unit, so
          ${backendBaseUrl} resolves here even though this page is EL-ignored --%>
     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp" />
+    <%-- Session institution scope. login_users keeps a single ins_code column holding a district
+         code for district logins (roleId 3) and an ITI code for ITI logins (roleId 4), so the role
+         and that one code are sent together and the backend decides which to use. This page is
+         isELIgnored="true", so EL cannot read the session here; a scriptlet is used instead. --%>
+    <%
+        Object sessionRoleId = session.getAttribute("roleId");
+        Object sessionInsCode = session.getAttribute("insCode");
+        String jsRoleId = sessionRoleId == null ? "" : String.valueOf(sessionRoleId).replace("'", "\\'");
+        String jsInsCode = sessionInsCode == null ? "" : String.valueOf(sessionInsCode).replace("'", "\\'");
+    %>
     <script>
         const API_BASE = window.API_BASE_URL + '/admission-timings';
         const NODE_API_BASE = window.API_BASE_URL;
+        const SESSION_ROLE_ID = '<%= jsRoleId %>';
+        const SESSION_INS_CODE = '<%= jsInsCode %>';
+
+        // Schedule creation/updating is scoped by these two headers. Without them the backend
+        // cannot tell which district/ITI the schedule belongs to and rejects the request.
+        function scopeHeaders(extra) {
+            return Object.assign({
+                'X-Role-Id': SESSION_ROLE_ID,
+                'X-Ins-Code': SESSION_INS_CODE
+            }, extra || {});
+        }
         let currentInitData = null;
 
         // Fetch Caste List
@@ -342,10 +363,10 @@
             const payload = { reservation: caste, minqul: qual };
 
             try {
-                const response = await fetch(API_BASE + '/entry', { 
+                const response = await fetch(API_BASE + '/entry', {
                     credentials: 'include',
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: scopeHeaders({ 'Content-Type': 'application/json' }),
                     body: JSON.stringify(payload)
                 });
 
@@ -422,10 +443,10 @@
             }
 
             try {
-                const response = await fetch(API_BASE + '/timings', { 
+                const response = await fetch(API_BASE + '/timings', {
                     credentials: 'include',
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: scopeHeaders({ 'Content-Type': 'application/json' }),
                     body: JSON.stringify(payload)
                 });
 

@@ -115,6 +115,9 @@
 
     <jsp:include page="/WEB-INF/bannernew.jsp" />
     <jsp:include page="/WEB-INF/authNavbar.jsp" />
+    <%-- Defines window.API_BASE_URL. This page is isELIgnored="true", so '${backendBaseUrl}'
+         would be emitted literally; the routed /ScheduleEntry page includes this same fragment. --%>
+    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp" />
 
     <div class="page-header-custom text-center">
         <div class="container">
@@ -230,8 +233,29 @@
         </div>
     </div>
 
+    <%--
+        Page is isELIgnored="true", so session values arrive via a scriptlet — the same channel
+        checkmeritschedule/ScheduleEntry.jsp uses. Without these headers the Backend rejects
+        schedule creation with 400 (AdmissionTimingController.currentUser()).
+    --%>
+    <%
+        Object sessionRoleId = session.getAttribute("roleId");
+        Object sessionInsCode = session.getAttribute("insCode");
+        String jsRoleId = sessionRoleId == null ? "" : String.valueOf(sessionRoleId).replace("'", "\\'");
+        String jsInsCode = sessionInsCode == null ? "" : String.valueOf(sessionInsCode).replace("'", "\\'");
+    %>
     <script>
-        const NODE_API_BASE = '${backendBaseUrl}';
+        const API_BASE = window.API_BASE_URL + '/admission-timings';
+        const NODE_API_BASE = window.API_BASE_URL;
+        const SESSION_ROLE_ID = '<%= jsRoleId %>';
+        const SESSION_INS_CODE = '<%= jsInsCode %>';
+
+        function scopeHeaders(extra) {
+            return Object.assign({
+                'X-Role-Id': SESSION_ROLE_ID,
+                'X-Ins-Code': SESSION_INS_CODE
+            }, extra || {});
+        }
         let currentInitData = null;
 
         // Fetch Caste List
@@ -268,11 +292,14 @@
             const payload = { reservation: caste, minqul: qual };
 
             try {
-                const response = await fetch(NODE_API_BASE + '/api/schedule-entry/create', { credentials: 'include',
+                // Real route: POST /admission-timings/entry (CreateEntryRequest = {minqul, reservation}).
+                // The dead '/api/schedule-entry/create' never existed in either app; the legacy
+                // equivalent is schedule_entry_interface.jsp -> schedule_entry_int.do.
+                const response = await fetch(API_BASE + '/entry', {
+                    credentials: 'include',
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                    headers: scopeHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
@@ -306,16 +333,19 @@
             feedback.innerText = "";
             feedback.className = "mt-3 fw-bold";
 
+            // UpdateTimingsRequest declares meritFrom / meritTo as @NotNull and only aliases
+            // calDate / calTime, so these two keys must be camelCase — snake_case would fail
+            // validation with 400 rather than the old 404.
             const payload = {
                 ...currentInitData,
-                merit_from: document.getElementById('meritFrom').value,
-                merit_to: document.getElementById('meritTo').value,
+                meritFrom: document.getElementById('meritFrom').value,
+                meritTo: document.getElementById('meritTo').value,
                 cal_date: document.getElementById('calDate').value,
                 cal_time: document.getElementById('calTime').value
             };
 
             // Basic Validation
-            if (!payload.merit_from || !payload.merit_to || !payload.cal_date || !payload.cal_time) {
+            if (!payload.meritFrom || !payload.meritTo || !payload.cal_date || !payload.cal_time) {
                 setFeedback("Please fill all timing fields.", "text-danger");
                 return;
             }
@@ -328,11 +358,12 @@
             }
 
             try {
-                const response = await fetch(NODE_API_BASE + '/api/schedule-entry/add-timings', { credentials: 'include',
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                // Real route: PUT /admission-timings/timings (UpdateTimingsRequest).
+                const response = await fetch(API_BASE + '/timings', {
+                    credentials: 'include',
+                    method: 'PUT',
+                    headers: scopeHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
