@@ -299,8 +299,21 @@
             </script>
             <script type="text/javascript">
                 // Final submit: PUT /api/student/update/{regid} + POST /api/student/marks/save
+                // Double-submit guard: a second click/Enter while the two nested AJAX
+                // calls are in flight used to POST /marks/save twice, and with no
+                // unique constraint on student_cand_marks that wrote duplicate rows.
+                var __applySubmitting = false;
+                function setApplySubmitting(on) {
+                    __applySubmitting = on;
+                    var form = document.forms ? document.forms['ApplicationForm'] : null;
+                    if (!form) return;
+                    var els = form.querySelectorAll('input[type="submit"], button[type="submit"]');
+                    for (var i = 0; i < els.length; i++) { els[i].disabled = on; }
+                }
                 function submitApplication() {
+                    if (__applySubmitting) return false;
                     if (!validateApplication()) return false;
+                    setApplySubmitting(true);
                     var payload = {
                         name: document.getElementById("name").value.trim(),
                         fname: document.getElementById("fname").value.trim(),
@@ -350,11 +363,13 @@
                                         + '<p><a href="${pageContext.request.contextPath}/">Back to Home</a></p></div>');
                                     document.getElementById("applyDiv").style.display = "none";
                                     window.scrollTo(0, 0);
+                                    // Keep submit locked after success (form is hidden).
                                 },
-                                error: function () { alert("Details saved but marks could not be saved. Please retry from Edit Registration."); }
+                                error: function () { setApplySubmitting(false); alert("Details saved but marks could not be saved. Please retry from Edit Registration."); }
                             });
                         },
                         error: function (xhr) {
+                            setApplySubmitting(false);
                             alert("Failed to save application details. Please check the values and try again.");
                         }
                     });
