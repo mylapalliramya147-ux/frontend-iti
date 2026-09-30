@@ -1,15 +1,7 @@
 package com.server.frontend.controller.checkmeritschedulecontroller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdmissionPageController {
@@ -20,27 +12,8 @@ public class AdmissionPageController {
         return "checkmeritschedule/ScheduleEntry";
     }
 
-    // API endpoint for creating schedule entry
-    @PostMapping("/admission-timings/schedule-entry/create")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> createScheduleEntry(
-            @RequestBody(required = false) Map<String, Object> request) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("success", true);
-        body.put("message", "Schedule initialized");
-        body.put("data", request == null ? new HashMap<String, Object>() : request);
-        return ResponseEntity.ok(body);
-    }
-
-    // API endpoint for saving timings
-    @PutMapping("/admission-timings/timings")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> saveTimings(
-            @RequestBody(required = false) Map<String, Object> request) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("success", true);
-        body.put("message", "Timings saved successfully");
-        body.put("data", request == null ? new HashMap<String, Object>() : request);
-        return ResponseEntity.ok(body);
-    }
+    // The schedule-entry and timings APIs are NOT proxied here. They are served by the
+    // Backend (AdmissionTimingController on :5050), and the pages reach it directly through
+    // window.API_BASE_URL. The two stubs that used to live here shadowed nothing real —
+    // they had no callers — but echoing back success without persisting anything was a trap.
 }
