@@ -39,3 +39,5 @@ openapi.json
 ### Local env overrides — NEVER commit real credentials ###
 .env
 .env.*.local
+
+!.env.example
