@@ -88,11 +88,6 @@ public class HomeController {
         return "checkmeritschedule/AdmissionPhase";
     }
 
-    @GetMapping("/AdmissionPhase1")
-    public String admissionPhase1() {
-        return "checkmeritschedule/admissionPhase1";
-    }
-
     @GetMapping("/DgtPermittedShift")
     public String dgtPermittedShift() {
         return "checkmeritschedule/DscList";
