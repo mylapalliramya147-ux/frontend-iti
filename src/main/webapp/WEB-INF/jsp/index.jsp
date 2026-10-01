@@ -64,7 +64,7 @@ function closeAirforcePopup() {
                 <span><font color="#660000"><b>2:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-apply"><font color="blue">Application to apply for ITI</font></a></b></span><br><br>
                 <h2>If Student is not Registered both Steps 1 and 2 are Mandatory for Applying to ITI</h2>
                 <span><font color="#660000"><b>3:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/student-edit-details"><font color="blue">Edit Registration</font></a></b></span><br><br>
-                <span><font color="#660000"><b>4:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/forgotregid.jsp"><font color="blue">Forgot Registration ID</font></a></b></span>
+                <span><font color="#660000"><b>4:&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/forgot-regid"><font color="blue">Forgot Registration ID</font></a></b></span>
             </ul>
         </td></tr>
     </table>
@@ -150,8 +150,8 @@ function closeAirforcePopup() {
 </form>
 
 <!-- ================= SCRIPTS ================= -->
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/md5.js"></script>
+<%-- js/md5.js is not in static/js and nothing on this page calls md5(), so it only ever produced
+     a 404 in the console of every login page load. --%>
 
 <script>
 function submit1() {
@@ -178,5 +178,6 @@ $(document).ready(function () {
 });
 </script>
 
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -48,7 +48,11 @@ $(document).ready(function(){
 					convertFormValuesAsNull();
 				}
 			}
-		});
+		,
+        error: function(xhr, status, error) {
+            console.error('Request failed:', status, error);
+        }
+    });
 	}
 	  
 	});

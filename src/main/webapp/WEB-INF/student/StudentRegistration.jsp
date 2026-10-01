@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>open_application_entry.jsp</title>
+        <title>:: ITI :: Student Registration</title>
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>:: ITI  ::</title>
@@ -337,6 +337,9 @@
             td{ padding-bottom: 10px; padding-left: 10px; font-weight: bolder; }  
         </style>
         
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     <body>
         
 <center>
@@ -442,5 +445,6 @@
 </div>
 
 
+<%@ include file="../footer.jsp" %>
     </body>
 </html>

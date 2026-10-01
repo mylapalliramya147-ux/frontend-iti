@@ -2,7 +2,6 @@
  * 
  */
 const API_BASE_URL = window.API_BASE_URL;
-let jwtToken = null;
 let insCode = null;
 
 let getSSCBoards = null;
@@ -15,11 +14,11 @@ function getReady(){
 	//alert("getReady");
 	getAdmissionPhaseData();
 	
-	jwtToken = localStorage.getItem('jwtToken');
-	insCode =  localStorage.getItem('insCode');
-	//alert("jwtToken=>"+jwtToken);
-	
-	if(jwtToken == null || jwtToken == ""){
+	// Session gate, same source as MeritList.jsp and admissionIntialization.jsp:
+	// LoginController stores roleId/insCode in the HTTP session and the JSP
+	// publishes them. The old gate read localStorage keys nothing ever sets, so
+	// this routed page always fell into the "not authorized" branch.
+	if(typeof SESSION_ROLE_ID === 'undefined' || SESSION_ROLE_ID === null || SESSION_ROLE_ID === ''){
 		$("#contentDiv").hide();
 		
 		$("#navbar").hide(); 
@@ -28,8 +27,7 @@ function getReady(){
 		
 		$("#404Msg").append('<h3 class="h3 text-danger">YOU DONT HAVE AUTHORIZE TO THIS PAGE</h3>');
 	}else{
-		//alert("else");
-		jwtToken = "Bearer "+jwtToken;
+		insCode = SESSION_INS_CODE;
 		$("#404Msg").hide(); 
 		$("#navbar").show(); 
 		$("#formTwo").hide(); 
@@ -157,12 +155,11 @@ function editApplication(ssc_regno,regid,dob){
 	 
 	 
 	
-		// Check the registration — no backend endpoint exists for checkRegOrNot
-	// This call will fail; callers should handle gracefully
+	// Best available: fetch the student by regid — the legacy
+	// /itiapi/std/checkRegOrNot call has no backend endpoint at all.
 	$.ajax({
 		type: 'post',
-		//url: API_BASE_URL + '/itiapi/std/checkRegOrNot?sscRegno='+ssc_regno+'&regid='+regid+'&dob='+convertedDate,
-		url: API_BASE_URL + '/api/student/' + regid,  // Best available: fetch student by regid
+		url: API_BASE_URL + '/api/student/' + regid,
 		cache: false,
 		timeout: 6000000,
 		success:function(resp){
@@ -202,7 +199,7 @@ function editApplication(ssc_regno,regid,dob){
 			$("#caste").append('<option value="">-select-</option>');
 			for(var i=0; i < getCastes.length; i++){
 				var bean = getCastes[i];
-				$("#caste").append('<option value="'+bean.category_code+'">'+bean.category_name+'</option>');
+				$("#caste").append('<option value="'+bean.casteCode+'">'+bean.casteName+'</option>');
 			}
 			$('#caste').val(resp.studentApplication.caste); 
 			document.getElementById('fname').value = resp.studentApplication.fname;
@@ -1106,7 +1103,11 @@ function approveData(){
 //				alert("failure=>resp=>"+JSON.stringify(resp));
 //			}
 //			
-//		});
+//		,
+//        error: function(xhr, status, error) {
+//            console.error('Request failed:', status, error);
+//        }
+//    });
 	}else{
 		 $("#ssc_eqError").html('Document SSC/Equivalent Marks should be checked Yes or No for Approve of this candidate.');
 		 $("#ssc_eqError").css({"color": "red"});

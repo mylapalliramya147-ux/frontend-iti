@@ -16,8 +16,8 @@
         <li><a href="${pageContext.request.contextPath}/authHome">Home</a></li>
         <li><a href="#">ITI Services</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/Password_change.jsp">Change User Password</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/Registration.jsp">Add ITI Master</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/password-change">Change User Password</a></li>
+                <li><a href="${pageContext.request.contextPath}/services/registration">Add ITI Master</a></li>
             </ul>
         </li>
         <li><a href="#">ITI Reports</a>
@@ -38,9 +38,13 @@
         </li>
         <li><a href="#">Admissions</a>
             <ul>
+<<<<<<< HEAD
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
                 <li><a href="${pageContext.request.contextPath}/jsp/permitted_shift_unit_nodal_report.jsp">DGT Permitted Shifts Report</a></li>
+=======
+                <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
+>>>>>>> 7665577f8b5a72be9eb9d0ae6626adc0d0804e4f
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a><ul></ul></li>

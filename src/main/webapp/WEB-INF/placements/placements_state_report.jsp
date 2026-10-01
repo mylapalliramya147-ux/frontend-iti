@@ -36,6 +36,9 @@ $(document).ready(function(){
 
 });
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -252,5 +255,6 @@ function fnExcelReport(tableId) {
     return false;
 }
 </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

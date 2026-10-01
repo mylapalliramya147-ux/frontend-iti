@@ -55,12 +55,13 @@
           <div class="row">
             <c:forEach var="page" items="${entry.value}">
               <c:set var="viewName" value="${entry.key}/${page}"/>
+              <c:set var="status" value="${pageStatuses[viewName]}"/>
               <div class="col-md-4 page-item" data-name="${page}">
                 <a class="page-link-item"
                    href="${pageContext.request.contextPath}${realRoutes[viewName] != null ? realRoutes[viewName] : '/dev/view/'.concat(entry.key).concat('/').concat(page)}">
                   <span><c:out value="${page}"/></span>
-                  <span class="badge badge-route ${realRoutes[viewName] != null ? 'badge-done' : (doneFolders[entry.key] ? 'badge-partial' : 'badge-wip')}">
-                    ${realRoutes[viewName] != null ? 'done' : (doneFolders[entry.key] ? 'partial' : 'wip')}
+                  <span class="badge badge-route badge-${status}">
+                    <c:out value="${status}"/>
                   </span>
                 </a>
               </div>

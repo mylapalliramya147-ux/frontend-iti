@@ -34,7 +34,11 @@ function getReady(){
 			
 			itis = resp;
 		}
-	});
+	,
+        error: function(xhr, status, error) {
+            console.error('Request failed:', status, error);
+        }
+    });
 }
 function Street_name() {
     var dists = getDists(); // Assuming getDists() function is accessible from siteScript.js

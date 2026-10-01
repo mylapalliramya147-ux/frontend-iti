@@ -42,18 +42,6 @@
 				$("#distss").append('<option value="'+bean.dist_code+'">'+bean.dist_name+'</option>');
 			}
 		
-//		$.ajax({
-//			type: 'get',
-//			url: '${backendBaseUrl}/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
-//			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getItiProfilesWithTradeAndStrength',
-//			cache: false,
-//			timeout: 6000000,
-//			success:function(resp){
-//				//alert("resp=>"+JSON.stringify(resp));
-//				data = resp;
-//				 
-//			}
-//		});
 		$.ajax({
 			type: 'get',
 			url: '${backendBaseUrl}/api/itis',
@@ -64,17 +52,6 @@
 				itis = resp;
 			}
 		});
-//		$.ajax({
-//			type: 'get',
-//			url: '${backendBaseUrl}/itiapi/masterdata/getSeatMatrixItiwise',
-//			//url: 'https://itiadmissions.ap.gov.in/itiapi/masterdata/getSeatMatrixItiwise',
-//			cache: false,
-//			timeout: 6000000,
-//			success:function(resp){
-//				//alert("resp=>"+JSON.stringify(resp));
-//				seatmatrix = resp;
-//			}
-//		});
 		
 	});
 	

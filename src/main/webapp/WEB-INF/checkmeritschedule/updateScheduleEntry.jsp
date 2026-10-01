@@ -18,6 +18,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body onload="generateCaptcha(),getReady();">
 	<div id="404Msg" align="center">
@@ -25,7 +26,8 @@
 				<%@include file="../navbars/openNavbar.jsp"%>
 	</div>
 	<div id="navbar">
-		<%@include file="/WEB-INF/userpages/Navbar.jsp"%>
+		<%@include file="/WEB-INF/bannernew.jsp"%>
+		<%@include file="/WEB-INF/checkmeritschedule/authNavbar.jsp"%>
 	</div>
 
 	<br>

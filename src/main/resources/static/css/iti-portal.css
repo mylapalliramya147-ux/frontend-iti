@@ -236,6 +236,6 @@ body.portal-page #mysubmit {
 
 /* Active item inside index-style dropdown menus (role report navbars) */
 #menu-bar .dropdown-content a.active {
-    background: lightblue !important;
+    background: #e4eeb9 !important;
     color: black !important;
 }

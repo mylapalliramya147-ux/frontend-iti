@@ -135,6 +135,9 @@ function deleteMapping(slno){
     return false;
 }
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -178,5 +181,6 @@ function deleteMapping(slno){
         <tbody id="industrydata"></tbody>
     </table>
 </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -106,6 +106,9 @@ function fnExcelReport(a) {
     return false;
 }
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -177,5 +180,6 @@ onclick="return getData();">GET DATA</button>
     </div>
     
     
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

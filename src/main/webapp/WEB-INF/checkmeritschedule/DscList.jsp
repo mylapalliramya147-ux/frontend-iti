@@ -75,6 +75,7 @@
             margin-bottom: 15px;
         }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body class="bg-light">
     <!-- Header Content -->

@@ -7,32 +7,37 @@
     <title>Merit List Management - AP ITI</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/all.min.css">
     <style>
         .form-container {
             max-width: 580px;
             margin: 30px auto;
         }
+        /* Index-style "Generate Merit List" panel. Palette matches
+           jsp/index.jsp via style.css + iti-portal.css (menu bar / footer,
+           shared partials) and the pale-cyan box used by this module's own
+           classic pages (MeritListPhaseOne.jsp). */
         .outer-border {
-            border: 3px solid #004a99 !important;
+            border: 1px solid black !important;
             padding: 15px;
-            border-radius: 12px;
-            background: #fff;
+            border-radius: 20px;
+            background: #e4eeb9;
         }
         .inner-box {
-            background-color: #f8fbff; /* Very light blue */
-            border: 1px solid #004a99 !important;
+            background-color: #fff;
+            border: 1px solid black !important;
             padding: 25px 30px;
-            border-radius: 8px;
+            border-radius: 20px;
         }
         .form-label-custom {
             font-weight: 700;
-            color: #003366;
+            color: #660000; /* index.jsp maroon headings */
             font-size: 0.9rem;
             text-transform: uppercase;
+            font-family: verdana, Arial, sans-serif;
         }
         .custom-select-box {
-            border: 1.5px solid #004a99;
+            border: 1.5px solid #b9c46d;
             font-weight: 500;
             color: #222;
             border-radius: 6px;
@@ -40,48 +45,78 @@
             background-color: #fff;
             font-size: 0.95rem;
         }
-        /* Buttons */
+
+        /* ---- Native <select> dropdowns (Category / Qualification / Status) ----
+           Replace the blue OS highlight that appears on hovered <option> items,
+           and the blue Bootstrap focus ring, with the index palette. */
+        .custom-select-box option:hover,
+        .form-select option:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+        }
+        .custom-select-box:focus,
+        .form-select:focus {
+            border-color: #4CAF50 !important;
+            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25) !important;
+        }
+        /* Navbar dropdown items: replace legacy blue hover (#2f6fa5) with the
+           index palette so MeritList matches ScheduleEntry. */
+        body .dropdown-menu .dropdown-item:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+            padding-left: 25px;
+        }
+        /* Buttons - index.jsp palette: green submit, yellow-green reset */
         .btn-submit-custom {
-            background: #28a745; /* Success Green */
+            background: #1aab1f;
             border: none;
             color: #fff;
             font-weight: bold;
             padding: 10px 40px;
             border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(40,167,69,0.2);
             transition: 0.3s;
         }
         .btn-submit-custom:hover {
-            background: #218838;
+            background: #3d8b40;
             transform: translateY(-2px);
         }
         .btn-reset-custom {
-            background: #dc3545; /* Danger Red */
-            border: none;
+            background: #c41818;
+            border: 1.5px solid #b9c46d;
             color: #fff;
             font-weight: bold;
             padding: 10px 40px;
             border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(220,53,69,0.2);
             transition: 0.3s;
         }
         .btn-reset-custom:hover {
-            background: #c82333;
+            background: #cb342c;
             transform: translateY(-2px);
         }
         .page-title {
-            color: #004a99;
+            color: #000000;
+            background: #e4eeb9;
+            border-radius: 20px;
+            padding: 10px;
             font-weight: 800;
             font-size: 1.6rem;
             text-align: center;
             margin-bottom: 15px;
+            font-family: verdana, Arial, sans-serif;
+        }
+
+        /* Footer colour - pale yellow-green (#e4eeb9) */
+        .lower-footer {
+            background-color: #e4eeb9 !important;
+            color: #000000 !important;
         }
     </style>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>
-<body class="bg-light">
+<body>
     <!-- Header Content -->
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
 
     <div class="container form-container">
         <div class="outer-border shadow-lg">
@@ -141,13 +176,40 @@
         </div>
     </div>
 
-    <!-- Global Footer -->
+        <!-- Global Footer -->
     <footer>
         <jsp:include page="/WEB-INF/footer.jsp" />
     </footer>
-
+    <%-- Backend API base URL from application.properties (backend.api.base-url)
+         via GlobalControllerAdvice#backendBaseUrl. Dynamic <jsp:include> is a
+         separate translation unit, so its EL (${backendBaseUrl}) resolves here
+         even though this page uses isELIgnored="true". A static <%@ include %>
+         would inherit that flag and print the literal token. --%>
+    <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
+    <%-- Session institution scope. login_users keeps a single ins_code column holding a district
+         code for district logins (roleId 3) and an ITI code for ITI logins (roleId 4), so the role
+         and that one code are sent together and the backend decides which to use. This page is
+         isELIgnored="true", so EL cannot read the session here; a scriptlet is used instead, the
+         same way request.getContextPath() is used above. --%>
+    <%
+        Object sessionRoleId = session.getAttribute("roleId");
+        Object sessionInsCode = session.getAttribute("insCode");
+        String jsRoleId = sessionRoleId == null ? "" : String.valueOf(sessionRoleId).replace("'", "\\'");
+        String jsInsCode = sessionInsCode == null ? "" : String.valueOf(sessionInsCode).replace("'", "\\'");
+    %>
     <script>
-        const NODE_API_BASE = "${backendBaseUrl}";
+        const NODE_API_BASE = window.API_BASE_URL;
+        const SESSION_ROLE_ID = '<%= jsRoleId %>';
+        const SESSION_INS_CODE = '<%= jsInsCode %>';
+
+        // Merit generation is scoped by these two headers. Without them the backend cannot tell
+        // which district/ITI the list belongs to and rejects the request instead of guessing.
+        function meritScopeHeaders(extra) {
+            return Object.assign({
+                'X-Role-Id': SESSION_ROLE_ID,
+                'X-Ins-Code': SESSION_INS_CODE
+            }, extra || {});
+        }
 
         document.addEventListener('DOMContentLoaded', async () => {
             // Load Caste/Category List
@@ -186,11 +248,11 @@
             
             try {
                 // Pointing to existing merit generation endpoint
-                const response = await fetch(NODE_API_BASE + '/api/meritlist/generate', { credentials: 'include',
+                const response = await fetch(NODE_API_BASE + '/api/meritlist/generate', {
+                    credentials: 'include',
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    credentials: 'include'
+                    headers: meritScopeHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
                 });
                 const result = await response.json();
                 if (result.success) {

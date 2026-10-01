@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>open_edit_form</title>
+        <title>:: ITI :: Edit Registration</title>
         
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
@@ -281,24 +281,34 @@
             </script>
             <script type="text/javascript">
                 function loadCastes() {
+                    // Master list comes from public.caste_master (caste_code / caste_name).
+                    // The codes (BC-A, SC-I, ...) are exactly what student_application.caste stores.
                     $.get('${backendBaseUrl}/api/student/castes', function (list) {
                         $.each(list, function (i, c) {
-                            $('#casteSelect').append('<option value="' + c.casteCategory + '" data-id="' + c.casteId + '">' + c.casteCategory + '</option>');
+                            $('#casteSelect').append('<option value="' + c.casteCode + '">' + c.casteName + '</option>');
                         });
                     });
                 }
 
                 function loadSubCastes() {
-                    var opt = $('#casteSelect option:selected');
-                    var casteId = opt.data('id');
-                    $('#subCasteSelect').html('<option value="">--Select Sub Caste--</option>');
-                    if (!casteId) return;
-                    $.get('${backendBaseUrl}/api/student/subcastes/' + casteId, function (list) {
-                        $.each(list, function (i, sc) {
-                            $('#subCasteSelect').append('<option value="' + sc.subCaste + '">' + sc.subCaste + '</option>');
+                    var code = document.getElementById("casteSelect").value;
+                    var sel = document.getElementById("subCasteSelect");
+                    sel.innerHTML = '<option value="">--Select Sub Caste--</option>';
+                    if (!code) { return; }
+                    // Sub-caste master is the local reference (ids preserved from real
+                    // applications; names land as the true master becomes available)
+                    $.get('${backendBaseUrl}/api/student/subcastes/' + encodeURIComponent(code))
+                        .done(function (list) {
+                            (list || []).forEach(function (r) {
+                                var label = (r.subCasteName && r.subCasteName !== '') ? r.subCasteName : ('Sub-caste ' + r.subCasteId);
+                                var opt = document.createElement('option');
+                                opt.value = r.subCasteId; opt.textContent = label + ' (' + r.subCasteId + ')';
+                                sel.appendChild(opt);
+                            });
                         });
-                    });
                 }
+
+                $(document).on('change', '#casteSelect', loadSubCastes);
 
                 function validateEdit() {
                     var req = [["name","Name"],["fname","Father's Name"],["gender","Gender"],["appdob","Date of Birth"],["phno","Mobile Number"],["addr","Address"],["local","Local/Non-Local"],["casteSelect","Caste"]];
@@ -388,6 +398,9 @@
             }
 
         </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
     </head>
     <body>
         
@@ -500,5 +513,6 @@
 </div>
 
 
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

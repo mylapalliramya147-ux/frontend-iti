@@ -48,6 +48,8 @@ document.getElementById("userinfo").innerHTML =
 " | <i class='fas fa-building'></i> " + insName;
 });
 </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 <body>
 
@@ -444,5 +446,6 @@ $("#plcmtscard").append('<h4 class="card-title text-danger">PLACEMENTS</h4>');
 }
 });
 </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

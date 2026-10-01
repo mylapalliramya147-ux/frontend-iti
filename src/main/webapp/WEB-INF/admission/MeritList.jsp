@@ -76,6 +76,12 @@
             text-align: center;
             margin-bottom: 15px;
         }
+
+        /* Footer colour - pale yellow-green (#e4eeb9) */
+        .lower-footer {
+            background-color: #E4EEB9 !important;
+            color: #000000 !important;
+        }
     </style>
 </head>
 <body class="bg-light">

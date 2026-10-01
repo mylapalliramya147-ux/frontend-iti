@@ -26,17 +26,22 @@
         </li>
         <li><a href="#">Admissions</a>
             <ul>
+<<<<<<< HEAD
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/permitted_shift_unit_report">DGT Permitted Shifts Report</a></li>
                 
                 <li><a href="${pageContext.request.contextPath}/reports/DeleteAdmission_interface">Discharge Admission</a></li>
+=======
+                <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/discharge">Discharge Admission</a></li>
+>>>>>>> 7665577f8b5a72be9eb9d0ae6626adc0d0804e4f
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/ScvtExams_RDD_DCP">SCVT Exam Verification</a></li>
-                <li><a href="${pageContext.request.contextPath}/jsp/scvt_certificate_interface">SCVT Certificate</a></li>
+                <li><a href="${pageContext.request.contextPath}/scvt/exam-verification">SCVT Exam Verification</a></li>
+                <li><a href="${pageContext.request.contextPath}/scvt/certificate">SCVT Certificate</a></li>
             </ul>
         </li>
         <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>

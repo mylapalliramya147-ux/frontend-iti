@@ -41,6 +41,7 @@
             border: 1px solid #dee2e6;
         }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 
 <body>

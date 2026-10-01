@@ -25,6 +25,11 @@ public class HomeController {
         return "student/StudentEditDetails";
     }
 
+    @GetMapping("/forgot-regid")
+    public String forgotRegId() {
+        return "student/ForgotRegId";
+    }
+
     @GetMapping("/authHome")
     public String authHome(HttpServletRequest request) {
         HttpSession authSession = request.getSession(false);
@@ -48,6 +53,26 @@ public class HomeController {
         return "jsp/authHome";
     }
 
+    @GetMapping("/authHome/admin")
+    public String authHomeAdmin() {
+        return "jsp/authHome_admin";
+    }
+
+    @GetMapping("/authHome/district")
+    public String authHomeDistrict() {
+        return "jsp/authHome_district";
+    }
+
+    @GetMapping("/authHome/iti")
+    public String authHomeIti() {
+        return "jsp/authHome_iti";
+    }
+
+    @GetMapping("/authHome/nodal")
+    public String authHomeNodal() {
+        return "jsp/authHome_nodal";
+    }
+
     @GetMapping("/MeritList")
     public String meritList() {
         return "checkmeritschedule/MeritList";
@@ -61,11 +86,6 @@ public class HomeController {
     @GetMapping("/AdmissionPhase")
     public String admissionPhase() {
         return "checkmeritschedule/AdmissionPhase";
-    }
-
-    @GetMapping("/AdmissionPhase1")
-    public String admissionPhase1() {
-        return "checkmeritschedule/admissionPhase1";
     }
 
     @GetMapping("/DgtPermittedShift")
@@ -112,6 +132,23 @@ public class HomeController {
             return "redirect:/placements?error=session";
         }
         return "jsp/placementDashboard";
+    }
+
+    @GetMapping({
+        "/under-construction",
+        "/services/password-change",
+        "/services/dget-iti-code",
+        "/services/register-new-user",
+        "/admissions/status-master",
+        "/scvt/exam-initialization",
+        "/admissions/discharge",
+        "/scvt/exam-verification",
+        "/scvt/certificate",
+        "/services/registration",
+        "/reports/DeleteAdmission_interface"
+    })
+    public String legacyModuleNotice() {
+        return "jsp/under_construction";
     }
 
     @GetMapping("/")

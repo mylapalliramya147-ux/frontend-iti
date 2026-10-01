@@ -66,6 +66,7 @@
             min-width: 150px;
         }
     </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
 </head>
 
 <body>

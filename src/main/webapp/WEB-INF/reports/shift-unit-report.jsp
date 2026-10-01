@@ -31,6 +31,27 @@
         function showLoader(id) { document.getElementById(id).style.display = 'block'; }
         function hideLoader(id) { document.getElementById(id).style.display = 'none'; }
 
+        var currentPage = 0;
+        var pageSize = 100;
+
+        function renderPagination(page, totalPages, totalCount, pageSize) {
+            var start = page * pageSize + 1;
+            var end = Math.min((page + 1) * pageSize, totalCount);
+            var prevDisabled = (page === 0) ? 'disabled' : '';
+            var nextDisabled = (page >= totalPages - 1) ? 'disabled' : '';
+            var html = '<div style="margin:10px 0; font-family:Arial; font-size:13px;">';
+            html += '<span>Showing ' + start + '–' + end + ' of ' + totalCount + ' records</span>&nbsp;&nbsp;';
+            html += '<button type="button" onclick="goToPage(0)" ' + prevDisabled + '>« First</button> ';
+            html += '<button type="button" onclick="goToPage(' + (page - 1) + ')" ' + prevDisabled + '>‹ Prev</button> ';
+            html += '<span style="margin:0 8px;">Page ' + (page + 1) + ' of ' + totalPages + '</span>';
+            html += '<button type="button" onclick="goToPage(' + (page + 1) + ')" ' + nextDisabled + '>Next ›</button> ';
+            html += '<button type="button" onclick="goToPage(' + (totalPages - 1) + ')" ' + nextDisabled + '>Last »</button>';
+            html += '</div>';
+            document.getElementById('paginationBar').innerHTML = html;
+        }
+
+        function goToPage(p) { currentPage = p; loadAllDistricts(); }
+
         function loadAllDistricts() {
             showLoader('loader');
             fetch(backendUrl + '/trade-display/districts')
@@ -46,9 +67,9 @@
                     }
                     var proms = districts.map(function(d) {
                         return fetch(backendUrl + '/permitted-shift-unit?distCode='
-                            + encodeURIComponent(d.code) + '&itaCode=All&size=1000')
+                            + encodeURIComponent(d.code) + '&itaCode=All&page=' + currentPage + '&size=' + pageSize)
                             .then(function(rr) { if (!rr.ok) throw new Error('HTTP ' + rr.status); return rr.json(); })
-                            .then(function(jj) { if (jj.error) throw new Error(jj.error); return { dist: d, rows: jj.data || [] }; })
+                            .then(function(jj) { if (jj.error) throw new Error(jj.error); return { dist: d, rows: jj.data || [], page: jj.page, totalPages: jj.totalPages, totalCount: jj.totalCount }; })
                             .catch(function(e) { console.error('shift-unit load failed for ' + d.code, e); return { dist: d, rows: [] }; });
                     });
                     return Promise.all(proms);
@@ -79,6 +100,9 @@
                             '<td class="text-center font-weight-bold">' + (total - entered) + '</td>';
                         tb.appendChild(tr);
                     });
+                    if (res.length > 0 && res[0].page !== undefined) {
+                        renderPagination(res[0].page, res[0].totalPages, res[0].totalCount, pageSize);
+                    }
                     hideLoader('loader');
                 })
                 .catch(function(e) {
@@ -150,6 +174,7 @@
             </thead>
             <tbody id="districtBody"></tbody>
         </table>
+        <div id="paginationBar"></div>
 
         <div id="detailSection" class="detail-section">
             <hr class="my-4">
@@ -173,5 +198,6 @@
             </button>
         </div>
     </div>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

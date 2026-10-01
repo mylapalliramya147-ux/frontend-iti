@@ -16,9 +16,10 @@
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
 <script type="text/javascript" src="./js/jquery364.min.js"></script>
-<script type="text/javascript" src="./js/customJs/addTradeJs.js"></script>
 </head>
-<body onload="generateCaptcha(),getReady();">
+<body onload="generateCaptcha();">
+	<%-- getReady() lived in addTradeJs.js, removed with its ghost /itiapi calls
+	     (unrouted page; see WRONG_IMPLEMENTATIONS.md Issue 2). --%>
 	<div id="404Msg" align="center">
 		<%@include file="/WEB-INF/banner.jsp"%>
 		<%@include file="/WEB-INF/navbaropen.jsp"%>

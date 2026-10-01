@@ -56,7 +56,7 @@
                         <div class="col-md-5"><label for="durationMonths" class="form-label-official mb-md-0">Duration (Months) *</label></div>
                         <div class="col-md-7">
                             <select name="durationMonths" id="durationMonths" class="form-select-official w-100" required>
-                                <option value="6">6 Months</option><option value="12">12 Months</option><option value="24">24 Months</option><option value="36">36 Months</option><option value="48">48 Months</option>
+                                <option value="">-select-</option><option value="6">6 MONTHS</option><option value="12">12 MONTHS</option><option value="24">24 MONTHS</option>
                             </select>
                         </div>
                     </div>
@@ -142,5 +142,6 @@
             if (itiType) document.getElementById('itiType').value = itiType;
         });
     </script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

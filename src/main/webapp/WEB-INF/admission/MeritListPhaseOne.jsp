@@ -14,7 +14,6 @@
 <script type="text/javascript" src="./js/jquery.min.js"></script>
                     <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp"/>
 <script type="text/javascript" src="./js/siteScript.js"></script>
-<script type="text/javascript" src="./js/customJs/MeritListPhaseOneJs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -48,7 +47,9 @@ function exportToExcel() {
 
     
 </head>
-<body onload="generateCaptcha(),getReady();">
+<body onload="generateCaptcha();">
+	<%-- getReady() lived in MeritListPhaseOneJs.js, removed with its ghost /itiapi
+	     calls (unrouted page; see WRONG_IMPLEMENTATIONS.md Issue 2). --%>
 	<div id="404Msg" align="center">
 				<img src="./images/gen.jpg" class="img-fluid" />
 				<%@include file="../navbars/openNavbar.jsp"%>
