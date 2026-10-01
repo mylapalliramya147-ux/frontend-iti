@@ -28,6 +28,8 @@
             <ul>
                 <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
                 <li><a href="${pageContext.request.contextPath}/admissions/discharge">Discharge Admission</a></li>
+                <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
+
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a>
