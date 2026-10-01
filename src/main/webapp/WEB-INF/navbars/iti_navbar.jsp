@@ -30,16 +30,13 @@
 
             <li><a href="#">Admissions</a>
         <ul>
-<<<<<<< HEAD
             <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
             <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
             <li><a href="${pageContext.request.contextPath}/DgtPermittedShift">DGT Permitted Shifts Units Report</a></li>
             <li><a href="${pageContext.request.contextPath}/PrintAdmissionSlip">Print Admission Slip</a></li>
             <li><a href="${pageContext.request.contextPath}/AdmissionPhase1">Schedule Entry</a></li>
-=======
             <li><a href="${pageContext.request.contextPath}/MeritList">MeritList with GPA</a></li>
             <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
->>>>>>> 7665577f8b5a72be9eb9d0ae6626adc0d0804e4f
         </ul>
     </li>
 

@@ -33,11 +33,7 @@
                 <li><a href="${pageContext.request.contextPath}/reports/DeleteAdmission_interface">Discharge Admission</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
                 <li><a href="${pageContext.request.contextPath}/admissions/discharge">Discharge Admission</a></li>
-<<<<<
                 <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
-
-=======
->>>>>>> 2cf89e907e331451f73c7d314d6f56d5bfc50ac2
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a>
