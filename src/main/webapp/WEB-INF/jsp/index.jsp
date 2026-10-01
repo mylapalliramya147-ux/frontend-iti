@@ -151,7 +151,7 @@ function closeAirforcePopup() {
 
 <!-- ================= SCRIPTS ================= -->
 <%-- js/md5.js is not in static/js and nothing on this page calls md5(), so it only ever produced
-     a 404 in the console of every login page load. -%>
+     a 404 in the console of every login page load. --%>
 
 <script>
 function submit1() {

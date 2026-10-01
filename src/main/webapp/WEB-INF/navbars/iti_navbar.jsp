@@ -31,7 +31,7 @@
             <li><a href="#">Admissions</a>
         <ul>
             <li><a href="${pageContext.request.contextPath}/MeritList">MeritList with GPA</a></li>
-            <li><a href="${pageContext.request.contextPath}/#">Schedule Entry</a></li>
+            <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
         </ul>
     </li>
 

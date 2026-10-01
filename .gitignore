@@ -45,3 +45,5 @@ openapi.json
 # .git/info/exclude, which is local to one machine, so any other clone or CI
 # job would see 197 files of scratch copies ready to be committed by accident.
 .kilo/
+
+!.env.example
