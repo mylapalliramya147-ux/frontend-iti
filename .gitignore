@@ -39,3 +39,9 @@ openapi.json
 ### Local env overrides — NEVER commit real credentials ###
 .env
 .env.*.local
+
+### AI agent worktrees ###
+# Kilo Code clones the whole project here per task. It was only excluded via
+# .git/info/exclude, which is local to one machine, so any other clone or CI
+# job would see 197 files of scratch copies ready to be committed by accident.
+.kilo/
