@@ -26,6 +26,8 @@
         </li>
         <li><a href="#">Admissions</a>
             <ul>
+                <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
+                <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/permitted_shift_unit_report">DGT Permitted Shifts Report</a></li>
                 
                 <li><a href="${pageContext.request.contextPath}/reports/DeleteAdmission_interface">Discharge Admission</a></li>

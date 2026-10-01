@@ -30,6 +30,8 @@
 
             <li><a href="#">Admissions</a>
         <ul>
+            <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
+            <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
             <li><a href="${pageContext.request.contextPath}/DgtPermittedShift">DGT Permitted Shifts Units Report</a></li>
             <li><a href="${pageContext.request.contextPath}/PrintAdmissionSlip">Print Admission Slip</a></li>
             <li><a href="${pageContext.request.contextPath}/AdmissionPhase1">Schedule Entry</a></li>
