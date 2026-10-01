@@ -55,7 +55,6 @@ public class DevPageController {
         m.put("checkmeritschedule/MeritList", "/MeritList");
         m.put("checkmeritschedule/MeritResults", "/MeritResults");
         m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");
-        m.put("checkmeritschedule/admissionPhase1", "/AdmissionPhase1");
         m.put("checkmeritschedule/DscList", "/DgtPermittedShift");
         m.put("checkmeritschedule/distVerification", "/VerificationReport");
         m.put("checkmeritschedule/admissionIntialization", "/PrintAdmissionSlip");

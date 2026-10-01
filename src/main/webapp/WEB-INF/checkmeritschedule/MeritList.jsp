@@ -16,7 +16,7 @@
         /* Index-style "Generate Merit List" panel. Palette matches
            jsp/index.jsp via style.css + iti-portal.css (menu bar / footer,
            shared partials) and the pale-cyan box used by this module's own
-           classic pages (admissionPhase1.jsp / MeritListPhaseOne.jsp). */
+           classic pages (MeritListPhaseOne.jsp). */
         .outer-border {
             border: 1px solid black !important;
             padding: 15px;

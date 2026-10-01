@@ -69,7 +69,9 @@
                             </li>
                             <li><a class="dropdown-item" href="#">Add Trade</a></li>
                             <li><a id="nav-admission-phase" class="dropdown-item"
-                                    href="${pageContext.request.contextPath}/AdmissionPhase">Admission Phase 1</a></li>
+                                    href="${pageContext.request.contextPath}/AdmissionCounseling/Start">Admission Phase 1 (Start)</a></li>
+                            <li><a class="dropdown-item"
+                                    href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
                             <li><a class="dropdown-item"
                                     href="${pageContext.request.contextPath}/PrintAdmissionSlip">Print
                                     Admission Slip</a></li>

@@ -10,9 +10,9 @@
          updateScheduleEntry.jsp, deleteScheduleEntry.jsp,
          distVerification.jsp, MeritListPhaseOne.jsp,
          admissionIntialization.jsp
-       - checkmeritschedule/admissionPhase1.jsp,
-         updateScheduleEntry.jsp, deleteScheduleEntry.jsp,
-         MeritListPhaseOne.jsp, admissionIntialization.jsp
+       - checkmeritschedule/updateScheduleEntry.jsp,
+         deleteScheduleEntry.jsp, MeritListPhaseOne.jsp,
+         admissionIntialization.jsp
 
      NOTE: the "c" taglib is intentionally NOT declared here (unlike the
      role navbars) because this file contains no JSTL tags - plain HTML
