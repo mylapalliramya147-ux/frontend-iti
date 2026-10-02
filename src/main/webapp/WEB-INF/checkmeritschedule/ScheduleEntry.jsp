@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="true" %>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +14,7 @@
             background-color: #e4eeb9;
             color: #000000;
             padding: 20px 0;
+            margin-top: 15px;    /* small gap between the navbar and the portal heading */
             margin-bottom: 30px;
             border-bottom: 4px solid #b9c46d;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -116,40 +117,12 @@
             border-color: #b9c46d !important;
         }
 
-        /* ---- Authenticated navbar -> index gold palette ----------------------
-            Mirrors index.jsp / iti-portal.css #menu-bar palette:
-           bar #e4eeb9, text #000, hover red->mauve gradient w/ white text,
-                      dropdown panel border #b9c46d (no blue), item hover #b9c46d / black.         */
-        body .custom-navbar,
-        body .authenticated-navbar {
-            background-color: #e4eeb9 !important;
-            border-top: 2px solid #ffffff !important;
-            border-bottom: 2px solid #b9c46d !important;
-        }
-        body .custom-navbar .navbar-toggler {
-            background-color: #e4eeb9 !important;
-        }
-        body .nav-menu > li > a,
-        body .authenticated-navbar .nav-link {
-            color: #000000 !important;
-            font-weight: 600;
-        }
-        body .nav-menu > li:hover,
-        body .authenticated-navbar .nav-link:hover {
-            background: linear-gradient(to bottom, #EB4954, #A19197) !important;
-            color: #ffffff !important;
-        }
-                        /* dropdown: page-accent #b9c46d for panel border + item hover (no blue), black text */
-        body .dropdown-menu {
-            background-color: #fff !important;
-            border: 1px solid #b9c46d !important;
-        }
-        body .dropdown-menu .dropdown-item {
-            color: #555555 !important;
-        }
+        /* Navbar dropdown items: replace legacy blue hover (#2f6fa5) with the
+           index palette so ScheduleEntry's navbar matches MeritList. */
         body .dropdown-menu .dropdown-item:hover {
             background-color: #b9c46d !important;
             color: #000000 !important;
+            padding-left: 25px;
         }
 
         /* ---- Native <select> dropdowns (Category / Qualification) ----
@@ -177,7 +150,7 @@
 <body>
 
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
 
     <div class="page-header-custom text-center">
         <div class="container">
