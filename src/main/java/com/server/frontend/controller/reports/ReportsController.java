@@ -40,7 +40,7 @@ public class ReportsController {
 
     @GetMapping("/students-not-admitted")
     public String studentsNotAdmitted(HttpServletRequest request) {
-        if (!hasRole(request, "10", "3", "4")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "3", "4", "2")) return "redirect:/?error=session";
         return "reports/students-not-admitted";
     }
 
@@ -72,7 +72,7 @@ public class ReportsController {
 
     @GetMapping("/dsc-list")
     public String dscListSecondphase(HttpServletRequest request) {
-        if (!hasRole(request, "4", "3", "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "4", "3", "10", "2")) return "redirect:/?error=session";
         return "reports/dsc-list";
     }
 
@@ -80,7 +80,7 @@ public class ReportsController {
 
     @GetMapping("/caste-wise-admissions-abstract")
     public String statewideCastewiseAbstractInter(HttpServletRequest request) {
-        if (!hasRole(request, "3", "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "3", "10", "2")) return "redirect:/?error=session";
         return "reports/caste-wise-admissions-abstract";
     }
 
@@ -98,7 +98,7 @@ public class ReportsController {
 
     @GetMapping("/verification-report")
     public String districtWiseApplicationCount(HttpServletRequest request) {
-        if (!hasRole(request, "3", "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "3", "10", "2")) return "redirect:/?error=session";
         return "reports/verification-report";
     }
 
@@ -106,19 +106,19 @@ public class ReportsController {
 
     @GetMapping("/api-dashboard-state")
     public String jdGetDashboardReport(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/api-dashboard-state";
     }
 
     @GetMapping("/phase-wise-admissions-details")
     public String phaseWiseAdmissionReport(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/phase-wise-admissions-details";
     }
 
     @GetMapping("/today-schedule-itis")
     public String admissionScheduleIti(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/today-schedule-itis";
     }
 
@@ -136,19 +136,19 @@ public class ReportsController {
 
     @GetMapping("/dist-iti-trade-wise-seats-abstract")
     public String distWiseOpenSeats(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/dist-iti-trade-wise-seats-abstract";
     }
 
     @GetMapping("/duration-wise-trade-seats-abstract")
     public String tradeSeatsAbstractDurationWise(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/duration-wise-trade-seats-abstract";
     }
 
     @GetMapping("/govt-or-pvt-dist-wise-seats-abstract")
     public String govtPvtDistSeatsAbstract(HttpServletRequest request) {
-        if (!hasRole(request, "10")) return "redirect:/?error=session";
+        if (!hasRole(request, "10", "2")) return "redirect:/?error=session";
         return "reports/govt-or-pvt-dist-wise-seats-abstract";
     }
 
