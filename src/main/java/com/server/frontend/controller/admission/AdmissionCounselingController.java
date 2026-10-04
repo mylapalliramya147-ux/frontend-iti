@@ -172,7 +172,6 @@ public class AdmissionCounselingController {
     /** Resolve a counseling candidate from a Rank number (primary + fallback chain). */
     @GetMapping("/api/candidate-resolve")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public ResponseEntity<Object> candidateResolve(@RequestParam("rank") String rank,
                                                    @RequestParam("phase") String phase,
                                                    @RequestParam("year") String year) {
@@ -215,7 +214,6 @@ public class AdmissionCounselingController {
     }
 
     /** Paged fallback: parallel meritList[].rank+phase match. Bounded by timeout. */
-    @SuppressWarnings("unchecked")
     private Map<String, Object> fallbackByMerit(String rank, String phase, String year) {
         ExecutorService pool = Executors.newFixedThreadPool(10);
         long deadline = System.currentTimeMillis() + RESOLVE_TIMEOUT_MS;
@@ -226,7 +224,10 @@ public class AdmissionCounselingController {
                         .fromUriString(backendBaseUrl + "/api/reports/students-not-admitted")
                         .queryParam("year", year).queryParam("phase", phase)
                         .queryParam("page", page).queryParam("size", size).toUriString();
-                Map<String, Object> listResp = rest.getForObject(listUrl, Map.class);
+                Map<String, Object> listResp = rest.exchange(listUrl,
+                        org.springframework.http.HttpMethod.GET, null,
+                        new ParameterizedTypeReference<Map<String, Object>>() {
+                        }).getBody();
                 if (listResp == null) break;
                 List<Object> rows = toList(listResp.get("data"));
                 if (rows.isEmpty()) break;
@@ -244,14 +245,13 @@ public class AdmissionCounselingController {
     }
 
     /** Scan one page of not-admitted rows in parallel for a merit match. */
-    @SuppressWarnings("unchecked")
     private Map<String, Object> scanPageParallel(ExecutorService pool, List<Object> rows,
                                                  String rank, String phase, String year,
                                                  long deadline) {
         List<Future<Map<String, Object>>> futures = new ArrayList<>();
         for (Object r : rows) {
-            if (!(r instanceof Map)) continue;
-            Map<String, Object> row0 = (Map<String, Object>) r;
+            Map<String, Object> row0 = asMap(r);
+            if (row0 == null) continue;
             Object regid = row0.get("regid");
             if (regid == null) continue;
             String rid = String.valueOf(regid);
@@ -278,25 +278,27 @@ public class AdmissionCounselingController {
     }
 
     /** Fetch one student-details record by regid (null on error). */
-    @SuppressWarnings("unchecked")
     private Map<String, Object> fetchDetails(String regid) {
         try {
             String sdUrl = UriComponentsBuilder
                     .fromUriString(backendBaseUrl + "/api/reports/student-details")
                     .queryParam("regid", regid).toUriString();
-            return rest.getForObject(sdUrl, Map.class);
+            ResponseEntity<Map<String, Object>> resp = rest.exchange(sdUrl,
+                    org.springframework.http.HttpMethod.GET, null,
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    });
+            return resp.getBody();
         } catch (Exception ignored) {
             return null;
         }
     }
 
     /** Build unified candidate when a merit entry matches rank+phase. */
-    @SuppressWarnings("unchecked")
     private Map<String, Object> matchMerit(Map<String, Object> sd, Map<String, Object> row0,
                                            String rank, String phase, String year) {
         for (Object m : toList(sd.get("meritList"))) {
-            if (!(m instanceof Map)) continue;
-            Map<String, Object> mm = (Map<String, Object>) m;
+            Map<String, Object> mm = asMap(m);
+            if (mm == null) continue;
             boolean ok = String.valueOf(mm.get("rank")).equals(String.valueOf(rank))
                     && String.valueOf(mm.get("phase")).equals(String.valueOf(phase));
             if (!ok) continue;
@@ -306,12 +308,10 @@ public class AdmissionCounselingController {
     }
 
     /** Assemble the unified candidate payload from registration + merit + list row. */
-    @SuppressWarnings("unchecked")
     private Map<String, Object> buildCandidate(Map<String, Object> sd, Map<String, Object> row0,
                                               Map<String, Object> mm,
                                               String rank, String phase, String year) {
-        Map<String, Object> reg = sd.get("registration") instanceof Map
-                ? (Map<String, Object>) sd.get("registration") : Map.of();
+        Map<String, Object> reg = asMapOrEmpty(sd.get("registration"));
         Map<String, Object> cand = new LinkedHashMap<>();
         cand.put("regid", reg.getOrDefault("registrationId", row0.getOrDefault("regid", "")));
         cand.put("rank", rank);
@@ -337,12 +337,33 @@ public class AdmissionCounselingController {
     }
 
     private static List<Object> toList(Object body) {
-        if (body instanceof List) return (List<Object>) body;
-        if (body instanceof Map) {
-            Object d = ((Map<String, Object>) body).get("data");
-            if (d instanceof List) return (List<Object>) d;
+        if (body instanceof List<?> list) {
+            return new ArrayList<>(list);
+        }
+        if (body instanceof Map<?, ?> map) {
+            Object d = map.get("data");
+            if (d instanceof List<?> dataList) {
+                return new ArrayList<>(dataList);
+            }
         }
         return new ArrayList<>();
+    }
+
+    /** Type-safe view of a decoded JSON object without unchecked casts. */
+    private static Map<String, Object> asMap(Object value) {
+        if (!(value instanceof Map<?, ?> map)) {
+            return null;
+        }
+        Map<String, Object> out = new LinkedHashMap<>();
+        for (Map.Entry<?, ?> e : map.entrySet()) {
+            out.put(String.valueOf(e.getKey()), e.getValue());
+        }
+        return out;
+    }
+
+    private static Map<String, Object> asMapOrEmpty(Object value) {
+        Map<String, Object> m = asMap(value);
+        return m != null ? m : Map.of();
     }
 
     /** Proxy open-seats. */
