@@ -47,3 +47,7 @@ openapi.json
 .kilo/
 
 !.env.example
+
+.env
+.env.*
+!.env.example
