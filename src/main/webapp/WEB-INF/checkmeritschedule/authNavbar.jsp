@@ -116,7 +116,7 @@
             let userRole = null;
             const match = document.cookie.match(new RegExp('(^| )user_role=([^;]+)'));
             if (match) userRole = match[2];
-            if (!userRole) userRole = '${sessionScope.role_id}';
+            if (!userRole) userRole = '${sessionScope.roleId}';
 
             // STRICT ROLE MATCHING
             if (String(userRole) === String(requiredRole)) {

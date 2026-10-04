@@ -60,6 +60,7 @@ public class LoginController {
         session.setAttribute("insCode", result.get("insCode"));
         session.setAttribute("fullName", result.get("fullName"));
         session.setAttribute("itiName", result.get("itiName"));
+        session.setAttribute("distName", result.get("distName"));
         session.setAttribute("loginCount", result.get("loginCount"));
         session.setAttribute("lastLogins", result.get("lastLogins"));
         return "redirect:/authHome";
@@ -136,6 +137,7 @@ public class LoginController {
         private Object insCode;
         private Object fullName;
         private Object itiName;
+        private Object distName;
         private Object loginCount;
         private Object lastLogins;
 
@@ -195,6 +197,14 @@ public class LoginController {
             this.itiName = itiName;
         }
 
+        public Object getDistName() {
+            return distName;
+        }
+
+        public void setDistName(Object distName) {
+            this.distName = distName;
+        }
+
         public Object getLoginCount() {
             return loginCount;
         }
@@ -220,6 +230,7 @@ public class LoginController {
             map.put("insCode", insCode);
             map.put("fullName", fullName);
             map.put("itiName", itiName);
+            map.put("distName", distName);
             map.put("loginCount", loginCount);
             map.put("lastLogins", lastLogins);
             return map;
