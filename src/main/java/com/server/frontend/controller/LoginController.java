@@ -29,27 +29,31 @@ public class LoginController {
     public String login(@RequestParam("uname") String uname,
                         @RequestParam("pwd") String pwd,
                         @RequestParam(value = "captcha", required = false) String captcha,
+                        @RequestParam(value = "redirect", required = false) String redirectTo,
+                        @RequestParam(value = "dev", required = false, defaultValue = "false") boolean devLogin,
                         HttpServletRequest request) {
 
-        // 1. captcha must match the one generated for this session
-        if (!CaptchaController.matches(request, captcha)) {
+        // 1. captcha must match the one generated for this session.
+        //    The dev index (/dev) posts here without a captcha, so that single
+        //    developer flow skips the check instead of dead-ending on error=captcha.
+        if (!devLogin && !CaptchaController.matches(request, captcha)) {
             HttpSession stale = request.getSession(false);
             if (stale != null) {
                 stale.removeAttribute("sessionUser");
             }
-            return "redirect:/?error=captcha";
+            return devLogin ? "redirect:/dev/login?error=captcha" : "redirect:/?error=captcha";
         }
 
         // 2. credentials are checked by the backend
         Map<String, Object> result = callAuthBackend(request, uname, pwd);
         if (result == null) {
-            return "redirect:/?error=server";
+            return devLogin ? "redirect:/dev/login?error=server" : "redirect:/?error=server";
         }
         if (!Boolean.TRUE.equals(result.get("success"))) {
-            Object msg = result == null ? null : result.get("message");
+            Object msg = result.get("message");
             String err = "inactive".equalsIgnoreCase(String.valueOf(msg)) || (msg != null && msg.toString().contains("inactive"))
                     ? "inactive" : "invalid";
-            return "redirect:/?error=" + err;
+            return devLogin ? "redirect:/dev/login?error=" + err : "redirect:/?error=" + err;
         }
 
         // 3. store the authenticated user in session
@@ -60,9 +64,23 @@ public class LoginController {
         session.setAttribute("insCode", result.get("insCode"));
         session.setAttribute("fullName", result.get("fullName"));
         session.setAttribute("itiName", result.get("itiName"));
+        session.setAttribute("distName", result.get("distName"));
         session.setAttribute("loginCount", result.get("loginCount"));
         session.setAttribute("lastLogins", result.get("lastLogins"));
-        return "redirect:/authHome";
+        // 4. land back on the page the user came from (used by the /dev index)
+        return "redirect:" + safeRedirect(redirectTo, devLogin ? "/dev" : "/authHome");
+    }
+
+    /** Only same-site relative paths are honoured, so the param can't be used as an open redirect. */
+    private static String safeRedirect(String redirectTo, String fallback) {
+        if (redirectTo == null) {
+            return fallback;
+        }
+        String target = redirectTo.trim();
+        if (target.startsWith("/") && !target.startsWith("//") && !target.contains(":")) {
+            return target;
+        }
+        return fallback;
     }
 
     @PostMapping("/placementsLogin.do")
@@ -121,6 +139,8 @@ public class LoginController {
             AuthResponse body = response.getBody();
             return body == null ? null : body.toMap();
         } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(LoginController.class)
+                    .warn("Auth backend call failed ({}): {}", AUTH_URL, e.toString());
             return null;
         }
     }
@@ -134,6 +154,7 @@ public class LoginController {
         private Object insCode;
         private Object fullName;
         private Object itiName;
+        private Object distName;
         private Object loginCount;
         private Object lastLogins;
 
@@ -193,6 +214,14 @@ public class LoginController {
             this.itiName = itiName;
         }
 
+        public Object getDistName() {
+            return distName;
+        }
+
+        public void setDistName(Object distName) {
+            this.distName = distName;
+        }
+
         public Object getLoginCount() {
             return loginCount;
         }
@@ -218,6 +247,7 @@ public class LoginController {
             map.put("insCode", insCode);
             map.put("fullName", fullName);
             map.put("itiName", itiName);
+            map.put("distName", distName);
             map.put("loginCount", loginCount);
             map.put("lastLogins", lastLogins);
             return map;

@@ -178,17 +178,35 @@
         <jsp:include page="/WEB-INF/footer.jsp" />
     </footer>
 
+    <%-- Name for the read-only District/ITI box, taken from the login session that
+         /iti/login.do populates. This used to read localStorage.displayName, but the live
+         login is session-based and never writes that key, so the box always showed "N/A".
+         distName is set for role 3 and itiName for role 4; fullName/username are the
+         remaining roles and any unexpected gap.
+
+         The declaration is deliberately kept above the script tag with only the expression
+         below, matching ScheduleEntry.jsp. A multi-line declaration block placed inside the
+         script tag is valid JSP but trips the editor's embedded JavaScript parser, which
+         reports it as a syntax error. --%>
+    <%
+        String entityName = "";
+        for (String key : new String[]{"distName", "itiName", "fullName", "username"}) {
+            Object value = session.getAttribute(key);
+            if (value != null && !value.toString().isBlank()) {
+                entityName = value.toString();
+                break;
+            }
+        }
+        String jsEntityName = entityName.replace("\\", "\\\\").replace("'", "\\'");
+    %>
     <script>
         // Ensure we point to the Node backend correctly
         const NODE_API_BASE = "${backendBaseUrl}";
+        const SESSION_ENTITY_NAME = '<%= jsEntityName %>';
 
         document.addEventListener('DOMContentLoaded', async () => {
             // 1. Setup District Display
-            let displayName = localStorage.getItem('displayName') || '';
-            if (displayName.toLowerCase().startsWith('district:')) {
-                displayName = displayName.substring(9).trim();
-            }
-            document.getElementById('districtDisplay').value = displayName || "N/A";
+            document.getElementById('districtDisplay').value = SESSION_ENTITY_NAME || "N/A";
 
             // 2. Setup Year selection
             const yearSelect = document.getElementById('yearSelect');
