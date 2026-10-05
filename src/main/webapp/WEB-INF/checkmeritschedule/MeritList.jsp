@@ -116,7 +116,7 @@
 <body>
     <!-- Header Content -->
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
 
     <div class="container form-container">
         <div class="outer-border shadow-lg">
