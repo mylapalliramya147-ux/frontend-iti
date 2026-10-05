@@ -16,7 +16,7 @@
             margin: 30px auto;
         }
         .outer-border {
-            border: 3px solid #004a99 !important;
+            border: 3px solid #e4eeb9 !important;
             padding: 15px;
             border-radius: 12px;
             background: #fff;

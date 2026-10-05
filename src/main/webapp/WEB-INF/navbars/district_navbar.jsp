@@ -29,7 +29,6 @@
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
                 <li><a href="${pageContext.request.contextPath}/SeatMatrix">seatmatrix</a></li>
-                <li><a href="${pageContext.request.contextPath}/ScheduleEntryView">Schedule Entry</a></li>
                 <li><a href="${pageContext.request.contextPath}/CallLetterView">Call Letter</a></li>
                 <li><a href="${pageContext.request.contextPath}/AddTrade">Add Trade</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
