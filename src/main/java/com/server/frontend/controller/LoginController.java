@@ -139,6 +139,8 @@ public class LoginController {
             AuthResponse body = response.getBody();
             return body == null ? null : body.toMap();
         } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(LoginController.class)
+                    .warn("Auth backend call failed ({}): {}", AUTH_URL, e.toString());
             return null;
         }
     }
