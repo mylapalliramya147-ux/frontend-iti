@@ -12,6 +12,12 @@ public class AdmissionPageController {
         return "checkmeritschedule/ScheduleEntry";
     }
 
+    // Page view endpoint for deleting schedule entries
+    @GetMapping("/DeleteScheduleEntry")
+    public String deleteScheduleEntry() {
+        return "checkmeritschedule/deleteScheduleEntry";
+    }
+
     // The schedule-entry and timings APIs are NOT proxied here. They are served by the
     // Backend (AdmissionTimingController on :5050), and the pages reach it directly through
     // window.API_BASE_URL. The two stubs that used to live here shadowed nothing real —

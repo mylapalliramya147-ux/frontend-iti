@@ -19,11 +19,28 @@
   .page-link-item { text-decoration:none; color:#212529; display:flex; justify-content:space-between; align-items:center;
                      padding:7px 12px; border:1px solid #e9ecef; border-radius:6px; margin-bottom:5px; background:#fff; }
   .page-link-item:hover { border-color:#0d6efd; background:#f8f9ff; }
+  .page-link-main { color:#212529; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .page-link-main:hover { color:#0d6efd; }
   .badge-route { font-size:.68rem; }
   .badge-done { background:#198754; }
   .badge-partial { background:#6c757d; }
   .badge-wip { background:#ffc107; color:#212529; }
   .dev-header { background:linear-gradient(90deg,#212529,#343a40); color:#fff; border-radius:10px; }
+
+  /* Role tags: which login owns the page. */
+  .role-tag { font-size:.68rem; font-weight:600; }
+  .role-iti { background:#0d6efd; color:#fff; }
+  .role-district { background:#198754; color:#fff; }
+  .role-nodal { background:#6f42c1; color:#fff; }
+  .role-admin { background:#dc3545; color:#fff; }
+  .role-multi { background:#fd7e14; color:#fff; }
+  .role-any { background:#6c757d; color:#fff; }
+
+  /* Page the signed-in login does not own: listed, but visibly not openable. */
+  .page-locked { background:#f8f9fa; border-style:dashed; color:#adb5bd; }
+  .page-locked .page-link-main { color:#adb5bd; }
+  .page-locked .page-link-main:hover { color:#6c757d; text-decoration:underline; }
+  .lock-icon { margin-right:4px; font-size:.8rem; }
 </style>
 </head>
 <body>
@@ -32,9 +49,38 @@
   <div class="dev-header p-3 mb-4 d-flex justify-content-between align-items-center">
     <div>
       <h3 class="mb-1">&#128736; DEV - Page Index</h3>
-      <small class="text-white-50">Temporary development tool - every JSP in WEB-INF. Green = done (full page with its own URL), Grey = partial (done but part of another page - navbar/header/include), Yellow = wip (not done, opened via /dev/view passthrough).</small>
+      <small class="text-white-50">Temporary development tool - every JSP in WEB-INF. All pages are listed for every login, but only the pages your own login owns will open; the rest are shown locked with an 🔒. Green = done (has its own real URL), Grey = partial (navbar/header/include), Yellow = wip (no route yet). Tags show which login owns each page. Click the &#8599; badge to open the real role-guarded route.</small>
     </div>
     <input id="devSearch" type="search" class="form-control w-25" placeholder="Search pages..." autofocus>
+  </div>
+
+  <!-- ============ SESSION BANNER (login happens on /dev/login) ============ -->
+  <c:if test="${param.error eq 'denied'}">
+    <div class="alert alert-danger d-flex justify-content-between align-items-center">
+      <span>
+        &#128683; <b><c:out value="${param.page}"/></b> belongs to another login and was not opened.
+        You are signed in as <c:out value="${devRoleLabel}"/>
+        <c:if test="${devRoleId ne null}"> (role <c:out value="${devRoleId}"/>)</c:if>.
+        Sign in with that login to develop this page.
+      </span>
+      <a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/dev/logout">Switch login</a>
+    </div>
+  </c:if>
+
+  <div class="alert alert-success d-flex justify-content-between align-items-center">
+    <span>
+      &#9989; Signed in as <b><c:out value="${devUserName}"/></b>
+      <c:if test="${not empty devFullName}">&nbsp;(<c:out value="${devFullName}"/>)</c:if>
+      &nbsp;- <b><c:out value="${devRoleLabel}"/></b>
+      <c:if test="${devRoleId ne null}"> (role <c:out value="${devRoleId}"/>)</c:if>
+      <c:if test="${not empty devItiName}">, <c:out value="${devItiName}"/></c:if>
+      <c:if test="${devIsAdmin}"> <span class="badge bg-danger">full access</span></c:if>
+      <small class="text-muted">All pages are listed below; only the ones your login owns will open.</small>
+    </span>
+    <span>
+      <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dev">Refresh</a>
+      <a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/dev/logout">Switch login</a>
+    </span>
   </div>
 
   <div class="row">
@@ -56,14 +102,32 @@
             <c:forEach var="page" items="${entry.value}">
               <c:set var="viewName" value="${entry.key}/${page}"/>
               <c:set var="status" value="${pageStatuses[viewName]}"/>
-              <div class="col-md-4 page-item" data-name="${page}">
-                <a class="page-link-item"
-                   href="${pageContext.request.contextPath}${realRoutes[viewName] != null ? realRoutes[viewName] : '/dev/view/'.concat(entry.key).concat('/').concat(page)}">
-                  <span><c:out value="${page}"/></span>
-                  <span class="badge badge-route badge-${status}">
-                    <c:out value="${status}"/>
+              <c:set var="roleTag" value="${roleTags[viewName]}"/>
+              <c:set var="canOpen" value="${allowedViews[viewName]}"/>
+              <c:set var="roleTagClass" value="${roleTagClasses[viewName]}"/>
+              <div class="col-md-4 page-item" data-name="${page}" data-roles="${roleTag}">
+                <%-- Every page is listed, but /dev/view only opens the ones the signed-in
+                     login owns. Locked pages are muted and carry the owning login's tag.
+                     The ↗ badge jumps to the real role-guarded controller route. --%>
+                <div class="page-link-item ${canOpen ? '' : 'page-locked'}">
+                  <a class="page-link-main" href="${pageContext.request.contextPath}/dev/view/${entry.key}/${page}">
+                    <c:if test="${not canOpen}"><span class="lock-icon">&#128274;</span></c:if>
+                    <c:out value="${page}"/>
+                  </a>
+                  <span class="d-flex align-items-center gap-1">
+                    <c:if test="${not empty roleTag}">
+                      <span class="badge role-tag ${roleTagClass}">${roleTag}</span>
+                    </c:if>
+                    <c:if test="${not empty realRoutes[viewName]}">
+                      <a class="badge badge-route text-decoration-none"
+                         title="Open the real controller route (role-guarded)"
+                         href="${pageContext.request.contextPath}${realRoutes[viewName]}">&#8599;</a>
+                    </c:if>
+                    <span class="badge badge-route badge-${status}">
+                      <c:out value="${status}"/>
+                    </span>
                   </span>
-                </a>
+                </div>
               </div>
             </c:forEach>
           </div>
