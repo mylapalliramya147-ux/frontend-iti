@@ -196,7 +196,7 @@
 
     <body>
         <jsp:include page="/WEB-INF/bannernew.jsp" />
-        <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+        <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
         <jsp:include page="/WEB-INF/jsp/_api_base_url.jsp" />
 
         <div class="page-header-custom text-center">
