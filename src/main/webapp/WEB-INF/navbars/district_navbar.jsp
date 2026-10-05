@@ -32,12 +32,18 @@
                 <li><a href="${pageContext.request.contextPath}/CallLetterView">Call Letter</a></li>
                 <li><a href="${pageContext.request.contextPath}/AddTrade">Add Trade</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
+<<<<<<< HEAD
+                <li><a href="${pageContext.request.contextPath}/admissions/discharge-admission">Discharge Admission</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/application-reprint">Application Reprint</a></li>
+                <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
+=======
                 <li><a href="${pageContext.request.contextPath}/admissions/discharge">Discharge Admission</a></li>
                 <li><a href="${pageContext.request.contextPath}/reports/shift-unit-report">DGT Permitted Shifts Report</a></li>
                 <li><a href="${pageContext.request.contextPath}/admissions/discharge">Discharge Admission</a></li>
                 <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
                 <li><a href="${pageContext.request.contextPath}/DeleteScheduleEntry">Delete Schedule Entry</a></li>
 
+>>>>>>> 2e0a416e75021a155e214e3d62f9f23219c6cc62
             </ul>
         </li>
         <li><a href="#">SCVT Exams</a>

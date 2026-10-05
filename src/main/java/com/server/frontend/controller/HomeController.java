@@ -134,6 +134,11 @@ public class HomeController {
         return "jsp/placementDashboard";
     }
 
+    @GetMapping("/admissions/discharge")
+    public String dischargeAdmissionLegacy() {
+        return "redirect:/admissions/discharge-admission";
+    }
+
     @GetMapping({
         "/under-construction",
         "/services/password-change",
@@ -141,7 +146,6 @@ public class HomeController {
         "/services/register-new-user",
         "/admissions/status-master",
         "/scvt/exam-initialization",
-        "/admissions/discharge",
         "/scvt/exam-verification",
         "/scvt/certificate",
         "/services/registration",
