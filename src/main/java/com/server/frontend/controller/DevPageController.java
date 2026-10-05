@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,138 @@ public class DevPageController {
 
     /** view name -> real controller URL; others fall back to /dev/view. */
     private static final Map<String, String> REAL_ROUTES = buildRoutes();
+
+    /** roleId -> the label shown on the /dev tags and section headings. */
+    private static final Map<String, String> ROLE_LABELS = Map.of(
+            "2", "Admin Login",
+            "3", "District Login",
+            "4", "ITI Login",
+            "10", "Nodal Login");
+
+    /** Admin (role 2) can open every page, mirroring the open-ended hasRole() guards. */
+    private static final String ADMIN_ROLE = "2";
+
+    /**
+     * DEV TOOL ONLY. view name -> the roleIds the real controller guard allows.
+     *
+     * <p>This mirrors the guards that already exist; it never changes them. A view that is
+     * absent from this map has no server-side role guard (public page, or an unrouted WIP
+     * page), so it stays open to every signed-in developer.
+     */
+    private static final Map<String, List<String>> VIEW_ROLE_IDS = buildRoleAccess();
+
+    private static Map<String, List<String>> buildRoleAccess() {
+        Map<String, List<String>> m = new LinkedHashMap<>();
+        // ---- ReportsController.hasRole ----
+        m.put("reports/students-not-admitted", List.of("10", "3", "4"));
+        m.put("reports/api-dashboard-iti", List.of("4"));
+        m.put("reports/applicant-report", List.of("4"));
+        m.put("reports/admission-report", List.of("4"));
+        m.put("reports/dsc-list", List.of("4", "3", "10"));
+        m.put("reports/caste-wise-admissions-abstract", List.of("3", "10"));
+        m.put("reports/applicant-address-with-mobile", List.of("3"));
+        m.put("reports/api-dashboard-district", List.of("3"));
+        m.put("reports/verification-report", List.of("3", "10"));
+        m.put("reports/api-dashboard-state", List.of("10"));
+        m.put("reports/phase-wise-admissions-details", List.of("10"));
+        m.put("reports/today-schedule-itis", List.of("10"));
+        m.put("reports/trade-wise-report", List.of("10"));
+        m.put("reports/applicant-report-dist-wise", List.of("10"));
+        m.put("reports/dist-iti-trade-wise-seats-abstract", List.of("10"));
+        m.put("reports/duration-wise-trade-seats-abstract", List.of("10"));
+        m.put("reports/govt-or-pvt-dist-wise-seats-abstract", List.of("10"));
+        m.put("reports/student-reg-details", List.of("10"));
+
+        // ---- ImplantController (isDistrictRole / isItiRole / isNodalRole) ----
+        m.put("implant/implant_dist_report", List.of("3"));
+        m.put("implant/implant_entry", List.of("4"));
+        m.put("implant/implant_report", List.of("4"));
+        m.put("implant/implant_mapping", List.of("4"));
+        m.put("implant/implant_mapping_edit", List.of("4"));
+        for (String nodal : List.of("industry_master_preview", "industry_master_edit",
+                "industry_master_entry", "industry_mapping_nodal", "industry_partner_details",
+                "industry_partner_details_edit", "inplant_nodal_report", "industry_master_report",
+                "industry_mapping_report", "inplant_trainees_report", "inplant_yearwise_report",
+                "inplant_two_year_report", "inplant_twelve_24_months_report",
+                "inplant_district_report", "inplant_datewise_report", "IndustryConnectedTrades",
+                "inplant_industry_not_connected_trades")) {
+            m.put("implant/" + nodal, List.of("10"));
+        }
+
+        // ---- LabsController (isItiRole) ----
+        m.put("labs/labs_entry", List.of("4"));
+        m.put("labs/labs_report", List.of("4"));
+
+        // ---- PlacementsController ----
+        m.put("placements/placements_schedule_entry", List.of("3"));
+        m.put("placements/placements_dist_report", List.of("3"));
+        m.put("placements/placements_entry", List.of("4"));
+        m.put("placements/placements_iti_report", List.of("4"));
+
+        return java.util.Collections.unmodifiableMap(m);
+    }
+
+    /** Role ids allowed to open this view, or null when the view has no role guard. */
+    private static List<String> allowedRoles(String viewName) {
+        return VIEW_ROLE_IDS.get(viewName);
+    }
+
+    /**
+     * Whether the signed-in developer may open this view through /dev/view.
+     *
+     * <p>Admin opens everything. A session with no roleId is not filtered, which matches
+     * ReportsController's deliberate "role not stored yet - don't lock out" behaviour.
+     */
+    private static boolean canOpen(String viewName, Object roleId) {
+        List<String> allowed = allowedRoles(viewName);
+        if (allowed == null || roleId == null || String.valueOf(roleId).isBlank()) {
+            return true;
+        }
+        String role = String.valueOf(roleId).trim();
+        return ADMIN_ROLE.equals(role) || allowed.contains(role);
+    }
+
+    /** "ITI Login", "District Login, Nodal Login", or "" when the view has no role guard. */
+    private static String roleTagText(String viewName) {
+        List<String> allowed = allowedRoles(viewName);
+        if (allowed == null) {
+            return "";
+        }
+        List<String> labels = new ArrayList<>();
+        for (String roleId : allowed) {
+            String label = ROLE_LABELS.get(roleId);
+            if (label != null) labels.add(label);
+        }
+        if (labels.isEmpty()) {
+            return "Any Login";
+        }
+        // Nodal is the most privileged label already present; Admin opens everything.
+        if (labels.contains("Admin Login")) {
+            return "Admin Login";
+        }
+        return String.join(", ", labels);
+    }
+
+    /**
+     * CSS suffix for a page's role tag, so a multi-role page gets a combined colour.
+     * Returns "" for views with no role guard (no tag is rendered for them).
+     */
+    private static String roleTagClass(String viewName) {
+        List<String> allowed = allowedRoles(viewName);
+        if (allowed == null) {
+            return "";
+        }
+        if (allowed.size() > 1) return "role-multi";
+        String label = ROLE_LABELS.get(allowed.get(0));
+        if (label == null) return "role-any";
+        return switch (label) {
+            case "ITI Login" -> "role-iti";
+            case "District Login" -> "role-district";
+            case "Nodal Login" -> "role-nodal";
+            case "Admin Login" -> "role-admin";
+            default -> "role-any";
+        };
+    }
 
     private static Map<String, String> buildRoutes() {
         Map<String, String> m = new LinkedHashMap<>();
@@ -123,8 +257,36 @@ public class DevPageController {
         this.servletContext = servletContext;
     }
 
+    /** Standalone dev login. Log in here, then /dev opens with your login's pages unlocked. */
+    @GetMapping("/dev/login")
+    public String devLoginPage() {
+        return "jsp/devLogin";
+    }
+
     @GetMapping("/dev")
-    public String devIndex(Model model) {
+    public String devIndex(Model model, HttpServletRequest request) {
+
+        // The dev pages point at real, session-guarded controllers, so the index needs the
+        // developer to be signed in first. Without a session there is nothing to show.
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("sessionUser") == null) {
+            return "redirect:/dev/login";
+        }
+        Object roleId = session.getAttribute("roleId");
+        model.addAttribute("devUserName", session.getAttribute("username"));
+        model.addAttribute("devRoleId", roleId);
+        model.addAttribute("devItiName", session.getAttribute("itiName"));
+        model.addAttribute("devFullName", session.getAttribute("fullName"));
+        model.addAttribute("devRoleLabel",
+                roleId == null ? "No role" : ROLE_LABELS.getOrDefault(String.valueOf(roleId).trim(), "Role " + roleId));
+        model.addAttribute("devIsAdmin", ADMIN_ROLE.equals(String.valueOf(roleId).trim()));
+
+        // Every page is listed for every developer; roleTag/allowed say which ones their
+        // own login can actually open.
+        model.addAttribute("roleTags", buildRoleTags());
+        model.addAttribute("roleTagClasses", buildRoleTagClasses());
+        model.addAttribute("allowedViews", buildAllowedViews(roleId));
+
         Map<String, List<String>> pages = new LinkedHashMap<>();
         for (String folder : FOLDERS) {
             java.util.Set<?> resources = servletContext.getResourcePaths("/WEB-INF/" + folder + "/");
@@ -164,15 +326,75 @@ public class DevPageController {
         return "jsp/dev";
     }
 
-    /** Passthrough so WIP pages with no route can still be opened while developing. */
+    /** view name -> its role tag label, and view name -> the CSS suffix for that tag. */
+    private Map<String, String> buildRoleTags() {
+        Map<String, String> tags = new LinkedHashMap<>();
+        for (String viewName : VIEW_ROLE_IDS.keySet()) {
+            tags.put(viewName, roleTagText(viewName));
+        }
+        return tags;
+    }
+
+    /** view name -> CSS suffix so the JSP can colour the tag without duplicating logic. */
+    private Map<String, String> buildRoleTagClasses() {
+        Map<String, String> classes = new LinkedHashMap<>();
+        for (String viewName : VIEW_ROLE_IDS.keySet()) {
+            classes.put(viewName, roleTagClass(viewName));
+        }
+        return classes;
+    }
+
+    /** view name -> whether the signed-in developer can open it through /dev/view. */
+    private Map<String, Boolean> buildAllowedViews(Object roleId) {
+        Map<String, Boolean> allowed = new LinkedHashMap<>();
+        for (String folder : FOLDERS) {
+            java.util.Set<?> resources = servletContext.getResourcePaths("/WEB-INF/" + folder + "/");
+            if (resources == null) continue;
+            for (Object r : resources) {
+                String path = r.toString();
+                if (!path.endsWith(".jsp")) continue;
+                String name = path.substring(path.lastIndexOf('/') + 1, path.length() - 4);
+                String viewName = folder + "/" + name;
+                allowed.put(viewName, canOpen(viewName, roleId));
+            }
+        }
+        return allowed;
+    }
+
+    /** Drops the dev session and sends the developer back to the dev login form. */
+    @GetMapping("/dev/logout")
+    public String devLogout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/dev/login";
+    }
+
+    /**
+     * Passthrough so any page can be opened while developing, gated by the same role map the
+     * real controllers use. The real route is still reachable via the ↗ badge on /dev when a
+     * developer wants to check the genuine guard.
+     */
     @GetMapping("/dev/view/{folder}/{name}")
-    public String devView(@PathVariable String folder, @PathVariable String name) {
+    public String devView(@PathVariable String folder, @PathVariable String name, HttpServletRequest request) {
         if (!FOLDERS.contains(folder) || !name.matches("[A-Za-z0-9_\\.-]+")) {
             return "redirect:/dev";
         }
         if (name.endsWith(".jsp")) {
             name = name.substring(0, name.length() - 4);
         }
-        return folder + "/" + name;
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("sessionUser") == null) {
+            return "redirect:/dev/login";
+        }
+        // These JSPs read sessionUser/roleId via their navbars, and a page owned by another
+        // login is blocked here so the dev tool cannot be used to sidestep the real guards.
+        String viewName = folder + "/" + name;
+        if (!canOpen(viewName, session.getAttribute("roleId"))) {
+            return "redirect:/dev?error=denied&page=" + java.net.URLEncoder.encode(viewName,
+                    java.nio.charset.StandardCharsets.UTF_8);
+        }
+        return viewName;
     }
 }
