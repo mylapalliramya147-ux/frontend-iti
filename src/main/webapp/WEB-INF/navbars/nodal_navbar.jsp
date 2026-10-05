@@ -40,6 +40,7 @@
             <ul>
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Start">ADMISSIONS PHASE 1</a></li>
                 <li><a href="${pageContext.request.contextPath}/AdmissionCounseling/Counseling">Admission Counseling (Rank)</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/reprint-verified-application">Application Reprint</a></li>
                 <li><a href="${pageContext.request.contextPath}/jsp/permitted_shift_unit_nodal_report.jsp">DGT Permitted Shifts Report</a></li>
             </ul>
         </li>
