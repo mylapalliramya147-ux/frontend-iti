@@ -31,7 +31,6 @@ public class DevPageController {
     /** Specific partial/snippet views that are includes, not standalone pages. */
     private static final java.util.Set<String> PARTIAL_VIEWS = java.util.Set.of(
             "jsp/_api_base_url",
-            "checkmeritschedule/authNavbar",
             "reports/header"
     );
 

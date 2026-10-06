@@ -7,8 +7,15 @@
     <title>Merit List Results - AP ITI</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/all.min.css">
     <style>
+        /* Navbar dropdown items: same as MeritList.jsp so both pages share
+           the index palette hover instead of the legacy blue hover. */
+        body .dropdown-menu .dropdown-item:hover {
+            background-color: #b9c46d !important;
+            color: #000000 !important;
+            padding-left: 25px;
+        }
         /* Essential layout adjustments */
         .results-container {
             width: 98%;
@@ -27,13 +34,17 @@
             padding: 20px;
             border-radius: 8px;
         }
+        .lower-footer {
+            background-color: #e4eeb9 !important;
+            color: #000000 !important;
+        }
     </style>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iti-portal.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/iti-portal.css">
 </head>
-<body class="bg-light">
-    <!-- Header -->
+<body>
+    <!-- Header Content -->
     <jsp:include page="/WEB-INF/bannernew.jsp" />
-    <jsp:include page="/WEB-INF/checkmeritschedule/authNavbar.jsp" />
+    <jsp:include page="/WEB-INF/navbars/iti_navbar.jsp" />
 
     <div class="results-container">
         <div class="outer-border shadow-lg">
