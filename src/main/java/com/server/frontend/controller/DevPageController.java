@@ -186,6 +186,7 @@ public class DevPageController {
         m.put("student/StudentEditDetails", "/student-edit-details");
         m.put("student/ForgotRegId", "/forgot-regid");
         m.put("checkmeritschedule/MeritList", "/MeritList");
+        m.put("checkmeritschedule/deleteScheduleEntry", "/DeleteScheduleEntry");
         m.put("checkmeritschedule/MeritResults", "/MeritResults");
         m.put("checkmeritschedule/AdmissionPhase", "/AdmissionPhase");
         m.put("checkmeritschedule/DscList", "/DgtPermittedShift");
