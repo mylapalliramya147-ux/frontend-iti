@@ -35,6 +35,7 @@
             <li><a href="${pageContext.request.contextPath}/DeleteScheduleEntry">Delete Schedule Entry</a></li>
             <li><a href="${pageContext.request.contextPath}/admissions/admission-update">Admission Update</a></li>
             <li><a href="${pageContext.request.contextPath}/admissions/admission-image-upload">Admission Image Upload</a></li>
+            <li><a href="${pageContext.request.contextPath}/admissions/dsc-list">DSC List</a></li>
 
         </ul>
     </li>

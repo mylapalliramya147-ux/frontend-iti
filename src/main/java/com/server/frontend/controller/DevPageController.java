@@ -193,6 +193,7 @@ public class DevPageController {
         m.put("checkmeritschedule/distVerification", "/VerificationReport");
         m.put("checkmeritschedule/admissionIntialization", "/PrintAdmissionSlip");
         m.put("admission/dischargeAdmission", "/admissions/discharge-admission");
+        m.put("admission/DscList", "/admissions/dsc-list");
         m.put("checkmeritschedule/ScheduleEntry", "/ScheduleEntry");
         m.put("labs/labs_entry", "/labs/entry");
         m.put("labs/labs_report", "/labs/report");
