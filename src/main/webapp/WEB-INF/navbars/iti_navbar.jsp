@@ -21,6 +21,9 @@
 
             <li><a href="#">ITI Reports</a>
         <ul>
+
+             <li><a href="${pageContext.request.contextPath}/admissions/search">Search</a></li>
+
             <li><a href="${pageContext.request.contextPath}/reports/api-dashboard-iti">API Dashboard (ITI)</a></li>
             <li><a href="${pageContext.request.contextPath}/reports/applicant-report">Applicant Report</a></li>
             <li><a href="${pageContext.request.contextPath}/reports/admission-report">Admission Report</a></li>
@@ -34,6 +37,7 @@
             <li><a href="${pageContext.request.contextPath}/ScheduleEntry">Schedule Entry</a></li>
             <li><a href="${pageContext.request.contextPath}/DeleteScheduleEntry">Delete Schedule Entry</a></li>
             <li><a href="${pageContext.request.contextPath}/admissions/admission-update">Admission Update</a></li>
+            <li><a href="${pageContext.request.contextPath}/admissions/search">Search</a></li>
             <li><a href="${pageContext.request.contextPath}/admissions/admission-image-upload">Admission Image Upload</a></li>
             <li><a href="${pageContext.request.contextPath}/admissions/dsc-list">DSC List</a></li>
 
