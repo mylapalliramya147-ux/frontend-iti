@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping("/PrintAdmissionSlip")
+@RequestMapping("/admissions/print-admission-slip")
 public class PrintAdmissionSlipController {
 
     private final RestTemplate rest = new RestTemplate();

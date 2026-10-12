@@ -46,6 +46,9 @@
         </li>
         <li><a href="#">Admissions</a>
             <ul>
+                <li><a href="${pageContext.request.contextPath}/admissions/search">Search</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/dsc-list">DSC List</a></li>
+                <li><a href="${pageContext.request.contextPath}/admissions/discharge-admission">DISCHARGE ADMISSION</a></li>
                 <li><a href="${pageContext.request.contextPath}/admissions/status-master">Freeze / UnFreeze</a></li>
             </ul>
         </li>
